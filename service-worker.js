@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gwangtelecom-product-v82';
+const CACHE_NAME = 'gwangtelecom-product-v83';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,8 @@ const APP_ASSETS = [
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
   './assets/cabinet_rack.png',
-  './assets/open_rack.png'
+  './assets/open_rack.png',
+  './assets/gwangtelecom_logo.png'
 ];
 
 self.addEventListener('install', event => {
