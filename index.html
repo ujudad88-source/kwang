@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V78</title>
+  <title>광전기통신 제품 정보 V80</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -1536,7 +1536,7 @@ function symbol(g,p,x,y,w,h){const cx=x+w/2,cy=y+h/2,t=p.type;
  else if(t===&#x27;cable-left&#x27;||t===&#x27;cable-right&#x27;){const ch=t===&#x27;cable-left&#x27;?&#x27;‹&#x27;:&#x27;›&#x27;;g.appendChild(el(&#x27;text&#x27;,{x:cx,y:cy+h*.28,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,&#x27;font-size&#x27;:Math.max(18,h),fill:&#x27;#243746&#x27;,&#x27;font-weight&#x27;:&#x27;700&#x27;},ch))}
 }
 
-function beginDrag(svg,e,i,map){e.preventDefault();e.stopPropagation();selected=i;updateFields();const q=pt(svg,e),p=parts[i],sp=map.toScreen(p.x,p.y);drag={i,svgId:svg.id,map,dx:q.x-sp.x,dy:q.y-sp.y};setStatus(surfaceName(p.surface)+&#x27; 객체를 이동 중입니다.&#x27;);}
+function beginDrag(svg,e,i,map){if(e.pointerType===&#x27;touch&#x27;){selected=i;updateFields();return;}e.preventDefault();e.stopPropagation();selected=i;updateFields();const q=pt(svg,e),p=parts[i],sp=map.toScreen(p.x,p.y);drag={i,svgId:svg.id,map,dx:q.x-sp.x,dy:q.y-sp.y};setStatus(surfaceName(p.surface)+&#x27; 객체를 이동 중입니다.&#x27;);}
 function renderMapped(svg,surf,map,interactive=true){parts.forEach((p,i)=&gt;{if(p.surface!==surf)return;const a=map.toScreen(p.x,p.y),b=map.toScreen(p.x+p.w,p.y+p.h);const gw=Math.max(4,Math.abs(b.x-a.x)),gh=Math.max(4,Math.abs(b.y-a.y));const gx=Math.min(a.x,b.x),gy=Math.min(a.y,b.y);const g=el(&#x27;g&#x27;,{class:&#x27;part&#x27;+(i===selected?&#x27; selected&#x27;:&#x27;&#x27;),&#x27;data-index&#x27;:i,transform:`rotate(${p.rot||0} ${gx+gw/2} ${gy+gh/2})`});symbol(g,p,gx,gy,gw,gh);g.appendChild(el(&#x27;rect&#x27;,{x:gx-3,y:gy-3,width:gw+6,height:gh+6,class:&#x27;select-box&#x27;}));g.appendChild(el(&#x27;rect&#x27;,{x:gx-7,y:gy-7,width:gw+14,height:gh+14,class:&#x27;part-hit&#x27;}));svg.appendChild(g);if(interactive)g.addEventListener(&#x27;pointerdown&#x27;,e=&gt;beginDrag(svg,e,i,map));})}
 function linearMap(x,y,rw,rh,PW,PH){return{toScreen:(u,v)=&gt;({x:x+u*rw/PW,y:y+v*rh/PH}),toPlane:(sx,sy)=&gt;({x:(sx-x)*PW/rw,y:(sy-y)*PH/rh}),contains:(sx,sy)=&gt;sx&gt;=x&amp;&amp;sx&lt;=x+rw&amp;&amp;sy&gt;=y&amp;&amp;sy&lt;=y+rh}}
 function affineMap(o,ux,uy,vx,vy,PW,PH){const det=ux*vy-uy*vx;return{toScreen:(u,v)=&gt;({x:o.x+ux*u/PW+vx*v/PH,y:o.y+uy*u/PW+vy*v/PH}),toPlane:(sx,sy)=&gt;{const dx=sx-o.x,dy=sy-o.y;return{x:PW*(dx*vy-dy*vx)/det,y:PH*(ux*dy-uy*dx)/det}},contains:(sx,sy)=&gt;{const q=this?.toPlane?this.toPlane(sx,sy):null;return !!q}}}
@@ -1702,7 +1702,7 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
       showPanel("homePanel");
     });
 
-    // V79: 입체도면 iframe 내부의 이중 스크롤을 없애고 콘텐츠 높이에 맞춰 자동 조정합니다.
+    // V80: iframe 경계에서 휠·터치가 끊기지 않도록 부모 페이지 스크롤로 전달합니다.
     const drawingToolFrame = document.getElementById("drawingToolFrame");
 
     function resizeDrawingToolFrame() {
@@ -1719,10 +1719,75 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
       }
     }
 
+    function installDrawingScrollBridge() {
+      if (!drawingToolFrame) return;
+      try {
+        const frameWindow = drawingToolFrame.contentWindow;
+        const frameDoc = drawingToolFrame.contentDocument || frameWindow.document;
+        if (!frameDoc || frameDoc.__scrollBridgeInstalled) return;
+        frameDoc.__scrollBridgeInstalled = true;
+
+        frameDoc.documentElement.style.overflow = "hidden";
+        if (frameDoc.body) {
+          frameDoc.body.style.overflow = "visible";
+          frameDoc.body.style.overscrollBehavior = "none";
+        }
+
+        frameDoc.addEventListener("wheel", (event) => {
+          if (event.ctrlKey) return;
+          event.preventDefault();
+          window.scrollBy(0, event.deltaY);
+        }, { passive: false, capture: true });
+
+        let lastTouchY = null;
+        let touchScrolling = false;
+
+        frameDoc.addEventListener("touchstart", (event) => {
+          if (event.touches.length !== 1) {
+            lastTouchY = null;
+            touchScrolling = false;
+            return;
+          }
+          const target = event.target;
+          if (target && target.closest && target.closest("input, select, button, textarea")) {
+            lastTouchY = null;
+            touchScrolling = false;
+            return;
+          }
+          lastTouchY = event.touches[0].clientY;
+          touchScrolling = false;
+        }, { passive: true, capture: true });
+
+        frameDoc.addEventListener("touchmove", (event) => {
+          if (lastTouchY === null || event.touches.length !== 1) return;
+          const currentY = event.touches[0].clientY;
+          const deltaY = lastTouchY - currentY;
+          if (!touchScrolling && Math.abs(deltaY) < 3) return;
+          touchScrolling = true;
+          lastTouchY = currentY;
+          event.preventDefault();
+          window.scrollBy(0, deltaY);
+        }, { passive: false, capture: true });
+
+        const clearTouch = () => {
+          lastTouchY = null;
+          touchScrolling = false;
+        };
+        frameDoc.addEventListener("touchend", clearTouch, { passive: true, capture: true });
+        frameDoc.addEventListener("touchcancel", clearTouch, { passive: true, capture: true });
+      } catch (error) {
+        console.warn("입체도면 스크롤 연결 실패:", error);
+      }
+    }
+
     if (drawingToolFrame) {
       drawingToolFrame.addEventListener("load", () => {
         resizeDrawingToolFrame();
-        setTimeout(resizeDrawingToolFrame, 150);
+        installDrawingScrollBridge();
+        setTimeout(() => {
+          resizeDrawingToolFrame();
+          installDrawingScrollBridge();
+        }, 150);
         setTimeout(resizeDrawingToolFrame, 600);
       });
       window.addEventListener("resize", resizeDrawingToolFrame, { passive: true });
