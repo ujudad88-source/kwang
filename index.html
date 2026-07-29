@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V86</title>
+  <title>광전기통신 제품 정보 V88</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -2321,7 +2321,40 @@
       currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
       drawingCanvas.append(svgEl("line",{x1:x,y1:y+h+30,x2:x+w,y2:y+h+30,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x+w/2,y:y+h+53,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800},`${p.width}`),svgEl("line",{x1:x-30,y1:y,x2:x-30,y2:y+h,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x-42,y:y+h/2,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800,transform:`rotate(-90 ${x-42} ${y+h/2})`},`${p.height}`));
     }
-    function drawCabinet3d(svg,c,ox,oy,scale,objects=true){const fw=c.width*scale,fh=c.height*scale,dep=Math.max(18,c.depth*scale*.55),A=[ox,oy+dep],B=[ox+fw,oy+dep],C=[ox+fw,oy+fh+dep],D=[ox,oy+fh+dep],E=[ox+dep,oy],F=[ox+fw+dep,oy],G=[ox+fw+dep,oy+fh];const poly=(pts,fill)=>svg.appendChild(svgEl("polygon",{points:pts.map(p=>p.join(",")).join(" "),fill,stroke:"#4b5563","stroke-width":1.2}));poly([A,B,F,E],"#eceff3");poly([B,C,G,F],"#d8dde3");poly([A,B,C,D],"#f7f8fa");if(objects)c.objects.filter(o=>o.surface==="front").forEach(o=>{const g=svgEl("g"),x=A[0]+o.x*scale,y=A[1]+o.y*scale,w=o.w*scale,h=o.h*scale;drawShape(g,o,x,y,w,h,true);svg.appendChild(g)});return{width:fw+dep,height:fh+dep}}
+    function drawCabinet3d(svg,c,ox,oy,scale,objects=true){
+      const fw=c.width*scale,fh=c.height*scale,dep=Math.max(18,c.depth*scale*.55),depthPx=Math.max(1,c.depth*scale),diag=dep/depthPx;
+      const A=[ox,oy+dep],B=[ox+fw,oy+dep],C=[ox+fw,oy+fh+dep],D=[ox,oy+fh+dep],E=[ox+dep,oy],F=[ox+fw+dep,oy],G=[ox+fw+dep,oy+fh],H=[ox+dep,oy+fh];
+      const solid="#111827",sw=1.55;
+      const line=(p1,p2)=>svg.appendChild(svgEl("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:solid,"stroke-width":sw,"stroke-linecap":"round"}));
+      [[A,B],[B,C],[C,D],[D,A],[E,F],[F,G],[G,H],[H,E],[A,E],[B,F],[C,G],[D,H]].forEach(([p1,p2])=>line(p1,p2));
+
+      if(objects){
+        const faces={
+          back:{origin:E,ux:[1,0],vy:[0,1],opacity:.58},
+          inside:{origin:[A[0]+dep*.22,A[1]-dep*.22],ux:[1,0],vy:[0,1],opacity:.68},
+          left:{origin:A,ux:[diag,-diag],vy:[0,1],opacity:.78},
+          right:{origin:B,ux:[diag,-diag],vy:[0,1],opacity:.92},
+          top:{origin:E,ux:[1,0],vy:[-diag,diag],opacity:.9},
+          bottom:{origin:H,ux:[1,0],vy:[-diag,diag],opacity:.82},
+          front:{origin:A,ux:[1,0],vy:[0,1],opacity:1}
+        };
+        const order=["back","inside","left","right","top","bottom","front"];
+        order.forEach(surface=>{
+          const face=faces[surface];
+          c.objects.filter(o=>o.surface===surface).forEach(o=>{
+            const outer=svgEl("g",{
+              transform:`matrix(${face.ux[0]} ${face.ux[1]} ${face.vy[0]} ${face.vy[1]} ${face.origin[0]} ${face.origin[1]})`,
+              opacity:face.opacity
+            });
+            const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${(o.x+o.w/2)*scale} ${(o.y+o.h/2)*scale})`});
+            drawShape(inner,o,o.x*scale,o.y*scale,o.w*scale,o.h*scale,true);
+            outer.appendChild(inner);
+            svg.appendChild(outer);
+          });
+        });
+      }
+      return{width:fw+dep,height:fh+dep}
+    }
     function render3d(){drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}}
     function addObjectAt(px,py){const t=toolById(drawingState.activeTool),o={id:drawingState.nextObjectId++,type:t.id,option:drawingState.toolOptions[t.id],surface:drawingState.surface,x:px-t.w/2,y:py-t.h/2,w:t.w,h:t.h,rot:0};clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
     drawingCanvas.onpointerdown=e=>{const hit=e.target.closest("[data-id]");const q=toPlane(e);if(hit){const o=currentObjects().find(v=>v.id===Number(hit.dataset.id));drawingState.selectedObjectId=o.id;drawingState.drag={id:o.id,dx:q.x-o.x,dy:q.y-o.y};updateObjectPanel();render2d();e.preventDefault()}else if(q.x>=0&&q.y>=0&&q.x<=drawingState.layout.p.width&&q.y<=drawingState.layout.p.height)addObjectAt(q.x,q.y)};
