@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V81</title>
+  <title>광전기통신 제품 정보 V82</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -144,7 +144,7 @@
 
     .drawing-embed-card {
       width: 100%;
-      overflow: visible;
+      overflow: hidden;
       border: 1px solid var(--border);
       border-radius: 22px;
       background: #fff;
@@ -154,11 +154,14 @@
     .drawing-tool-frame {
       display: block;
       width: 100%;
-      height: 1850px;
+      height: min(820px, 78dvh);
+      min-height: 560px;
       border: 0;
       background: #fff;
-      overflow: hidden;
-      touch-action: pan-y pinch-zoom;
+      overflow: auto;
+      touch-action: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
     @media (max-width: 800px) {
@@ -167,7 +170,9 @@
       }
 
       .drawing-tool-frame {
-        height: 3200px;
+        height: 78dvh;
+        min-height: 540px;
+        max-height: 820px;
       }
     }
 
@@ -1440,7 +1445,7 @@
           id="drawingToolFrame"
           class="drawing-tool-frame"
           title="입체도면 자동 생성 V9"
-          scrolling="no"
+          scrolling="yes"
           srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;ko&quot;&gt;
 &lt;head&gt;
@@ -1449,7 +1454,7 @@
 &lt;title&gt;600 × 800 × 130 함체 도면 예제 V9&lt;/title&gt;
 &lt;style&gt;
 :root{--ink:#17202a;--muted:#5d6d7e;--panel:#fff;--accent:#1f6f8b;--danger:#c0392b}
-*{box-sizing:border-box}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:Arial,&#x27;Noto Sans KR&#x27;,sans-serif}.wrap{max-width:1380px;margin:auto;padding:24px}h1{margin:0 0 8px;font-size:28px}.sub{margin:0 0 20px;color:var(--muted)}
+*{box-sizing:border-box}html{height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}body{margin:0;min-height:100%;overflow:visible;overscroll-behavior:contain;background:#f3f6f8;color:var(--ink);font-family:Arial,&#x27;Noto Sans KR&#x27;,sans-serif}.wrap{max-width:1380px;margin:auto;padding:24px}h1{margin:0 0 8px;font-size:28px}.sub{margin:0 0 20px;color:var(--muted)}
 .controls,.part-panel{display:grid;gap:12px;background:#fff;padding:16px;border:1px solid #d7e0e5;border-radius:14px;box-shadow:0 4px 18px rgba(20,35,45,.06);margin-bottom:18px}.controls{grid-template-columns:repeat(3,1fr) auto}.part-panel{grid-template-columns:repeat(6,minmax(120px,1fr))}.wide{grid-column:span 2}.actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.status{grid-column:1/-1;font-size:13px;color:var(--muted);background:#f7fafb;padding:10px;border-radius:8px}
 label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}input,select{width:100%;padding:10px 11px;border:1px solid #bcc9d1;border-radius:9px;font-size:15px;background:#fff}button{padding:11px 17px;border:0;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}.secondary{background:#5d6d7e}.danger{background:#b03a2e}.rotate{background:#7d3c98}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid #d7e0e5;border-radius:14px;padding:14px;box-shadow:0 4px 18px rgba(20,35,45,.05)}.card h2{font-size:18px;margin:0 0 6px}.card p{font-size:13px;color:var(--muted);margin:0 0 10px}.full{grid-column:1/-1}svg{width:100%;height:auto;background:#fbfcfd;border:1px solid #e3eaee;border-radius:10px;touch-action:pan-y pinch-zoom}.note{margin-top:18px;background:#fff;border-left:5px solid var(--accent);padding:14px 16px;border-radius:10px;color:#34495e}
@@ -1702,155 +1707,44 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
       showPanel("homePanel");
     });
 
-    // V81: 입체도면 iframe 스크롤을 1:1 좌표 기반으로 전달해 느림·튐·영역 이탈을 줄입니다.
+    // V82: 합성 스크롤 브리지를 제거하고 iframe 자체의 네이티브 스크롤을 사용합니다.
+    // 모바일 브라우저가 직접 관성·경계 처리를 맡아 느려짐과 영역 이탈을 방지합니다.
     const drawingToolFrame = document.getElementById("drawingToolFrame");
 
-    function resizeDrawingToolFrame() {
-      if (!drawingToolFrame) return;
-      try {
-        const frameDoc = drawingToolFrame.contentDocument || drawingToolFrame.contentWindow.document;
-        if (!frameDoc) return;
-        const bodyHeight = frameDoc.body ? frameDoc.body.scrollHeight : 0;
-        const htmlHeight = frameDoc.documentElement ? frameDoc.documentElement.scrollHeight : 0;
-        const contentHeight = Math.max(bodyHeight, htmlHeight);
-        if (contentHeight > 0) drawingToolFrame.style.height = `${contentHeight + 8}px`;
-      } catch (error) {
-        console.warn("입체도면 높이 자동 조정 실패:", error);
-      }
-    }
-
-    function installDrawingScrollBridge() {
+    function configureDrawingNativeScroll() {
       if (!drawingToolFrame) return;
       try {
         const frameWindow = drawingToolFrame.contentWindow;
         const frameDoc = drawingToolFrame.contentDocument || frameWindow.document;
-        if (!frameDoc || frameDoc.__scrollBridgeInstalledV81) return;
-        frameDoc.__scrollBridgeInstalledV81 = true;
+        if (!frameDoc || frameDoc.__nativeScrollConfiguredV82) return;
+        frameDoc.__nativeScrollConfiguredV82 = true;
 
-        // iframe 자체에는 스크롤바를 만들지 않고, 페이지 스크롤만 사용합니다.
-        frameDoc.documentElement.style.overflow = "visible";
-        frameDoc.documentElement.style.overscrollBehavior = "none";
-        if (frameDoc.body) {
-          frameDoc.body.style.overflow = "visible";
-          frameDoc.body.style.overscrollBehavior = "none";
+        const html = frameDoc.documentElement;
+        const body = frameDoc.body;
+        if (html) {
+          html.style.height = "100%";
+          html.style.overflowX = "hidden";
+          html.style.overflowY = "auto";
+          html.style.overscrollBehavior = "contain";
+          html.style.webkitOverflowScrolling = "touch";
+        }
+        if (body) {
+          body.style.minHeight = "100%";
+          body.style.overflowX = "hidden";
+          body.style.overflowY = "visible";
+          body.style.overscrollBehavior = "contain";
+          body.style.touchAction = "pan-y pinch-zoom";
         }
 
-        const clampScrollY = (value) => {
-          const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-          return Math.max(0, Math.min(max, value));
-        };
-
-        // PC 휠은 배율을 건드리지 않고 브라우저 기본 속도 그대로 부모 페이지에 전달합니다.
-        frameDoc.addEventListener("wheel", (event) => {
-          if (event.ctrlKey || event.metaKey) return;
-          const multiplier = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-          const delta = event.deltaY * multiplier;
-          if (!delta) return;
-          event.preventDefault();
-          window.scrollTo({ top: clampScrollY(window.scrollY + delta), behavior: "auto" });
-        }, { passive: false, capture: true });
-
-        let touch = null;
-        let rafId = 0;
-        let momentumId = 0;
-        let pendingTop = null;
-
-        const stopMomentum = () => {
-          if (momentumId) cancelAnimationFrame(momentumId);
-          momentumId = 0;
-        };
-
-        const applyPendingScroll = () => {
-          rafId = 0;
-          if (pendingTop === null) return;
-          window.scrollTo(0, clampScrollY(pendingTop));
-          pendingTop = null;
-        };
-
-        frameDoc.addEventListener("touchstart", (event) => {
-          stopMomentum();
-          if (event.touches.length !== 1) {
-            touch = null;
-            return;
-          }
-          const target = event.target;
-          if (target && target.closest && target.closest("input, select, button, textarea, option")) {
-            touch = null;
-            return;
-          }
-          const now = performance.now();
-          const y = event.touches[0].clientY;
-          touch = {
-            startY: y,
-            startScrollY: window.scrollY,
-            lastY: y,
-            lastTime: now,
-            velocity: 0,
-            scrolling: false
-          };
-        }, { passive: true, capture: true });
-
-        frameDoc.addEventListener("touchmove", (event) => {
-          if (!touch || event.touches.length !== 1) return;
-          const now = performance.now();
-          const y = event.touches[0].clientY;
-          const totalDelta = touch.startY - y;
-
-          // 작은 손떨림은 무시하고, 세로 의도가 확인되면 정확히 1:1로 이동합니다.
-          if (!touch.scrolling && Math.abs(totalDelta) < 5) return;
-          touch.scrolling = true;
-          event.preventDefault();
-
-          const dt = Math.max(8, now - touch.lastTime);
-          const instantaneousVelocity = (touch.lastY - y) / dt;
-          touch.velocity = touch.velocity * 0.7 + instantaneousVelocity * 0.3;
-          touch.lastY = y;
-          touch.lastTime = now;
-
-          pendingTop = touch.startScrollY + totalDelta;
-          if (!rafId) rafId = requestAnimationFrame(applyPendingScroll);
-        }, { passive: false, capture: true });
-
-        const finishTouch = () => {
-          if (!touch) return;
-          const velocity = touch.scrolling ? touch.velocity : 0;
-          touch = null;
-
-          // 짧고 빠른 스와이프에만 가벼운 관성을 주어 과도한 영역 이탈을 방지합니다.
-          if (Math.abs(velocity) < 0.12) return;
-          let v = Math.max(-1.8, Math.min(1.8, velocity));
-          let last = performance.now();
-          const step = (now) => {
-            const dt = Math.min(32, now - last);
-            last = now;
-            const before = window.scrollY;
-            const next = clampScrollY(before + v * dt);
-            window.scrollTo(0, next);
-            if (next === before || next === 0 || next >= document.documentElement.scrollHeight - window.innerHeight) return;
-            v *= Math.pow(0.92, dt / 16.67);
-            if (Math.abs(v) >= 0.05) momentumId = requestAnimationFrame(step);
-          };
-          momentumId = requestAnimationFrame(step);
-        };
-
-        frameDoc.addEventListener("touchend", finishTouch, { passive: true, capture: true });
-        frameDoc.addEventListener("touchcancel", () => { touch = null; stopMomentum(); }, { passive: true, capture: true });
+        // 이전 버전에서 등록된 합성 스크롤 상태가 남아도 현재 문서에는 재등록하지 않습니다.
+        frameWindow.scrollTo(0, 0);
       } catch (error) {
-        console.warn("입체도면 스크롤 연결 실패:", error);
+        console.warn("입체도면 네이티브 스크롤 설정 실패:", error);
       }
     }
 
     if (drawingToolFrame) {
-      drawingToolFrame.addEventListener("load", () => {
-        resizeDrawingToolFrame();
-        installDrawingScrollBridge();
-        setTimeout(() => {
-          resizeDrawingToolFrame();
-          installDrawingScrollBridge();
-        }, 150);
-        setTimeout(resizeDrawingToolFrame, 600);
-      });
-      window.addEventListener("resize", resizeDrawingToolFrame, { passive: true });
+      drawingToolFrame.addEventListener("load", configureDrawingNativeScroll);
     }
 
     /*
