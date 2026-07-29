@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보</title>
+  <title>광전기통신 제품 정보 V78</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -983,6 +983,248 @@
       }
     }
 
+
+    /* V78: 사내 사용자 암호 로그인 */
+    body.auth-locked {
+      overflow: hidden;
+    }
+
+    body.auth-locked .page {
+      visibility: hidden;
+    }
+
+    .auth-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, .18), transparent 35%),
+        linear-gradient(145deg, #eef4ff 0%, #f8fafc 48%, #eef2f7 100%);
+    }
+
+    .auth-screen[hidden] {
+      display: none;
+    }
+
+    .auth-card {
+      width: min(420px, 100%);
+      padding: 38px 34px 30px;
+      border: 1px solid rgba(217, 225, 236, .95);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .97);
+      box-shadow: 0 24px 70px rgba(27, 43, 75, .18);
+      text-align: center;
+    }
+
+    .auth-brand-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, .28);
+    }
+
+    .auth-title {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -.4px;
+    }
+
+    .auth-subtitle {
+      margin: 7px 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .auth-lock-icon {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 27px;
+    }
+
+    .auth-guide {
+      margin: 0 0 18px;
+      color: #344054;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .auth-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .auth-input {
+      width: 100%;
+      height: 52px;
+      padding: 0 50px 0 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 17px;
+      letter-spacing: 3px;
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    .auth-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    }
+
+    .auth-toggle {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 0;
+      border-radius: 9px;
+      transform: translateY(-50%);
+      background: transparent;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .auth-submit {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, .24);
+    }
+
+    .auth-error {
+      min-height: 20px;
+      margin: 10px 0 0;
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .auth-notice {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .user-badge {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      min-height: 42px;
+      padding: 7px 10px 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 7px 18px rgba(27, 43, 75, .06);
+    }
+
+    .user-badge.active {
+      display: flex;
+    }
+
+    .user-avatar {
+      display: grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .user-info {
+      text-align: left;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .user-role {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .user-name {
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .lock-button {
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .lock-button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    @media (max-width: 680px) {
+      .auth-card {
+        padding: 32px 24px 26px;
+        border-radius: 20px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar-actions {
+        flex-wrap: wrap;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .user-badge {
+        padding: 5px;
+      }
+    }
+
   </style>
 
   <!-- PWA / 모바일 웹앱 설정 -->
@@ -996,7 +1238,25 @@
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 
 </head>
-<body>
+<body class="auth-locked">
+
+  <section id="authScreen" class="auth-screen" aria-label="사내 사용자 로그인">
+    <form id="authForm" class="auth-card" autocomplete="off">
+      <div class="auth-brand-mark" aria-hidden="true">G</div>
+      <h1 class="auth-title">광전기통신</h1>
+      <p class="auth-subtitle">제품정보 시스템</p>
+      <div class="auth-lock-icon" aria-hidden="true">🔒</div>
+      <p class="auth-guide">보안을 위해 개인 암호를 입력해 주세요.</p>
+      <div class="auth-input-wrap">
+        <input id="authPassword" class="auth-input" type="password" inputmode="numeric" maxlength="20" placeholder="암호 입력" aria-label="암호 입력" required>
+        <button id="authToggle" class="auth-toggle" type="button" aria-label="암호 표시">◉</button>
+      </div>
+      <button class="auth-submit" type="submit">로그인</button>
+      <p id="authError" class="auth-error" role="alert" aria-live="polite"></p>
+      <p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
+    </form>
+  </section>
+
   <main class="page">
     <div class="topbar" data-persistent-header="true">
       <div class="brand">
@@ -1007,9 +1267,19 @@
         </div>
       </div>
 
-      <button id="homeButton" class="home-button" type="button">
-        ← 첫 화면
-      </button>
+      <div class="topbar-actions">
+        <div id="userBadge" class="user-badge" aria-label="현재 로그인 사용자">
+          <span class="user-avatar" aria-hidden="true">황</span>
+          <span class="user-info">
+            <span id="userRole" class="user-role">관리자</span>
+            <span id="userName" class="user-name">황철준 차장</span>
+          </span>
+        </div>
+        <button id="lockButton" class="lock-button" type="button" hidden>🔒 잠금</button>
+        <button id="homeButton" class="home-button" type="button">
+          ← 첫 화면
+        </button>
+      </div>
     </div>
 
     <section id="homePanel" class="panel active">
@@ -1865,6 +2135,112 @@ window.rackImageMap['19" 캐비닛 랙'] = 'assets/cabinet_rack.png'; // V76_EXT
 })();
 </script>
 
+
+
+<script>
+(function () {
+  "use strict";
+
+  // V78 사용자 등록 영역: 추후 사용자별 항목을 같은 형식으로 추가할 수 있습니다.
+  const AUTH_USERS = [
+    {
+      role: "관리자",
+      name: "황철준",
+      position: "차장",
+      passwordHash: "45df51e4ea78519b4123b5b652497fddd25169c2752c8efff237dbe475ae6b8c"
+    }
+  ];
+
+  const SESSION_KEY = "gwangtelecom-v78-user";
+
+  async function sha256(value) {
+    const data = new TextEncoder().encode(value);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(byte => byte.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  function showAuthenticatedUser(user) {
+    const authScreen = document.getElementById("authScreen");
+    const userBadge = document.getElementById("userBadge");
+    const userRole = document.getElementById("userRole");
+    const userName = document.getElementById("userName");
+    const lockButton = document.getElementById("lockButton");
+
+    userRole.textContent = user.role;
+    userName.textContent = user.name + " " + user.position;
+    userBadge.classList.add("active");
+    lockButton.hidden = false;
+    authScreen.hidden = true;
+    document.body.classList.remove("auth-locked");
+  }
+
+  function lockApplication() {
+    sessionStorage.removeItem(SESSION_KEY);
+    const authScreen = document.getElementById("authScreen");
+    const authPassword = document.getElementById("authPassword");
+    const authError = document.getElementById("authError");
+    const userBadge = document.getElementById("userBadge");
+    const lockButton = document.getElementById("lockButton");
+
+    userBadge.classList.remove("active");
+    lockButton.hidden = true;
+    document.body.classList.add("auth-locked");
+    authScreen.hidden = false;
+    authPassword.value = "";
+    authError.textContent = "";
+    setTimeout(() => authPassword.focus(), 50);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const authForm = document.getElementById("authForm");
+    const authPassword = document.getElementById("authPassword");
+    const authToggle = document.getElementById("authToggle");
+    const authError = document.getElementById("authError");
+    const lockButton = document.getElementById("lockButton");
+
+    const savedUserName = sessionStorage.getItem(SESSION_KEY);
+    const savedUser = AUTH_USERS.find(user => user.name === savedUserName);
+    if (savedUser) {
+      showAuthenticatedUser(savedUser);
+    } else {
+      setTimeout(() => authPassword.focus(), 50);
+    }
+
+    authToggle.addEventListener("click", function () {
+      const isHidden = authPassword.type === "password";
+      authPassword.type = isHidden ? "text" : "password";
+      authToggle.setAttribute("aria-label", isHidden ? "암호 숨기기" : "암호 표시");
+      authPassword.focus();
+    });
+
+    authForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      authError.textContent = "";
+
+      try {
+        const enteredHash = await sha256(authPassword.value.trim());
+        const matchedUser = AUTH_USERS.find(user => user.passwordHash === enteredHash);
+
+        if (!matchedUser) {
+          authError.textContent = "암호가 올바르지 않습니다.";
+          authPassword.select();
+          return;
+        }
+
+        sessionStorage.setItem(SESSION_KEY, matchedUser.name);
+        showAuthenticatedUser(matchedUser);
+      } catch (error) {
+        console.error("로그인 처리 오류:", error);
+        authError.textContent = "로그인 처리 중 오류가 발생했습니다.";
+      }
+    });
+
+    lockButton.addEventListener("click", lockApplication);
+  });
+})();
+</script>
 
 <script>
   // 서비스 워커 등록: 설치 후 오프라인에서도 주요 화면과 이미지를 사용할 수 있습니다.
