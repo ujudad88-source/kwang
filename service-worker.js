@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gwangtelecom-product-v85';
+const CACHE_NAME = 'gwangtelecom-product-v86';
 const APP_ASSETS = [
   './',
   './index.html',

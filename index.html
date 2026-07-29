@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V85</title>
+  <title>광전기통신 제품 정보 V86</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -1722,6 +1722,134 @@
       .stack-preview-grid { grid-template-columns:1fr; }
       .stack-preview-svg { border-right:0; border-bottom:1px solid var(--border); }
     }
+
+    /* V86: PC 전용 도면 편집 화면 최적화 — 모바일 및 객체 기능 유지 */
+    @media (min-width: 1281px) {
+      body:has(#drawingPanel.active) .page {
+        width: min(1680px, calc(100% - 28px));
+        padding-top: 24px;
+      }
+
+      body:has(#drawingPanel.active) .topbar {
+        margin-bottom: 20px;
+      }
+
+      #drawingPanel .section-head {
+        margin-bottom: 14px;
+      }
+
+      #drawingPanel .drawing-toolbar {
+        padding: 14px 18px;
+      }
+
+      #drawingPanel .drawing-controls {
+        grid-template-columns: repeat(3, minmax(150px, 210px)) minmax(150px, 190px);
+        justify-content: center;
+        padding: 16px 18px;
+      }
+
+      #drawingPanel .drawing-v85-main {
+        grid-template-columns: minmax(230px, 250px) minmax(560px, 1fr) minmax(240px, 270px) minmax(350px, 400px);
+        gap: 16px;
+        padding: 0 16px 16px;
+        align-items: stretch;
+      }
+
+      #drawingPanel .drawing-v85-main > .drawing-v85-card {
+        height: 100%;
+      }
+
+      #drawingPanel .drawing-tool-rows {
+        max-height: 690px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+
+      #drawingPanel .drawing-v85-canvas-wrap {
+        padding: 12px 16px 16px;
+      }
+
+      #drawingPanel .drawing-v85-canvas {
+        min-height: 640px;
+        max-height: 720px;
+      }
+
+      #drawingPanel .drawing-3d-wrap {
+        display: grid;
+        align-content: start;
+        min-height: 650px;
+      }
+
+      #drawingPanel .drawing-3d-svg {
+        min-height: 600px;
+        max-height: 660px;
+      }
+
+      #drawingPanel .cabinet-property-grid {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 8px 10px;
+        padding: 14px 16px;
+      }
+
+      #drawingPanel .stack-section {
+        grid-template-columns: minmax(330px, 380px) minmax(520px, 1fr) minmax(360px, 420px);
+        gap: 16px;
+        padding: 0 16px 18px;
+        align-items: stretch;
+      }
+
+      #drawingPanel .stack-preview-grid {
+        grid-template-columns: minmax(0, 1fr) 210px;
+        min-height: 420px;
+      }
+
+      #drawingPanel .stack-preview-svg {
+        height: 420px;
+      }
+
+      #drawingPanel .stack-list {
+        max-height: 330px;
+        overflow-y: auto;
+      }
+
+      #drawingPanel .drawing-view-tab {
+        flex: 1 1 0;
+        min-width: 76px;
+        padding: 0 10px;
+      }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      body:has(#drawingPanel.active) .page {
+        width: min(1220px, calc(100% - 24px));
+      }
+
+      #drawingPanel .drawing-v85-main {
+        grid-template-columns: 220px minmax(0, 1fr) 250px;
+        gap: 14px;
+      }
+
+      #drawingPanel .drawing-v85-main .drawing-3d-panel {
+        grid-column: 2 / 4;
+      }
+
+      #drawingPanel .drawing-v85-canvas {
+        min-height: 560px;
+      }
+
+      #drawingPanel .drawing-3d-svg {
+        min-height: 500px;
+      }
+
+      #drawingPanel .stack-section {
+        grid-template-columns: 320px minmax(0, 1fr);
+      }
+
+      #drawingPanel .stack-section .stack-properties {
+        grid-column: 1 / -1;
+      }
+    }
+
 </style>
 
   <!-- PWA / 모바일 웹앱 설정 -->
