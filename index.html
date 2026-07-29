@@ -144,7 +144,7 @@
 
     .drawing-embed-card {
       width: 100%;
-      overflow: hidden;
+      overflow: visible;
       border: 1px solid var(--border);
       border-radius: 22px;
       background: #fff;
@@ -157,6 +157,8 @@
       height: 1850px;
       border: 0;
       background: #fff;
+      overflow: hidden;
+      touch-action: pan-y pinch-zoom;
     }
 
     @media (max-width: 800px) {
@@ -984,7 +986,7 @@
     }
 
 
-    /* V78: 사내 사용자 암호 로그인 */
+    /* V79: 사내 사용자 암호 로그인 */
     body.auth-locked {
       overflow: hidden;
     }
@@ -1438,6 +1440,7 @@
           id="drawingToolFrame"
           class="drawing-tool-frame"
           title="입체도면 자동 생성 V9"
+          scrolling="no"
           srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;ko&quot;&gt;
 &lt;head&gt;
@@ -1449,7 +1452,7 @@
 *{box-sizing:border-box}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:Arial,&#x27;Noto Sans KR&#x27;,sans-serif}.wrap{max-width:1380px;margin:auto;padding:24px}h1{margin:0 0 8px;font-size:28px}.sub{margin:0 0 20px;color:var(--muted)}
 .controls,.part-panel{display:grid;gap:12px;background:#fff;padding:16px;border:1px solid #d7e0e5;border-radius:14px;box-shadow:0 4px 18px rgba(20,35,45,.06);margin-bottom:18px}.controls{grid-template-columns:repeat(3,1fr) auto}.part-panel{grid-template-columns:repeat(6,minmax(120px,1fr))}.wide{grid-column:span 2}.actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.status{grid-column:1/-1;font-size:13px;color:var(--muted);background:#f7fafb;padding:10px;border-radius:8px}
 label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}input,select{width:100%;padding:10px 11px;border:1px solid #bcc9d1;border-radius:9px;font-size:15px;background:#fff}button{padding:11px 17px;border:0;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}.secondary{background:#5d6d7e}.danger{background:#b03a2e}.rotate{background:#7d3c98}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid #d7e0e5;border-radius:14px;padding:14px;box-shadow:0 4px 18px rgba(20,35,45,.05)}.card h2{font-size:18px;margin:0 0 6px}.card p{font-size:13px;color:var(--muted);margin:0 0 10px}.full{grid-column:1/-1}svg{width:100%;height:auto;background:#fbfcfd;border:1px solid #e3eaee;border-radius:10px;touch-action:none}.note{margin-top:18px;background:#fff;border-left:5px solid var(--accent);padding:14px 16px;border-radius:10px;color:#34495e}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid #d7e0e5;border-radius:14px;padding:14px;box-shadow:0 4px 18px rgba(20,35,45,.05)}.card h2{font-size:18px;margin:0 0 6px}.card p{font-size:13px;color:var(--muted);margin:0 0 10px}.full{grid-column:1/-1}svg{width:100%;height:auto;background:#fbfcfd;border:1px solid #e3eaee;border-radius:10px;touch-action:pan-y pinch-zoom}.note{margin-top:18px;background:#fff;border-left:5px solid var(--accent);padding:14px 16px;border-radius:10px;color:#34495e}
 .dim{font-size:14px;font-weight:700;fill:#17202a}.obj{fill:#f9fbfc;stroke:#17202a;stroke-width:2}.shade{fill:#dbe7ed;stroke:#17202a;stroke-width:2}.topface{fill:#edf4f7;stroke:#17202a;stroke-width:2}.hidden{stroke:#6c7a89;stroke-width:1.5;stroke-dasharray:7 5;fill:none}.dline{stroke:#34495e;stroke-width:1.4;fill:none;marker-start:url(#arrow);marker-end:url(#arrow)}.ext{stroke:#7b8a97;stroke-width:1;fill:none}.part{cursor:move}.part.selected .select-box{stroke:#d35400;stroke-width:3;stroke-dasharray:5 3}.select-box{fill:transparent;stroke:transparent;pointer-events:none}.part-hit{fill:transparent;stroke:none}.front-hit{fill:transparent;cursor:crosshair}.cut{stroke:#d00000;fill:none;stroke-width:2.2}.cut-fill{stroke:#d00000;fill:rgba(255,0,0,.035);stroke-width:2.2}.symbol{stroke:#243746;fill:none;stroke-width:2}.symbol-fill{stroke:#243746;fill:#eef3f6;stroke-width:2}.smalltext{font-size:10px;font-weight:700;fill:#243746;pointer-events:none}.plate-text{font-size:9px;font-weight:700;fill:#243746}.inner-plate{fill:#f3f0df;stroke:#555;stroke-width:1.8}.inner-plate.pvc{fill:#f8fbff}.inner-plate.steel{fill:#d7dde1}.inner-plate.bakelite{fill:#ead9b7}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.part-panel{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}.wrap{padding:14px}}
 &lt;/style&gt;
@@ -1698,6 +1701,32 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
     homeButton.addEventListener("click", () => {
       showPanel("homePanel");
     });
+
+    // V79: 입체도면 iframe 내부의 이중 스크롤을 없애고 콘텐츠 높이에 맞춰 자동 조정합니다.
+    const drawingToolFrame = document.getElementById("drawingToolFrame");
+
+    function resizeDrawingToolFrame() {
+      if (!drawingToolFrame) return;
+      try {
+        const frameDoc = drawingToolFrame.contentDocument || drawingToolFrame.contentWindow.document;
+        if (!frameDoc) return;
+        const bodyHeight = frameDoc.body ? frameDoc.body.scrollHeight : 0;
+        const htmlHeight = frameDoc.documentElement ? frameDoc.documentElement.scrollHeight : 0;
+        const contentHeight = Math.max(bodyHeight, htmlHeight);
+        if (contentHeight > 0) drawingToolFrame.style.height = `${contentHeight + 8}px`;
+      } catch (error) {
+        console.warn("입체도면 높이 자동 조정 실패:", error);
+      }
+    }
+
+    if (drawingToolFrame) {
+      drawingToolFrame.addEventListener("load", () => {
+        resizeDrawingToolFrame();
+        setTimeout(resizeDrawingToolFrame, 150);
+        setTimeout(resizeDrawingToolFrame, 600);
+      });
+      window.addEventListener("resize", resizeDrawingToolFrame, { passive: true });
+    }
 
     /*
       함 제품 데이터 수정 위치
