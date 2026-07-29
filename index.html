@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V80</title>
+  <title>광전기통신 제품 정보 V81</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -1702,7 +1702,7 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
       showPanel("homePanel");
     });
 
-    // V80: iframe 경계에서 휠·터치가 끊기지 않도록 부모 페이지 스크롤로 전달합니다.
+    // V81: 입체도면 iframe 스크롤을 1:1 좌표 기반으로 전달해 느림·튐·영역 이탈을 줄입니다.
     const drawingToolFrame = document.getElementById("drawingToolFrame");
 
     function resizeDrawingToolFrame() {
@@ -1724,57 +1724,117 @@ partX.addEventListener(&#x27;change&#x27;,applySettings);partY.addEventListener(
       try {
         const frameWindow = drawingToolFrame.contentWindow;
         const frameDoc = drawingToolFrame.contentDocument || frameWindow.document;
-        if (!frameDoc || frameDoc.__scrollBridgeInstalled) return;
-        frameDoc.__scrollBridgeInstalled = true;
+        if (!frameDoc || frameDoc.__scrollBridgeInstalledV81) return;
+        frameDoc.__scrollBridgeInstalledV81 = true;
 
-        frameDoc.documentElement.style.overflow = "hidden";
+        // iframe 자체에는 스크롤바를 만들지 않고, 페이지 스크롤만 사용합니다.
+        frameDoc.documentElement.style.overflow = "visible";
+        frameDoc.documentElement.style.overscrollBehavior = "none";
         if (frameDoc.body) {
           frameDoc.body.style.overflow = "visible";
           frameDoc.body.style.overscrollBehavior = "none";
         }
 
+        const clampScrollY = (value) => {
+          const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          return Math.max(0, Math.min(max, value));
+        };
+
+        // PC 휠은 배율을 건드리지 않고 브라우저 기본 속도 그대로 부모 페이지에 전달합니다.
         frameDoc.addEventListener("wheel", (event) => {
-          if (event.ctrlKey) return;
+          if (event.ctrlKey || event.metaKey) return;
+          const multiplier = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+          const delta = event.deltaY * multiplier;
+          if (!delta) return;
           event.preventDefault();
-          window.scrollBy(0, event.deltaY);
+          window.scrollTo({ top: clampScrollY(window.scrollY + delta), behavior: "auto" });
         }, { passive: false, capture: true });
 
-        let lastTouchY = null;
-        let touchScrolling = false;
+        let touch = null;
+        let rafId = 0;
+        let momentumId = 0;
+        let pendingTop = null;
+
+        const stopMomentum = () => {
+          if (momentumId) cancelAnimationFrame(momentumId);
+          momentumId = 0;
+        };
+
+        const applyPendingScroll = () => {
+          rafId = 0;
+          if (pendingTop === null) return;
+          window.scrollTo(0, clampScrollY(pendingTop));
+          pendingTop = null;
+        };
 
         frameDoc.addEventListener("touchstart", (event) => {
+          stopMomentum();
           if (event.touches.length !== 1) {
-            lastTouchY = null;
-            touchScrolling = false;
+            touch = null;
             return;
           }
           const target = event.target;
-          if (target && target.closest && target.closest("input, select, button, textarea")) {
-            lastTouchY = null;
-            touchScrolling = false;
+          if (target && target.closest && target.closest("input, select, button, textarea, option")) {
+            touch = null;
             return;
           }
-          lastTouchY = event.touches[0].clientY;
-          touchScrolling = false;
+          const now = performance.now();
+          const y = event.touches[0].clientY;
+          touch = {
+            startY: y,
+            startScrollY: window.scrollY,
+            lastY: y,
+            lastTime: now,
+            velocity: 0,
+            scrolling: false
+          };
         }, { passive: true, capture: true });
 
         frameDoc.addEventListener("touchmove", (event) => {
-          if (lastTouchY === null || event.touches.length !== 1) return;
-          const currentY = event.touches[0].clientY;
-          const deltaY = lastTouchY - currentY;
-          if (!touchScrolling && Math.abs(deltaY) < 3) return;
-          touchScrolling = true;
-          lastTouchY = currentY;
+          if (!touch || event.touches.length !== 1) return;
+          const now = performance.now();
+          const y = event.touches[0].clientY;
+          const totalDelta = touch.startY - y;
+
+          // 작은 손떨림은 무시하고, 세로 의도가 확인되면 정확히 1:1로 이동합니다.
+          if (!touch.scrolling && Math.abs(totalDelta) < 5) return;
+          touch.scrolling = true;
           event.preventDefault();
-          window.scrollBy(0, deltaY);
+
+          const dt = Math.max(8, now - touch.lastTime);
+          const instantaneousVelocity = (touch.lastY - y) / dt;
+          touch.velocity = touch.velocity * 0.7 + instantaneousVelocity * 0.3;
+          touch.lastY = y;
+          touch.lastTime = now;
+
+          pendingTop = touch.startScrollY + totalDelta;
+          if (!rafId) rafId = requestAnimationFrame(applyPendingScroll);
         }, { passive: false, capture: true });
 
-        const clearTouch = () => {
-          lastTouchY = null;
-          touchScrolling = false;
+        const finishTouch = () => {
+          if (!touch) return;
+          const velocity = touch.scrolling ? touch.velocity : 0;
+          touch = null;
+
+          // 짧고 빠른 스와이프에만 가벼운 관성을 주어 과도한 영역 이탈을 방지합니다.
+          if (Math.abs(velocity) < 0.12) return;
+          let v = Math.max(-1.8, Math.min(1.8, velocity));
+          let last = performance.now();
+          const step = (now) => {
+            const dt = Math.min(32, now - last);
+            last = now;
+            const before = window.scrollY;
+            const next = clampScrollY(before + v * dt);
+            window.scrollTo(0, next);
+            if (next === before || next === 0 || next >= document.documentElement.scrollHeight - window.innerHeight) return;
+            v *= Math.pow(0.92, dt / 16.67);
+            if (Math.abs(v) >= 0.05) momentumId = requestAnimationFrame(step);
+          };
+          momentumId = requestAnimationFrame(step);
         };
-        frameDoc.addEventListener("touchend", clearTouch, { passive: true, capture: true });
-        frameDoc.addEventListener("touchcancel", clearTouch, { passive: true, capture: true });
+
+        frameDoc.addEventListener("touchend", finishTouch, { passive: true, capture: true });
+        frameDoc.addEventListener("touchcancel", () => { touch = null; stopMomentum(); }, { passive: true, capture: true });
       } catch (error) {
         console.warn("입체도면 스크롤 연결 실패:", error);
       }
