@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>600 × 800 × 130 함체 도면 예제 V9</title>
+<style>
+:root{--ink:#17202a;--muted:#5d6d7e;--panel:#fff;--accent:#1f6f8b;--danger:#c0392b}
+*{box-sizing:border-box}html{height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}body{margin:0;min-height:100%;overflow:visible;overscroll-behavior:contain;background:#f3f6f8;color:var(--ink);font-family:Arial,'Noto Sans KR',sans-serif}.wrap{max-width:1380px;margin:auto;padding:24px}h1{margin:0 0 8px;font-size:28px}.sub{margin:0 0 20px;color:var(--muted)}
+.controls,.part-panel{display:grid;gap:12px;background:#fff;padding:16px;border:1px solid #d7e0e5;border-radius:14px;box-shadow:0 4px 18px rgba(20,35,45,.06);margin-bottom:18px}.controls{grid-template-columns:repeat(3,1fr) auto}.part-panel{grid-template-columns:repeat(6,minmax(120px,1fr))}.wide{grid-column:span 2}.actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.status{grid-column:1/-1;font-size:13px;color:var(--muted);background:#f7fafb;padding:10px;border-radius:8px}
+label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}input,select{width:100%;padding:10px 11px;border:1px solid #bcc9d1;border-radius:9px;font-size:15px;background:#fff}button{padding:11px 17px;border:0;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}.secondary{background:#5d6d7e}.danger{background:#b03a2e}.rotate{background:#7d3c98}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid #d7e0e5;border-radius:14px;padding:14px;box-shadow:0 4px 18px rgba(20,35,45,.05)}.card h2{font-size:18px;margin:0 0 6px}.card p{font-size:13px;color:var(--muted);margin:0 0 10px}.full{grid-column:1/-1}svg{width:100%;height:auto;background:#fbfcfd;border:1px solid #e3eaee;border-radius:10px;touch-action:pan-y pinch-zoom}.note{margin-top:18px;background:#fff;border-left:5px solid var(--accent);padding:14px 16px;border-radius:10px;color:#34495e}
+.dim{font-size:14px;font-weight:700;fill:#17202a}.obj{fill:#f9fbfc;stroke:#17202a;stroke-width:2}.shade{fill:#dbe7ed;stroke:#17202a;stroke-width:2}.topface{fill:#edf4f7;stroke:#17202a;stroke-width:2}.hidden{stroke:#6c7a89;stroke-width:1.5;stroke-dasharray:7 5;fill:none}.dline{stroke:#34495e;stroke-width:1.4;fill:none;marker-start:url(#arrow);marker-end:url(#arrow)}.ext{stroke:#7b8a97;stroke-width:1;fill:none}.part{cursor:move}.part.selected .select-box{stroke:#d35400;stroke-width:3;stroke-dasharray:5 3}.select-box{fill:transparent;stroke:transparent;pointer-events:none}.part-hit{fill:transparent;stroke:none}.front-hit{fill:transparent;cursor:crosshair}.cut{stroke:#d00000;fill:none;stroke-width:2.2}.cut-fill{stroke:#d00000;fill:rgba(255,0,0,.035);stroke-width:2.2}.symbol{stroke:#243746;fill:none;stroke-width:2}.symbol-fill{stroke:#243746;fill:#eef3f6;stroke-width:2}.smalltext{font-size:10px;font-weight:700;fill:#243746;pointer-events:none}.plate-text{font-size:9px;font-weight:700;fill:#243746}.inner-plate{fill:#f3f0df;stroke:#555;stroke-width:1.8}.inner-plate.pvc{fill:#f8fbff}.inner-plate.steel{fill:#d7dde1}.inner-plate.bakelite{fill:#ead9b7}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.part-panel{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}.wrap{padding:14px}}
+</style>
+</head>
+<body><div class="wrap">
+<h1>함체 도면 표현 방식 비교 <small style="font-size:14px;color:#5d6d7e">V9</small></h1>
+<p class="sub">기본 규격: <strong id="titleSize">600 × 800 × 130 mm</strong></p>
+<div class="controls"><div><label>가로 W (mm)</label><input id="w" type="number" value="600" min="1"></div><div><label>세로 H (mm)</label><input id="h" type="number" value="800" min="1"></div><div><label>깊이 D (mm)</label><input id="d" type="number" value="130" min="1"></div><button onclick="drawAll()">도면 다시 그리기</button></div>
+<div class="part-panel">
+<div><label>배치 면</label><select id="surface"><option value="front">함 전면</option><option value="back">함 뒷면</option><option value="inside">함 내부</option><option value="top">함 상부</option><option value="leftSide">함 좌측면</option><option value="rightSide">함 우측면</option></select></div>
+<div class="wide"><label>추가 표시 종류</label><select id="partType" onchange="syncDefaults()">
+<optgroup label="환기구"><option value="vent-louver">환기구 - 루버형</option><option value="vent-hole">환기구 - 타공형</option><option value="vent-hex">환기구 - 벌집형</option><option value="vent-mesh">환기구 - 메쉬형</option></optgroup>
+<optgroup label="키 종류"><option value="key-detach">탈착키</option><option value="key-push">푸쉬버튼키</option><option value="key-handle">푸쉬핸들키</option></optgroup>
+<optgroup label="후면 구멍"><option value="anchor-hole">앙카구멍</option><option value="screw-hole">피스구멍</option></optgroup>
+<optgroup label="명판"><option value="nameplate-100">사각형 명판 100 × 30</option><option value="nameplate-150">사각형 명판 150 × 30</option></optgroup>
+<optgroup label="속판"><option value="inner-pvc">PVC속판</option><option value="inner-steel">철속판</option><option value="inner-bakelite">빼끄판</option></optgroup>
+<optgroup label="접지"><option value="ground-busbar">접지 꺾인 부스바</option></optgroup>
+<optgroup label="타공"><option value="cut-rect">사각 타공</option><option value="cut-circle">원형 타공</option></optgroup>
+<optgroup label="기타"><option value="cable-left">케이블걸이 &lt;</option><option value="cable-right">케이블걸이 &gt;</option></optgroup>
+</select></div>
+<div><label>가로/직경 (mm)</label><input id="partW" type="number" value="180" min="1"></div><div><label>세로 (mm)</label><input id="partH" type="number" value="45" min="1"></div><div><label>회전 각도</label><select id="rotation"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></div>
+<div><label>선택 X (mm)</label><input id="partX" type="number" disabled></div><div><label>선택 Y (mm)</label><input id="partY" type="number" disabled></div><div><label>명판 문구</label><input id="partLabel" type="text" value="함 명칭"></div>
+<div class="actions"><button id="addBtn" onclick="toggleAdd()">표시 추가</button><button class="secondary" onclick="applySettings()">선택 항목 적용</button><button class="rotate" onclick="rotateSelected()">90° 회전</button><button class="secondary" onclick="duplicateSelected()">선택 복사</button><button class="danger" onclick="deleteSelected()">선택 삭제</button></div>
+<div id="status" class="status">표시 종류와 배치 면을 선택하고 ‘표시 추가’를 누른 뒤 해당 도면을 클릭하세요.</div>
+</div>
+<div class="grid">
+<section class="card"><h2>1. 정면도</h2><p>키·명판·환기구·타공·케이블걸이를 배치합니다.</p><svg id="front" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>2. 뒷면도</h2><p>앙카구멍 또는 피스구멍을 배치합니다.</p><svg id="back" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>3. 함 내부</h2><p>속판·접지 부스바·내부 타공 등을 배치합니다.</p><svg id="inside" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>4. 좌측면도</h2><p>좌측면 객체를 추가·선택·이동할 수 있습니다.</p><svg id="leftSide" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>5. 우측면도</h2><p>우측면 객체를 추가·선택·이동할 수 있습니다.</p><svg id="rightSide" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>6. 평면도</h2><p>상부 객체를 추가·선택·이동할 수 있습니다.</p><svg id="top" viewBox="0 0 560 440"></svg></section>
+<section class="card"><h2>7. 기본 사시도</h2><p>정면·상부·측면에 배치한 객체만 표시하며 직접 편집할 수 있습니다.</p><svg id="iso" viewBox="0 0 560 440"></svg></section>
+<section class="card full"><h2>8. 실선 입체도</h2><p>V7의 기존 실선·숨은선 구조를 그대로 유지하며 모든 면의 객체를 표시하고 편집할 수 있습니다.</p><svg id="solid3d" viewBox="0 0 1120 470"></svg></section>
+<section class="card full"><h2>9. 도면형 와이어프레임</h2><p id="wireDesc">전면·뒷면·내부·상부·좌측면·우측면을 구분하여 한 화면에서 확인하고 직접 이동할 수 있습니다.</p><svg id="wire" viewBox="0 0 1120 720"></svg></section>
+</div>
+<div class="note">V9: V7의 실선 입체도 선·각도·구조를 그대로 복원했습니다. 모든 도면에서 객체를 추가·선택·이동·삭제할 수 있으며, 기본 사시도에는 정면·상부·측면 객체만, 실선 입체도에는 모든 면의 객체가 표시됩니다.</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a={},t='')=>{const e=document.createElementNS(NS,n);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));if(t)e.textContent=t;return e};
+function reset(svg){svg.innerHTML='';const defs=el('defs');const m=el('marker',{id:'arrow',viewBox:'0 0 10 10',refX:5,refY:5,markerWidth:6,markerHeight:6,orient:'auto-start-reverse'});m.appendChild(el('path',{d:'M0 0L10 5L0 10z',fill:'#34495e'}));defs.appendChild(m);svg.appendChild(defs)}
+const line=(s,x1,y1,x2,y2,c='ext')=>s.appendChild(el('line',{x1,y1,x2,y2,class:c}));
+const text=(s,x,y,t,a='middle')=>s.appendChild(el('text',{x,y,class:'dim','text-anchor':a},t));
+const rect=(s,x,y,w,h,c='obj')=>s.appendChild(el('rect',{x,y,width:w,height:h,class:c}));
+const poly=(s,p,c='obj')=>s.appendChild(el('polygon',{points:p.map(v=>v.join(',')).join(' '),class:c}));
+const dims=()=>({W:+w.value||600,H:+h.value||800,D:+d.value||130});
+const fit=(a,b,ma,mb)=>{const sc=Math.min(ma/a,mb/b);return[a*sc,b*sc,sc]};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const surfaceName=v=>v==='back'?'함 뒷면':v==='inside'?'함 내부':v==='top'?'함 상부':v==='leftSide'?'함 좌측면':v==='rightSide'?'함 우측면':'함 전면';
+function planeDims(surf){const {W,H,D}=dims();return (surf==='leftSide'||surf==='rightSide')?{PW:D,PH:H}:surf==='top'?{PW:W,PH:D}:{PW:W,PH:H}}
+let parts=[{surface:'front',type:'vent-louver',x:210,y:610,w:180,h:45,rot:0,label:''}];
+let selected=0,addMode=false,drag=null;
+const defaults={
+'vent-louver':[180,45,'front'],'vent-hole':[180,45,'front'],'vent-hex':[180,45,'front'],'vent-mesh':[180,45,'front'],
+'key-detach':[35,60,'front'],'key-push':[35,35,'front'],'key-handle':[45,120,'front'],'anchor-hole':[18,18,'back'],'screw-hole':[10,10,'back'],
+'nameplate-100':[100,30,'front'],'nameplate-150':[150,30,'front'],'inner-pvc':[500,700,'inside'],'inner-steel':[500,700,'inside'],'inner-bakelite':[500,700,'inside'],
+'ground-busbar':[160,35,'inside'],'cut-rect':[120,80,'front'],'cut-circle':[80,80,'front'],'cable-left':[40,70,'inside'],'cable-right':[40,70,'inside']};
+function syncDefaults(){const d=defaults[partType.value];partW.value=d[0];partH.value=d[1];surface.value=d[2]}
+function setStatus(t){status.textContent=t}
+function toggleAdd(){addMode=!addMode;addBtn.textContent=addMode?'배치할 도면을 클릭':'표시 추가';addBtn.style.background=addMode?'#d35400':'';setStatus(addMode?'원하는 도면 또는 입체도의 면을 클릭하세요.':'추가 모드를 해제했습니다.')}
+function selectPart(i){selected=i;updateFields();drawAll()}
+function updateFields(){const p=parts[selected];[partX,partY].forEach(e=>e.disabled=!p);if(!p){partX.value=partY.value='';return}surface.value=p.surface;partType.value=p.type;partW.value=Math.round(p.w);partH.value=Math.round(p.h);partX.value=Math.round(p.x);partY.value=Math.round(p.y);rotation.value=p.rot||0;partLabel.value=p.label||'함 명칭'}
+function addAt(surf,x,y){const {PW,PH}=planeDims(surf),t=partType.value;let pw=Math.min(+partW.value||40,PW),ph=Math.min(+partH.value||40,PH);if(t==='cut-circle')ph=Math.min(pw,PH);parts.push({surface:surf,type:t,x:clamp(x-pw/2,0,PW-pw),y:clamp(y-ph/2,0,PH-ph),w:pw,h:ph,rot:+rotation.value||0,label:partLabel.value});selected=parts.length-1;surface.value=surf;addMode=false;addBtn.textContent='표시 추가';addBtn.style.background='';setStatus(surfaceName(surf)+'에 표시를 추가했습니다.');drawAll()}
+function applySettings(){const p=parts[selected];if(!p)return setStatus('적용할 표시를 먼저 선택하세요.');p.surface=surface.value;p.type=partType.value;const {PW,PH}=planeDims(p.surface);p.w=Math.min(+partW.value||p.w,PW);p.h=Math.min(p.type==='cut-circle'?p.w:(+partH.value||p.h),PH);p.rot=+rotation.value||0;p.label=partLabel.value;p.x=clamp(+partX.value||p.x,0,PW-p.w);p.y=clamp(+partY.value||p.y,0,PH-p.h);setStatus('선택 항목을 적용했습니다.');drawAll()}
+function rotateSelected(){const p=parts[selected];if(!p)return;p.rot=((p.rot||0)+90)%360;rotation.value=p.rot;drawAll()}
+function duplicateSelected(){const p=parts[selected];if(!p)return;const {PW,PH}=planeDims(p.surface);parts.push({...p,x:clamp(p.x+20,0,PW-p.w),y:clamp(p.y+20,0,PH-p.h)});selected=parts.length-1;drawAll()}
+function deleteSelected(){if(!parts[selected])return;parts.splice(selected,1);selected=parts.length?Math.min(selected,parts.length-1):-1;setStatus('선택한 객체를 삭제했습니다.');drawAll()}
+function pt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function symbol(g,p,x,y,w,h){const cx=x+w/2,cy=y+h/2,t=p.type;
+ if(t.startsWith('vent-')){g.appendChild(el('rect',{x,y,width:w,height:h,rx:2,class:'symbol-fill'}));const pad=Math.max(2,Math.min(w,h)*.12),ix=x+pad,iy=y+pad,iw=w-2*pad,ih=h-2*pad;if(t==='vent-louver'){for(let r=1;r<=5;r++)line(g,ix,iy+r*ih/6,ix+iw,iy+r*ih/6,'symbol')}else if(t==='vent-hole'){for(let r=0;r<3;r++)for(let c=0;c<8;c++)g.appendChild(el('circle',{cx:ix+(c+.5)*iw/8,cy:iy+(r+.5)*ih/3,r:Math.max(1,Math.min(iw/20,ih/8)),fill:'#526b78'}))}else if(t==='vent-hex'){for(let r=0;r<3;r++)for(let c=0;c<7;c++){const xx=ix+(c+.55+(r%2)*.45)*iw/7.5,yy=iy+(r+.5)*ih/3,rr=Math.max(1.5,Math.min(iw/24,ih/7)),q=[];for(let k=0;k<6;k++){const a=k*Math.PI/3;q.push([xx+rr*Math.cos(a),yy+rr*Math.sin(a)])}g.appendChild(el('polygon',{points:q.map(v=>v.join(',')).join(' '),class:'symbol'}))}}else{for(let c=1;c<8;c++)line(g,ix+c*iw/8,iy,ix+c*iw/8,iy+ih,'symbol');for(let r=1;r<4;r++)line(g,ix,iy+r*ih/4,ix+iw,iy+r*ih/4,'symbol')}}
+ else if(t==='key-detach'){g.appendChild(el('circle',{cx,cy:y+h*.3,r:Math.min(w,h)*.18,class:'symbol-fill'}));line(g,cx,y+h*.45,cx,y+h*.86,'symbol');line(g,cx,y+h*.68,x+w*.72,y+h*.68,'symbol')}
+ else if(t==='key-push'){g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)*.38,class:'symbol-fill'}));g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)*.16,fill:'#526b78'}))}
+ else if(t==='key-handle'){g.appendChild(el('rect',{x:x+w*.28,y,width:w*.44,height:h,rx:w*.18,class:'symbol-fill'}));line(g,cx,y+h*.16,cx,y+h*.82,'symbol');g.appendChild(el('circle',{cx,cy:y+h*.82,r:w*.1,fill:'#526b78'}))}
+ else if(t==='anchor-hole'||t==='screw-hole'){g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)*.4,class:'symbol'}));line(g,x+w*.25,y+h*.25,x+w*.75,y+h*.75,'symbol');line(g,x+w*.75,y+h*.25,x+w*.25,y+h*.75,'symbol')}
+ else if(t.startsWith('nameplate')){g.appendChild(el('rect',{x,y,width:w,height:h,rx:2,class:'symbol-fill'}));g.appendChild(el('text',{x:cx,y:cy+3,'text-anchor':'middle',class:'plate-text'},p.label||'함 명칭'))}
+ else if(t.startsWith('inner-')){const c=t==='inner-pvc'?'inner-plate pvc':t==='inner-steel'?'inner-plate steel':'inner-plate bakelite';g.appendChild(el('rect',{x,y,width:w,height:h,rx:2,class:c}));g.appendChild(el('text',{x:cx,y:cy,'text-anchor':'middle',class:'smalltext'},t==='inner-pvc'?'PVC속판':t==='inner-steel'?'철속판':'빼끄판'))}
+ else if(t==='ground-busbar'){const pts=[[x,y+h*.75],[x+w*.18,y+h*.75],[x+w*.18,y+h*.28],[x+w,y+h*.28]];g.appendChild(el('polyline',{points:pts.map(v=>v.join(',')).join(' '),stroke:'#9b6a19','stroke-width':Math.max(4,h*.22),fill:'none','stroke-linejoin':'round'}));for(let i=1;i<=4;i++)g.appendChild(el('circle',{cx:x+w*(.2+i*.16),cy:y+h*.28,r:Math.max(2,h*.08),fill:'#fff',stroke:'#5b410d'}))}
+ else if(t==='cut-rect'){g.appendChild(el('rect',{x,y,width:w,height:h,class:'cut-fill'}));line(g,x,y,x+w,y+h,'cut');line(g,x+w,y,x,y+h,'cut')}
+ else if(t==='cut-circle'){g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)/2,class:'cut-fill'}));line(g,cx-w*.35,cy-h*.35,cx+w*.35,cy+h*.35,'cut');line(g,cx+w*.35,cy-h*.35,cx-w*.35,cy+h*.35,'cut')}
+ else if(t==='cable-left'||t==='cable-right'){const ch=t==='cable-left'?'‹':'›';g.appendChild(el('text',{x:cx,y:cy+h*.28,'text-anchor':'middle','font-size':Math.max(18,h),fill:'#243746','font-weight':'700'},ch))}
+}
+
+function beginDrag(svg,e,i,map){if(e.pointerType==='touch'){selected=i;updateFields();return;}e.preventDefault();e.stopPropagation();selected=i;updateFields();const q=pt(svg,e),p=parts[i],sp=map.toScreen(p.x,p.y);drag={i,svgId:svg.id,map,dx:q.x-sp.x,dy:q.y-sp.y};setStatus(surfaceName(p.surface)+' 객체를 이동 중입니다.');}
+function renderMapped(svg,surf,map,interactive=true){parts.forEach((p,i)=>{if(p.surface!==surf)return;const a=map.toScreen(p.x,p.y),b=map.toScreen(p.x+p.w,p.y+p.h);const gw=Math.max(4,Math.abs(b.x-a.x)),gh=Math.max(4,Math.abs(b.y-a.y));const gx=Math.min(a.x,b.x),gy=Math.min(a.y,b.y);const g=el('g',{class:'part'+(i===selected?' selected':''),'data-index':i,transform:`rotate(${p.rot||0} ${gx+gw/2} ${gy+gh/2})`});symbol(g,p,gx,gy,gw,gh);g.appendChild(el('rect',{x:gx-3,y:gy-3,width:gw+6,height:gh+6,class:'select-box'}));g.appendChild(el('rect',{x:gx-7,y:gy-7,width:gw+14,height:gh+14,class:'part-hit'}));svg.appendChild(g);if(interactive)g.addEventListener('pointerdown',e=>beginDrag(svg,e,i,map));})}
+function linearMap(x,y,rw,rh,PW,PH){return{toScreen:(u,v)=>({x:x+u*rw/PW,y:y+v*rh/PH}),toPlane:(sx,sy)=>({x:(sx-x)*PW/rw,y:(sy-y)*PH/rh}),contains:(sx,sy)=>sx>=x&&sx<=x+rw&&sy>=y&&sy<=y+rh}}
+function affineMap(o,ux,uy,vx,vy,PW,PH){const det=ux*vy-uy*vx;return{toScreen:(u,v)=>({x:o.x+ux*u/PW+vx*v/PH,y:o.y+uy*u/PW+vy*v/PH}),toPlane:(sx,sy)=>{const dx=sx-o.x,dy=sy-o.y;return{x:PW*(dx*vy-dy*vx)/det,y:PH*(ux*dy-uy*dx)/det}},contains:(sx,sy)=>{const q=this?.toPlane?this.toPlane(sx,sy):null;return !!q}}}
+function drawFlat(id,surf,PW,PH,maxW,maxH,x0,y0){const svg=document.getElementById(id);reset(svg);const[rw,rh]=fit(PW,PH,maxW,maxH),x=x0+(maxW-rw)/2,y=y0+(maxH-rh)/2;rect(svg,x,y,rw,rh);const map=linearMap(x,y,rw,rh,PW,PH);svg.appendChild(el('rect',{x,y,width:rw,height:rh,class:'front-hit'}));renderMapped(svg,surf,map,true);line(svg,x,y+rh+18,x+rw,y+rh+18,'dline');text(svg,x+rw/2,y+rh+42,PW+' mm');line(svg,x-20,y,x-20,y+rh,'dline');text(svg,x-35,y+rh/2,PH+' mm','end');svg.onclick=e=>{if(!addMode||e.target.closest('.part'))return;const q=pt(svg,e);if(!map.contains(q.x,q.y))return;const p=map.toPlane(q.x,q.y);surface.value=surf;addAt(surf,p.x,p.y)}}
+function drawIso(W,H,D){const s=document.getElementById('iso');reset(s);const sc=Math.min(300/W,250/H,115/D),rw=W*sc,rh=H*sc,off=Math.max(40,D*sc*.78),x=95,y=60;const A=[x,y+off],B=[x+rw,y+off],C=[x+rw,y+rh+off],D1=[x,y+rh+off],E=[x+off,y],F=[x+rw+off,y],G=[x+rw+off,y+rh];poly(s,[A,B,F,E],'topface');poly(s,[B,C,G,F],'shade');poly(s,[A,B,C,D1],'obj');const maps={front:affineMap({x:A[0],y:A[1]},rw,0,0,rh,W,H),top:affineMap({x:A[0],y:A[1]},rw,0,off,-off,W,D),side:affineMap({x:B[0],y:B[1]},off,-off,0,rh,D,H)};['front','top','side'].forEach(v=>renderMapped(s,v,maps[v],true));s.onclick=e=>{if(!addMode||e.target.closest('.part'))return;const q=pt(s,e);for(const surf of ['front','side','top']){const p=maps[surf].toPlane(q.x,q.y),{PW,PH}=planeDims(surf);if(p.x>=0&&p.x<=PW&&p.y>=0&&p.y<=PH){surface.value=surf;addAt(surf,p.x,p.y);return}}};text(s,280,425,'기본 사시도: 정면 · 상부 · 측면 객체만 표시')}
+function drawSolid3D(W,H,D){
+ const s=document.getElementById('solid3d');reset(s);
+ const sc=Math.min(470/W,310/H,125/D),rw=W*sc,rh=H*sc,off=Math.max(42,D*sc*.8),x=260,y=55;
+ const A=[x,y+off],B=[x+rw,y+off],C=[x+rw,y+rh+off],D1=[x,y+rh+off],E=[x+off,y],F=[x+rw+off,y],G=[x+rw+off,y+rh],H1=[x+off,y+rh];
+ poly(s,[A,B,C,D1],'obj');
+ [[E,F],[F,G],[G,H1],[H1,E]].forEach(v=>line(s,...v[0],...v[1],'hidden'));
+ line(s,...A,...E);line(s,...B,...F);line(s,...C,...G);line(s,...D1,...H1,'hidden');
+ line(s,x,y+rh+off+28,x+rw,y+rh+off+28,'dline');text(s,x+rw/2,y+rh+off+52,'W '+W+' mm');
+ text(s,900,90,'규격');text(s,900,135,W+' × '+H+' × '+D+' mm');
+ text(s,900,205,'실선 입체도');text(s,900,250,'V7 기존 입체 도면 유지');
+ text(s,900,320,'모든 객체 위치 자동 반영');
+ const maps={
+  front:affineMap({x:A[0],y:A[1]},rw,0,0,rh,W,H),
+  top:affineMap({x:A[0],y:A[1]},rw,0,off,-off,W,D),
+  side:affineMap({x:B[0],y:B[1]},off,-off,0,rh,D,H),
+  back:affineMap({x:E[0],y:E[1]},rw,0,0,rh,W,H),
+  inside:affineMap({x:E[0],y:E[1]},rw,0,0,rh,W,H)
+ };
+ ['back','inside','top','side','front'].forEach(v=>renderMapped(s,v,maps[v],true));
+ const regions=['front','side','top','back','inside'];
+ s.onclick=e=>{if(!addMode||e.target.closest('.part'))return;const q=pt(s,e);for(const surf of regions){const p=maps[surf].toPlane(q.x,q.y),{PW,PH}=planeDims(surf);if(p.x>=0&&p.x<=PW&&p.y>=0&&p.y<=PH){surface.value=surf;addAt(surf,p.x,p.y);return}}};
+}
+function drawWire(W,H,D){const s=document.getElementById('wire');reset(s);const panels=[{surf:'front',name:'함 전면',x:35,y:65},{surf:'back',name:'함 뒷면',x:390,y:65},{surf:'inside',name:'함 내부',x:745,y:65},{surf:'top',name:'함 상부',x:35,y:390},{surf:'leftSide',name:'함 좌측면',x:390,y:390},{surf:'rightSide',name:'함 우측면',x:745,y:390}];const maps=[];panels.forEach(p=>{const {PW,PH}=planeDims(p.surf),[rw,rh]=fit(PW,PH,300,245),x=p.x+(300-rw)/2,y=p.y+(245-rh)/2; text(s,p.x+150,p.y-18,p.name);rect(s,x,y,rw,rh);const map=linearMap(x,y,rw,rh,PW,PH);maps.push([p.surf,map]);renderMapped(s,p.surf,map,true)});s.onclick=e=>{if(!addMode||e.target.closest('.part'))return;const q=pt(s,e);for(const [surf,map] of maps){const p=map.toPlane(q.x,q.y),{PW,PH}=planeDims(surf);if(p.x>=0&&p.x<=PW&&p.y>=0&&p.y<=PH){surface.value=surf;addAt(surf,p.x,p.y);return}}};text(s,560,700,'좌측면과 우측면을 구분하여 모든 면의 객체를 추가 · 이동 · 선택 · 삭제할 수 있습니다.')}
+function drawAll(){const {W,H,D}=dims();parts.forEach(p=>{const {PW,PH}=planeDims(p.surface);p.w=Math.min(p.w,PW);p.h=Math.min(p.h,PH);p.x=clamp(p.x,0,PW-p.w);p.y=clamp(p.y,0,PH-p.h)});titleSize.textContent=`${W} × ${H} × ${D} mm`;drawFlat('front','front',W,H,330,300,125,55);drawFlat('back','back',W,H,330,300,125,55);drawFlat('inside','inside',W,H,330,300,125,55);drawFlat('leftSide','leftSide',D,H,230,300,170,55);drawFlat('rightSide','rightSide',D,H,230,300,170,55);drawFlat('top','top',W,D,350,170,105,120);drawIso(W,H,D);drawSolid3D(W,H,D);drawWire(W,H,D);updateFields()}
+document.addEventListener('pointermove',e=>{if(!drag)return;const svg=document.getElementById(drag.svgId),p=parts[drag.i];if(!svg||!p)return;const q=pt(svg,e),v=drag.map.toPlane(q.x-drag.dx,q.y-drag.dy),{PW,PH}=planeDims(p.surface);p.x=clamp(v.x,0,PW-p.w);p.y=clamp(v.y,0,PH-p.h);updateFields();drawAll()});
+document.addEventListener('pointerup',()=>{if(!drag)return;const p=parts[drag.i];drag=null;setStatus((p?surfaceName(p.surface):'객체')+' 위치를 모든 도면에 반영했습니다.')});
+partX.addEventListener('change',applySettings);partY.addEventListener('change',applySettings);surface.addEventListener('change',()=>setStatus(surfaceName(surface.value)+'이 선택되었습니다.'));drawAll();
+</script></body></html>
