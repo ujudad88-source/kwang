@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gwangtelecom-product-v88';
+const CACHE_NAME = "gwang-v93";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const APP_ASSETS = [
   './icons/apple-touch-icon.png',
   './assets/cabinet_rack.png',
   './assets/open_rack.png',
+  './assets/server_rack.png',
   './assets/gwangtelecom_logo.png'
 ];
 
