@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>광전기통신 제품 정보 V84</title>
+  <title>광전기통신 제품 정보 V85</title>
   <style>
     :root {
       --bg: #f3f6fb;
@@ -1646,7 +1646,83 @@
       }
     }
 
-  </style>
+  
+
+    /* V85: 적층 함체 + 단독/적층 3D 미리보기 */
+    .drawing-v85-main {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr) 220px 300px;
+      gap: 14px;
+      padding: 0 18px 18px;
+      align-items: start;
+    }
+    .drawing-v85-card { border:1px solid var(--border); border-radius:16px; background:#fff; overflow:hidden; min-width:0; }
+    .drawing-v85-card-head { padding:14px 15px; border-bottom:1px solid var(--border); font-weight:800; background:#fbfcfe; }
+    .drawing-tool-row { display:grid; grid-template-columns:42px minmax(0,1fr); gap:9px; align-items:center; padding:8px 10px; border-bottom:1px solid #edf1f6; }
+    .drawing-tool-row:last-child { border-bottom:0; }
+    .drawing-tool-pick { display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:19px; }
+    .drawing-tool-row.active { background:#eef4ff; }
+    .drawing-tool-row.active .drawing-tool-pick { border-color:var(--primary); color:var(--primary); }
+    .drawing-tool-meta { min-width:0; }
+    .drawing-tool-name { display:block; margin-bottom:5px; font-size:13px; font-weight:800; }
+    .drawing-tool-option { width:100%; min-height:35px; padding:0 30px 0 9px; border-radius:9px; font-size:13px; }
+    .drawing-view-tabs { display:flex; overflow-x:auto; border-bottom:1px solid var(--border); scrollbar-width:none; }
+    .drawing-view-tabs::-webkit-scrollbar { display:none; }
+    .drawing-view-tab { flex:0 0 auto; min-width:72px; min-height:45px; padding:0 13px; border:0; border-right:1px solid var(--border); border-radius:0; background:#fff; color:#475467; font-weight:800; }
+    .drawing-view-tab.active { background:#1261cf; color:#fff; }
+    .drawing-v85-canvas-wrap { padding:12px; }
+    .drawing-v85-canvas { display:block; width:100%; min-height:520px; height:auto; border:1px solid #dfe6ef; border-radius:12px; background:#fff; touch-action:pan-y pinch-zoom; }
+    .drawing-3d-mode-tabs { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--border); }
+    .drawing-3d-mode { min-height:43px; border:0; border-radius:0; background:#fff; font-weight:800; }
+    .drawing-3d-mode.active { background:#1261cf; color:#fff; }
+    .drawing-3d-wrap { padding:12px; }
+    .drawing-3d-svg { display:block; width:100%; min-height:490px; height:auto; background:linear-gradient(#fff,#fbfcfe); border-radius:10px; }
+    .drawing-3d-note { margin:8px 0 0; color:var(--muted); font-size:12px; line-height:1.55; }
+    .stack-section { display:grid; grid-template-columns:330px minmax(0,1fr) 360px; gap:14px; padding:0 18px 18px; }
+    .stack-toolbar { display:flex; gap:7px; padding:10px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .stack-small-btn { min-height:36px; padding:0 11px; border:1px solid var(--border); border-radius:9px; background:#fff; font-weight:700; }
+    .stack-list { padding:8px; display:grid; gap:7px; }
+    .stack-item { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; padding:11px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; text-align:left; }
+    .stack-item.active { border-color:var(--primary); background:#eaf1ff; }
+    .stack-item-title { font-weight:800; font-size:13px; }
+    .stack-item-size { margin-top:4px; color:#475467; font-size:13px; }
+    .stack-order { display:grid; gap:4px; }
+    .stack-order button { width:30px; height:28px; padding:0; border:1px solid var(--border); border-radius:7px; background:#fff; }
+    .stack-summary { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--border); }
+    .stack-summary > div { padding:12px 8px; text-align:center; border-right:1px solid var(--border); }
+    .stack-summary > div:last-child { border-right:0; }
+    .stack-summary span { display:block; color:var(--muted); font-size:11px; }
+    .stack-summary strong { display:block; margin-top:4px; font-size:14px; }
+    .stack-preview-grid { display:grid; grid-template-columns:minmax(0,1fr) 190px; min-height:330px; }
+    .stack-preview-svg { width:100%; height:330px; border-right:1px solid var(--border); background:#fff; }
+    .stack-info { padding:16px; }
+    .stack-info h5 { margin:0 0 12px; font-size:15px; }
+    .stack-info-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef2f6; font-size:13px; }
+    .stack-info-row strong { color:#1261cf; }
+    .cabinet-property-grid { display:grid; grid-template-columns:100px 1fr; gap:9px 10px; padding:14px; align-items:center; }
+    .cabinet-property-grid label { font-size:12px; font-weight:800; color:#475467; }
+    .cabinet-property-grid input, .cabinet-property-grid select { min-height:38px; padding:0 10px; border:1px solid var(--border); border-radius:9px; width:100%; }
+    .drawing-object-red { stroke:#e11d48; fill:none; }
+    @media(max-width:1280px){
+      .drawing-v85-main { grid-template-columns:200px minmax(0,1fr) 220px; }
+      .drawing-v85-main .drawing-3d-panel { grid-column:1/-1; }
+      .drawing-3d-svg { min-height:420px; }
+      .stack-section { grid-template-columns:300px minmax(0,1fr); }
+      .stack-section .stack-properties { grid-column:1/-1; }
+    }
+    @media(max-width:820px){
+      .drawing-v85-main { grid-template-columns:1fr; padding:0 10px 10px; }
+      .drawing-v85-main .drawing-3d-panel { grid-column:auto; }
+      .drawing-tool-rows { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .drawing-tool-row { border-right:1px solid #edf1f6; }
+      .drawing-v85-canvas { min-height:390px; }
+      .drawing-3d-svg { min-height:360px; }
+      .stack-section { grid-template-columns:1fr; padding:0 10px 10px; }
+      .stack-section .stack-properties { grid-column:auto; }
+      .stack-preview-grid { grid-template-columns:1fr; }
+      .stack-preview-svg { border-right:0; border-bottom:1px solid var(--border); }
+    }
+</style>
 
   <!-- PWA / 모바일 웹앱 설정 -->
   <meta name="theme-color" content="#0f4c81">
@@ -1847,22 +1923,16 @@
 
     <section id="drawingPanel" class="panel">
       <header class="section-head">
-        <span class="eyebrow">도면 자동 생성</span>
-        <h2>2D 도면 편집 레이아웃</h2>
-        <p>
-          PC와 모바일에서 같은 구조로 사용할 수 있는 2D 도면 편집 화면입니다. 한 화면에 하나의 면만 표시하고,
-          객체 선택·배치·수정이 가능하도록 재구성했습니다.
-        </p>
+        <span class="eyebrow">함체 설계</span>
+        <h2>2D · 3D 함체 설계기</h2>
+        <p>단독 함체와 여러 함체를 위아래로 연결한 적층 함체를 설계하고 각 면에 객체를 배치합니다.</p>
       </header>
 
-      <section class="drawing-shell card" aria-label="2D 도면 편집기">
+      <section class="drawing-shell card" aria-label="함체 설계기">
         <div class="drawing-toolbar">
           <div class="drawing-toolbar-title">
             <div class="drawing-toolbar-badge" aria-hidden="true">▣</div>
-            <div>
-              <h3>광전기통신 제품정보 · 2D 도면 편집 추천 레이아웃</h3>
-              <p>스크롤 1개만 사용하고 선택한 면만 표시하는 단일 편집 구조입니다.</p>
-            </div>
+            <div><h3>광전기통신 제품정보 · 함체 설계기</h3><p>기존 객체 체계를 유지하면서 단독/적층 3D 미리보기를 지원합니다.</p></div>
           </div>
           <div class="drawing-toolbar-actions">
             <button id="drawingSaveBtn" class="drawing-action-btn" type="button">저장</button>
@@ -1872,127 +1942,70 @@
         </div>
 
         <div class="drawing-controls">
-          <div class="drawing-field">
-            <label for="drawingWidthInput">가로</label>
-            <div class="drawing-input-unit">
-              <input id="drawingWidthInput" type="number" min="1" value="800" inputmode="numeric" />
-              <span>mm</span>
-            </div>
-          </div>
-          <div class="drawing-field">
-            <label for="drawingHeightInput">세로</label>
-            <div class="drawing-input-unit">
-              <input id="drawingHeightInput" type="number" min="1" value="1000" inputmode="numeric" />
-              <span>mm</span>
-            </div>
-          </div>
-          <div class="drawing-field">
-            <label for="drawingDepthInput">깊이</label>
-            <div class="drawing-input-unit">
-              <input id="drawingDepthInput" type="number" min="1" value="300" inputmode="numeric" />
-              <span>mm</span>
-            </div>
-          </div>
+          <div class="drawing-field"><label for="drawingWidthInput">선택 함체 가로</label><div class="drawing-input-unit"><input id="drawingWidthInput" type="number" min="1" value="600"><span>mm</span></div></div>
+          <div class="drawing-field"><label for="drawingHeightInput">선택 함체 세로</label><div class="drawing-input-unit"><input id="drawingHeightInput" type="number" min="1" value="700"><span>mm</span></div></div>
+          <div class="drawing-field"><label for="drawingDepthInput">선택 함체 깊이</label><div class="drawing-input-unit"><input id="drawingDepthInput" type="number" min="1" value="130"><span>mm</span></div></div>
           <button id="drawingGenerateBtn" class="drawing-primary-btn" type="button">도면 생성</button>
         </div>
 
-        <div class="drawing-layout">
-          <section class="drawing-side-card">
-            <div class="drawing-panel-head">
-              <h4>객체 목록</h4>
-            </div>
-            <div id="drawingToolList" class="drawing-tool-list"></div>
-            <p class="drawing-tool-hint">왼쪽 객체를 선택한 뒤 도면 안의 원하는 위치를 클릭하면 배치됩니다. 배치된 객체는 다시 선택해 이동·수정할 수 있습니다.</p>
+        <div class="drawing-v85-main">
+          <section class="drawing-v85-card">
+            <div class="drawing-v85-card-head">객체 목록</div>
+            <div id="drawingToolList" class="drawing-tool-rows"></div>
+            <p class="drawing-tool-hint">객체를 선택한 뒤 현재 도면을 클릭하여 배치합니다.</p>
           </section>
 
-          <section class="drawing-center-card">
-            <div class="drawing-panel-head">
-              <h4>2D 도면 화면</h4>
-            </div>
-            <div id="drawingTabbar" class="drawing-tabbar"></div>
-            <div class="drawing-canvas-wrap">
-              <svg id="drawingCanvas" class="drawing-canvas" viewBox="0 0 760 760" aria-label="2D 도면 편집 캔버스"></svg>
-            </div>
+          <section class="drawing-v85-card">
+            <div id="drawingTabbar" class="drawing-view-tabs"></div>
+            <div class="drawing-v85-canvas-wrap"><svg id="drawingCanvas" class="drawing-v85-canvas" viewBox="0 0 760 700"></svg></div>
           </section>
 
-          <section class="drawing-side-card">
-            <div class="drawing-panel-head">
-              <h4>선택 객체 설정</h4>
-            </div>
+          <section class="drawing-v85-card">
+            <div class="drawing-v85-card-head">선택 객체 설정</div>
             <div class="drawing-settings-wrap">
               <div class="drawing-settings-grid">
-                <div class="drawing-field">
-                  <label for="drawingSelectedName">객체명</label>
-                  <input id="drawingSelectedName" type="text" readonly value="선택된 객체 없음" />
-                </div>
-                <div class="drawing-dual">
-                  <div class="drawing-field">
-                    <label for="drawingObjectX">X 위치</label>
-                    <div class="drawing-input-unit">
-                      <input id="drawingObjectX" type="number" min="0" step="1" inputmode="numeric" />
-                      <span>mm</span>
-                    </div>
-                  </div>
-                  <div class="drawing-field">
-                    <label for="drawingObjectY">Y 위치</label>
-                    <div class="drawing-input-unit">
-                      <input id="drawingObjectY" type="number" min="0" step="1" inputmode="numeric" />
-                      <span>mm</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="drawing-dual">
-                  <div class="drawing-field">
-                    <label for="drawingObjectW">가로</label>
-                    <div class="drawing-input-unit">
-                      <input id="drawingObjectW" type="number" min="1" step="1" inputmode="numeric" />
-                      <span>mm</span>
-                    </div>
-                  </div>
-                  <div class="drawing-field">
-                    <label for="drawingObjectH">세로</label>
-                    <div class="drawing-input-unit">
-                      <input id="drawingObjectH" type="number" min="1" step="1" inputmode="numeric" />
-                      <span>mm</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="drawing-field">
-                  <label for="drawingObjectRotation">회전</label>
-                  <div class="drawing-input-unit">
-                    <input id="drawingObjectRotation" type="number" min="0" max="359" step="1" inputmode="numeric" />
-                    <span>°</span>
-                  </div>
-                </div>
+                <div class="drawing-field"><label>객체명</label><input id="drawingSelectedName" readonly value="선택된 객체 없음"></div>
+                <div class="drawing-dual"><div class="drawing-field"><label>X 위치</label><div class="drawing-input-unit"><input id="drawingObjectX" type="number"><span>mm</span></div></div><div class="drawing-field"><label>Y 위치</label><div class="drawing-input-unit"><input id="drawingObjectY" type="number"><span>mm</span></div></div></div>
+                <div class="drawing-dual"><div class="drawing-field"><label>가로</label><div class="drawing-input-unit"><input id="drawingObjectW" type="number"><span>mm</span></div></div><div class="drawing-field"><label>세로</label><div class="drawing-input-unit"><input id="drawingObjectH" type="number"><span>mm</span></div></div></div>
+                <div class="drawing-field"><label>회전</label><div class="drawing-input-unit"><input id="drawingObjectRotation" type="number" min="0" max="359"><span>°</span></div></div>
               </div>
-
-              <div class="drawing-settings-actions">
-                <button id="drawingApplyBtn" class="drawing-primary-btn" type="button">적용</button>
-                <button id="drawingDeleteBtn" class="drawing-danger-btn" type="button">삭제</button>
-              </div>
-              <div id="drawingStatus" class="drawing-status">객체를 선택한 뒤 도면의 원하는 위치를 클릭하세요.</div>
+              <div class="drawing-settings-actions"><button id="drawingApplyBtn" class="drawing-primary-btn">적용</button><button id="drawingDeleteBtn" class="drawing-danger-btn">삭제</button></div>
+              <div id="drawingStatus" class="drawing-status">객체를 선택한 뒤 도면을 클릭하세요.</div>
             </div>
+          </section>
+
+          <section class="drawing-v85-card drawing-3d-panel">
+            <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
+            <div class="drawing-3d-wrap"><svg id="drawing3dCanvas" class="drawing-3d-svg" viewBox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
           </section>
         </div>
 
-        <section class="drawing-highlights" aria-label="추천 포인트">
-          <div class="drawing-highlight-item">
-            <div class="drawing-highlight-title">✔ 스크롤 1개만 사용</div>
-            <p class="drawing-highlight-desc">페이지 전체에 스크롤 하나만 유지해 모바일과 PC 모두에서 하단 영역 이탈을 줄였습니다.</p>
-          </div>
-          <div class="drawing-highlight-item">
-            <div class="drawing-highlight-title">✔ 선택한 도면 1개만 표시</div>
-            <p class="drawing-highlight-desc">정면·뒷면·내부·좌측·우측·상부 중 현재 편집 중인 면만 보여 집중도를 높였습니다.</p>
-          </div>
-          <div class="drawing-highlight-item">
-            <div class="drawing-highlight-title">✔ 객체 드래그 + 좌표 입력</div>
-            <p class="drawing-highlight-desc">객체를 직접 끌어 놓을 수 있고, X·Y·가로·세로를 수치로도 입력해 정밀하게 수정할 수 있습니다.</p>
-          </div>
-          <div class="drawing-highlight-item">
-            <div class="drawing-highlight-title">✔ PC/모바일 공통 구조</div>
-            <p class="drawing-highlight-desc">화면 폭에 따라 한 열로 재배치되어 작은 화면에서도 같은 흐름으로 도면을 편집할 수 있습니다.</p>
-          </div>
-        </section>
+        <div class="stack-section">
+          <section class="drawing-v85-card">
+            <div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
+            <div class="stack-toolbar"><button id="stackAddBtn" class="stack-small-btn">＋ 함체 추가</button><button id="stackCloneBtn" class="stack-small-btn">복사</button><button id="stackDeleteBtn" class="stack-small-btn">삭제</button></div>
+            <div id="stackList" class="stack-list"></div>
+            <div class="stack-summary"><div><span>전체 높이</span><strong id="stackTotalHeight">-</strong></div><div><span>전체 깊이</span><strong id="stackTotalDepth">-</strong></div><div><span>함체 수</span><strong id="stackCount">-</strong></div></div>
+          </section>
+
+          <section class="drawing-v85-card">
+            <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-stack-preview="2d">적층 미리보기 (2D)</button><button class="drawing-3d-mode" data-stack-preview="3d">적층 미리보기 (3D)</button></div>
+            <div class="stack-preview-grid"><svg id="stackPreviewCanvas" class="stack-preview-svg" viewBox="0 0 520 430"></svg><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
+          </section>
+
+          <section class="drawing-v85-card stack-properties">
+            <div class="drawing-v85-card-head">함체 속성</div>
+            <div class="cabinet-property-grid">
+              <label for="cabinetNameInput">함체명</label><input id="cabinetNameInput" type="text">
+              <label for="cabinetWidthInput">가로(mm)</label><input id="cabinetWidthInput" type="number" min="1">
+              <label for="cabinetHeightInput">세로(mm)</label><input id="cabinetHeightInput" type="number" min="1">
+              <label for="cabinetDepthInput">깊이(mm)</label><input id="cabinetDepthInput" type="number" min="1">
+              <label for="cabinetMaterialSelect">재질</label><select id="cabinetMaterialSelect"><option>일반 철판</option><option>스테인리스</option></select>
+              <label for="cabinetThicknessSelect">두께(mm)</label><select id="cabinetThicknessSelect"><option>1.2</option><option>1.5</option><option>2.0</option></select>
+            </div>
+            <div style="padding:0 14px 14px"><button id="cabinetApplyBtn" class="drawing-primary-btn" style="width:100%">함체 속성 적용</button></div>
+          </section>
+        </div>
       </section>
     </section>
 
@@ -2124,611 +2137,83 @@
       showPanel("homePanel");
     });
 
-    const drawingTools = {
-      vent: { label: "환기구", icon: "▦", width: 160, height: 100 },
-      hole: { label: "타공", icon: "◯", width: 90, height: 90 },
-      handle: { label: "손잡이", icon: "⌸", width: 36, height: 120 },
-      plate: { label: "명판", icon: "▭", width: 150, height: 45 },
-      cable: { label: "케이블 인입구", icon: "◎", width: 70, height: 70 },
-      bracket: { label: "브라켓", icon: "∟", width: 80, height: 80 }
-    };
-
-    const drawingSurfaces = [
-      { id: "front", label: "정면" },
-      { id: "back", label: "뒷면" },
-      { id: "inside", label: "내부" },
-      { id: "left", label: "좌측" },
-      { id: "right", label: "우측" },
-      { id: "top", label: "상부" }
+    const drawingToolDefs = [
+      {id:"vent",label:"환기구",icon:"▦",options:["일반형","루버형"],w:160,h:90},
+      {id:"anchor",label:"앙카구멍",icon:"•",options:["앙카구멍"],w:18,h:18},
+      {id:"key",label:"키종류",icon:"⌸",options:["탈착키","푸쉬버튼키","푸쉬핸들키"],w:42,h:120},
+      {id:"nameplate",label:"명판",icon:"▭",options:["기본형"],w:150,h:45},
+      {id:"emboss",label:"타공형태",icon:"⊙",options:["엠보타공 원형","엠보타공 사각형"],w:90,h:90},
+      {id:"cut",label:"타공",icon:"⊗",options:["원형타공","사각타공"],w:90,h:90},
+      {id:"plate",label:"속판",icon:"□",options:["PVC속판","철속판","빼끄판"],w:180,h:130},
+      {id:"cableHook",label:"케이블 걸이",icon:"‹›",options:["왼쪽 <","오른쪽 >"],w:55,h:75},
+      {id:"cover",label:"타공 덮개",icon:"▣",options:["기본형"],w:110,h:90},
+      {id:"doubleLock",label:"이중시건",icon:"⊃",options:["기본형"],w:70,h:80}
     ];
-
-    const drawingState = {
-      box: { width: 800, height: 1000, depth: 300 },
-      surface: "front",
-      activeTool: "vent",
-      objects: [],
-      selectedId: null,
-      nextId: 1,
-      dragging: null,
-      layout: null
+    const drawingSurfaces=[
+      {id:"front",label:"정면"},{id:"back",label:"뒷면"},{id:"inside",label:"내부"},{id:"left",label:"좌측면"},{id:"right",label:"우측면"},{id:"top",label:"상부면"},{id:"bottom",label:"하부면"}
+    ];
+    const drawingState={
+      cabinets:[
+        {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
+        {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
+        {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]}
+      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d"
     };
-
-    const drawingWidthInput = document.getElementById("drawingWidthInput");
-    const drawingHeightInput = document.getElementById("drawingHeightInput");
-    const drawingDepthInput = document.getElementById("drawingDepthInput");
-    const drawingGenerateBtn = document.getElementById("drawingGenerateBtn");
-    const drawingSaveBtn = document.getElementById("drawingSaveBtn");
-    const drawingResetBtn = document.getElementById("drawingResetBtn");
-    const drawingExportBtn = document.getElementById("drawingExportBtn");
-    const drawingToolList = document.getElementById("drawingToolList");
-    const drawingTabbar = document.getElementById("drawingTabbar");
-    const drawingCanvas = document.getElementById("drawingCanvas");
-    const drawingSelectedName = document.getElementById("drawingSelectedName");
-    const drawingObjectX = document.getElementById("drawingObjectX");
-    const drawingObjectY = document.getElementById("drawingObjectY");
-    const drawingObjectW = document.getElementById("drawingObjectW");
-    const drawingObjectH = document.getElementById("drawingObjectH");
-    const drawingObjectRotation = document.getElementById("drawingObjectRotation");
-    const drawingApplyBtn = document.getElementById("drawingApplyBtn");
-    const drawingDeleteBtn = document.getElementById("drawingDeleteBtn");
-    const drawingStatus = document.getElementById("drawingStatus");
-
-    function drawingSurfacePlane(surfaceId) {
-      const { width, height, depth } = drawingState.box;
-      if (surfaceId === "left" || surfaceId === "right") {
-        return { width: depth, height };
-      }
-      if (surfaceId === "top") {
-        return { width, height: depth };
-      }
-      return { width, height };
+    drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
+    const $=id=>document.getElementById(id);
+    const drawingWidthInput=$("drawingWidthInput"),drawingHeightInput=$("drawingHeightInput"),drawingDepthInput=$("drawingDepthInput"),drawingGenerateBtn=$("drawingGenerateBtn"),drawingSaveBtn=$("drawingSaveBtn"),drawingResetBtn=$("drawingResetBtn"),drawingExportBtn=$("drawingExportBtn"),drawingToolList=$("drawingToolList"),drawingTabbar=$("drawingTabbar"),drawingCanvas=$("drawingCanvas"),drawing3dCanvas=$("drawing3dCanvas"),drawingSelectedName=$("drawingSelectedName"),drawingObjectX=$("drawingObjectX"),drawingObjectY=$("drawingObjectY"),drawingObjectW=$("drawingObjectW"),drawingObjectH=$("drawingObjectH"),drawingObjectRotation=$("drawingObjectRotation"),drawingApplyBtn=$("drawingApplyBtn"),drawingDeleteBtn=$("drawingDeleteBtn"),drawingStatus=$("drawingStatus"),stackList=$("stackList"),stackPreviewCanvas=$("stackPreviewCanvas");
+    const currentCabinet=()=>drawingState.cabinets.find(c=>c.id===drawingState.selectedCabinetId)||drawingState.cabinets[0];
+    const currentObjects=()=>currentCabinet().objects;
+    const toolById=id=>drawingToolDefs.find(t=>t.id===id);
+    const svgEl=(tag,a={},txt="")=>{const n=document.createElementNS("http://www.w3.org/2000/svg",tag);Object.entries(a).forEach(([k,v])=>n.setAttribute(k,v));if(txt)n.textContent=txt;return n};
+    const clamp=(v,a,b)=>Math.max(a,Math.min(v,b));
+    function plane(surface,c=currentCabinet()){if(surface==="left"||surface==="right")return{width:c.depth,height:c.height};if(surface==="top"||surface==="bottom")return{width:c.width,height:c.depth};return{width:c.width,height:c.height}}
+    function setStatus(t){drawingStatus.textContent=t}
+    function syncInputs(){const c=currentCabinet();drawingWidthInput.value=c.width;drawingHeightInput.value=c.height;drawingDepthInput.value=c.depth;$("cabinetNameInput").value=c.name;$("cabinetWidthInput").value=c.width;$("cabinetHeightInput").value=c.height;$("cabinetDepthInput").value=c.depth;$("cabinetMaterialSelect").value=c.material;$("cabinetThicknessSelect").value=c.thickness}
+    function buildTools(){drawingToolList.innerHTML="";drawingToolDefs.forEach(t=>{const r=document.createElement("div");r.className="drawing-tool-row"+(drawingState.activeTool===t.id?" active":"");const b=document.createElement("button");b.className="drawing-tool-pick";b.type="button";b.textContent=t.icon;b.onclick=()=>{drawingState.activeTool=t.id;buildTools();setStatus(`${t.label} 배치 모드입니다.`)};const m=document.createElement("div");m.className="drawing-tool-meta";m.innerHTML=`<span class="drawing-tool-name">${t.label}</span>`;const sel=document.createElement("select");sel.className="drawing-tool-option";t.options.forEach(o=>sel.add(new Option(o,o)));sel.value=drawingState.toolOptions[t.id];sel.onchange=e=>{drawingState.toolOptions[t.id]=e.target.value;drawingState.activeTool=t.id;buildTools()};m.appendChild(sel);r.append(b,m);drawingToolList.appendChild(r)})}
+    function buildTabs(){drawingTabbar.innerHTML="";drawingSurfaces.forEach(s=>{const b=document.createElement("button");b.className="drawing-view-tab"+(drawingState.surface===s.id?" active":"");b.textContent=s.label;b.onclick=()=>{drawingState.surface=s.id;drawingState.selectedObjectId=null;buildTabs();renderAll()};drawingTabbar.appendChild(b)})}
+    function clampObj(o){const p=plane(o.surface);o.w=clamp(o.w,10,p.width);o.h=clamp(o.h,10,p.height);o.x=clamp(o.x,0,p.width-o.w);o.y=clamp(o.y,0,p.height-o.h)}
+    function screenPoint(e,svg=drawingCanvas){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+    function toPlane(e){const q=screenPoint(e),l=drawingState.layout;return{x:(q.x-l.x)/l.s,y:(q.y-l.y)/l.s}}
+    function selectedObj(){return currentObjects().find(o=>o.id===drawingState.selectedObjectId)||null}
+    function updateObjectPanel(){const o=selectedObj(),dis=!o;[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation,drawingApplyBtn,drawingDeleteBtn].forEach(x=>x.disabled=dis);drawingSelectedName.value=o?`${toolById(o.type).label} · ${o.option}`:"선택된 객체 없음";drawingObjectX.value=o?Math.round(o.x):"";drawingObjectY.value=o?Math.round(o.y):"";drawingObjectW.value=o?Math.round(o.w):"";drawingObjectH.value=o?Math.round(o.h):"";drawingObjectRotation.value=o?Math.round(o.rot||0):""}
+    function drawShape(g,o,x,y,w,h,is3d=false){const black="#1f2937",red="#e11d48",sw=is3d?1.3:2;
+      if(o.type==="vent"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:3,fill:"none",stroke:black,"stroke-width":sw}));const n=o.option==="루버형"?6:4;for(let i=1;i<=n;i++)g.appendChild(svgEl("line",{x1:x+w*.14,y1:y+h*i/(n+1),x2:x+w*.86,y2:y+h*i/(n+1),stroke:black,"stroke-width":sw}))}
+      else if(o.type==="anchor")g.appendChild(svgEl("circle",{cx:x+w/2,cy:y+h/2,r:Math.max(2,Math.min(w,h)*.22),fill:black}));
+      else if(o.type==="key"){g.appendChild(svgEl("rect",{x:x+w*.22,y,width:w*.56,height:h,rx:Math.min(8,w*.2),fill:"none",stroke:black,"stroke-width":sw}));if(o.option==="탈착키"){g.appendChild(svgEl("rect",{x:x+w*.35,y:y+h*.18,width:w*.3,height:h*.34,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.5,y1:y+h*.52,x2:x+w*.5,y2:y+h*.78,stroke:black,"stroke-width":sw}));g.appendChild(svgEl("polyline",{points:`${x+w*.38},${y+h*.69} ${x+w*.5},${y+h*.8} ${x+w*.62},${y+h*.69}`,fill:"none",stroke:black,"stroke-width":sw}))}else if(o.option==="푸쉬버튼키")g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.25,r:Math.min(w,h)*.12,fill:"none",stroke:black,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.36,y:y+h*.15,width:w*.28,height:h*.7,rx:w*.12,fill:"none",stroke:black,"stroke-width":sw}))}
+      else if(o.type==="nameplate")g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));
+      else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
+      else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
+      else if(o.type==="plate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option))}
+      else if(o.type==="cableHook")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(18,h*.75),fill:black},o.option.includes("왼쪽")?"<":">"));
+      else if(o.type==="cover"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));[[.5,.1],[.5,.9],[.1,.5],[.9,.5]].forEach(([a,b])=>g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(1.5,Math.min(w,h)*.035),fill:"none",stroke:black,"stroke-width":sw})))}
+      else if(o.type==="doubleLock")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(20,h*.72),fill:black},"⊃"));
     }
-
-    function drawingClampObject(object) {
-      const plane = drawingSurfacePlane(object.surface);
-      object.width = Math.max(10, Math.min(object.width, plane.width));
-      object.height = Math.max(10, Math.min(object.height, plane.height));
-      object.x = Math.max(0, Math.min(object.x, plane.width - object.width));
-      object.y = Math.max(0, Math.min(object.y, plane.height - object.height));
-      object.rotation = ((object.rotation || 0) % 360 + 360) % 360;
+    function render2d(){const c=currentCabinet(),p=plane(drawingState.surface),vw=760,vh=700,pad={l:105,r:55,t:60,b:90},s=Math.min((vw-pad.l-pad.r)/p.width,(vh-pad.t-pad.b)/p.height),w=p.width*s,h=p.height*s,x=pad.l+(vw-pad.l-pad.r-w)/2,y=pad.t+(vh-pad.t-pad.b-h)/2;drawingState.layout={x,y,s,w,h,p};drawingCanvas.innerHTML="";drawingCanvas.append(svgEl("rect",{x:0,y:0,width:vw,height:vh,fill:"#fff"}),svgEl("text",{x:24,y:30,"font-size":16,"font-weight":800,fill:"#111827"},`${drawingSurfaces.find(v=>v.id===drawingState.surface).label} · ${c.name}`));drawingCanvas.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"#fff",stroke:"#111827","stroke-width":2}));
+      currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
+      drawingCanvas.append(svgEl("line",{x1:x,y1:y+h+30,x2:x+w,y2:y+h+30,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x+w/2,y:y+h+53,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800},`${p.width}`),svgEl("line",{x1:x-30,y1:y,x2:x-30,y2:y+h,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x-42,y:y+h/2,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800,transform:`rotate(-90 ${x-42} ${y+h/2})`},`${p.height}`));
     }
-
-    function drawingSetStatus(message) {
-      drawingStatus.textContent = message;
-    }
-
-    function drawingCreateSvg(tag, attrs = {}, textContent = "") {
-      const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
-      Object.entries(attrs).forEach(([key, value]) => {
-        if (value !== null && value !== undefined) node.setAttribute(key, String(value));
-      });
-      if (textContent) node.textContent = textContent;
-      return node;
-    }
-
-    function drawingGetObjectById(id) {
-      return drawingState.objects.find((item) => item.id === id) || null;
-    }
-
-    function drawingSetSelected(id) {
-      drawingState.selectedId = id;
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-    }
-
-    function drawingUpdateSettings() {
-      const object = drawingGetObjectById(drawingState.selectedId);
-      const disabled = !object;
-      drawingSelectedName.value = object ? `${drawingTools[object.type].label} (${drawingSurfaces.find(s => s.id === object.surface).label})` : "선택된 객체 없음";
-      [drawingObjectX, drawingObjectY, drawingObjectW, drawingObjectH, drawingObjectRotation, drawingApplyBtn, drawingDeleteBtn].forEach((element) => {
-        element.disabled = disabled;
-      });
-      if (!object) {
-        drawingObjectX.value = "";
-        drawingObjectY.value = "";
-        drawingObjectW.value = "";
-        drawingObjectH.value = "";
-        drawingObjectRotation.value = "";
-        return;
-      }
-      drawingObjectX.value = Math.round(object.x);
-      drawingObjectY.value = Math.round(object.y);
-      drawingObjectW.value = Math.round(object.width);
-      drawingObjectH.value = Math.round(object.height);
-      drawingObjectRotation.value = Math.round(object.rotation || 0);
-    }
-
-    function drawingBuildToolButtons() {
-      if (!drawingToolList) return;
-      drawingToolList.innerHTML = "";
-      Object.entries(drawingTools).forEach(([toolKey, tool]) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = `drawing-tool-btn${drawingState.activeTool === toolKey ? " active" : ""}`;
-        button.dataset.tool = toolKey;
-        button.innerHTML = `<span class="drawing-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.label}</span>`;
-        button.addEventListener("click", () => {
-          drawingState.activeTool = toolKey;
-          drawingBuildToolButtons();
-          drawingSetStatus(`${tool.label} 배치 모드입니다. 도면 안의 원하는 위치를 클릭하세요.`);
-        });
-        drawingToolList.appendChild(button);
-      });
-    }
-
-    function drawingBuildTabs() {
-      if (!drawingTabbar) return;
-      drawingTabbar.innerHTML = "";
-      drawingSurfaces.forEach((surface) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = `drawing-tab${drawingState.surface === surface.id ? " active" : ""}`;
-        button.textContent = surface.label;
-        button.addEventListener("click", () => {
-          drawingState.surface = surface.id;
-          drawingSetSelected(null);
-          drawingBuildTabs();
-          drawingRenderCanvas();
-          drawingSetStatus(`${surface.label} 도면을 표시했습니다.`);
-        });
-        drawingTabbar.appendChild(button);
-      });
-    }
-
-    function drawingSyncBoxInputs() {
-      drawingWidthInput.value = drawingState.box.width;
-      drawingHeightInput.value = drawingState.box.height;
-      drawingDepthInput.value = drawingState.box.depth;
-    }
-
-    function drawingApplyDimensions() {
-      const nextWidth = Math.max(50, Number(drawingWidthInput.value) || drawingState.box.width);
-      const nextHeight = Math.max(50, Number(drawingHeightInput.value) || drawingState.box.height);
-      const nextDepth = Math.max(50, Number(drawingDepthInput.value) || drawingState.box.depth);
-      drawingState.box = { width: nextWidth, height: nextHeight, depth: nextDepth };
-      drawingState.objects.forEach(drawingClampObject);
-      drawingSyncBoxInputs();
-      drawingRenderCanvas();
-      drawingUpdateSettings();
-      drawingSetStatus(`함체 규격을 ${nextWidth} × ${nextHeight} × ${nextDepth} mm로 적용했습니다.`);
-    }
-
-    function drawingSvgPoint(event) {
-      const point = drawingCanvas.createSVGPoint();
-      point.x = event.clientX;
-      point.y = event.clientY;
-      return point.matrixTransform(drawingCanvas.getScreenCTM().inverse());
-    }
-
-    function drawingScreenToPlane(event) {
-      const { innerX, innerY, scale, plane } = drawingState.layout;
-      const point = drawingSvgPoint(event);
-      return {
-        x: (point.x - innerX) / scale,
-        y: (point.y - innerY) / scale,
-        point
-      };
-    }
-
-    function drawingInsidePlane(point) {
-      if (!drawingState.layout) return false;
-      const { plane } = drawingState.layout;
-      return point.x >= 0 && point.y >= 0 && point.x <= plane.width && point.y <= plane.height;
-    }
-
-    function drawingAddObject(planeX, planeY) {
-      const tool = drawingTools[drawingState.activeTool];
-      if (!tool) return;
-      const plane = drawingSurfacePlane(drawingState.surface);
-      const object = {
-        id: drawingState.nextId++,
-        type: drawingState.activeTool,
-        surface: drawingState.surface,
-        x: planeX - tool.width / 2,
-        y: planeY - tool.height / 2,
-        width: tool.width,
-        height: tool.height,
-        rotation: 0
-      };
-      drawingClampObject(object);
-      drawingState.objects.push(object);
-      drawingSetSelected(object.id);
-      drawingSetStatus(`${tool.label} 객체를 ${drawingSurfaces.find(s => s.id === drawingState.surface).label} 도면에 배치했습니다.`);
-    }
-
-    function drawingHandleCanvasPointerDown(event) {
-      const targetObject = event.target.closest("[data-object-id]");
-      const planePoint = drawingScreenToPlane(event);
-      if (targetObject) {
-        const object = drawingGetObjectById(Number(targetObject.dataset.objectId));
-        if (!object) return;
-        drawingState.surface = object.surface;
-        drawingBuildTabs();
-        drawingState.dragging = {
-          id: object.id,
-          offsetX: planePoint.x - object.x,
-          offsetY: planePoint.y - object.y
-        };
-        drawingSetSelected(object.id);
-        event.preventDefault();
-        drawingSetStatus(`${drawingTools[object.type].label} 객체를 이동 중입니다.`);
-        return;
-      }
-      if (drawingInsidePlane(planePoint)) {
-        drawingAddObject(planePoint.x, planePoint.y);
-      } else {
-        drawingSetSelected(null);
-      }
-    }
-
-    function drawingHandlePointerMove(event) {
-      if (!drawingState.dragging) return;
-      const object = drawingGetObjectById(drawingState.dragging.id);
-      if (!object) return;
-      const planePoint = drawingScreenToPlane(event);
-      object.x = planePoint.x - drawingState.dragging.offsetX;
-      object.y = planePoint.y - drawingState.dragging.offsetY;
-      drawingClampObject(object);
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-      event.preventDefault();
-    }
-
-    function drawingHandlePointerUp() {
-      if (!drawingState.dragging) return;
-      const object = drawingGetObjectById(drawingState.dragging.id);
-      drawingState.dragging = null;
-      if (object) drawingSetStatus(`${drawingTools[object.type].label} 위치를 적용했습니다.`);
-    }
-
-    function drawingDrawGrid(layer, layout) {
-      const spacing = layout.plane.width > 1200 || layout.plane.height > 1200 ? 200 : 100;
-      for (let x = 0; x <= layout.plane.width; x += spacing) {
-        const sx = layout.innerX + x * layout.scale;
-        layer.appendChild(drawingCreateSvg("line", { x1: sx, y1: layout.innerY, x2: sx, y2: layout.innerY + layout.drawHeight, stroke: "#eef2f7", "stroke-width": 1 }));
-      }
-      for (let y = 0; y <= layout.plane.height; y += spacing) {
-        const sy = layout.innerY + y * layout.scale;
-        layer.appendChild(drawingCreateSvg("line", { x1: layout.innerX, y1: sy, x2: layout.innerX + layout.drawWidth, y2: sy, stroke: "#eef2f7", "stroke-width": 1 }));
-      }
-    }
-
-    function drawingDrawDimension(layer, layout) {
-      const bottomY = layout.innerY + layout.drawHeight + 36;
-      const leftX = layout.innerX - 34;
-      layer.appendChild(drawingCreateSvg("line", { x1: layout.innerX, y1: bottomY, x2: layout.innerX + layout.drawWidth, y2: bottomY, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("line", { x1: layout.innerX, y1: bottomY - 9, x2: layout.innerX, y2: bottomY + 9, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("line", { x1: layout.innerX + layout.drawWidth, y1: bottomY - 9, x2: layout.innerX + layout.drawWidth, y2: bottomY + 9, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("text", { x: layout.innerX + layout.drawWidth / 2, y: bottomY + 26, fill: "#2563eb", "font-size": 16, "font-weight": 800, "text-anchor": "middle" }, `${Math.round(layout.plane.width)}`));
-
-      layer.appendChild(drawingCreateSvg("line", { x1: leftX, y1: layout.innerY, x2: leftX, y2: layout.innerY + layout.drawHeight, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("line", { x1: leftX - 9, y1: layout.innerY, x2: leftX + 9, y2: layout.innerY, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("line", { x1: leftX - 9, y1: layout.innerY + layout.drawHeight, x2: leftX + 9, y2: layout.innerY + layout.drawHeight, stroke: "#2563eb", "stroke-width": 2 }));
-      layer.appendChild(drawingCreateSvg("text", { x: leftX - 12, y: layout.innerY + layout.drawHeight / 2, fill: "#2563eb", "font-size": 16, "font-weight": 800, "text-anchor": "middle", transform: `rotate(-90 ${leftX - 12} ${layout.innerY + layout.drawHeight / 2})` }, `${Math.round(layout.plane.height)}`));
-    }
-
-    function drawingDrawFrame(layer, layout) {
-      const surface = drawingState.surface;
-      const outer = drawingCreateSvg("rect", {
-        x: layout.innerX,
-        y: layout.innerY,
-        width: layout.drawWidth,
-        height: layout.drawHeight,
-        rx: 6,
-        fill: "#fff",
-        stroke: "#1f2937",
-        "stroke-width": 2.2
-      });
-      layer.appendChild(outer);
-
-      if (surface === "front") {
-        const tabW = 18, tabH = 22;
-        [0.12, 0.82].forEach((ratio) => {
-          const tx = layout.innerX + layout.drawWidth * ratio;
-          layer.appendChild(drawingCreateSvg("rect", { x: tx, y: layout.innerY - tabH + 4, width: tabW, height: tabH, rx: 3, fill: "#fff", stroke: "#1f2937", "stroke-width": 2 }));
-          layer.appendChild(drawingCreateSvg("circle", { cx: tx + tabW / 2, cy: layout.innerY - 4, r: 3.2, fill: "none", stroke: "#1f2937", "stroke-width": 1.8 }));
-        });
-        const handleX = layout.innerX + layout.drawWidth * 0.08;
-        const handleY = layout.innerY + layout.drawHeight * 0.47;
-        const handleH = Math.max(50, layout.drawHeight * 0.18);
-        layer.appendChild(drawingCreateSvg("rect", { x: handleX, y: handleY, width: 18, height: handleH, rx: 7, fill: "#fff", stroke: "#1f2937", "stroke-width": 2 }));
-        layer.appendChild(drawingCreateSvg("line", { x1: handleX + 9, y1: handleY + 8, x2: handleX + 9, y2: handleY + handleH - 8, stroke: "#1f2937", "stroke-width": 1.6 }));
-        [0.18, 0.8].forEach((ratio) => {
-          const cx = layout.innerX + layout.drawWidth * ratio;
-          const baseY = layout.innerY + layout.drawHeight + 6;
-          layer.appendChild(drawingCreateSvg("rect", { x: cx, y: baseY, width: 18, height: 14, rx: 3, fill: "#fff", stroke: "#1f2937", "stroke-width": 2 }));
-          layer.appendChild(drawingCreateSvg("line", { x1: cx + 4, y1: baseY + 14, x2: cx + 4, y2: baseY + 26, stroke: "#1f2937", "stroke-width": 2 }));
-          layer.appendChild(drawingCreateSvg("line", { x1: cx + 14, y1: baseY + 14, x2: cx + 14, y2: baseY + 26, stroke: "#1f2937", "stroke-width": 2 }));
-        });
-        [0.14, 0.77].forEach((ratio) => {
-          const hx = layout.innerX + layout.drawWidth;
-          const hy = layout.innerY + layout.drawHeight * ratio;
-          layer.appendChild(drawingCreateSvg("rect", { x: hx - 8, y: hy, width: 20, height: 34, rx: 2, fill: "#f8fafc", stroke: "#1f2937", "stroke-width": 1.7 }));
-          layer.appendChild(drawingCreateSvg("circle", { cx: hx - 2, cy: hy + 9, r: 1.6, fill: "#1f2937" }));
-          layer.appendChild(drawingCreateSvg("circle", { cx: hx + 6, cy: hy + 9, r: 1.6, fill: "#1f2937" }));
-          layer.appendChild(drawingCreateSvg("circle", { cx: hx - 2, cy: hy + 24, r: 1.6, fill: "#1f2937" }));
-          layer.appendChild(drawingCreateSvg("circle", { cx: hx + 6, cy: hy + 24, r: 1.6, fill: "#1f2937" }));
-        });
-      }
-
-      if (surface === "inside") {
-        layer.appendChild(drawingCreateSvg("rect", {
-          x: layout.innerX + layout.drawWidth * 0.08,
-          y: layout.innerY + layout.drawHeight * 0.08,
-          width: layout.drawWidth * 0.84,
-          height: layout.drawHeight * 0.84,
-          rx: 4,
-          fill: "none",
-          stroke: "#b8c4d5",
-          "stroke-width": 2,
-          "stroke-dasharray": "8 6"
-        }));
-      }
-    }
-
-    function drawingShape(group, object, screenX, screenY, screenW, screenH) {
-      const stroke = "#1f2937";
-      const fill = object.type === "plate" ? "#ffffff" : "#f8fafc";
-      if (object.type === "vent") {
-        group.appendChild(drawingCreateSvg("rect", { x: screenX, y: screenY, width: screenW, height: screenH, rx: 6, fill, stroke, "stroke-width": 2 }));
-        const slats = 5;
-        for (let index = 1; index <= slats; index += 1) {
-          const y = screenY + (screenH / (slats + 1)) * index;
-          group.appendChild(drawingCreateSvg("line", { x1: screenX + screenW * 0.18, y1: y, x2: screenX + screenW * 0.82, y2: y, stroke, "stroke-width": 2 }));
-        }
-      } else if (object.type === "hole") {
-        group.appendChild(drawingCreateSvg("circle", { cx: screenX + screenW / 2, cy: screenY + screenH / 2, r: Math.min(screenW, screenH) / 2, fill: "none", stroke, "stroke-width": 2.2 }));
-      } else if (object.type === "handle") {
-        group.appendChild(drawingCreateSvg("rect", { x: screenX + screenW * 0.2, y: screenY, width: screenW * 0.6, height: screenH, rx: 10, fill: "none", stroke, "stroke-width": 2.2 }));
-        group.appendChild(drawingCreateSvg("line", { x1: screenX + screenW / 2, y1: screenY + screenH * 0.16, x2: screenX + screenW / 2, y2: screenY + screenH * 0.84, stroke, "stroke-width": 1.6 }));
-      } else if (object.type === "plate") {
-        group.appendChild(drawingCreateSvg("rect", { x: screenX, y: screenY, width: screenW, height: screenH, rx: 3, fill, stroke, "stroke-width": 1.8 }));
-        [0.14, 0.86].forEach((rx) => {
-          [0.22, 0.78].forEach((ry) => {
-            group.appendChild(drawingCreateSvg("circle", { cx: screenX + screenW * rx, cy: screenY + screenH * ry, r: 2, fill: "#ffffff", stroke, "stroke-width": 1.4 }));
-          });
-        });
-      } else if (object.type === "cable") {
-        [0.5, 0.3].forEach((ratio) => {
-          group.appendChild(drawingCreateSvg("circle", { cx: screenX + screenW / 2, cy: screenY + screenH / 2, r: Math.min(screenW, screenH) * ratio, fill: "none", stroke, "stroke-width": 2 }));
-        });
-      } else if (object.type === "bracket") {
-        const path = [
-          `M ${screenX + screenW * 0.18} ${screenY}`,
-          `L ${screenX + screenW * 0.18} ${screenY + screenH * 0.82}`,
-          `L ${screenX + screenW} ${screenY + screenH * 0.82}`
-        ].join(" ");
-        group.appendChild(drawingCreateSvg("path", { d: path, fill: "none", stroke, "stroke-width": 5, "stroke-linecap": "round", "stroke-linejoin": "round" }));
-        group.appendChild(drawingCreateSvg("circle", { cx: screenX + screenW * 0.18, cy: screenY + screenH * 0.18, r: 3, fill: "#fff", stroke, "stroke-width": 1.5 }));
-        group.appendChild(drawingCreateSvg("circle", { cx: screenX + screenW * 0.82, cy: screenY + screenH * 0.82, r: 3, fill: "#fff", stroke, "stroke-width": 1.5 }));
-      }
-    }
-
-    function drawingRenderObjects(layer, layout) {
-      const visibleObjects = drawingState.objects.filter((object) => object.surface === drawingState.surface);
-      visibleObjects.forEach((object) => {
-        const screenX = layout.innerX + object.x * layout.scale;
-        const screenY = layout.innerY + object.y * layout.scale;
-        const screenW = object.width * layout.scale;
-        const screenH = object.height * layout.scale;
-        const centerX = screenX + screenW / 2;
-        const centerY = screenY + screenH / 2;
-        const group = drawingCreateSvg("g", {
-          class: `drawing-object${drawingState.dragging && drawingState.dragging.id === object.id ? " dragging" : ""}`,
-          "data-object-id": object.id,
-          transform: `rotate(${object.rotation || 0} ${centerX} ${centerY})`
-        });
-        drawingShape(group, object, screenX, screenY, screenW, screenH);
-        if (drawingState.selectedId === object.id) {
-          group.appendChild(drawingCreateSvg("rect", {
-            x: screenX - 4,
-            y: screenY - 4,
-            width: screenW + 8,
-            height: screenH + 8,
-            rx: 4,
-            fill: "none",
-            stroke: "#2563eb",
-            "stroke-width": 2,
-            "stroke-dasharray": "6 5",
-            "pointer-events": "none"
-          }));
-          [[screenX, screenY], [screenX + screenW, screenY], [screenX, screenY + screenH], [screenX + screenW, screenY + screenH]].forEach(([cx, cy]) => {
-            group.appendChild(drawingCreateSvg("rect", { x: cx - 4, y: cy - 4, width: 8, height: 8, fill: "#2563eb", stroke: "#ffffff", "stroke-width": 1, "pointer-events": "none" }));
-          });
-        }
-        const hit = drawingCreateSvg("rect", {
-          x: screenX - 8,
-          y: screenY - 8,
-          width: screenW + 16,
-          height: screenH + 16,
-          fill: "transparent",
-          stroke: "transparent",
-          "data-object-id": object.id
-        });
-        group.appendChild(hit);
-        layer.appendChild(group);
-      });
-    }
-
-    function drawingRenderCanvas() {
-      if (!drawingCanvas) return;
-      const plane = drawingSurfacePlane(drawingState.surface);
-      const viewWidth = 760;
-      const viewHeight = 760;
-      const padding = { top: 70, right: 60, bottom: 100, left: 110 };
-      const availableWidth = viewWidth - padding.left - padding.right;
-      const availableHeight = viewHeight - padding.top - padding.bottom;
-      const scale = Math.min(availableWidth / plane.width, availableHeight / plane.height);
-      const drawWidth = plane.width * scale;
-      const drawHeight = plane.height * scale;
-      const innerX = padding.left + (availableWidth - drawWidth) / 2;
-      const innerY = padding.top + (availableHeight - drawHeight) / 2;
-      drawingState.layout = { plane, scale, drawWidth, drawHeight, innerX, innerY };
-
-      drawingCanvas.innerHTML = "";
-      drawingCanvas.setAttribute("viewBox", `0 0 ${viewWidth} ${viewHeight}`);
-
-      const background = drawingCreateSvg("rect", { x: 0, y: 0, width: viewWidth, height: viewHeight, fill: "#ffffff" });
-      drawingCanvas.appendChild(background);
-
-      const title = drawingCreateSvg("text", { x: 28, y: 34, fill: "#111827", "font-size": 16, "font-weight": 800 }, `${drawingSurfaces.find(surface => surface.id === drawingState.surface).label} 도면`);
-      const subTitle = drawingCreateSvg("text", { x: 28, y: 58, fill: "#6b7280", "font-size": 13, "font-weight": 600 }, `${drawingState.box.width} × ${drawingState.box.height} × ${drawingState.box.depth} mm`);
-      drawingCanvas.appendChild(title);
-      drawingCanvas.appendChild(subTitle);
-
-      const gridLayer = drawingCreateSvg("g");
-      drawingDrawGrid(gridLayer, drawingState.layout);
-      drawingCanvas.appendChild(gridLayer);
-
-      const frameLayer = drawingCreateSvg("g");
-      drawingDrawFrame(frameLayer, drawingState.layout);
-      drawingCanvas.appendChild(frameLayer);
-
-      const objectLayer = drawingCreateSvg("g");
-      drawingRenderObjects(objectLayer, drawingState.layout);
-      drawingCanvas.appendChild(objectLayer);
-
-      const dimensionLayer = drawingCreateSvg("g");
-      drawingDrawDimension(dimensionLayer, drawingState.layout);
-      drawingCanvas.appendChild(dimensionLayer);
-    }
-
-    function drawingApplySelectedChanges() {
-      const object = drawingGetObjectById(drawingState.selectedId);
-      if (!object) return;
-      object.x = Number(drawingObjectX.value) || 0;
-      object.y = Number(drawingObjectY.value) || 0;
-      object.width = Number(drawingObjectW.value) || object.width;
-      object.height = Number(drawingObjectH.value) || object.height;
-      object.rotation = Number(drawingObjectRotation.value) || 0;
-      drawingClampObject(object);
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-      drawingSetStatus(`${drawingTools[object.type].label} 객체 설정을 적용했습니다.`);
-    }
-
-    function drawingDeleteSelected() {
-      const object = drawingGetObjectById(drawingState.selectedId);
-      if (!object) return;
-      drawingState.objects = drawingState.objects.filter((item) => item.id !== object.id);
-      drawingState.selectedId = null;
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-      drawingSetStatus(`${drawingTools[object.type].label} 객체를 삭제했습니다.`);
-    }
-
-    function drawingSaveToLocal() {
-      const payload = {
-        box: drawingState.box,
-        surface: drawingState.surface,
-        activeTool: drawingState.activeTool,
-        objects: drawingState.objects,
-        nextId: drawingState.nextId
-      };
-      localStorage.setItem("gwangtelecom_drawing_v84", JSON.stringify(payload));
-      drawingSetStatus("현재 도면 상태를 이 브라우저에 저장했습니다.");
-    }
-
-    function drawingRestoreLocal() {
-      try {
-        const raw = localStorage.getItem("gwangtelecom_drawing_v84");
-        if (!raw) return false;
-        const saved = JSON.parse(raw);
-        if (!saved || !saved.box || !Array.isArray(saved.objects)) return false;
-        drawingState.box = {
-          width: Math.max(50, Number(saved.box.width) || 800),
-          height: Math.max(50, Number(saved.box.height) || 1000),
-          depth: Math.max(50, Number(saved.box.depth) || 300)
-        };
-        drawingState.surface = saved.surface || "front";
-        drawingState.activeTool = saved.activeTool || "vent";
-        drawingState.objects = saved.objects.map((object) => ({
-          id: Number(object.id),
-          type: drawingTools[object.type] ? object.type : "vent",
-          surface: drawingSurfaces.some(surface => surface.id === object.surface) ? object.surface : "front",
-          x: Number(object.x) || 0,
-          y: Number(object.y) || 0,
-          width: Number(object.width) || 100,
-          height: Number(object.height) || 60,
-          rotation: Number(object.rotation) || 0
-        }));
-        drawingState.objects.forEach(drawingClampObject);
-        drawingState.nextId = Math.max(1, Number(saved.nextId) || drawingState.objects.length + 1);
-        return true;
-      } catch (error) {
-        console.warn("도면 저장 복원 실패:", error);
-        return false;
-      }
-    }
-
-    function drawingResetAll() {
-      drawingState.box = { width: 800, height: 1000, depth: 300 };
-      drawingState.surface = "front";
-      drawingState.activeTool = "vent";
-      drawingState.objects = [];
-      drawingState.selectedId = null;
-      drawingState.nextId = 1;
-      drawingSyncBoxInputs();
-      drawingBuildToolButtons();
-      drawingBuildTabs();
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-      drawingSetStatus("도면 편집기를 초기 상태로 되돌렸습니다.");
-    }
-
-    function drawingExportImage() {
-      const serializer = new XMLSerializer();
-      const source = serializer.serializeToString(drawingCanvas);
-      const svgBlob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>${source}`], { type: "image/svg+xml;charset=utf-8" });
-      const url = URL.createObjectURL(svgBlob);
-      const image = new Image();
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = 1520;
-        canvas.height = 1520;
-        const context = canvas.getContext("2d");
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = `광전기통신_도면_${drawingState.surface}.png`;
-        link.click();
-        URL.revokeObjectURL(url);
-        drawingSetStatus("현재 도면을 PNG 이미지로 출력했습니다.");
-      };
-      image.onerror = () => {
-        URL.revokeObjectURL(url);
-        drawingSetStatus("이미지 출력에 실패했습니다.");
-      };
-      image.src = url;
-    }
-
-    function drawingInit() {
-      if (!drawingCanvas) return;
-      drawingRestoreLocal();
-      drawingSyncBoxInputs();
-      drawingBuildToolButtons();
-      drawingBuildTabs();
-      drawingUpdateSettings();
-      drawingRenderCanvas();
-      drawingSetStatus("객체를 선택한 뒤 도면 안을 클릭하면 배치됩니다.");
-
-      drawingCanvas.addEventListener("pointerdown", drawingHandleCanvasPointerDown);
-      window.addEventListener("pointermove", drawingHandlePointerMove, { passive: false });
-      window.addEventListener("pointerup", drawingHandlePointerUp);
-      window.addEventListener("pointercancel", drawingHandlePointerUp);
-      drawingGenerateBtn.addEventListener("click", drawingApplyDimensions);
-      drawingApplyBtn.addEventListener("click", drawingApplySelectedChanges);
-      drawingDeleteBtn.addEventListener("click", drawingDeleteSelected);
-      drawingSaveBtn.addEventListener("click", drawingSaveToLocal);
-      drawingResetBtn.addEventListener("click", drawingResetAll);
-      drawingExportBtn.addEventListener("click", drawingExportImage);
-      [drawingObjectX, drawingObjectY, drawingObjectW, drawingObjectH, drawingObjectRotation].forEach((input) => {
-        input.addEventListener("change", drawingApplySelectedChanges);
-      });
-    }
-
+    function drawCabinet3d(svg,c,ox,oy,scale,objects=true){const fw=c.width*scale,fh=c.height*scale,dep=Math.max(18,c.depth*scale*.55),A=[ox,oy+dep],B=[ox+fw,oy+dep],C=[ox+fw,oy+fh+dep],D=[ox,oy+fh+dep],E=[ox+dep,oy],F=[ox+fw+dep,oy],G=[ox+fw+dep,oy+fh];const poly=(pts,fill)=>svg.appendChild(svgEl("polygon",{points:pts.map(p=>p.join(",")).join(" "),fill,stroke:"#4b5563","stroke-width":1.2}));poly([A,B,F,E],"#eceff3");poly([B,C,G,F],"#d8dde3");poly([A,B,C,D],"#f7f8fa");if(objects)c.objects.filter(o=>o.surface==="front").forEach(o=>{const g=svgEl("g"),x=A[0]+o.x*scale,y=A[1]+o.y*scale,w=o.w*scale,h=o.h*scale;drawShape(g,o,x,y,w,h,true);svg.appendChild(g)});return{width:fw+dep,height:fh+dep}}
+    function render3d(){drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}}
+    function addObjectAt(px,py){const t=toolById(drawingState.activeTool),o={id:drawingState.nextObjectId++,type:t.id,option:drawingState.toolOptions[t.id],surface:drawingState.surface,x:px-t.w/2,y:py-t.h/2,w:t.w,h:t.h,rot:0};clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
+    drawingCanvas.onpointerdown=e=>{const hit=e.target.closest("[data-id]");const q=toPlane(e);if(hit){const o=currentObjects().find(v=>v.id===Number(hit.dataset.id));drawingState.selectedObjectId=o.id;drawingState.drag={id:o.id,dx:q.x-o.x,dy:q.y-o.y};updateObjectPanel();render2d();e.preventDefault()}else if(q.x>=0&&q.y>=0&&q.x<=drawingState.layout.p.width&&q.y<=drawingState.layout.p.height)addObjectAt(q.x,q.y)};
+    window.addEventListener("pointermove",e=>{if(!drawingState.drag)return;const o=currentObjects().find(v=>v.id===drawingState.drag.id),q=toPlane(e);o.x=q.x-drawingState.drag.dx;o.y=q.y-drawingState.drag.dy;clampObj(o);render2d();updateObjectPanel();e.preventDefault()},{passive:false});window.addEventListener("pointerup",()=>drawingState.drag=null);
+    function applyObj(){const o=selectedObj();if(!o)return;o.x=Number(drawingObjectX.value)||0;o.y=Number(drawingObjectY.value)||0;o.w=Number(drawingObjectW.value)||o.w;o.h=Number(drawingObjectH.value)||o.h;o.rot=Number(drawingObjectRotation.value)||0;clampObj(o);renderAll()}
+    function deleteObj(){const c=currentCabinet();c.objects=c.objects.filter(o=>o.id!==drawingState.selectedObjectId);drawingState.selectedObjectId=null;renderAll()}
+    function renderStackList(){stackList.innerHTML="";drawingState.cabinets.forEach((c,i)=>{const b=document.createElement("div");b.setAttribute("role","button");b.tabIndex=0;b.className="stack-item"+(c.id===drawingState.selectedCabinetId?" active":"");b.innerHTML=`<span><span class="stack-item-title">${c.name}</span><span class="stack-item-size">${c.width} × ${c.height} × ${c.depth}</span></span><span class="stack-order"><button data-up="${c.id}">↑</button><button data-down="${c.id}">↓</button></span>`;b.onclick=e=>{if(e.target.dataset.up){moveCabinet(Number(e.target.dataset.up),-1);return}if(e.target.dataset.down){moveCabinet(Number(e.target.dataset.down),1);return}drawingState.selectedCabinetId=c.id;drawingState.selectedObjectId=null;syncInputs();renderAll()};stackList.appendChild(b)});const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),d=Math.max(...drawingState.cabinets.map(c=>c.depth));$("stackTotalHeight").textContent=total+" mm";$("stackTotalDepth").textContent=d+" mm";$("stackCount").textContent=drawingState.cabinets.length+" EA";$("stackInfoWidth").textContent=Math.max(...drawingState.cabinets.map(c=>c.width))+" mm";$("stackInfoHeight").textContent=total+" mm";$("stackInfoDepth").textContent=d+" mm";$("stackInfoCount").textContent=drawingState.cabinets.length+" EA"}
+    function moveCabinet(id,dir){const i=drawingState.cabinets.findIndex(c=>c.id===id),j=i+dir;if(j<0||j>=drawingState.cabinets.length)return;[drawingState.cabinets[i],drawingState.cabinets[j]]=[drawingState.cabinets[j],drawingState.cabinets[i]];renderAll()}
+    function renderStackPreview(){stackPreviewCanvas.innerHTML="";stackPreviewCanvas.appendChild(svgEl("rect",{x:0,y:0,width:520,height:430,fill:"#fff"}));if(drawingState.stackPreview==="3d"){const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total);let y=35;drawingState.cabinets.forEach(c=>{drawCabinet3d(stackPreviewCanvas,c,85,y,sc,true);y+=c.height*sc});return}const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total),x=90+(270-maxW*sc)/2;let y=40;drawingState.cabinets.forEach((c,i)=>{const w=c.width*sc,h=c.height*sc,cx=x+(maxW-c.width)*sc/2;stackPreviewCanvas.appendChild(svgEl("rect",{x:cx,y,width:w,height:h,fill:c.id===drawingState.selectedCabinetId?"#eaf1ff":"#fff",stroke:"#111827","stroke-width":1.4}));stackPreviewCanvas.appendChild(svgEl("text",{x:cx+w/2,y:y+h/2,"text-anchor":"middle","font-size":12,"font-weight":700,fill:"#475467"},`${c.width}×${c.height}×${c.depth}`));y+=h});stackPreviewCanvas.appendChild(svgEl("text",{x:225,y:405,"text-anchor":"middle","font-size":13,fill:"#1261cf","font-weight":800},`전체 높이 ${total} mm`))}
+    function applyDimensions(){const c=currentCabinet();c.width=Math.max(50,Number(drawingWidthInput.value)||c.width);c.height=Math.max(50,Number(drawingHeightInput.value)||c.height);c.depth=Math.max(30,Number(drawingDepthInput.value)||c.depth);c.objects.forEach(clampObj);syncInputs();renderAll()}
+    function applyCabinetProps(){const c=currentCabinet();c.name=$("cabinetNameInput").value.trim()||c.name;c.width=Math.max(50,Number($("cabinetWidthInput").value)||c.width);c.height=Math.max(50,Number($("cabinetHeightInput").value)||c.height);c.depth=Math.max(30,Number($("cabinetDepthInput").value)||c.depth);c.material=$("cabinetMaterialSelect").value;c.thickness=$("cabinetThicknessSelect").value;c.objects.forEach(clampObj);syncInputs();renderAll()}
+    function addCabinet(){const base=currentCabinet(),c={id:drawingState.nextCabinetId++,name:`함체 ${drawingState.cabinets.length+1}`,width:base.width,height:base.height,depth:base.depth,material:base.material,thickness:base.thickness,objects:[]};drawingState.cabinets.push(c);drawingState.selectedCabinetId=c.id;syncInputs();renderAll()}
+    function cloneCabinet(){const b=currentCabinet(),c=JSON.parse(JSON.stringify(b));c.id=drawingState.nextCabinetId++;c.name=b.name+" 복사";c.objects.forEach(o=>o.id=drawingState.nextObjectId++);drawingState.cabinets.push(c);drawingState.selectedCabinetId=c.id;syncInputs();renderAll()}
+    function deleteCabinet(){if(drawingState.cabinets.length<=1){setStatus("함체는 최소 1개가 필요합니다.");return}drawingState.cabinets=drawingState.cabinets.filter(c=>c.id!==drawingState.selectedCabinetId);drawingState.selectedCabinetId=drawingState.cabinets[0].id;syncInputs();renderAll()}
+    function renderAll(){buildTabs();render2d();render3d();renderStackList();renderStackPreview();updateObjectPanel()}
+    function save(){localStorage.setItem("gwangtelecom_drawing_v85",JSON.stringify(drawingState));setStatus("함체 설계 상태를 저장했습니다.")}
+    function reset(){localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
+    function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_2D도면.svg";a.click();URL.revokeObjectURL(url)}
+    function restore(){try{const v=JSON.parse(localStorage.getItem("gwangtelecom_drawing_v85"));if(v&&Array.isArray(v.cabinets))Object.assign(drawingState,v)}catch(e){console.warn(e)}}
+    function drawingInit(){restore();buildTools();syncInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=save;drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj)}
     drawingInit();
 
     /*
