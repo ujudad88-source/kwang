@@ -26,9 +26,9 @@ label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}input,se
 <optgroup label="후면 구멍"><option value="anchor-hole">앙카구멍</option><option value="screw-hole">피스구멍</option></optgroup>
 <optgroup label="명판"><option value="nameplate-100">사각형 명판 100 × 30</option><option value="nameplate-150">사각형 명판 150 × 30</option></optgroup>
 <optgroup label="속판"><option value="inner-pvc">PVC속판</option><option value="inner-steel">철속판</option><option value="inner-bakelite">빼끄판</option></optgroup>
-<optgroup label="접지"><option value="ground-busbar">접지 꺾인 부스바</option></optgroup>
+<optgroup label="접지"><option value="ground-steel">철접지</option><option value="ground-copper">동접지</option></optgroup>
 <optgroup label="타공"><option value="cut-rect">사각 타공</option><option value="cut-circle">원형 타공</option></optgroup>
-<optgroup label="기타"><option value="cable-left">케이블걸이 &lt;</option><option value="cable-right">케이블걸이 &gt;</option></optgroup>
+<optgroup label="기타"><option value="cable-left">케이블걸이 &lt;</option><option value="cable-right">케이블걸이 &gt;</option><option value="cable-horizontal">케이블걸이 수평</option></optgroup>
 </select></div>
 <div><label>가로/직경 (mm)</label><input id="partW" type="number" value="180" min="1"></div><div><label>세로 (mm)</label><input id="partH" type="number" value="45" min="1"></div><div><label>회전 각도</label><select id="rotation"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></div>
 <div><label>선택 X (mm)</label><input id="partX" type="number" disabled></div><div><label>선택 Y (mm)</label><input id="partY" type="number" disabled></div><div><label>명판 문구</label><input id="partLabel" type="text" value="함 명칭"></div>
@@ -67,7 +67,7 @@ const defaults={
 'vent-louver':[180,45,'front'],'vent-hole':[180,45,'front'],'vent-hex':[180,45,'front'],'vent-mesh':[180,45,'front'],
 'key-detach':[35,60,'front'],'key-push':[35,35,'front'],'key-handle':[45,120,'front'],'anchor-hole':[18,18,'back'],'screw-hole':[10,10,'back'],
 'nameplate-100':[100,30,'front'],'nameplate-150':[150,30,'front'],'inner-pvc':[500,700,'inside'],'inner-steel':[500,700,'inside'],'inner-bakelite':[500,700,'inside'],
-'ground-busbar':[160,35,'inside'],'cut-rect':[120,80,'front'],'cut-circle':[80,80,'front'],'cable-left':[40,70,'inside'],'cable-right':[40,70,'inside']};
+'ground-steel':[160,45,'inside'],'ground-copper':[160,45,'inside'],'cut-rect':[120,80,'front'],'cut-circle':[80,80,'front'],'cable-left':[40,70,'inside'],'cable-right':[40,70,'inside'],'cable-horizontal':[110,55,'inside']};
 function syncDefaults(){const d=defaults[partType.value];partW.value=d[0];partH.value=d[1];surface.value=d[2]}
 function setStatus(t){status.textContent=t}
 function toggleAdd(){addMode=!addMode;addBtn.textContent=addMode?'배치할 도면을 클릭':'표시 추가';addBtn.style.background=addMode?'#d35400':'';setStatus(addMode?'원하는 도면 또는 입체도의 면을 클릭하세요.':'추가 모드를 해제했습니다.')}
@@ -87,10 +87,11 @@ function symbol(g,p,x,y,w,h){const cx=x+w/2,cy=y+h/2,t=p.type;
  else if(t==='anchor-hole'||t==='screw-hole'){g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)*.4,class:'symbol'}));line(g,x+w*.25,y+h*.25,x+w*.75,y+h*.75,'symbol');line(g,x+w*.75,y+h*.25,x+w*.25,y+h*.75,'symbol')}
  else if(t.startsWith('nameplate')){g.appendChild(el('rect',{x,y,width:w,height:h,rx:2,class:'symbol-fill'}));g.appendChild(el('text',{x:cx,y:cy+3,'text-anchor':'middle',class:'plate-text'},p.label||'함 명칭'))}
  else if(t.startsWith('inner-')){const c=t==='inner-pvc'?'inner-plate pvc':t==='inner-steel'?'inner-plate steel':'inner-plate bakelite';g.appendChild(el('rect',{x,y,width:w,height:h,rx:2,class:c}));g.appendChild(el('text',{x:cx,y:cy,'text-anchor':'middle',class:'smalltext'},t==='inner-pvc'?'PVC속판':t==='inner-steel'?'철속판':'빼끄판'))}
- else if(t==='ground-busbar'){const pts=[[x,y+h*.75],[x+w*.18,y+h*.75],[x+w*.18,y+h*.28],[x+w,y+h*.28]];g.appendChild(el('polyline',{points:pts.map(v=>v.join(',')).join(' '),stroke:'#9b6a19','stroke-width':Math.max(4,h*.22),fill:'none','stroke-linejoin':'round'}));for(let i=1;i<=4;i++)g.appendChild(el('circle',{cx:x+w*(.2+i*.16),cy:y+h*.28,r:Math.max(2,h*.08),fill:'#fff',stroke:'#5b410d'}))}
+ else if(t==='ground-steel'||t==='ground-copper'){const stroke=t==='ground-copper'?'#b87333':'#6b7280',pts=[[x+w*.08,y+h*.82],[x+w*.08,y+h*.28],[x+w*.92,y+h*.28],[x+w*.92,y+h*.82]];g.appendChild(el('polyline',{points:pts.map(v=>v.join(',')).join(' '),stroke,'stroke-width':Math.max(4,h*.2),fill:'none','stroke-linejoin':'round','stroke-linecap':'square'}))}
  else if(t==='cut-rect'){g.appendChild(el('rect',{x,y,width:w,height:h,class:'cut-fill'}));line(g,x,y,x+w,y+h,'cut');line(g,x+w,y,x,y+h,'cut')}
  else if(t==='cut-circle'){g.appendChild(el('circle',{cx,cy,r:Math.min(w,h)/2,class:'cut-fill'}));line(g,cx-w*.35,cy-h*.35,cx+w*.35,cy+h*.35,'cut');line(g,cx+w*.35,cy-h*.35,cx-w*.35,cy+h*.35,'cut')}
  else if(t==='cable-left'||t==='cable-right'){const ch=t==='cable-left'?'‹':'›';g.appendChild(el('text',{x:cx,y:cy+h*.28,'text-anchor':'middle','font-size':Math.max(18,h),fill:'#243746','font-weight':'700'},ch))}
+ else if(t==='cable-horizontal'){const pts=[[x+w*.08,y+h*.2],[x+w*.08,y+h*.76],[x+w*.92,y+h*.76],[x+w*.92,y+h*.2]];g.appendChild(el('polyline',{points:pts.map(v=>v.join(',')).join(' '),stroke:'#243746','stroke-width':Math.max(4,Math.min(w,h)*.18),fill:'none','stroke-linejoin':'round','stroke-linecap':'square'}))}
 }
 
 function beginDrag(svg,e,i,map){if(e.pointerType==='touch'){selected=i;updateFields();return;}e.preventDefault();e.stopPropagation();selected=i;updateFields();const q=pt(svg,e),p=parts[i],sp=map.toScreen(p.x,p.y);drag={i,svgId:svg.id,map,dx:q.x-sp.x,dy:q.y-sp.y};setStatus(surfaceName(p.surface)+' 객체를 이동 중입니다.');}

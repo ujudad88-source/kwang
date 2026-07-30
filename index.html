@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 제품 정보 V93</title>
+<title>광전기통신 제품 정보 V96</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1724,7 +1724,13 @@
     .stack-summary span { display:block; color:var(--muted); font-size:11px; }
     .stack-summary strong { display:block; margin-top:4px; font-size:14px; }
     .stack-preview-grid { display:grid; grid-template-columns:minmax(0,1fr) 190px; min-height:330px; }
-    .stack-preview-svg { width:100%; height:330px; border-right:1px solid var(--border); background:#fff; }
+    .stack-preview-svg { width:100%; height:330px; border-right:1px solid var(--border); background:#fff; touch-action:none; user-select:none; }
+    .stack-3d-controls { display:none; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-top:1px solid var(--border); background:#f8fafc; }
+    .stack-3d-controls.active { display:flex; }
+    .stack-3d-help { color:#667085; font-size:12px; line-height:1.35; }
+    .stack-3d-reset { min-height:34px; padding:0 11px; border:1px solid var(--border); border-radius:8px; background:#fff; font-weight:700; white-space:nowrap; }
+    .stack-preview-svg.is-rotating { cursor:grabbing; }
+    .stack-preview-svg[data-rotate-enabled="true"] { cursor:grab; }
     .stack-info { padding:16px; }
     .stack-info h5 { margin:0 0 12px; font-size:15px; }
     .stack-info-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef2f6; font-size:13px; }
@@ -2198,7 +2204,7 @@
 </section>
 <section class="drawing-v85-card">
 <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-stack-preview="2d">적층 미리보기 (2D)</button><button class="drawing-3d-mode" data-stack-preview="3d">적층 미리보기 (3D)</button></div>
-<div class="stack-preview-grid"><svg class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430"></svg><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
+<div class="stack-preview-grid"><div><svg class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430" aria-label="회전 가능한 적층 3D 미리보기"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">마우스 또는 한 손가락으로 드래그하여 360° 회전 · 휠/두 손가락으로 확대·축소</span><button type="button" class="stack-3d-reset" id="stack3dResetBtn">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
 </section>
 <section class="drawing-v85-card stack-properties">
 <div class="drawing-v85-card-head">함체 속성</div>
@@ -2338,7 +2344,8 @@
       {id:"emboss",label:"타공형태",icon:"⊙",options:["엠보타공 원형","엠보타공 사각형"],w:90,h:90},
       {id:"cut",label:"타공",icon:"⊗",options:["원형타공","사각타공"],w:90,h:90},
       {id:"plate",label:"속판",icon:"□",options:["PVC속판","철속판","빼끄판"],w:180,h:130},
-      {id:"cableHook",label:"케이블 걸이",icon:"‹›",options:["왼쪽 <","오른쪽 >"],w:55,h:75},
+      {id:"ground",label:"접지",icon:"⊔",options:["철접지 · 상","철접지 · 하","철접지 · 좌","철접지 · 우","동접지 · 상","동접지 · 하","동접지 · 좌","동접지 · 우"],w:160,h:45},
+      {id:"cableHook",label:"케이블 걸이",icon:"‹⊔›",options:["왼쪽 <","오른쪽 >","수평"],w:55,h:75},
       {id:"cover",label:"타공 덮개",icon:"▣",options:["기본형"],w:110,h:90},
       {id:"doubleLock",label:"이중시건",icon:"⊃",options:["기본형"],w:70,h:80}
     ];
@@ -2350,7 +2357,7 @@
         {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
         {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
         {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]}
-      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d"
+      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1}
     };
     drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
     const $=id=>document.getElementById(id);
@@ -2378,7 +2385,22 @@
       else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
       else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
       else if(o.type==="plate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option))}
-      else if(o.type==="cableHook")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(18,h*.75),fill:black},o.option.includes("왼쪽")?"<":">"));
+      else if(o.type==="ground"){
+        const copper=o.option.includes("동접지"),dir=o.option.split("·").pop().trim();
+        const stroke=copper?"#b87333":"#6b7280",th=Math.max(3,Math.min(w,h)*.18);
+        let pts;
+        if(dir==="하")pts=[[x+w*.08,y+h*.18],[x+w*.08,y+h*.72],[x+w*.92,y+h*.72],[x+w*.92,y+h*.18]];
+        else if(dir==="좌")pts=[[x+w*.82,y+h*.08],[x+w*.28,y+h*.08],[x+w*.28,y+h*.92],[x+w*.82,y+h*.92]];
+        else if(dir==="우")pts=[[x+w*.18,y+h*.08],[x+w*.72,y+h*.08],[x+w*.72,y+h*.92],[x+w*.18,y+h*.92]];
+        else pts=[[x+w*.08,y+h*.82],[x+w*.08,y+h*.28],[x+w*.92,y+h*.28],[x+w*.92,y+h*.82]];
+        g.appendChild(svgEl("polyline",{points:pts.map(v=>v.join(",")).join(" "),fill:"none",stroke,"stroke-width":th,"stroke-linejoin":"round","stroke-linecap":"square"}));
+      }
+      else if(o.type==="cableHook"){
+        if(o.option==="수평"){
+          const pts=[[x+w*.08,y+h*.2],[x+w*.08,y+h*.76],[x+w*.92,y+h*.76],[x+w*.92,y+h*.2]];
+          g.appendChild(svgEl("polyline",{points:pts.map(v=>v.join(",")).join(" "),fill:"none",stroke:black,"stroke-width":Math.max(3,Math.min(w,h)*.16),"stroke-linejoin":"round","stroke-linecap":"square"}));
+        }else g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(18,h*.75),fill:black},o.option.includes("왼쪽")?"<":">"));
+      }
       else if(o.type==="cover"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));[[.5,.1],[.5,.9],[.1,.5],[.9,.5]].forEach(([a,b])=>g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(1.5,Math.min(w,h)*.035),fill:"none",stroke:black,"stroke-width":sw})))}
       else if(o.type==="doubleLock")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(20,h*.72),fill:black},"⊃"));
     }
@@ -2428,7 +2450,45 @@
     function deleteObj(){const c=currentCabinet();c.objects=c.objects.filter(o=>o.id!==drawingState.selectedObjectId);drawingState.selectedObjectId=null;renderAll()}
     function renderStackList(){stackList.innerHTML="";drawingState.cabinets.forEach((c,i)=>{const b=document.createElement("div");b.setAttribute("role","button");b.tabIndex=0;b.className="stack-item"+(c.id===drawingState.selectedCabinetId?" active":"");b.innerHTML=`<span><span class="stack-item-title">${c.name}</span><span class="stack-item-size">${c.width} × ${c.height} × ${c.depth}</span></span><span class="stack-order"><button data-up="${c.id}">↑</button><button data-down="${c.id}">↓</button></span>`;b.onclick=e=>{if(e.target.dataset.up){moveCabinet(Number(e.target.dataset.up),-1);return}if(e.target.dataset.down){moveCabinet(Number(e.target.dataset.down),1);return}drawingState.selectedCabinetId=c.id;drawingState.selectedObjectId=null;syncInputs();renderAll()};stackList.appendChild(b)});const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),d=Math.max(...drawingState.cabinets.map(c=>c.depth));$("stackTotalHeight").textContent=total+" mm";$("stackTotalDepth").textContent=d+" mm";$("stackCount").textContent=drawingState.cabinets.length+" EA";$("stackInfoWidth").textContent=Math.max(...drawingState.cabinets.map(c=>c.width))+" mm";$("stackInfoHeight").textContent=total+" mm";$("stackInfoDepth").textContent=d+" mm";$("stackInfoCount").textContent=drawingState.cabinets.length+" EA"}
     function moveCabinet(id,dir){const i=drawingState.cabinets.findIndex(c=>c.id===id),j=i+dir;if(j<0||j>=drawingState.cabinets.length)return;[drawingState.cabinets[i],drawingState.cabinets[j]]=[drawingState.cabinets[j],drawingState.cabinets[i]];renderAll()}
-    function renderStackPreview(){stackPreviewCanvas.innerHTML="";stackPreviewCanvas.appendChild(svgEl("rect",{x:0,y:0,width:520,height:430,fill:"#fff"}));if(drawingState.stackPreview==="3d"){const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total);let y=35;drawingState.cabinets.forEach(c=>{drawCabinet3d(stackPreviewCanvas,c,85,y,sc,true);y+=c.height*sc});return}const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total),x=90+(270-maxW*sc)/2;let y=40;drawingState.cabinets.forEach((c,i)=>{const w=c.width*sc,h=c.height*sc,cx=x+(maxW-c.width)*sc/2;stackPreviewCanvas.appendChild(svgEl("rect",{x:cx,y,width:w,height:h,fill:c.id===drawingState.selectedCabinetId?"#eaf1ff":"#fff",stroke:"#111827","stroke-width":1.4}));stackPreviewCanvas.appendChild(svgEl("text",{x:cx+w/2,y:y+h/2,"text-anchor":"middle","font-size":12,"font-weight":700,fill:"#475467"},`${c.width}×${c.height}×${c.depth}`));y+=h});stackPreviewCanvas.appendChild(svgEl("text",{x:225,y:405,"text-anchor":"middle","font-size":13,fill:"#1261cf","font-weight":800},`전체 높이 ${total} mm`))}
+    function projectStackPoint(x,y,z,view,center,scale){
+      const yaw=view.yaw*Math.PI/180,pitch=view.pitch*Math.PI/180;
+      let px=x-center.x,py=y-center.y,pz=z-center.z;
+      const x1=px*Math.cos(yaw)+pz*Math.sin(yaw),z1=-px*Math.sin(yaw)+pz*Math.cos(yaw);
+      const y1=py*Math.cos(pitch)-z1*Math.sin(pitch);
+      return{x:260+x1*scale*view.zoom,y:202+y1*scale*view.zoom};
+    }
+    function renderRotatableStack3d(){
+      const cs=drawingState.cabinets,total=cs.reduce((a,c)=>a+c.height,0),maxW=Math.max(...cs.map(c=>c.width)),maxD=Math.max(...cs.map(c=>c.depth));
+      const view=drawingState.stack3dView||(drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1});
+      const center={x:maxW/2,y:total/2,z:maxD/2},scale=Math.min(320/maxW,330/total,180/maxD);
+      let yOffset=0;
+      const line=(p1,p2,attrs={})=>{const a=projectStackPoint(...p1,view,center,scale),b=projectStackPoint(...p2,view,center,scale);stackPreviewCanvas.appendChild(svgEl("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:"#111827","stroke-width":1.45,"stroke-linecap":"round","vector-effect":"non-scaling-stroke",...attrs}))};
+      cs.forEach(c=>{
+        const x0=(maxW-c.width)/2,z0=(maxD-c.depth)/2,y0=yOffset,y1=yOffset+c.height,x1=x0+c.width,z1=z0+c.depth;
+        const pts={A:[x0,y0,z0],B:[x1,y0,z0],C:[x1,y1,z0],D:[x0,y1,z0],E:[x0,y0,z1],F:[x1,y0,z1],G:[x1,y1,z1],H:[x0,y1,z1]};
+        [["A","B"],["B","C"],["C","D"],["D","A"],["E","F"],["F","G"],["G","H"],["H","E"],["A","E"],["B","F"],["C","G"],["D","H"]].forEach(([a,b])=>line(pts[a],pts[b]));
+        const faceBases={
+          front:{o:[x0,y0,z0],u:[1,0,0],v:[0,1,0],opacity:1},back:{o:[x0,y0,z1],u:[1,0,0],v:[0,1,0],opacity:.52},
+          inside:{o:[x0,y0,z0+c.depth*.18],u:[1,0,0],v:[0,1,0],opacity:.65},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.76},
+          right:{o:[x1,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.9},top:{o:[x0,y0,z0],u:[1,0,0],v:[0,0,1],opacity:.86},bottom:{o:[x0,y1,z0],u:[1,0,0],v:[0,0,1],opacity:.78}
+        };
+        ["back","inside","left","right","top","bottom","front"].forEach(surface=>{
+          const f=faceBases[surface],po=projectStackPoint(...f.o,view,center,scale),pu=projectStackPoint(f.o[0]+f.u[0],f.o[1]+f.u[1],f.o[2]+f.u[2],view,center,scale),pv=projectStackPoint(f.o[0]+f.v[0],f.o[1]+f.v[1],f.o[2]+f.v[2],view,center,scale);
+          c.objects.filter(o=>o.surface===surface).forEach(o=>{
+            const outer=svgEl("g",{transform:`matrix(${pu.x-po.x} ${pu.y-po.y} ${pv.x-po.x} ${pv.y-po.y} ${po.x} ${po.y})`,opacity:f.opacity});
+            const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`});
+            drawShape(inner,o,o.x,o.y,o.w,o.h,true);outer.appendChild(inner);stackPreviewCanvas.appendChild(outer);
+          });
+        });
+        yOffset=y1;
+      });
+      stackPreviewCanvas.appendChild(svgEl("text",{x:260,y:416,"text-anchor":"middle","font-size":12,fill:"#667085","font-weight":700},`회전 ${Math.round(view.yaw)}° · 기울기 ${Math.round(view.pitch)}° · ${Math.round(view.zoom*100)}%`));
+    }
+    function renderStackPreview(){
+      stackPreviewCanvas.innerHTML="";stackPreviewCanvas.appendChild(svgEl("rect",{x:0,y:0,width:520,height:430,fill:"#fff"}));
+      const controls=$("stack3dControls"),is3d=drawingState.stackPreview==="3d";controls.classList.toggle("active",is3d);stackPreviewCanvas.dataset.rotateEnabled=is3d?"true":"false";
+      if(is3d){renderRotatableStack3d();return}
+      const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total),x=90+(270-maxW*sc)/2;let y=40;drawingState.cabinets.forEach((c,i)=>{const w=c.width*sc,h=c.height*sc,cx=x+(maxW-c.width)*sc/2;stackPreviewCanvas.appendChild(svgEl("rect",{x:cx,y,width:w,height:h,fill:c.id===drawingState.selectedCabinetId?"#eaf1ff":"#fff",stroke:"#111827","stroke-width":1.4}));stackPreviewCanvas.appendChild(svgEl("text",{x:cx+w/2,y:y+h/2,"text-anchor":"middle","font-size":12,"font-weight":700,fill:"#475467"},`${c.width}×${c.height}×${c.depth}`));y+=h});stackPreviewCanvas.appendChild(svgEl("text",{x:225,y:405,"text-anchor":"middle","font-size":13,fill:"#1261cf","font-weight":800},`전체 높이 ${total} mm`))}
     function applyDimensions(){const c=currentCabinet();c.width=Math.max(50,Number(drawingWidthInput.value)||c.width);c.height=Math.max(50,Number(drawingHeightInput.value)||c.height);c.depth=Math.max(30,Number(drawingDepthInput.value)||c.depth);c.objects.forEach(clampObj);syncInputs();renderAll()}
     function applyCabinetProps(){const c=currentCabinet();c.name=$("cabinetNameInput").value.trim()||c.name;c.width=Math.max(50,Number($("cabinetWidthInput").value)||c.width);c.height=Math.max(50,Number($("cabinetHeightInput").value)||c.height);c.depth=Math.max(30,Number($("cabinetDepthInput").value)||c.depth);c.material=$("cabinetMaterialSelect").value;c.thickness=$("cabinetThicknessSelect").value;c.objects.forEach(clampObj);syncInputs();renderAll()}
     function addCabinet(){const base=currentCabinet(),c={id:drawingState.nextCabinetId++,name:`함체 ${drawingState.cabinets.length+1}`,width:base.width,height:base.height,depth:base.depth,material:base.material,thickness:base.thickness,objects:[]};drawingState.cabinets.push(c);drawingState.selectedCabinetId=c.id;syncInputs();renderAll()}
@@ -2439,7 +2499,14 @@
     function reset(){localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
     function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_2D도면.svg";a.click();URL.revokeObjectURL(url)}
     function restore(){try{const v=JSON.parse(localStorage.getItem("gwangtelecom_drawing_v85"));if(v&&Array.isArray(v.cabinets))Object.assign(drawingState,v)}catch(e){console.warn(e)}}
-    function drawingInit(){restore();buildTools();syncInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=save;drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj)}
+    const stackPointers=new Map();let stackRotateDrag=null,stackPinchStart=null;
+    const pointerDistance=()=>{const pts=[...stackPointers.values()];return pts.length<2?0:Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y)};
+    stackPreviewCanvas.addEventListener("pointerdown",e=>{if(drawingState.stackPreview!=="3d")return;stackPreviewCanvas.setPointerCapture?.(e.pointerId);stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(stackPointers.size===1)stackRotateDrag={x:e.clientX,y:e.clientY,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};else if(stackPointers.size===2)stackPinchStart={distance:pointerDistance(),zoom:drawingState.stack3dView.zoom};stackPreviewCanvas.classList.add("is-rotating");e.preventDefault()});
+    stackPreviewCanvas.addEventListener("pointermove",e=>{if(!stackPointers.has(e.pointerId)||drawingState.stackPreview!=="3d")return;stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(stackPointers.size>=2&&stackPinchStart){const d=pointerDistance();if(d>0)drawingState.stack3dView.zoom=clamp(stackPinchStart.zoom*d/stackPinchStart.distance,.55,2.2)}else if(stackRotateDrag){drawingState.stack3dView.yaw=stackRotateDrag.yaw+(e.clientX-stackRotateDrag.x)*.65;drawingState.stack3dView.pitch=clamp(stackRotateDrag.pitch+(e.clientY-stackRotateDrag.y)*.45,-85,85)}renderStackPreview();e.preventDefault()},{passive:false});
+    const endStackPointer=e=>{stackPointers.delete(e.pointerId);if(stackPointers.size===1){const p=[...stackPointers.values()][0];stackRotateDrag={x:p.x,y:p.y,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};stackPinchStart=null}else if(stackPointers.size===0){stackRotateDrag=null;stackPinchStart=null;stackPreviewCanvas.classList.remove("is-rotating")}};stackPreviewCanvas.addEventListener("pointerup",endStackPointer);stackPreviewCanvas.addEventListener("pointercancel",endStackPointer);
+    stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;drawingState.stack3dView.zoom=clamp(drawingState.stack3dView.zoom*(e.deltaY>0?.9:1.1),.55,2.2);renderStackPreview();e.preventDefault()},{passive:false});
+    $("stack3dResetBtn").onclick=()=>{drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};renderStackPreview()};
+    function drawingInit(){restore();if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};buildTools();syncInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=save;drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj)}
     drawingInit();
 
     /*
