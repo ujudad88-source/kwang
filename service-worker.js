@@ -1,4 +1,4 @@
-const CACHE_NAME = "gwang-v0.0.2";
+const CACHE_NAME = "gwang-v0.0.3";
 const APP_ASSETS = [
   './',
   './index.html',

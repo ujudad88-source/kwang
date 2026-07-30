@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.2</title>
+<title>광전기통신 영업지원 시스템 v0.0.3</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2050,6 +2050,26 @@
     .education-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.education-card{padding:23px}.education-card>span{display:grid;place-items:center;width:40px;height:40px;margin-bottom:16px;border-radius:11px;background:var(--primary-soft);color:var(--primary);font-weight:800}
     @media(max-width:760px){.resource-layout,.education-grid{grid-template-columns:1fr}.resource-main,.resource-side,.education-card{padding:18px}}
 
+
+    /* v0.0.3 저장·공유 기능 */
+    .product-image-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .product-image-head h3{margin:0}
+    .product-share-btn{border:1px solid #b9c7db;background:#fff;color:#174f91;border-radius:9px;padding:8px 13px;font-weight:800;cursor:pointer;white-space:nowrap}
+    .product-share-btn:hover,.drawing-action-btn:hover{transform:translateY(-1px)}
+    .share-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.52)}
+    .share-modal.open{display:flex}
+    .share-modal-card{width:min(440px,100%);background:#fff;border-radius:18px;box-shadow:0 24px 80px rgba(15,23,42,.28);overflow:hidden}
+    .share-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #e5eaf1}
+    .share-modal-head h3{margin:0;font-size:20px}
+    .share-modal-close{border:0;background:transparent;font-size:26px;cursor:pointer;color:#667085}
+    .share-modal-body{padding:18px;display:grid;gap:10px}
+    .share-choice{width:100%;border:1px solid #d5deea;background:#fff;border-radius:12px;padding:14px 16px;text-align:left;font-weight:800;cursor:pointer}
+    .share-choice:hover{border-color:#3b82f6;background:#f5f9ff}
+    .share-help{margin:3px 2px 0;color:#667085;font-size:13px;line-height:1.55}
+    .export-progress{position:fixed;right:18px;bottom:18px;z-index:10020;background:#172033;color:#fff;border-radius:10px;padding:11px 14px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:none}
+    .export-progress.show{display:block}
+    @media(max-width:680px){.drawing-toolbar-actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.drawing-toolbar-actions .drawing-action-btn{width:100%}.product-image-head{align-items:flex-start}.product-share-btn{padding:7px 11px}}
+
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2112,7 +2132,7 @@
 <div class="part-grid">
 <button class="part-card drawing-part-card" data-panel="drawingPanel" type="button">
 <span class="part-icon">◇</span>
-<span class="part-title">2D 도면 편집</span>
+<span class="part-title">손도면 생성</span>
 <span class="part-description">
             가로·세로·깊이를 입력하고 객체를 배치해 정면·측면·상부 도면을 편집합니다.
           </span>
@@ -2247,18 +2267,15 @@
 </section>
 </section>
 <section class="panel" id="drawingPanel">
-<header class="section-head">
-<span class="eyebrow">함체 설계</span>
-<h2>2D · 3D 함체 설계기</h2>
-<p>단독 함체와 여러 함체를 위아래로 연결한 적층 함체를 설계하고 각 면에 객체를 배치합니다.</p>
-</header>
+
 <section aria-label="함체 설계기" class="drawing-shell card">
 <div class="drawing-toolbar">
 <div class="drawing-toolbar-title">
 <div aria-hidden="true" class="drawing-toolbar-badge">▣</div>
-<div><h3>광전기통신 제품정보 · 함체 설계기</h3><p>기존 객체 체계를 유지하면서 단독/적층 3D 미리보기를 지원합니다.</p></div>
+<div><h3>광전기통신 손도면 생성기</h3></div>
 </div>
 <div class="drawing-toolbar-actions">
+<button class="drawing-action-btn" id="drawingShareBtn" type="button">공유</button>
 <button class="drawing-action-btn" id="drawingSaveBtn" type="button">저장</button>
 <button class="drawing-action-btn" id="drawingResetBtn" type="button">초기화</button>
 <button class="drawing-action-btn" id="drawingExportBtn" type="button">이미지 출력</button>
@@ -2317,7 +2334,7 @@
 <label for="cabinetHeightInput">세로(mm)</label><input id="cabinetHeightInput" min="1" type="number"/>
 <label for="cabinetDepthInput">깊이(mm)</label><input id="cabinetDepthInput" min="1" type="number"/>
 <label for="cabinetMaterialSelect">재질</label><select id="cabinetMaterialSelect"><option>일반 철판</option><option>스테인리스</option></select>
-<label for="cabinetThicknessSelect">두께(mm)</label><select id="cabinetThicknessSelect"><option>1.2</option><option>1.5</option><option>2.0</option></select>
+<label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option value="1.6T" selected>1.6T</option></select>
 </div>
 <div style="padding:0 14px 14px"><button class="drawing-primary-btn" id="cabinetApplyBtn" style="width:100%">함체 속성 적용</button></div>
 </section>
@@ -2342,8 +2359,8 @@
 <option>서버 랙</option>
 </select>
 </section>
-<section class="card rack-image-card">
-<h3 class="rack-layout-title">제품 이미지</h3>
+<section class="card rack-image-card share-card-wrap">
+<div class="product-image-head"><h3 class="rack-layout-title">제품 이미지</h3><button class="product-share-btn" id="rackShareBtn" type="button">공유</button></div>
 <p class="rack-layout-description">선택한 제품의 이미지는 화면 너비와 높이를 벗어나지 않도록 자동 조절됩니다.</p>
 <div class="rack-image-stage">
 <img alt="선택한 랙 제품 이미지" class="rack-product-image" id="rackProductImage">
@@ -2389,8 +2406,8 @@
 </div>
 </div>
 </section>
-<section class="card material-image-card">
-<h3 class="material-layout-title">제품 이미지</h3>
+<section class="card material-image-card share-card-wrap">
+<div class="product-image-head"><h3 class="material-layout-title">제품 이미지</h3><button class="product-share-btn" id="materialShareBtn" type="button">공유</button></div>
 <p class="material-layout-description">
             세부 품목에서 선택한 제품 이미지는 화면 너비와 높이를 넘지 않도록 비율을 유지해 표시됩니다.
           </p>
@@ -2429,6 +2446,15 @@
 <div class="education-grid"><article class="card education-card"><span>01</span><h3>함 제품 기초</h3><p>함 종류, 재질, 회선수 및 규격표 읽는 방법</p></article><article class="card education-card"><span>02</span><h3>랙 제품 기초</h3><p>오픈랙, 캐비닛랙, 서버랙의 용도와 규격</p></article><article class="card education-card"><span>03</span><h3>자재 기초</h3><p>통신공사 주요 자재의 명칭과 적용 위치</p></article><article class="card education-card"><span>04</span><h3>도면 작성</h3><p>함체 생성, 객체 배치, 방향 설정과 3D 검토</p></article></div></section>
 
 </main>
+
+<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+  <div class="share-modal-card">
+    <div class="share-modal-head"><h3 id="shareModalTitle">공유 및 저장</h3><button class="share-modal-close" id="shareModalClose" type="button" aria-label="닫기">×</button></div>
+    <div class="share-modal-body" id="shareModalBody"></div>
+  </div>
+</div>
+<div class="export-progress" id="exportProgress">파일을 생성하고 있습니다…</div>
+
 <script>
     const panels = document.querySelectorAll(".panel");
     const partCards = document.querySelectorAll(".part-card");
@@ -2471,9 +2497,9 @@
     ];
     const drawingState={
       cabinets:[
-        {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
-        {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.2",objects:[]},
-        {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.2",objects:[]}
+        {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
+        {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
+        {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]}
       ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1}
     };
     drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
@@ -2486,7 +2512,7 @@
     const clamp=(v,a,b)=>Math.max(a,Math.min(v,b));
     function plane(surface,c=currentCabinet()){if(surface==="left"||surface==="right")return{width:c.depth,height:c.height};if(surface==="top"||surface==="bottom")return{width:c.width,height:c.depth};return{width:c.width,height:c.height}}
     function setStatus(t){drawingStatus.textContent=t}
-    function syncInputs(){const c=currentCabinet();drawingWidthInput.value=c.width;drawingHeightInput.value=c.height;drawingDepthInput.value=c.depth;$("cabinetNameInput").value=c.name;$("cabinetWidthInput").value=c.width;$("cabinetHeightInput").value=c.height;$("cabinetDepthInput").value=c.depth;$("cabinetMaterialSelect").value=c.material;$("cabinetThicknessSelect").value=c.thickness}
+    function syncInputs(){const c=currentCabinet();drawingWidthInput.value=c.width;drawingHeightInput.value=c.height;drawingDepthInput.value=c.depth;$("cabinetNameInput").value=c.name;$("cabinetWidthInput").value=c.width;$("cabinetHeightInput").value=c.height;$("cabinetDepthInput").value=c.depth;$("cabinetMaterialSelect").value=c.material;$("cabinetThicknessSelect").value=["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness)?c.thickness:"1.6T"}
     function buildTools(){drawingToolList.innerHTML="";drawingToolDefs.forEach(t=>{const r=document.createElement("div");r.className="drawing-tool-row"+(drawingState.activeTool===t.id?" active":"");const b=document.createElement("button");b.className="drawing-tool-pick";b.type="button";b.textContent=t.icon;b.onclick=()=>{drawingState.activeTool=t.id;buildTools();setStatus(`${t.label} 배치 모드입니다.`)};const m=document.createElement("div");m.className="drawing-tool-meta";m.innerHTML=`<span class="drawing-tool-name">${t.label}</span>`;const sel=document.createElement("select");sel.className="drawing-tool-option";t.options.forEach(o=>sel.add(new Option(o,o)));sel.value=drawingState.toolOptions[t.id];sel.onchange=e=>{drawingState.toolOptions[t.id]=e.target.value;drawingState.activeTool=t.id;buildTools()};m.appendChild(sel);r.append(b,m);drawingToolList.appendChild(r)})}
     function buildTabs(){drawingTabbar.innerHTML="";drawingSurfaces.forEach(s=>{const b=document.createElement("button");b.className="drawing-view-tab"+(drawingState.surface===s.id?" active":"");b.textContent=s.label;b.onclick=()=>{drawingState.surface=s.id;drawingState.selectedObjectId=null;buildTabs();renderAll()};drawingTabbar.appendChild(b)})}
     function clampObj(o){const p=plane(o.surface);o.w=clamp(o.w,10,p.width);o.h=clamp(o.h,10,p.height);o.x=clamp(o.x,0,p.width-o.w);o.y=clamp(o.y,0,p.height-o.h)}
@@ -2605,9 +2631,42 @@
     function cloneCabinet(){const b=currentCabinet(),c=JSON.parse(JSON.stringify(b));c.id=drawingState.nextCabinetId++;c.name=b.name+" 복사";c.objects.forEach(o=>o.id=drawingState.nextObjectId++);drawingState.cabinets.push(c);drawingState.selectedCabinetId=c.id;syncInputs();renderAll()}
     function deleteCabinet(){if(drawingState.cabinets.length<=1){setStatus("함체는 최소 1개가 필요합니다.");return}drawingState.cabinets=drawingState.cabinets.filter(c=>c.id!==drawingState.selectedCabinetId);drawingState.selectedCabinetId=drawingState.cabinets[0].id;syncInputs();renderAll()}
     function renderAll(){buildTabs();render2d();render3d();renderStackList();renderStackPreview();updateObjectPanel()}
-    function save(){localStorage.setItem("gwangtelecom_drawing_v85",JSON.stringify(drawingState));setStatus("함체 설계 상태를 저장했습니다.")}
-    function reset(){localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
-    function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_2D도면.svg";a.click();URL.revokeObjectURL(url)}
+    function persistDrawing(){localStorage.setItem("gwangtelecom_drawing_v85",JSON.stringify(drawingState));setStatus("손도면 작업 상태를 저장했습니다.")}
+    function reset(){if(!confirm("손도면 작업을 초기화하시겠습니까?"))return;localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
+    function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_현재면_손도면.svg";a.click();URL.revokeObjectURL(url)}
+    function setExportProgress(show,text="파일을 생성하고 있습니다…"){const el=$("exportProgress");if(!el)return;el.textContent=text;el.classList.toggle("show",show)}
+    function svgToImage(svg){return new Promise((resolve,reject)=>{const source=new XMLSerializer().serializeToString(svg),blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=e=>{URL.revokeObjectURL(url);reject(e)};img.src=url})}
+    async function buildDrawingSheetCanvas(){
+      setExportProgress(true,"전체 면 도면을 한 장으로 구성하고 있습니다…");
+      const previousSurface=drawingState.surface,previousSelected=drawingState.selectedObjectId;
+      const captured=[];
+      try{
+        drawingState.selectedObjectId=null;
+        for(const surface of drawingSurfaces){drawingState.surface=surface.id;render2d();captured.push({label:surface.label,img:await svgToImage(drawingCanvas)})}
+      }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;buildTabs();renderAll()}
+      const canvas=document.createElement("canvas"),W=1800,H=2300,margin=70,gap=34,header=150,cellW=(W-margin*2-gap)/2,cellH=(H-header-margin-gap*3)/4;
+      canvas.width=W;canvas.height=H;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);ctx.fillStyle="#172033";ctx.font="700 50px sans-serif";ctx.fillText("광전기통신 손도면 생성기",margin,70);ctx.font="26px sans-serif";ctx.fillStyle="#526174";const c=currentCabinet();ctx.fillText(`${c.name} · ${c.width} × ${c.height} × ${c.depth} mm · ${c.material} · ${c.thickness}`,margin,116);
+      captured.forEach((item,i)=>{const col=i%2,row=Math.floor(i/2),x=margin+col*(cellW+gap),y=header+row*(cellH+gap);ctx.fillStyle="#f7f9fc";ctx.fillRect(x,y,cellW,cellH);ctx.strokeStyle="#c9d3e1";ctx.lineWidth=2;ctx.strokeRect(x,y,cellW,cellH);ctx.fillStyle="#174f91";ctx.font="700 28px sans-serif";ctx.fillText(item.label,x+22,y+38);const maxW=cellW-32,maxH=cellH-60,scale=Math.min(maxW/item.img.width,maxH/item.img.height),dw=item.img.width*scale,dh=item.img.height*scale;ctx.drawImage(item.img,x+(cellW-dw)/2,y+50+(maxH-dh)/2,dw,dh)});
+      ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),W-margin-260,H-24);setExportProgress(false);return canvas
+    }
+    function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+    function canvasToBlob(canvas,type="image/png",quality=.95){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("이미지 생성 실패")),type,quality))}
+    function dataUrlBytes(dataUrl){const bin=atob(dataUrl.split(",")[1]),out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
+    function makePdfFromCanvas(canvas){
+      const jpeg=dataUrlBytes(canvas.toDataURL("image/jpeg",.92)),enc=new TextEncoder(),parts=[],offsets=[0];let size=0;
+      const add=v=>{const b=typeof v==="string"?enc.encode(v):v;parts.push(b);size+=b.length};
+      add("%PDF-1.4\n%âãÏÓ\n");
+      const obj=(n,body)=>{offsets[n]=size;add(`${n} 0 obj\n${body}\nendobj\n`)};
+      obj(1,"<< /Type /Catalog /Pages 2 0 R >>");obj(2,"<< /Type /Pages /Kids [3 0 R] /Count 1 >>");
+      const pageW=595.28,pageH=841.89,ratio=Math.min(pageW/canvas.width,pageH/canvas.height),dw=canvas.width*ratio,dh=canvas.height*ratio,x=(pageW-dw)/2,y=(pageH-dh)/2,content=`q\n${dw.toFixed(2)} 0 0 ${dh.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} cm\n/Im0 Do\nQ`;
+      obj(3,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+      offsets[4]=size;add(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);add(jpeg);add("\nendstream\nendobj\n");obj(5,`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+      const xref=size;add("xref\n0 6\n0000000000 65535 f \n");for(let i=1;i<=5;i++)add(String(offsets[i]).padStart(10,"0")+" 00000 n \n");add(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);return new Blob(parts,{type:"application/pdf"})
+    }
+    async function getDrawingFiles(){const canvas=await buildDrawingSheetCanvas(),png=await canvasToBlob(canvas),pdf=makePdfFromCanvas(canvas);return{canvas,pngFile:new File([png],"광전기통신_손도면.png",{type:"image/png"}),pdfFile:new File([pdf],"광전기통신_손도면.pdf",{type:"application/pdf"})}}
+    async function saveDrawingAs(kind){try{persistDrawing();const files=await getDrawingFiles();if(kind==="pdf")downloadBlob(files.pdfFile,files.pdfFile.name);else downloadBlob(files.pngFile,files.pngFile.name);setStatus(kind==="pdf"?"전체 면 PDF를 저장했습니다.":"전체 면 PNG를 저장했습니다.")}catch(e){console.error(e);setExportProgress(false);alert("파일 생성 중 오류가 발생했습니다.")}}
+    async function shareDrawingFile(kind){try{persistDrawing();const files=await getDrawingFiles(),file=kind==="pdf"?files.pdfFile:files.pngFile;if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:"광전기통신 손도면",text:"광전기통신 손도면 생성기로 작성한 도면입니다.",files:[file]})}else{downloadBlob(file,file.name);alert("이 브라우저는 파일 직접 공유를 지원하지 않아 먼저 파일을 저장했습니다. 공유할 앱에서 저장된 파일을 첨부해 주세요.")}}catch(e){if(e&&e.name!=="AbortError"){console.error(e);setExportProgress(false);alert("공유 준비 중 오류가 발생했습니다.")}}}
+
     function restore(){try{const v=JSON.parse(localStorage.getItem("gwangtelecom_drawing_v85"));if(v&&Array.isArray(v.cabinets))Object.assign(drawingState,v)}catch(e){console.warn(e)}}
     const stackPointers=new Map();let stackRotateDrag=null,stackPinchStart=null;
     const pointerDistance=()=>{const pts=[...stackPointers.values()];return pts.length<2?0:Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y)};
@@ -2616,7 +2675,7 @@
     const endStackPointer=e=>{stackPointers.delete(e.pointerId);if(stackPointers.size===1){const p=[...stackPointers.values()][0];stackRotateDrag={x:p.x,y:p.y,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};stackPinchStart=null}else if(stackPointers.size===0){stackRotateDrag=null;stackPinchStart=null;stackPreviewCanvas.classList.remove("is-rotating")}};stackPreviewCanvas.addEventListener("pointerup",endStackPointer);stackPreviewCanvas.addEventListener("pointercancel",endStackPointer);
     stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;drawingState.stack3dView.zoom=clamp(drawingState.stack3dView.zoom*(e.deltaY>0?.9:1.1),.55,2.2);renderStackPreview();e.preventDefault()},{passive:false});
     $("stack3dResetBtn").onclick=()=>{drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};renderStackPreview()};
-    function drawingInit(){restore();if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};buildTools();syncInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=save;drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj)}
+    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};buildTools();syncInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj)}
     drawingInit();
 
     /*
@@ -3156,6 +3215,30 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   });
 })();
 </script>
+
+<script>
+(function(){
+  "use strict";
+  const modal=document.getElementById("shareModal"),body=document.getElementById("shareModalBody"),title=document.getElementById("shareModalTitle"),close=document.getElementById("shareModalClose");
+  let context=null;
+  function button(label,fn){const b=document.createElement("button");b.type="button";b.className="share-choice";b.textContent=label;b.onclick=async()=>{try{await fn()}finally{if(!["drawing-save","drawing-share"].includes(context))hide()}};body.appendChild(b)}
+  function help(text){const p=document.createElement("p");p.className="share-help";p.textContent=text;body.appendChild(p)}
+  function hide(){modal.classList.remove("open");context=null}
+  window.openShareModal=function(type){context=type;body.innerHTML="";modal.classList.add("open");
+    if(type==="drawing-save"){title.textContent="전체 면 도면 저장";button("PNG 이미지로 저장",()=>saveDrawingAs("png"));button("PDF 파일로 저장",()=>saveDrawingAs("pdf"));help("정면·뒷면·내부·좌측면·우측면·상부면·하부면을 한 장에 배치하여 저장합니다.")}
+    else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingFile("png"));help("카카오톡 버튼은 모바일·지원 브라우저의 시스템 공유창을 열며, 목록에서 카카오톡을 선택합니다. 지원하지 않는 PC에서는 파일을 먼저 저장합니다.")}
+  };
+  async function buildProductCard(kind){
+    const isRack=kind==="rack",select=document.getElementById(isRack?"rackProductSelect":"materialItemSelect"),group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=select?.value||"선택된 제품 없음",sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("광전기통신 제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
+    if(img&&img.src&&img.style.display!=="none"&&img.complete&&img.naturalWidth){const scale=Math.min(1000/img.naturalWidth,520/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,600-w/2,250+(520-h)/2,w,h)}else{ctx.fillStyle="#f4f7fb";ctx.fillRect(80,230,1040,560);ctx.fillStyle="#8a97a8";ctx.font="700 30px sans-serif";ctx.textAlign="center";ctx.fillText("등록된 제품 이미지가 없습니다.",600,515);ctx.textAlign="left"}
+    ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),860,860);const blob=await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("이미지 생성 실패")),"image/png"));return{file:new File([blob],`광전기통신_${name.replace(/[\\/:*?\"<>|]/g,"_")}.png`,{type:"image/png"}),name}
+  }
+  async function shareProduct(kind,channel){try{const {file,name}=await buildProductCard(kind),text=`광전기통신 제품정보 - ${name}`;if(channel==="email"){downloadBlob(file,file.name);location.href="mailto:?subject="+encodeURIComponent(text)+"&body="+encodeURIComponent("제품 이미지 파일을 저장했습니다. 메일에 첨부해 주세요.");return}if(channel==="sms"){downloadBlob(file,file.name);location.href="sms:?&body="+encodeURIComponent(text+" (저장된 이미지 파일을 첨부해 주세요.)");return}if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:text,text,files:[file]})}else{downloadBlob(file,file.name);alert("직접 공유를 지원하지 않아 제품 이미지를 저장했습니다. 카카오톡이나 다른 앱에서 파일을 첨부해 주세요.")}}catch(e){if(e&&e.name!=="AbortError"){console.error(e);alert("제품 공유 준비 중 오류가 발생했습니다.")}}}
+  function openProduct(kind){context=kind;body.innerHTML="";title.textContent=kind==="rack"?"랙 제품 공유":"자재 제품 공유";modal.classList.add("open");button("시스템 공유 · 카카오톡",()=>shareProduct(kind,"system"));button("이메일로 공유",()=>shareProduct(kind,"email"));button("문자메시지로 공유",()=>shareProduct(kind,"sms"));help("모바일에서는 이미지 파일이 포함된 시스템 공유창이 열립니다. 카카오톡을 선택할 수 있습니다. PC에서 파일 공유가 지원되지 않으면 이미지가 먼저 저장됩니다.")}
+  document.getElementById("rackShareBtn")?.addEventListener("click",()=>openProduct("rack"));document.getElementById("materialShareBtn")?.addEventListener("click",()=>openProduct("material"));close.onclick=hide;modal.addEventListener("click",e=>{if(e.target===modal)hide()});document.addEventListener("keydown",e=>{if(e.key==="Escape")hide()});
+})();
+</script>
+
 <script>
   // 서비스 워커 등록: 설치 후 오프라인에서도 주요 화면과 이미지를 사용할 수 있습니다.
   if ('serviceWorker' in navigator) {
