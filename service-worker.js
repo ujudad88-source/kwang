@@ -1,30 +1,49 @@
-const CACHE_NAME = 'gwangjeon-ui-v0.0.1';
-const ASSETS = [
+const CACHE_NAME = "gwang-v0.0.2";
+const APP_ASSETS = [
   './',
   './index.html',
-  './styles.css',
-  './app.js',
   './manifest.webmanifest',
-  './assets/favicon.svg'
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/apple-touch-icon.png',
+  './assets/cabinet_rack.png',
+  './assets/open_rack.png',
+  './assets/server_rack.png',
+  './assets/gwangtelecom_logo.png',
+  './assets/cable_hook_horizontal.png',
+  './assets/ground/iron_up.png',
+  './assets/ground/iron_down.png',
+  './assets/ground/iron_left.png',
+  './assets/ground/iron_right.png',
+  './assets/ground/copper_up.png',
+  './assets/ground/copper_down.png',
+  './assets/ground/copper_left.png',
+  './assets/ground/copper_right.png'
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)));
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((keys) => Promise.all(
-      keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
     ))
   );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    fetch(event.request)
+      .then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
   );
 });
