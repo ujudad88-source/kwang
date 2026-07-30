@@ -1,4 +1,4 @@
-const CACHE_NAME = "gwang-v96";
+const CACHE_NAME = "gwang-v97";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -9,7 +9,16 @@ const APP_ASSETS = [
   './assets/cabinet_rack.png',
   './assets/open_rack.png',
   './assets/server_rack.png',
-  './assets/gwangtelecom_logo.png'
+  './assets/gwangtelecom_logo.png',
+  './assets/cable_hook_horizontal.png',
+  './assets/ground/iron_up.png',
+  './assets/ground/iron_down.png',
+  './assets/ground/iron_left.png',
+  './assets/ground/iron_right.png',
+  './assets/ground/copper_up.png',
+  './assets/ground/copper_down.png',
+  './assets/ground/copper_left.png',
+  './assets/ground/copper_right.png'
 ];
 
 self.addEventListener('install', event => {
