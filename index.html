@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.17</title>
+<title>광전기통신 영업지원 시스템 v0.0.18</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1476,7 +1476,78 @@
 
 
     .material-select-grid-single {
-      grid-template-columns: minmax(0, 520px);
+      grid-template-columns: minmax(220px, 520px) minmax(280px, 1fr);
+      align-items: end;
+    }
+
+    .material-search-group {
+      min-width: 0;
+    }
+
+    .material-search-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .material-search-input {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 15px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .material-search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    }
+
+    .material-search-input:disabled {
+      background: #f3f6fa;
+      color: #8a96a8;
+      cursor: not-allowed;
+    }
+
+    .material-search-btn {
+      min-width: 92px;
+      min-height: 52px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 7px 16px rgba(37, 99, 235, .18);
+      transition: transform .16s ease, filter .16s ease;
+    }
+
+    .material-search-btn:hover { filter: brightness(.96); }
+    .material-search-btn:active { transform: translateY(1px); }
+    .material-search-btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+    .material-search-mark {
+      padding: 0 .08em;
+      border-radius: 4px;
+      background: #fff0a8;
+      color: inherit;
+      font-weight: 900;
+    }
+
+    .material-search-status {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      background: #f8faff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .material-expand-cell {
@@ -1567,6 +1638,9 @@
     }
 
     @media (max-width: 640px) {
+      .material-select-grid-single { grid-template-columns: 1fr; }
+      .material-search-controls { grid-template-columns: minmax(0, 1fr) 82px; }
+      .material-search-btn { min-width: 82px; padding: 0 12px; }
       .material-expand-cell { width: auto; }
       .material-expand-btn { min-height: 34px; padding: 6px 10px; font-size: 12px; }
     }
@@ -2508,7 +2582,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.17</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.18</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2845,6 +2919,13 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <option value="">제품군을 선택하세요</option>
 </select>
 </div>
+<div class="material-search-group">
+<label class="material-select-label" for="materialSearchInput">품목·규격 검색</label>
+<div class="material-search-controls">
+<input class="material-search-input" id="materialSearchInput" type="search" placeholder="품목 또는 규격을 입력하세요" autocomplete="off" disabled/>
+<button class="material-search-btn" id="materialSearchBtn" type="button" disabled>검색</button>
+</div>
+</div>
 </div>
 </section>
 <section class="card material-image-card share-card-wrap">
@@ -3054,7 +3135,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       else if(o.type==="doubleLock")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(20,h*.72),fill:black},"⊃"));
     }
     function render2d(){const c=currentCabinet(),p=plane(drawingState.surface),vw=760,vh=700,pad={l:105,r:55,t:60,b:90},s=Math.min((vw-pad.l-pad.r)/p.width,(vh-pad.t-pad.b)/p.height),w=p.width*s,h=p.height*s,x=pad.l+(vw-pad.l-pad.r-w)/2,y=pad.t+(vh-pad.t-pad.b-h)/2;drawingState.layout={x,y,s,w,h,p};drawingCanvas.innerHTML="";drawingCanvas.append(svgEl("rect",{x:0,y:0,width:vw,height:vh,fill:"#fff"}),svgEl("text",{x:24,y:30,"font-size":16,"font-weight":800,fill:"#111827"},`${drawingSurfaces.find(v=>v.id===drawingState.surface).label} · ${c.name}`));drawingCanvas.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"#fff",stroke:"#111827","stroke-width":2}));
-      currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});if(o.surface==="inside"){g.appendChild(svgEl("rect",{x:sx+2,y:sy+2,width:sw,height:sh,rx:3,fill:"rgba(15,23,42,.12)",stroke:"none"}));const r=Math.max(1.6,Math.min(3.2,Math.min(sw,sh)*.035));[[sx+5,sy+5],[sx+sw-5,sy+5],[sx+5,sy+sh-5],[sx+sw-5,sy+sh-5]].forEach(([cx,cy])=>g.appendChild(svgEl("circle",{cx,cy,r,fill:"#64748b",opacity:.68}))) }drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
+      currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
       drawingCanvas.append(svgEl("line",{x1:x,y1:y+h+30,x2:x+w,y2:y+h+30,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x+w/2,y:y+h+53,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800},`${p.width}`),svgEl("line",{x1:x-30,y1:y,x2:x-30,y2:y+h,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x-42,y:y+h/2,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800,transform:`rotate(-90 ${x-42} ${y+h/2})`},`${p.height}`));
     }
     function drawCabinet3d(svg,c,ox,oy,scale,objects=true){
@@ -3067,7 +3148,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       if(objects){
         const faces={
           back:{origin:E,ux:[1,0],vy:[0,1],opacity:.58},
-          inside:{origin:[A[0]+dep*.94,A[1]-dep*.94],ux:[1,0],vy:[0,1],opacity:.92},
+          inside:{origin:[A[0]+dep*.22,A[1]-dep*.22],ux:[1,0],vy:[0,1],opacity:.68},
           left:{origin:A,ux:[diag,-diag],vy:[0,1],opacity:.78},
           right:{origin:B,ux:[diag,-diag],vy:[0,1],opacity:.92},
           top:{origin:E,ux:[1,0],vy:[-diag,diag],opacity:.9},
@@ -3083,7 +3164,6 @@ body:not(.auth-locked) .bottom-nav{display:grid}
               opacity:face.opacity
             });
             const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${(o.x+o.w/2)*scale} ${(o.y+o.h/2)*scale})`});
-            if(surface==="inside")inner.appendChild(svgEl("rect",{x:o.x*scale+1.5,y:o.y*scale+1.5,width:o.w*scale,height:o.h*scale,rx:2,fill:"rgba(15,23,42,.18)",stroke:"none"}));
             drawShape(inner,o,o.x*scale,o.y*scale,o.w*scale,o.h*scale,true);
             outer.appendChild(inner);
             svg.appendChild(outer);
@@ -3119,7 +3199,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         [["A","B"],["B","C"],["C","D"],["D","A"],["E","F"],["F","G"],["G","H"],["H","E"],["A","E"],["B","F"],["C","G"],["D","H"]].forEach(([a,b])=>line(pts[a],pts[b]));
         const faceBases={
           front:{o:[x0,y0,z0],u:[1,0,0],v:[0,1,0],opacity:1},back:{o:[x0,y0,z1],u:[1,0,0],v:[0,1,0],opacity:.52},
-          inside:{o:[x0,y0,z1-Math.max(2,c.depth*.025)],u:[1,0,0],v:[0,1,0],opacity:.92},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.76},
+          inside:{o:[x0,y0,z0+c.depth*.18],u:[1,0,0],v:[0,1,0],opacity:.65},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.76},
           right:{o:[x1,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.9},top:{o:[x0,y0,z0],u:[1,0,0],v:[0,0,1],opacity:.86},bottom:{o:[x0,y1,z0],u:[1,0,0],v:[0,0,1],opacity:.78}
         };
         ["back","inside","left","right","top","bottom","front"].forEach(surface=>{
@@ -3127,7 +3207,6 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           c.objects.filter(o=>o.surface===surface).forEach(o=>{
             const outer=svgEl("g",{transform:`matrix(${pu.x-po.x} ${pu.y-po.y} ${pv.x-po.x} ${pv.y-po.y} ${po.x} ${po.y})`,opacity:f.opacity});
             const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`});
-            if(surface==="inside")inner.appendChild(svgEl("rect",{x:o.x+1.5,y:o.y+1.5,width:o.w,height:o.h,rx:2,fill:"rgba(15,23,42,.18)",stroke:"none"}));
             drawShape(inner,o,o.x,o.y,o.w,o.h,true);outer.appendChild(inner);stackPreviewCanvas.appendChild(outer);
           });
         });
@@ -3152,17 +3231,16 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     function setExportProgress(show,text="파일을 생성하고 있습니다…"){const el=$("exportProgress");if(!el)return;el.textContent=text;el.classList.toggle("show",show)}
     function svgToImage(svg){return new Promise((resolve,reject)=>{const source=new XMLSerializer().serializeToString(svg),blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=e=>{URL.revokeObjectURL(url);reject(e)};img.src=url})}
     async function buildDrawingSheetCanvas(){
-      setExportProgress(true,"전체 면 도면과 단독함체를 한 장으로 구성하고 있습니다…");
-      const previousSurface=drawingState.surface,previousSelected=drawingState.selectedObjectId,previousMode=drawingState.mode3d;
+      setExportProgress(true,"전체 면 도면을 한 장으로 구성하고 있습니다…");
+      const previousSurface=drawingState.surface,previousSelected=drawingState.selectedObjectId;
       const captured=[];
       try{
         drawingState.selectedObjectId=null;
         for(const surface of drawingSurfaces){drawingState.surface=surface.id;render2d();captured.push({label:surface.label,img:await svgToImage(drawingCanvas)})}
-        drawingState.mode3d="single";render3d();captured.push({label:"단독함체 3D",img:await svgToImage(drawing3dCanvas),standalone:true});
-      }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;drawingState.mode3d=previousMode;buildTabs();renderAll()}
+      }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;buildTabs();renderAll()}
       const canvas=document.createElement("canvas"),W=1800,H=2300,margin=70,gap=34,header=150,cellW=(W-margin*2-gap)/2,cellH=(H-header-margin-gap*3)/4;
       canvas.width=W;canvas.height=H;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);ctx.fillStyle="#172033";ctx.font="700 50px sans-serif";ctx.fillText("광전기통신 손도면 생성기",margin,70);ctx.font="26px sans-serif";ctx.fillStyle="#526174";const c=currentCabinet();ctx.fillText(`${c.name} · ${c.width} × ${c.height} × ${c.depth} mm · ${c.material} · ${c.thickness}`,margin,116);
-      captured.forEach((item,i)=>{const col=i%2,row=Math.floor(i/2),x=margin+col*(cellW+gap),y=header+row*(cellH+gap);ctx.fillStyle=item.standalone?"#f3f7ff":"#f7f9fc";ctx.fillRect(x,y,cellW,cellH);ctx.strokeStyle=item.standalone?"#8fb2e8":"#c9d3e1";ctx.lineWidth=2;ctx.strokeRect(x,y,cellW,cellH);ctx.fillStyle="#174f91";ctx.font="700 28px sans-serif";ctx.fillText(item.label,x+22,y+38);const maxW=cellW-32,maxH=cellH-60,scale=Math.min(maxW/item.img.width,maxH/item.img.height),dw=item.img.width*scale,dh=item.img.height*scale;ctx.drawImage(item.img,x+(cellW-dw)/2,y+50+(maxH-dh)/2,dw,dh)});
+      captured.forEach((item,i)=>{const col=i%2,row=Math.floor(i/2),x=margin+col*(cellW+gap),y=header+row*(cellH+gap);ctx.fillStyle="#f7f9fc";ctx.fillRect(x,y,cellW,cellH);ctx.strokeStyle="#c9d3e1";ctx.lineWidth=2;ctx.strokeRect(x,y,cellW,cellH);ctx.fillStyle="#174f91";ctx.font="700 28px sans-serif";ctx.fillText(item.label,x+22,y+38);const maxW=cellW-32,maxH=cellH-60,scale=Math.min(maxW/item.img.width,maxH/item.img.height),dw=item.img.width*scale,dh=item.img.height*scale;ctx.drawImage(item.img,x+(cellW-dw)/2,y+50+(maxH-dh)/2,dw,dh)});
       ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),W-margin-260,H-24);setExportProgress(false);return canvas
     }
     function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
@@ -3705,8 +3783,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialInfoTitle = document.getElementById("materialInfoTitle");
     const materialUsage = document.getElementById("materialUsage");
     const materialNote = document.getElementById("materialNote");
+    const materialSearchInput = document.getElementById("materialSearchInput");
+    const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.17: 내부 객체 뒤판 부착 표현 및 전체 면 공유 이미지에 단독함체 3D 추가.
+    // v0.0.18: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
+    // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
     const materialCatalog = {
       "통합배선": [
         { id: "modular-jack", name: "모듈라잭", spec: "미등록", price: null, image: "", usage: "", note: "" },
@@ -3801,8 +3882,34 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       });
     }
 
+    function escapeMaterialHTML(value) {
+      return String(value ?? "").replace(/[&<>"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[char]));
+    }
+
+    function highlightMaterialMatch(value, keyword) {
+      const text = String(value ?? "");
+      if (!keyword) return escapeMaterialHTML(text);
+      const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return escapeMaterialHTML(text).replace(new RegExp(`(${escapedKeyword})`, "gi"), '<mark class="material-search-mark">$1</mark>');
+    }
+
+    function getMaterialSearchResults(items, keyword) {
+      if (!keyword) return items.map(item => ({ item, nameMatched: false, matchedVariants: null }));
+      const lowerKeyword = keyword.toLocaleLowerCase("ko-KR");
+      return items.map(item => {
+        const nameMatched = item.name.toLocaleLowerCase("ko-KR").includes(lowerKeyword);
+        const matchedVariants = Array.isArray(item.variants)
+          ? item.variants.filter(variant => String(variant.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword))
+          : [];
+        const specMatched = !item.variants && String(item.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword);
+        return (nameMatched || specMatched || matchedVariants.length) ? { item, nameMatched, specMatched, matchedVariants } : null;
+      }).filter(Boolean);
+    }
+
     function renderMaterialTable(groupName) {
       const items = materialCatalog[groupName] || [];
+      const keyword = materialSearchInput.value.trim();
+      const searchResults = getMaterialSearchResults(items, keyword);
       materialPriceArea.className = "material-price-placeholder";
       materialPriceArea.innerHTML = "";
 
@@ -3816,13 +3923,25 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         return;
       }
 
+      if (keyword && !searchResults.length) {
+        materialPriceArea.innerHTML = `<strong>검색 결과가 없습니다.</strong><br>품목명 또는 규격을 다시 확인해 주세요.`;
+        return;
+      }
+
       materialPriceArea.className = "material-price-table-wrap";
+      if (keyword) {
+        const status = document.createElement("div");
+        status.className = "material-search-status";
+        status.textContent = `“${keyword}” 검색 결과 ${searchResults.length}개 품목`;
+        materialPriceArea.appendChild(status);
+      }
       const table = document.createElement("table");
       table.className = "material-price-table";
       table.innerHTML = "<thead><tr><th>품목</th><th>규격</th><th>단가</th></tr></thead>";
       const tbody = document.createElement("tbody");
 
-      items.forEach(item => {
+      searchResults.forEach(result => {
+        const item = result.item;
         const hasVariants = Array.isArray(item.variants) && item.variants.length > 0;
         const row = document.createElement("tr");
         row.className = "material-price-row";
@@ -3830,9 +3949,10 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         row.dataset.selectionKey = item.id;
 
         if (hasVariants) {
-          const isExpanded = expandedMaterialItems.has(item.id);
+          const searchMatchedVariants = keyword ? result.matchedVariants : null;
+          const isExpanded = expandedMaterialItems.has(item.id) || (keyword && searchMatchedVariants.length > 0);
           row.innerHTML = `
-            <td><strong>${item.name}</strong></td>
+            <td><strong>${highlightMaterialMatch(item.name, keyword)}</strong></td>
             <td class="material-expand-cell">
               <button class="material-expand-btn" type="button" aria-expanded="${isExpanded ? "true" : "false"}" aria-controls="variants-${item.id}">
                 <span class="material-expand-icon" aria-hidden="true"></span>
@@ -3862,19 +3982,20 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           tbody.appendChild(row);
 
           if (isExpanded) {
-            item.variants.forEach(variant => {
+            const variantsToRender = keyword && searchMatchedVariants.length > 0 ? searchMatchedVariants : item.variants;
+            variantsToRender.forEach(variant => {
               const variantRow = document.createElement("tr");
               variantRow.className = "material-variant-row";
               variantRow.id = `variants-${item.id}-${variant.id}`;
               variantRow.dataset.itemId = item.id;
               variantRow.dataset.selectionKey = variant.id;
-              variantRow.innerHTML = `<td class="material-variant-name">${item.name}</td><td><strong>${variant.spec || "미등록"}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
+              variantRow.innerHTML = `<td class="material-variant-name">${highlightMaterialMatch(item.name, keyword)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
               makeSelectableRow(variantRow, () => applyMaterialSelection(item, variant));
               tbody.appendChild(variantRow);
             });
           }
         } else {
-          row.innerHTML = `<td><strong>${item.name}</strong></td><td>${item.spec || "미등록"}</td><td>${formatMaterialPrice(item.price)}</td>`;
+          row.innerHTML = `<td><strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td>${highlightMaterialMatch(item.spec || "미등록", keyword)}</td><td>${formatMaterialPrice(item.price)}</td>`;
           makeSelectableRow(row, () => applyMaterialSelection(item, null));
           tbody.appendChild(row);
         }
@@ -3903,9 +4024,30 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       expandedMaterialItems.clear();
       selectedMaterialKey = "";
       window.currentMaterialSelectionName = "";
+      materialSearchInput.value = "";
+      const enabled = Boolean(materialGroupSelect.value);
+      materialSearchInput.disabled = !enabled;
+      materialSearchBtn.disabled = !enabled;
       renderMaterialTable(materialGroupSelect.value);
       showMaterialImage(null);
       resetMaterialInfo();
+      if (enabled) materialSearchInput.focus();
+    });
+
+    materialSearchInput.addEventListener("input", () => {
+      renderMaterialTable(materialGroupSelect.value);
+    });
+
+    materialSearchInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        renderMaterialTable(materialGroupSelect.value);
+      }
+    });
+
+    materialSearchBtn.addEventListener("click", () => {
+      renderMaterialTable(materialGroupSelect.value);
+      materialSearchInput.focus();
     });
 
     renderMaterialTable("");
@@ -4146,7 +4288,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   function help(text){const p=document.createElement("p");p.className="share-help";p.textContent=text;body.appendChild(p)}
   function hide(){modal.classList.remove("open");context=null}
   window.openShareModal=function(type){context=type;body.innerHTML="";modal.classList.add("open");
-    if(type==="drawing-save"){title.textContent="전체 면 도면 저장";button("PNG 이미지로 저장",()=>saveDrawingAs("png"));button("PDF 파일로 저장",()=>saveDrawingAs("pdf"));help("정면·뒷면·내부·좌측면·우측면·상부면·하부면과 단독함체 3D를 한 장에 배치하여 저장합니다.")}
+    if(type==="drawing-save"){title.textContent="전체 면 도면 저장";button("PNG 이미지로 저장",()=>saveDrawingAs("png"));button("PDF 파일로 저장",()=>saveDrawingAs("pdf"));help("정면·뒷면·내부·좌측면·우측면·상부면·하부면을 한 장에 배치하여 저장합니다.")}
     else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingFile("png"));help("카카오톡 버튼은 모바일·지원 브라우저의 시스템 공유창을 열며, 목록에서 카카오톡을 선택합니다. 지원하지 않는 PC에서는 파일을 먼저 저장합니다.")}
   };
   async function buildProductCard(kind){
