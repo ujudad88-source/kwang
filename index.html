@@ -2124,6 +2124,21 @@ body:not(.auth-locked) .bottom-nav{display:grid}
   .drawing-controls{grid-template-columns:repeat(4,minmax(0,1fr))!important}.drawing-controls .drawing-primary-btn{grid-column:auto!important}
 }
 
+
+/* v0.0.5: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
+.auth-version-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
+.auth-version-item{padding:10px 8px;border:1px solid #dce6f2;border-radius:10px;background:#f7faff;text-align:center}
+.auth-version-item strong{display:block;font-size:12px;color:#174f91;margin-bottom:3px}.auth-version-item span{font-size:11px;color:#667085}
+.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.auth-secondary{min-height:40px;border:1px solid #cfd9e6;border-radius:10px;background:#fff;color:#344054;font-weight:800;cursor:pointer}
+.auth-submit.is-loading{pointer-events:none;opacity:.75}.auth-submit.is-success{background:#16803c}.auth-status{min-height:18px;margin:8px 0 0;font-size:12px;font-weight:800;color:#174f91;text-align:center}
+.back-button{display:none;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid #d4deea;border-radius:10px;background:#fff;color:#234;cursor:pointer;font-weight:800;white-space:nowrap}
+.back-button.visible{display:inline-flex}.breadcrumb{display:none;align-items:center;gap:7px;margin:-14px 0 18px;padding:0 4px;color:#667085;font-size:12px;font-weight:700}.breadcrumb.visible{display:flex}.breadcrumb-home{color:#174f91}.breadcrumb-sep{color:#a7b1bf}
+.panel.active{animation:panelSlideForward .22s ease both}body.nav-back .panel.active{animation-name:panelSlideBack}
+@keyframes panelSlideForward{from{opacity:.25;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes panelSlideBack{from{opacity:.25;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:760px){.back-button{min-height:38px;padding:0 9px;font-size:12px}.breadcrumb{margin:-18px 0 12px;padding:0 2px}.auth-version-box{grid-template-columns:1fr 1fr}.auth-actions{grid-template-columns:1fr}.topbar-actions{flex-wrap:wrap;justify-content:flex-end}}
+@media(prefers-reduced-motion:reduce){.panel.active{animation:none!important}}
+
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2147,8 +2162,17 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <input aria-label="암호 입력" class="auth-input" id="authPassword" inputmode="numeric" maxlength="20" placeholder="암호 입력" required="" type="password"/>
 <button aria-label="암호 표시" class="auth-toggle" id="authToggle" type="button">◉</button>
 </div>
-<button class="auth-submit" type="submit">로그인</button>
+<button class="auth-submit" id="authSubmit" type="submit">로그인</button>
+<p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
+<div class="auth-version-box" aria-label="시스템 정보">
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.5</span></div>
+  <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
+</div>
+<div class="auth-actions">
+  <button class="auth-secondary" id="authClear" type="button">입력 지우기</button>
+  <button class="auth-secondary" id="authRefresh" type="button">화면 새로고침</button>
+</div>
 <p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
 </form>
 </section>
@@ -2170,11 +2194,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 </span>
 </div>
 <button class="lock-button" hidden="" id="lockButton" type="button">🔒 잠금</button>
-<button class="home-button" id="homeButton" type="button">
-          ← 첫 화면
-        </button>
+<button class="back-button" id="backButton" type="button" aria-label="이전 화면">← 뒤로</button>
+<button class="home-button" id="homeButton" type="button">⌂ 첫 화면</button>
 </div>
 </div>
+<div class="breadcrumb" id="breadcrumb" aria-label="현재 위치"><span class="breadcrumb-home">홈</span><span class="breadcrumb-sep">›</span><span id="breadcrumbCurrent">첫 화면</span></div>
 <section class="panel active" id="homePanel">
 <header class="hero">
 <span class="eyebrow">제품 정보 통합 관리</span>
@@ -2547,32 +2571,68 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const panels = document.querySelectorAll(".panel");
     const partCards = document.querySelectorAll(".part-card");
     const homeButton = document.getElementById("homeButton");
+    const backButton = document.getElementById("backButton");
+    const breadcrumb = document.getElementById("breadcrumb");
+    const breadcrumbCurrent = document.getElementById("breadcrumbCurrent");
+    const PANEL_LABELS = {
+      homePanel: "첫 화면", drawingPanel: "손도면 생성", rackPanel: "랙 파트",
+      boxPanel: "함 파트", materialPanel: "자재 파트", specGuidePanel: "명세서 작성 요령",
+      manualPanel: "업무 매뉴얼", educationPanel: "교육 자료"
+    };
+    let currentPanelId = "homePanel";
 
-    function showPanel(panelId) {
-      panels.forEach((panel) => {
-        panel.classList.toggle("active", panel.id === panelId);
-      });
+    function validPanel(panelId) {
+      return Boolean(panelId && document.getElementById(panelId)?.classList.contains("panel"));
+    }
 
-      homeButton.style.display = panelId === "homePanel" ? "none" : "inline-flex";
+    function renderPanel(panelId, options = {}) {
+      if (!validPanel(panelId)) panelId = "homePanel";
+      const isBack = options.direction === "back";
+      document.body.classList.toggle("nav-back", isBack);
+      panels.forEach((panel) => panel.classList.toggle("active", panel.id === panelId));
+      currentPanelId = panelId;
+
+      const isHome = panelId === "homePanel";
+      homeButton.style.display = isHome ? "none" : "inline-flex";
+      backButton.classList.toggle("visible", !isHome);
+      breadcrumb.classList.toggle("visible", !isHome);
+      breadcrumbCurrent.textContent = PANEL_LABELS[panelId] || "현재 화면";
       document.querySelectorAll(".bottom-nav-btn").forEach((btn) => btn.classList.toggle("active", btn.dataset.target === panelId));
       if (panelId === "drawingPanel") applySelectedSpecToDrawing();
       haptic(10);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
+      setTimeout(() => document.body.classList.remove("nav-back"), 260);
     }
 
-    partCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        showPanel(card.dataset.panel);
-      });
+    function navigateTo(panelId, options = {}) {
+      if (!validPanel(panelId)) panelId = "homePanel";
+      if (panelId === currentPanelId && !options.replace) return;
+      const state = { appPanel: panelId };
+      if (options.replace) history.replaceState(state, "", "#" + panelId);
+      else history.pushState(state, "", "#" + panelId);
+      renderPanel(panelId, { direction: options.direction || "forward", instant: options.instant });
+    }
+
+    function goBack() {
+      if (currentPanelId === "homePanel") return;
+      if (history.length > 1) history.back();
+      else navigateTo("homePanel", { replace: true, direction: "back" });
+    }
+
+    partCards.forEach((card) => card.addEventListener("click", () => navigateTo(card.dataset.panel)));
+    homeButton.addEventListener("click", () => navigateTo("homePanel"));
+    backButton.addEventListener("click", goBack);
+    document.querySelectorAll(".bottom-nav-btn").forEach((btn) => btn.addEventListener("click", () => navigateTo(btn.dataset.target)));
+
+    window.addEventListener("popstate", (event) => {
+      const panelId = event.state?.appPanel || (location.hash ? location.hash.slice(1) : "homePanel");
+      renderPanel(validPanel(panelId) ? panelId : "homePanel", { direction: "back" });
     });
 
-    homeButton.addEventListener("click", () => {
-      showPanel("homePanel");
-    });
-
-    document.querySelectorAll(".bottom-nav-btn").forEach((btn) => {
-      btn.addEventListener("click", () => showPanel(btn.dataset.target));
-    });
+    // 최초 진입 상태를 앱 이력으로 등록합니다. 이후 iPhone 스와이프와 Android 뒤로가기가 같은 방식으로 동작합니다.
+    const initialPanel = validPanel(location.hash.slice(1)) ? location.hash.slice(1) : "homePanel";
+    history.replaceState({ appPanel: initialPanel }, "", "#" + initialPanel);
+    renderPanel(initialPanel, { instant: true });
 
     function haptic(duration = 8) {
       try { if (navigator.vibrate) navigator.vibrate(duration); } catch (_) {}
@@ -3346,6 +3406,19 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     const authToggle = document.getElementById("authToggle");
     const authError = document.getElementById("authError");
     const lockButton = document.getElementById("lockButton");
+    const authSubmit = document.getElementById("authSubmit");
+    const authStatus = document.getElementById("authStatus");
+    const authClear = document.getElementById("authClear");
+    const authRefresh = document.getElementById("authRefresh");
+    const networkStatus = document.getElementById("networkStatus");
+
+    function syncNetworkStatus() { networkStatus.textContent = navigator.onLine ? "온라인" : "오프라인"; }
+    syncNetworkStatus();
+    window.addEventListener("online", syncNetworkStatus);
+    window.addEventListener("offline", syncNetworkStatus);
+
+    authClear.addEventListener("click", function () { authPassword.value = ""; authError.textContent = ""; authStatus.textContent = ""; authPassword.focus(); });
+    authRefresh.addEventListener("click", function () { location.reload(); });
 
     const savedUserName = sessionStorage.getItem(SESSION_KEY);
     const savedUser = AUTH_USERS.find(user => user.name === savedUserName);
@@ -3365,22 +3438,41 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     authForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       authError.textContent = "";
+      authStatus.textContent = "암호를 확인하고 있습니다…";
+      authSubmit.classList.add("is-loading");
+      authSubmit.textContent = "확인 중…";
 
       try {
         const enteredHash = await sha256(authPassword.value.trim());
         const matchedUser = AUTH_USERS.find(user => user.passwordHash === enteredHash);
 
         if (!matchedUser) {
+          authStatus.textContent = "";
           authError.textContent = "암호가 올바르지 않습니다.";
           authPassword.select();
           return;
         }
 
+        authStatus.textContent = "인증 완료. 첫 화면으로 이동합니다.";
+        authSubmit.classList.remove("is-loading");
+        authSubmit.classList.add("is-success");
+        authSubmit.textContent = "인증 완료 ✓";
         sessionStorage.setItem(SESSION_KEY, matchedUser.name);
-        showAuthenticatedUser(matchedUser);
+        setTimeout(function () {
+          showAuthenticatedUser(matchedUser);
+          authSubmit.classList.remove("is-success");
+          authSubmit.textContent = "로그인";
+          authStatus.textContent = "";
+        }, 350);
       } catch (error) {
         console.error("로그인 처리 오류:", error);
+        authStatus.textContent = "";
         authError.textContent = "로그인 처리 중 오류가 발생했습니다.";
+      } finally {
+        if (!authSubmit.classList.contains("is-success")) {
+          authSubmit.classList.remove("is-loading");
+          authSubmit.textContent = "로그인";
+        }
       }
     });
 
