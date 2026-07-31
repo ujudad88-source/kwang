@@ -2070,6 +2070,60 @@
     .export-progress.show{display:block}
     @media(max-width:680px){.drawing-toolbar-actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.drawing-toolbar-actions .drawing-action-btn{width:100%}.product-image-head{align-items:flex-start}.product-share-btn{padding:7px 11px}}
 
+
+
+/* v0.0.4 모바일 최적화 · 하단 메뉴 · 단가 조정 · 행 선택 */
+:root{--bottom-nav-height:72px}
+button,.part-card,.spec-table tbody tr{-webkit-tap-highlight-color:transparent}
+button,.part-card,.quick-rate-btn,.bottom-nav-btn{transition:transform .14s ease,box-shadow .14s ease,background-color .14s ease,border-color .14s ease}
+button:active,.part-card:active,.quick-rate-btn:active,.bottom-nav-btn:active{transform:scale(.96)}
+.part-title,.drawing-action-btn,.drawing-primary-btn,.home-button,.lock-button,.quick-rate-btn,.bottom-nav-label{white-space:nowrap;word-break:keep-all;writing-mode:horizontal-tb}
+.price-adjust-panel{margin:18px 0;padding:16px;border:1px solid #d8e1ec;border-radius:14px;background:#f8fafc}
+.price-adjust-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.price-adjust-head h3{margin:0;font-size:17px;color:#172033}
+.price-adjust-status{font-size:13px;font-weight:800;color:#174f91;white-space:nowrap}
+.quick-rate-grid{display:grid;grid-template-columns:repeat(9,minmax(54px,1fr));gap:7px}
+.quick-rate-btn{min-height:42px;border:1px solid #ccd7e5;border-radius:10px;background:#fff;color:#334155;font-weight:800;cursor:pointer}
+.quick-rate-btn.active{background:#174f91;border-color:#174f91;color:#fff;box-shadow:0 4px 12px rgba(23,79,145,.22)}
+.custom-rate-row{display:grid;grid-template-columns:auto minmax(92px,150px) auto auto;align-items:center;gap:8px;margin-top:12px}
+.custom-rate-row label{font-weight:800;color:#334155}
+.custom-rate-input{height:42px;border:1px solid #cbd5e1;border-radius:10px;padding:0 12px;font-size:16px;text-align:right}
+.custom-rate-unit{font-weight:800;color:#526174}
+.custom-rate-apply{height:42px;border:0;border-radius:10px;padding:0 17px;background:#172033;color:#fff;font-weight:800;cursor:pointer}
+.spec-table tbody tr{cursor:pointer;outline:none}
+.spec-table tbody tr:hover,.spec-table tbody tr.is-selected{background:#e9f2ff!important}
+.spec-table tbody tr.is-selected{box-shadow:inset 4px 0 0 #174f91}
+.spec-table tbody tr.is-selected td{font-weight:800;color:#123b69}
+.spec-table tbody tr:focus-visible{outline:2px solid #174f91;outline-offset:-2px}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:none;grid-template-columns:repeat(5,1fr);min-height:var(--bottom-nav-height);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:rgba(255,255,255,.97);border-top:1px solid #d9e2ec;box-shadow:0 -8px 24px rgba(15,23,42,.10);backdrop-filter:blur(12px)}
+.bottom-nav-btn{border:0;background:transparent;border-radius:12px;min-width:0;padding:5px 2px;color:#64748b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:800;cursor:pointer}
+.bottom-nav-btn.active{color:#174f91;background:#eef5ff}
+.bottom-nav-icon{font-size:20px;line-height:1}.bottom-nav-label{font-size:11px}
+body:not(.auth-locked) .bottom-nav{display:grid}
+@media(max-width:760px){
+  body:not(.auth-locked){padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))}
+  .page{padding-left:10px!important;padding-right:10px!important;padding-bottom:24px!important}
+  .topbar{gap:8px}.topbar-actions{gap:5px}.home-button,.lock-button{font-size:11px;padding:0 8px}
+  .part-grid{display:grid!important;grid-template-columns:1fr!important;gap:12px!important}
+  .part-card,.drawing-part-card{width:100%;min-width:0;min-height:92px!important;margin:0!important;grid-template-columns:48px minmax(0,1fr) 24px!important;padding:15px!important}
+  .part-title{font-size:17px!important;line-height:1.2!important;overflow:visible!important}
+  .part-description{min-width:0;line-height:1.45}
+  .price-adjust-panel{padding:13px;margin:14px 0}
+  .price-adjust-head{align-items:flex-start;flex-direction:column;gap:5px}
+  .quick-rate-grid{grid-template-columns:repeat(5,1fr)}
+  .quick-rate-btn{min-width:0;font-size:12px;padding:0 3px}
+  .custom-rate-row{grid-template-columns:auto 1fr auto;gap:7px}.custom-rate-apply{grid-column:1/-1;width:100%}
+  .spec-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .spec-table th,.spec-table td{padding:10px 8px;font-size:12px;white-space:nowrap}
+  .drawing-toolbar-actions{grid-template-columns:repeat(4,1fr)!important}.drawing-action-btn{min-width:0}
+}
+@media(max-width:380px){.bottom-nav-label{font-size:10px}.bottom-nav-icon{font-size:18px}.quick-rate-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-height:520px) and (orientation:landscape){
+  :root{--bottom-nav-height:58px}.bottom-nav{grid-template-columns:repeat(5,1fr);min-height:58px;padding-top:3px}.bottom-nav-btn{flex-direction:row;gap:5px}.bottom-nav-icon{font-size:17px}.bottom-nav-label{font-size:10px}
+  .part-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.part-card,.drawing-part-card{min-height:82px!important}
+  .drawing-controls{grid-template-columns:repeat(4,minmax(0,1fr))!important}.drawing-controls .drawing-primary-btn{grid-column:auto!important}
+}
+
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2215,6 +2269,31 @@
 </select>
 </div>
 </div>
+
+<section class="price-adjust-panel" id="priceAdjustPanel" hidden>
+  <div class="price-adjust-head">
+    <h3>단가 조정</h3>
+    <div class="price-adjust-status" id="priceAdjustStatus">현재 적용: 기준단가</div>
+  </div>
+  <div class="quick-rate-grid" id="quickRateGrid" aria-label="빠른 퍼센트 선택">
+    <button class="quick-rate-btn" type="button" data-rate="-20">-20%</button>
+    <button class="quick-rate-btn" type="button" data-rate="-15">-15%</button>
+    <button class="quick-rate-btn" type="button" data-rate="-10">-10%</button>
+    <button class="quick-rate-btn" type="button" data-rate="-5">-5%</button>
+    <button class="quick-rate-btn active" type="button" data-rate="0">기준</button>
+    <button class="quick-rate-btn" type="button" data-rate="5">+5%</button>
+    <button class="quick-rate-btn" type="button" data-rate="10">+10%</button>
+    <button class="quick-rate-btn" type="button" data-rate="15">+15%</button>
+    <button class="quick-rate-btn" type="button" data-rate="20">+20%</button>
+  </div>
+  <div class="custom-rate-row">
+    <label for="customRateInput">직접 입력</label>
+    <input class="custom-rate-input" id="customRateInput" type="number" inputmode="decimal" min="-100" step="0.1" value="0" aria-label="단가 조정 퍼센트">
+    <span class="custom-rate-unit">%</span>
+    <button class="custom-rate-apply" id="customRateApply" type="button">적용</button>
+  </div>
+</section>
+
 <section class="spec-table-panel" id="specTablePanel">
 <div class="spec-table-head">
 <div>
@@ -2447,6 +2526,15 @@
 
 </main>
 
+
+<nav class="bottom-nav" id="bottomNav" aria-label="모바일 하단 메뉴">
+  <button class="bottom-nav-btn active" type="button" data-target="homePanel"><span class="bottom-nav-icon">⌂</span><span class="bottom-nav-label">홈</span></button>
+  <button class="bottom-nav-btn" type="button" data-target="rackPanel"><span class="bottom-nav-icon">▦</span><span class="bottom-nav-label">랙</span></button>
+  <button class="bottom-nav-btn" type="button" data-target="boxPanel"><span class="bottom-nav-icon">□</span><span class="bottom-nav-label">함</span></button>
+  <button class="bottom-nav-btn" type="button" data-target="materialPanel"><span class="bottom-nav-icon">◫</span><span class="bottom-nav-label">자재</span></button>
+  <button class="bottom-nav-btn" type="button" data-target="drawingPanel"><span class="bottom-nav-icon">✎</span><span class="bottom-nav-label">손도면</span></button>
+</nav>
+
 <div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
   <div class="share-modal-card">
     <div class="share-modal-head"><h3 id="shareModalTitle">공유 및 저장</h3><button class="share-modal-close" id="shareModalClose" type="button" aria-label="닫기">×</button></div>
@@ -2466,6 +2554,9 @@
       });
 
       homeButton.style.display = panelId === "homePanel" ? "none" : "inline-flex";
+      document.querySelectorAll(".bottom-nav-btn").forEach((btn) => btn.classList.toggle("active", btn.dataset.target === panelId));
+      if (panelId === "drawingPanel") applySelectedSpecToDrawing();
+      haptic(10);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -2478,6 +2569,22 @@
     homeButton.addEventListener("click", () => {
       showPanel("homePanel");
     });
+
+    document.querySelectorAll(".bottom-nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => showPanel(btn.dataset.target));
+    });
+
+    function haptic(duration = 8) {
+      try { if (navigator.vibrate) navigator.vibrate(duration); } catch (_) {}
+    }
+    document.addEventListener("click", (event) => {
+      if (event.target.closest("button, .spec-table tbody tr")) haptic(6);
+    }, { passive: true });
+
+    const orientationMedia = window.matchMedia("(orientation: landscape)");
+    function syncOrientationClass(){document.documentElement.classList.toggle("is-landscape", orientationMedia.matches);}
+    syncOrientationClass();
+    if (orientationMedia.addEventListener) orientationMedia.addEventListener("change", syncOrientationClass); else orientationMedia.addListener(syncOrientationClass);
 
     const drawingToolDefs = [
       {id:"vent",label:"환기구",icon:"▦",options:["일반형","루버형"],w:160,h:90},
@@ -2760,6 +2867,14 @@
     const specTableHead = document.getElementById("specTableHead");
     const specTableBody = document.getElementById("specTableBody");
     const noticeContent = document.getElementById("noticeContent");
+    const priceAdjustPanel = document.getElementById("priceAdjustPanel");
+    const priceAdjustStatus = document.getElementById("priceAdjustStatus");
+    const customRateInput = document.getElementById("customRateInput");
+    const customRateApply = document.getElementById("customRateApply");
+    const quickRateButtons = Array.from(document.querySelectorAll(".quick-rate-btn"));
+    let priceAdjustmentRate = Number(localStorage.getItem("gwang_price_adjustment_rate") || 0);
+    let selectedSpecKey = localStorage.getItem("gwang_selected_spec_key") || "";
+    let selectedSpecDimensions = null;
     const categoryText = document.getElementById("categoryText");
     const productNameText = document.getElementById("productNameText");
     const productText = document.getElementById("productText");
@@ -2811,13 +2926,45 @@
       });
     }
 
-    function formatWon(value) {
-      return `${Number(value).toLocaleString("ko-KR")}원`;
+    function adjustedPrice(value) {
+      return Math.round(Number(value) * (1 + priceAdjustmentRate / 100));
     }
+
+    function formatWon(value, applyAdjustment = false) {
+      const amount = applyAdjustment ? adjustedPrice(value) : Number(value);
+      return `${amount.toLocaleString("ko-KR")}원`;
+    }
+
+    function specKey(product, item) {
+      return [product, item["P수"] || item["회선수"] || "", item["가로"], item["세로"], item["깊이"]].join("|");
+    }
+
+    function updatePriceAdjustmentUi() {
+      const sign = priceAdjustmentRate > 0 ? "+" : "";
+      priceAdjustStatus.textContent = priceAdjustmentRate === 0 ? "현재 적용: 기준단가" : `현재 적용: 기준단가 ${sign}${priceAdjustmentRate}%`;
+      customRateInput.value = priceAdjustmentRate;
+      quickRateButtons.forEach(btn => btn.classList.toggle("active", Number(btn.dataset.rate) === priceAdjustmentRate));
+    }
+
+    function setPriceAdjustment(rate) {
+      const parsed = Number(rate);
+      if (!Number.isFinite(parsed) || parsed < -100) { alert("조정률은 -100% 이상으로 입력해 주세요."); return; }
+      priceAdjustmentRate = Math.round(parsed * 10) / 10;
+      localStorage.setItem("gwang_price_adjustment_rate", String(priceAdjustmentRate));
+      updatePriceAdjustmentUi();
+      renderSpecificationTable();
+      haptic(12);
+    }
+
+    quickRateButtons.forEach(btn => btn.addEventListener("click", () => setPriceAdjustment(btn.dataset.rate)));
+    customRateApply.addEventListener("click", () => setPriceAdjustment(customRateInput.value));
+    customRateInput.addEventListener("keydown", e => { if (e.key === "Enter") setPriceAdjustment(customRateInput.value); });
+    updatePriceAdjustmentUi();
 
     function renderSpecificationTable(selectedProduct = productSelect.value) {
       specTableHead.innerHTML = "";
       specTableBody.innerHTML = "";
+      priceAdjustPanel.hidden = !selectedProduct;
 
       let columns = [];
       let rows = [];
@@ -2870,6 +3017,7 @@
         specTableEmpty.textContent = "등록된 제품이 없습니다.";
         specTableEmpty.hidden = false;
         specTableWrap.hidden = true;
+        priceAdjustPanel.hidden = true;
         return;
       }
 
@@ -2883,10 +3031,24 @@
 
       rows.forEach((item) => {
         const row = document.createElement("tr");
+        const key = specKey(selectedProduct, item);
+        row.tabIndex = 0;
+        row.dataset.specKey = key;
+        row.classList.toggle("is-selected", key === selectedSpecKey);
+        const selectRow = () => {
+          selectedSpecKey = key;
+          selectedSpecDimensions = { width:Number(item["가로"]), height:Number(item["세로"]), depth:Number(item["깊이"]), product:selectedProduct };
+          localStorage.setItem("gwang_selected_spec_key", selectedSpecKey);
+          localStorage.setItem("gwang_selected_spec_dimensions", JSON.stringify(selectedSpecDimensions));
+          specTableBody.querySelectorAll("tr").forEach(tr => tr.classList.toggle("is-selected", tr === row));
+          haptic(12);
+        };
+        row.addEventListener("click", selectRow);
+        row.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectRow(); } });
         columns.forEach((column) => {
           const cell = document.createElement("td");
           const isPrice = !["P수", "회선수", "가로", "세로", "깊이"].includes(column);
-          cell.textContent = isPrice ? formatWon(item[column]) : item[column];
+          cell.textContent = isPrice ? formatWon(item[column], true) : item[column];
           if (isPrice) cell.className = "price-cell";
           row.appendChild(cell);
         });
@@ -2897,6 +3059,17 @@
       specTableWrap.hidden = false;
     }
 
+
+    function applySelectedSpecToDrawing() {
+      try {
+        const saved = selectedSpecDimensions || JSON.parse(localStorage.getItem("gwang_selected_spec_dimensions") || "null");
+        if (!saved || !saved.width || !saved.height || !saved.depth) return;
+        const w = document.getElementById("drawingWidthInput"), h = document.getElementById("drawingHeightInput"), d = document.getElementById("drawingDepthInput");
+        if (w && h && d) { w.value = saved.width; h.value = saved.height; d.value = saved.depth; }
+        const status = document.getElementById("drawingStatus");
+        if (status) status.textContent = `${saved.product || "선택 제품"} · ${saved.width} × ${saved.height} × ${saved.depth} 규격을 불러왔습니다.`;
+      } catch (_) {}
+    }
 
     function setSelectionMode() {
       circuitField.hidden = false;
