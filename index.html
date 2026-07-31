@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.9</title>
+<title>광전기통신 영업지원 시스템 v0.0.12</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2131,7 +2131,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 }
 
 
-/* v0.0.9: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
+/* v0.0.12: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
 .auth-version-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
 .auth-version-item{padding:10px 8px;border:1px solid #dce6f2;border-radius:10px;background:#f7faff;text-align:center}
 .auth-version-item strong{display:block;font-size:12px;color:#174f91;margin-bottom:3px}.auth-version-item span{font-size:11px;color:#667085}
@@ -2147,7 +2147,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
 
 
-/* v0.0.9: 메인 카드 모바일 레이아웃 확정 패치
+/* v0.0.12: 메인 카드 모바일 레이아웃 확정 패치
    - 제목 + 한 줄 요약
    - iOS Safari/Android Chrome에서 세로 글자 깨짐 방지
    - 카드 장식 최소화 및 전체 터치 영역 유지 */
@@ -2311,7 +2311,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.9</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.12</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -3024,7 +3024,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       "방송/소방/인터폰/중간단자함"
     ];
     const relatedMaterialOptions = [
-      "PVC속판/단프라"
+      "속판/빼끄판/단프라/철망",
+      "단자대",
+      "국선보호기/피뢰탄기반",
+      "접지 단자대",
+      "세대 덧박스"
     ];
     const productNotices = {
       "영업표준 단가표": ["광전기통신 기성품은 깊이 130입니다."],
@@ -3050,7 +3054,44 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const groundingTerminalPriceData = [{"회선수":"1CCT","가로":200,"세로":300,"깊이":100,"매입연강":23500,"노출연강":26700,"매입스텐":35000},{"회선수":"2CCT","가로":200,"세로":300,"깊이":100,"매입연강":31000,"노출연강":34200,"매입스텐":42500},{"회선수":"3CCT","가로":300,"세로":300,"깊이":100,"매입연강":43500,"노출연강":47700,"매입스텐":59500},{"회선수":"4CCT","가로":400,"세로":400,"깊이":100,"매입연강":62000,"노출연강":65200,"매입스텐":85000},{"회선수":"5CCT","가로":500,"세로":400,"깊이":100,"매입연강":77500,"노출연강":81500,"매입스텐":101500},{"회선수":"6CCT","가로":500,"세로":400,"깊이":100,"매입연강":85000,"노출연강":89000,"매입스텐":109000},{"회선수":"7CCT","가로":600,"세로":400,"깊이":100,"매입연강":98500,"노출연강":103100,"매입스텐":124500},{"회선수":"8CCT","가로":600,"세로":400,"깊이":100,"매입연강":106000,"노출연강":110600,"매입스텐":132000},{"회선수":"9CCT","가로":700,"세로":400,"깊이":100,"매입연강":118500,"노출연강":123600,"매입스텐":148500},{"회선수":"10CCT","가로":700,"세로":400,"깊이":100,"매입연강":126000,"노출연강":131100,"매입스텐":156000}];
     const tvAmplifierDistributorPriceData = [{"가로":200,"세로":300,"깊이":130,"매입연강":17000,"노출연강":20400,"매입스텐":28500},{"가로":300,"세로":300,"깊이":130,"매입연강":22000,"노출연강":26400,"매입스텐":38000},{"가로":300,"세로":400,"깊이":130,"매입연강":27000,"노출연강":32400,"매입스텐":44000},{"가로":400,"세로":400,"깊이":130,"매입연강":34000,"노출연강":37400,"매입스텐":57000},{"가로":400,"세로":500,"깊이":130,"매입연강":42000,"노출연강":46200,"매입스텐":66000},{"가로":500,"세로":600,"깊이":130,"매입연강":56000,"노출연강":61600,"매입스텐":88000},{"가로":600,"세로":700,"깊이":130,"매입연강":78000,"노출연강":85800,"매입스텐":118000},{"가로":700,"세로":800,"깊이":130,"매입연강":100000,"노출연강":110000,"매입스텐":160000},{"가로":800,"세로":900,"깊이":130,"매입연강":116000,"노출연강":127600,"매입스텐":192000},{"가로":900,"세로":1000,"깊이":130,"매입연강":138000,"노출연강":151800,"매입스텐":246000}];
     const broadcastFireIntercomIntermediatePriceData = [{"회선수":"10P","가로":200,"세로":300,"깊이":100,"매입연강":18500,"노출연강":21700,"매입스텐":30000},{"회선수":"20P","가로":200,"세로":300,"깊이":100,"매입연강":18500,"노출연강":21700,"매입스텐":30000},{"회선수":"30P","가로":200,"세로":400,"깊이":100,"매입연강":22750,"노출연강":26550,"매입스텐":37750},{"회선수":"40P","가로":250,"세로":350,"깊이":100,"매입연강":24000,"노출연강":27800,"매입스텐":39000},{"회선수":"50P","가로":300,"세로":400,"깊이":100,"매입연강":31750,"노출연강":36850,"매입스텐":48750},{"회선수":"60P","가로":300,"세로":400,"깊이":100,"매입연강":33000,"노출연강":38100,"매입스텐":50000},{"회선수":"80P","가로":400,"세로":400,"깊이":100,"매입연강":42000,"노출연강":45200,"매입스텐":65000},{"회선수":"100P","가로":500,"세로":400,"깊이":100,"매입연강":52500,"노출연강":56500,"매입스텐":76500},{"회선수":"150P","가로":600,"세로":400,"깊이":100,"매입연강":64750,"노출연강":69350,"매입스텐":90750},{"회선수":"200P","가로":500,"세로":600,"깊이":130,"매입연강":81000,"노출연강":86600,"매입스텐":113000},{"회선수":"250P","가로":600,"세로":700,"깊이":130,"매입연강":109250,"노출연강":117050,"매입스텐":149250},{"회선수":"300P","가로":700,"세로":800,"깊이":130,"매입연강":137500,"노출연강":147500,"매입스텐":197500}];
-    const pvcPlateDanplaPriceData = [{"가로":200,"세로":300,"PVC속판":1500,"단프라":1000},{"가로":250,"세로":350,"PVC속판":1700,"단프라":1300},{"가로":300,"세로":300,"PVC속판":1900,"단프라":1600},{"가로":300,"세로":400,"PVC속판":2100,"단프라":1900},{"가로":400,"세로":400,"PVC속판":2500,"단프라":2200},{"가로":400,"세로":500,"PVC속판":3000,"단프라":2500},{"가로":500,"세로":600,"PVC속판":4000,"단프라":2800},{"가로":600,"세로":700,"PVC속판":5000,"단프라":3100},{"가로":700,"세로":800,"PVC속판":7000,"단프라":3700},{"가로":800,"세로":900,"PVC속판":9000,"단프라":4300},{"가로":900,"세로":1000,"PVC속판":11000,"단프라":5000}];
+    const plateMaterialPriceData = [
+      {"가로":200,"세로":300,"PVC속판":1500,"빼끄판":7000,"단프라":1000,"철망":2000},
+      {"가로":300,"세로":400,"PVC속판":2000,"빼끄판":10000,"단프라":1500,"철망":3500},
+      {"가로":400,"세로":400,"PVC속판":2500,"빼끄판":14000,"단프라":2000,"철망":4000},
+      {"가로":400,"세로":500,"PVC속판":3000,"빼끄판":20000,"단프라":2500,"철망":4500},
+      {"가로":500,"세로":600,"PVC속판":4000,"빼끄판":28000,"단프라":3000,"철망":5000},
+      {"가로":600,"세로":700,"PVC속판":5000,"빼끄판":38000,"단프라":3500,"철망":6000},
+      {"가로":700,"세로":800,"PVC속판":7000,"빼끄판":50000,"단프라":4000,"철망":7000},
+      {"가로":800,"세로":900,"PVC속판":9000,"빼끄판":70000,"단프라":4500,"철망":8000},
+      {"가로":900,"세로":1000,"PVC속판":10000,"빼끄판":90000,"단프라":5000,"철망":10000}
+    ];
+    const terminalBlockPriceData = [
+      {"규격":"10P 10A","단가":1250},
+      {"규격":"10P 20A","단가":1360}
+    ];
+    const trunkProtectorLightningBasePriceData = [
+      {"규격":"구형 보호기 10P","단가":15000},
+      {"규격":"신형 보호기 10P","단가":15000},
+      {"규격":"피뢰탄기반 50P","단가":82000},
+      {"규격":"피뢰탄기반 100P","단가":137500},
+      {"규격":"피뢰탄기반 신형 100P","단가":362500}
+    ];
+    const groundingTerminalBlockPriceData = [
+      {"규격":"70SQ 1P","단가":7500},
+      {"규격":"100SQ 1P","단가":12000},
+      {"규격":"150SQ 1P","단가":17000},
+      {"규격":"200SQ 1P","단가":22000}
+    ];
+    const householdExtensionBoxPriceData = [
+      {"가로":400,"세로":300,"깊이":20,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":300,"깊이":30,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":500,"깊이":20,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":500,"깊이":30,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":600,"깊이":20,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":600,"깊이":30,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":700,"깊이":20,"연강":null,"ABS 사출":null},
+      {"가로":400,"세로":700,"깊이":30,"연강":null,"ABS 사출":null}
+    ];
     const pullBoxPriceData = [{"가로":100,"세로":100,"깊이":100,"기본형":6800,"도어형":10000,"앵글부착":13000},{"가로":150,"세로":150,"깊이":150,"기본형":9000,"도어형":10000,"앵글부착":13000},{"가로":200,"세로":200,"깊이":100,"기본형":10000,"도어형":13000,"앵글부착":16900},{"가로":200,"세로":200,"깊이":150,"기본형":11000,"도어형":14500,"앵글부착":18800},{"가로":200,"세로":200,"깊이":200,"기본형":12000,"도어형":16800,"앵글부착":21800},{"가로":250,"세로":250,"깊이":150,"기본형":14000,"도어형":19600,"앵글부착":25500},{"가로":250,"세로":250,"깊이":200,"기본형":15800,"도어형":22600,"앵글부착":29400},{"가로":300,"세로":300,"깊이":150,"기본형":17600,"도어형":25300,"앵글부착":32900},{"가로":300,"세로":300,"깊이":200,"기본형":20300,"도어형":28900,"앵글부착":37500},{"가로":300,"세로":300,"깊이":300,"기본형":25800,"도어형":36200,"앵글부착":47000},{"가로":400,"세로":400,"깊이":150,"기본형":27000,"도어형":38600,"앵글부착":50200},{"가로":400,"세로":400,"깊이":200,"기본형":30000,"도어형":43400,"앵글부착":56400},{"가로":400,"세로":400,"깊이":300,"기본형":38000,"도어형":53000,"앵글부착":68900},{"가로":400,"세로":500,"깊이":200,"기본형":38500,"도어형":54300,"앵글부착":70600},{"가로":500,"세로":500,"깊이":200,"기본형":43000,"도어형":60000,"앵글부착":78000},{"가로":400,"세로":400,"깊이":400,"기본형":45200,"도어형":62700,"앵글부착":81500},{"가로":400,"세로":500,"깊이":300,"기본형":47500,"도어형":66300,"앵글부착":86200},{"가로":500,"세로":500,"깊이":300,"기본형":52000,"도어형":72300,"앵글부착":94000},{"가로":500,"세로":600,"깊이":200,"기본형":52000,"도어형":72300,"앵글부착":94000},{"가로":400,"세로":500,"깊이":400,"기본형":56500,"도어형":78000,"앵글부착":101400},{"가로":600,"세로":600,"깊이":200,"기본형":57000,"도어형":79600,"앵글부착":103400},{"가로":500,"세로":500,"깊이":400,"기본형":61000,"도어형":84400,"앵글부착":109700},{"가로":500,"세로":600,"깊이":300,"기본형":52400,"도어형":86800,"앵글부착":112800},{"가로":600,"세로":600,"깊이":300,"기본형":67800,"도어형":94000,"앵글부착":122200},{"가로":500,"세로":600,"깊이":400,"기본형":73200,"도어형":101200,"앵글부착":131500},{"가로":600,"세로":600,"깊이":400,"기본형":78800,"도어형":108500,"앵글부착":141000},{"가로":700,"세로":700,"깊이":300,"기본형":85000,"도어형":118000,"앵글부착":153400},{"가로":700,"세로":800,"깊이":300,"기본형":98000,"도어형":135000,"앵글부착":175500},{"가로":700,"세로":700,"깊이":400,"기본형":98000,"도어형":135000,"앵글부착":175500},{"가로":700,"세로":700,"깊이":500,"기본형":110800,"도어형":152000,"앵글부착":197600},{"가로":700,"세로":800,"깊이":400,"기본형":112000,"도어형":154000,"앵글부착":200000},{"가로":800,"세로":800,"깊이":400,"기본형":119300,"도어형":164000,"앵글부착":213000},{"가로":700,"세로":700,"깊이":600,"기본형":123400,"도어형":168800,"앵글부착":218000},{"가로":700,"세로":800,"깊이":500,"기본형":126600,"도어형":173600,"앵글부착":226000},{"가로":800,"세로":800,"깊이":500,"기본형":133800,"도어형":183300,"앵글부착":238000},{"가로":700,"세로":700,"깊이":700,"기본형":136000,"도어형":185700,"앵글부착":241000},{"가로":700,"세로":800,"깊이":600,"기본형":141000,"도어형":193000,"앵글부착":250000},{"가로":800,"세로":800,"깊이":600,"기본형":148300,"도어형":203000,"앵글부착":264000},{"가로":700,"세로":800,"깊이":700,"기본형":155500,"도어형":212000,"앵글부착":276000},{"가로":700,"세로":800,"깊이":800,"기본형":170000,"도어형":232000,"앵글부착":301000}];
 
 
@@ -3143,12 +3184,19 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     }
 
     function formatWon(value, applyAdjustment = false) {
-      const amount = applyAdjustment ? adjustedPrice(value) : Number(value);
+      if (value === null || value === undefined || value === "") return "미등록";
+      const numericValue = Number(value);
+      if (!Number.isFinite(numericValue)) return "미등록";
+      const amount = applyAdjustment ? adjustedPrice(numericValue) : numericValue;
       return `${amount.toLocaleString("ko-KR")}원`;
     }
 
+    function getActiveEnclosureSelection() {
+      return productSelect.value || relatedMaterialSelect.value;
+    }
+
     function specKey(product, item) {
-      return [product, item["P수"] || item["회선수"] || "", item["가로"], item["세로"], item["깊이"]].join("|");
+      return [product, item["P수"] || item["회선수"] || item["규격"] || "", item["가로"] || "", item["세로"] || "", item["깊이"] || ""].join("|");
     }
 
     function updatePriceAdjustmentUi() {
@@ -3164,7 +3212,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       priceAdjustmentRate = Math.round(parsed * 10) / 10;
       localStorage.setItem("gwang_price_adjustment_rate", String(priceAdjustmentRate));
       updatePriceAdjustmentUi();
-      renderSpecificationTable();
+      renderSpecificationTable(getActiveEnclosureSelection());
       haptic(12);
     }
 
@@ -3173,7 +3221,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     customRateInput.addEventListener("keydown", e => { if (e.key === "Enter") setPriceAdjustment(customRateInput.value); });
     updatePriceAdjustmentUi();
 
-    function renderSpecificationTable(selectedProduct = productSelect.value) {
+    function renderSpecificationTable(selectedProduct = getActiveEnclosureSelection()) {
       specTableHead.innerHTML = "";
       specTableBody.innerHTML = "";
       priceAdjustPanel.hidden = !selectedProduct;
@@ -3217,12 +3265,36 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           `총 ${broadcastFireIntercomIntermediatePriceData.length}개 규격 · 금액은 원 단위입니다.`;
         columns = ["회선수", "가로", "세로", "깊이", "매입연강", "노출연강", "매입스텐"];
         rows = broadcastFireIntercomIntermediatePriceData;
-      } else if (selectedProduct === "PVC속판/단프라") {
-        specTableTitle.textContent = "PVC속판/단프라";
+      } else if (selectedProduct === "속판/빼끄판/단프라/철망") {
+        specTableTitle.textContent = "속판/빼끄판/단프라/철망";
         specTableDescription.textContent =
-          `총 ${pvcPlateDanplaPriceData.length}개 규격 · 금액은 원 단위입니다.`;
-        columns = ["가로", "세로", "PVC속판", "단프라"];
-        rows = pvcPlateDanplaPriceData;
+          `총 ${plateMaterialPriceData.length}개 규격 · 금액은 원 단위입니다.`;
+        columns = ["가로", "세로", "PVC속판", "빼끄판", "단프라", "철망"];
+        rows = plateMaterialPriceData;
+      } else if (selectedProduct === "단자대") {
+        specTableTitle.textContent = "단자대";
+        specTableDescription.textContent =
+          `총 ${terminalBlockPriceData.length}개 규격 · 금액은 원 단위입니다.`;
+        columns = ["규격", "단가"];
+        rows = terminalBlockPriceData;
+      } else if (selectedProduct === "국선보호기/피뢰탄기반") {
+        specTableTitle.textContent = "국선보호기/피뢰탄기반";
+        specTableDescription.textContent =
+          `총 ${trunkProtectorLightningBasePriceData.length}개 규격 · 금액은 원 단위입니다.`;
+        columns = ["규격", "단가"];
+        rows = trunkProtectorLightningBasePriceData;
+      } else if (selectedProduct === "접지 단자대") {
+        specTableTitle.textContent = "접지 단자대";
+        specTableDescription.textContent =
+          `총 ${groundingTerminalBlockPriceData.length}개 규격 · 금액은 원 단위입니다.`;
+        columns = ["규격", "단가"];
+        rows = groundingTerminalBlockPriceData;
+      } else if (selectedProduct === "세대 덧박스") {
+        specTableTitle.textContent = "세대 덧박스";
+        specTableDescription.textContent =
+          `총 ${householdExtensionBoxPriceData.length}개 규격 · 단가 미등록 항목은 미등록으로 표시됩니다.`;
+        columns = ["가로", "세로", "깊이", "연강", "ABS 사출"];
+        rows = householdExtensionBoxPriceData;
       } else if (selectedProduct === "PULL BOX") {
         specTableTitle.textContent = "PULL BOX";
         specTableDescription.textContent =
@@ -3268,7 +3340,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         row.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectRow(); } });
         columns.forEach((column) => {
           const cell = document.createElement("td");
-          const isPrice = !["P수", "회선수", "가로", "세로", "깊이"].includes(column);
+          const isPrice = !["P수", "회선수", "규격", "가로", "세로", "깊이"].includes(column);
           cell.textContent = isPrice ? formatWon(item[column], true) : item[column];
           if (isPrice) cell.className = "price-cell";
           row.appendChild(cell);
