@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.12</title>
+<title>광전기통신 영업지원 시스템 v0.0.14</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -903,6 +903,19 @@
       text-align: right;
       font-variant-numeric: tabular-nums;
       font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .price-change-mark {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 5px;
+      color: #d94841;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.2px;
+      vertical-align: 1px;
     }
 
     .spec-table tbody tr:nth-child(even) {
@@ -2131,7 +2144,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 }
 
 
-/* v0.0.12: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
+/* v0.0.13: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
 .auth-version-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
 .auth-version-item{padding:10px 8px;border:1px solid #dce6f2;border-radius:10px;background:#f7faff;text-align:center}
 .auth-version-item strong{display:block;font-size:12px;color:#174f91;margin-bottom:3px}.auth-version-item span{font-size:11px;color:#667085}
@@ -2147,7 +2160,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
 
 
-/* v0.0.12: 메인 카드 모바일 레이아웃 확정 패치
+/* v0.0.13: 메인 카드 모바일 레이아웃 확정 패치
    - 제목 + 한 줄 요약
    - iOS Safari/Android Chrome에서 세로 글자 깨짐 방지
    - 카드 장식 최소화 및 전체 터치 영역 유지 */
@@ -2294,6 +2307,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <link href="./manifest.webmanifest" rel="manifest"/>
 <link href="./icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="./icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link rel="icon" href="favicon.png">
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
@@ -2311,7 +2325,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.12</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.14</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -3191,6 +3205,34 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       return `${amount.toLocaleString("ko-KR")}원`;
     }
 
+    function formatAdjustmentRate(rate) {
+      const numericRate = Number(rate);
+      if (!Number.isFinite(numericRate)) return "";
+      return Number.isInteger(numericRate) ? String(numericRate) : numericRate.toFixed(1).replace(/\.0$/, "");
+    }
+
+    function renderPriceCell(cell, value) {
+      cell.className = "price-cell";
+      cell.textContent = "";
+
+      if (value === null || value === undefined || value === "" || !Number.isFinite(Number(value))) {
+        cell.textContent = "미등록";
+        return;
+      }
+
+      if (priceAdjustmentRate > 0) {
+        const mark = document.createElement("span");
+        mark.className = "price-change-mark";
+        mark.textContent = `▲${formatAdjustmentRate(priceAdjustmentRate)}%`;
+        mark.setAttribute("aria-label", `기준단가 대비 ${formatAdjustmentRate(priceAdjustmentRate)}퍼센트 인상`);
+        cell.appendChild(mark);
+      }
+
+      const priceText = document.createElement("span");
+      priceText.textContent = formatWon(value, true);
+      cell.appendChild(priceText);
+    }
+
     function getActiveEnclosureSelection() {
       return productSelect.value || relatedMaterialSelect.value;
     }
@@ -3341,8 +3383,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         columns.forEach((column) => {
           const cell = document.createElement("td");
           const isPrice = !["P수", "회선수", "규격", "가로", "세로", "깊이"].includes(column);
-          cell.textContent = isPrice ? formatWon(item[column], true) : item[column];
-          if (isPrice) cell.className = "price-cell";
+          if (isPrice) {
+            renderPriceCell(cell, item[column]);
+          } else {
+            cell.textContent = item[column];
+          }
           row.appendChild(cell);
         });
         specTableBody.appendChild(row);
@@ -3738,11 +3783,11 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingFile("png"));help("카카오톡 버튼은 모바일·지원 브라우저의 시스템 공유창을 열며, 목록에서 카카오톡을 선택합니다. 지원하지 않는 PC에서는 파일을 먼저 저장합니다.")}
   };
   async function buildProductCard(kind){
-    const isRack=kind==="rack",select=document.getElementById(isRack?"rackProductSelect":"materialItemSelect"),group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=select?.value||"선택된 제품 없음",sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("광전기통신 제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
+    const isRack=kind==="rack",select=document.getElementById(isRack?"rackProductSelect":"materialItemSelect"),group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=select?.value||"선택된 제품 없음",sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
     if(img&&img.src&&img.style.display!=="none"&&img.complete&&img.naturalWidth){const scale=Math.min(1000/img.naturalWidth,520/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,600-w/2,250+(520-h)/2,w,h)}else{ctx.fillStyle="#f4f7fb";ctx.fillRect(80,230,1040,560);ctx.fillStyle="#8a97a8";ctx.font="700 30px sans-serif";ctx.textAlign="center";ctx.fillText("등록된 제품 이미지가 없습니다.",600,515);ctx.textAlign="left"}
     ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),860,860);const blob=await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("이미지 생성 실패")),"image/png"));return{file:new File([blob],`광전기통신_${name.replace(/[\\/:*?\"<>|]/g,"_")}.png`,{type:"image/png"}),name}
   }
-  async function shareProduct(kind,channel){try{const {file,name}=await buildProductCard(kind),text=`광전기통신 제품정보 - ${name}`;if(channel==="email"){downloadBlob(file,file.name);location.href="mailto:?subject="+encodeURIComponent(text)+"&body="+encodeURIComponent("제품 이미지 파일을 저장했습니다. 메일에 첨부해 주세요.");return}if(channel==="sms"){downloadBlob(file,file.name);location.href="sms:?&body="+encodeURIComponent(text+" (저장된 이미지 파일을 첨부해 주세요.)");return}if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:text,text,files:[file]})}else{downloadBlob(file,file.name);alert("직접 공유를 지원하지 않아 제품 이미지를 저장했습니다. 카카오톡이나 다른 앱에서 파일을 첨부해 주세요.")}}catch(e){if(e&&e.name!=="AbortError"){console.error(e);alert("제품 공유 준비 중 오류가 발생했습니다.")}}}
+  async function shareProduct(kind,channel){try{const {file,name}=await buildProductCard(kind),text=`제품정보 - ${name}`;if(channel==="email"){downloadBlob(file,file.name);location.href="mailto:?subject="+encodeURIComponent(text)+"&body="+encodeURIComponent("제품 이미지 파일을 저장했습니다. 메일에 첨부해 주세요.");return}if(channel==="sms"){downloadBlob(file,file.name);location.href="sms:?&body="+encodeURIComponent(text+" (저장된 이미지 파일을 첨부해 주세요.)");return}if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:text,text,files:[file]})}else{downloadBlob(file,file.name);alert("직접 공유를 지원하지 않아 제품 이미지를 저장했습니다. 카카오톡이나 다른 앱에서 파일을 첨부해 주세요.")}}catch(e){if(e&&e.name!=="AbortError"){console.error(e);alert("제품 공유 준비 중 오류가 발생했습니다.")}}}
   function openProduct(kind){context=kind;body.innerHTML="";title.textContent=kind==="rack"?"랙 제품 공유":"자재 제품 공유";modal.classList.add("open");button("시스템 공유 · 카카오톡",()=>shareProduct(kind,"system"));button("이메일로 공유",()=>shareProduct(kind,"email"));button("문자메시지로 공유",()=>shareProduct(kind,"sms"));help("모바일에서는 이미지 파일이 포함된 시스템 공유창이 열립니다. 카카오톡을 선택할 수 있습니다. PC에서 파일 공유가 지원되지 않으면 이미지가 먼저 저장됩니다.")}
   document.getElementById("rackShareBtn")?.addEventListener("click",()=>openProduct("rack"));document.getElementById("materialShareBtn")?.addEventListener("click",()=>openProduct("material"));close.onclick=hide;modal.addEventListener("click",e=>{if(e.target===modal)hide()});document.addEventListener("keydown",e=>{if(e.key==="Escape")hide()});
 })();
