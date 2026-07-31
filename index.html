@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.20</title>
+<title>광전기통신 영업지원 시스템 v0.0.21</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2598,7 +2598,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.20</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.21</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -3164,7 +3164,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       if(objects){
         const faces={
           back:{origin:E,ux:[1,0],vy:[0,1],opacity:.58},
-          inside:{origin:[A[0]+dep*.22,A[1]-dep*.22],ux:[1,0],vy:[0,1],opacity:.68},
+          inside:{origin:[A[0]+dep*.92,A[1]-dep*.92],ux:[1,0],vy:[0,1],opacity:.96,mounted:true},
           left:{origin:A,ux:[diag,-diag],vy:[0,1],opacity:.78},
           right:{origin:B,ux:[diag,-diag],vy:[0,1],opacity:.92},
           top:{origin:E,ux:[1,0],vy:[-diag,diag],opacity:.9},
@@ -3181,6 +3181,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
             });
             const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${(o.x+o.w/2)*scale} ${(o.y+o.h/2)*scale})`});
             drawShape(inner,o,o.x*scale,o.y*scale,o.w*scale,o.h*scale,true);
+            if(face.mounted){
+              inner.setAttribute("filter","drop-shadow(2px 2px 1.4px rgba(17,24,39,.48))");
+              const bx=o.x*scale,by=o.y*scale,bw=o.w*scale,bh=o.h*scale,br=Math.max(1.4,Math.min(3.2,Math.min(bw,bh)*.045));
+              [[bx+br*2,by+br*2],[bx+bw-br*2,by+br*2],[bx+br*2,by+bh-br*2],[bx+bw-br*2,by+bh-br*2]].forEach(([cx,cy])=>inner.appendChild(svgEl("circle",{cx,cy,r:br,fill:"#64748b",stroke:"#f8fafc","stroke-width":Math.max(.7,br*.45),"vector-effect":"non-scaling-stroke"})));
+            }
             outer.appendChild(inner);
             svg.appendChild(outer);
           });
@@ -3215,7 +3220,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         [["A","B"],["B","C"],["C","D"],["D","A"],["E","F"],["F","G"],["G","H"],["H","E"],["A","E"],["B","F"],["C","G"],["D","H"]].forEach(([a,b])=>line(pts[a],pts[b]));
         const faceBases={
           front:{o:[x0,y0,z0],u:[1,0,0],v:[0,1,0],opacity:1},back:{o:[x0,y0,z1],u:[1,0,0],v:[0,1,0],opacity:.52},
-          inside:{o:[x0,y0,z0+c.depth*.18],u:[1,0,0],v:[0,1,0],opacity:.65},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.76},
+          inside:{o:[x0,y0,z0+c.depth*.92],u:[1,0,0],v:[0,1,0],opacity:.96,mounted:true},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.76},
           right:{o:[x1,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.9},top:{o:[x0,y0,z0],u:[1,0,0],v:[0,0,1],opacity:.86},bottom:{o:[x0,y1,z0],u:[1,0,0],v:[0,0,1],opacity:.78}
         };
         ["back","inside","left","right","top","bottom","front"].forEach(surface=>{
@@ -3223,7 +3228,13 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           c.objects.filter(o=>o.surface===surface).forEach(o=>{
             const outer=svgEl("g",{transform:`matrix(${pu.x-po.x} ${pu.y-po.y} ${pv.x-po.x} ${pv.y-po.y} ${po.x} ${po.y})`,opacity:f.opacity});
             const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`});
-            drawShape(inner,o,o.x,o.y,o.w,o.h,true);outer.appendChild(inner);stackPreviewCanvas.appendChild(outer);
+            drawShape(inner,o,o.x,o.y,o.w,o.h,true);
+            if(f.mounted){
+              inner.setAttribute("filter","drop-shadow(2px 2px 1.4px rgba(17,24,39,.48))");
+              const br=Math.max(1.4,Math.min(3.2,Math.min(o.w,o.h)*.045));
+              [[o.x+br*2,o.y+br*2],[o.x+o.w-br*2,o.y+br*2],[o.x+br*2,o.y+o.h-br*2],[o.x+o.w-br*2,o.y+o.h-br*2]].forEach(([cx,cy])=>inner.appendChild(svgEl("circle",{cx,cy,r:br,fill:"#64748b",stroke:"#f8fafc","stroke-width":Math.max(.7,br*.45),"vector-effect":"non-scaling-stroke"})));
+            }
+            outer.appendChild(inner);stackPreviewCanvas.appendChild(outer);
           });
         });
         yOffset=y1;
@@ -3842,6 +3853,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
+    // v0.0.21: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
