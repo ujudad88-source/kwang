@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.18</title>
+<title>광전기통신 영업지원 시스템 v0.0.20</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1550,6 +1550,22 @@
       font-weight: 700;
     }
 
+    .material-group-badge {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 7px;
+      padding: 3px 7px;
+      border: 1px solid #c9d6ea;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #315f9f;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+      vertical-align: 1px;
+      white-space: nowrap;
+    }
+
     .material-expand-cell {
       width: 180px;
     }
@@ -2582,7 +2598,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.18</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.20</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2910,7 +2926,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <section class="card material-select-card">
 <h3 class="material-layout-title">자재 선택</h3>
 <p class="material-layout-description">
-            제품군을 선택하면 아래 규격 및 단가 영역에서 해당 품목을 확인할 수 있습니다.
+            제품군을 선택해 조회하거나, 제품군을 선택하지 않고 전체 품목과 규격을 통합검색할 수 있습니다.
           </p>
 <div class="material-select-grid material-select-grid-single">
 <div class="material-select-group">
@@ -2922,8 +2938,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <div class="material-search-group">
 <label class="material-select-label" for="materialSearchInput">품목·규격 검색</label>
 <div class="material-search-controls">
-<input class="material-search-input" id="materialSearchInput" type="search" placeholder="품목 또는 규격을 입력하세요" autocomplete="off" disabled/>
-<button class="material-search-btn" id="materialSearchBtn" type="button" disabled>검색</button>
+<input class="material-search-input" id="materialSearchInput" type="search" placeholder="전체 제품군에서 품목 또는 규격 검색" autocomplete="off"/>
+<button class="material-search-btn" id="materialSearchBtn" type="button">검색</button>
 </div>
 </div>
 </div>
@@ -2948,7 +2964,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
             품목을 선택하면 제품 이미지와 용도 및 참고사항이 함께 변경됩니다. 여러 규격이 있는 품목은 ‘규격 보기’를 눌러 펼칠 수 있습니다.
           </p>
 <div class="material-price-placeholder" id="materialPriceArea">
-            제품군을 선택하면 해당 자재의 품목, 규격 및 단가 정보가 이곳에 표시됩니다.
+            제품군을 선택하거나 검색어를 입력하면 품목, 규격 및 단가 정보가 이곳에 표시됩니다.
           </div>
 </section>
 <section class="card material-info-card">
@@ -3259,7 +3275,47 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     }
     async function getDrawingFiles(){const canvas=await buildDrawingSheetCanvas(),png=await canvasToBlob(canvas),pdf=makePdfFromCanvas(canvas);return{canvas,pngFile:new File([png],"광전기통신_손도면.png",{type:"image/png"}),pdfFile:new File([pdf],"광전기통신_손도면.pdf",{type:"application/pdf"})}}
     async function saveDrawingAs(kind){try{persistDrawing();const files=await getDrawingFiles();if(kind==="pdf")downloadBlob(files.pdfFile,files.pdfFile.name);else downloadBlob(files.pngFile,files.pngFile.name);setStatus(kind==="pdf"?"전체 면 PDF를 저장했습니다.":"전체 면 PNG를 저장했습니다.")}catch(e){console.error(e);setExportProgress(false);alert("파일 생성 중 오류가 발생했습니다.")}}
-    async function shareDrawingFile(kind){try{persistDrawing();const files=await getDrawingFiles(),file=kind==="pdf"?files.pdfFile:files.pngFile;if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:"광전기통신 손도면",text:"광전기통신 손도면 생성기로 작성한 도면입니다.",files:[file]})}else{downloadBlob(file,file.name);alert("이 브라우저는 파일 직접 공유를 지원하지 않아 먼저 파일을 저장했습니다. 공유할 앱에서 저장된 파일을 첨부해 주세요.")}}catch(e){if(e&&e.name!=="AbortError"){console.error(e);setExportProgress(false);alert("공유 준비 중 오류가 발생했습니다.")}}}
+    function canShareFile(file){
+      try{return !!(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))}catch(e){return false}
+    }
+    async function shareDrawingFile(kind){
+      try{
+        persistDrawing();
+        const files=await getDrawingFiles(),file=kind==="pdf"?files.pdfFile:files.pngFile;
+        if(canShareFile(file)){
+          await navigator.share({title:"광전기통신 손도면",text:"광전기통신 손도면 생성기로 작성한 도면입니다.",files:[file]});
+          setStatus("파일 공유창을 열었습니다.")
+        }else{
+          downloadBlob(file,file.name);
+          alert("이 브라우저는 파일 직접 공유를 지원하지 않아 파일을 먼저 저장했습니다. 공유할 앱에서 저장된 파일을 첨부해 주세요.")
+        }
+      }catch(e){
+        if(e&&e.name!=="AbortError"){console.error(e);setExportProgress(false);alert("공유 준비 중 오류가 발생했습니다.")}
+      }
+    }
+    async function shareDrawingToKakao(){
+      let file=null;
+      try{
+        persistDrawing();
+        const files=await getDrawingFiles();
+        file=files.pngFile;
+        downloadBlob(file,file.name);
+        if(canShareFile(file)){
+          try{
+            await navigator.share({title:"광전기통신 손도면",text:"광전기통신 손도면 생성기로 작성한 도면입니다.",files:[file]});
+            alert("카카오톡 공유창에 이미지가 보이지 않으면, 기기에 저장된 ‘광전기통신_손도면.png’를 사진 또는 파일로 첨부해 주세요.")
+          }catch(shareError){
+            if(shareError&&shareError.name!=="AbortError")console.warn("카카오톡 파일 공유 실패",shareError);
+            alert("도면 PNG를 기기에 저장했습니다. 카카오톡에서 ‘광전기통신_손도면.png’를 사진 또는 파일로 첨부해 주세요.")
+          }
+        }else{
+          alert("이 기기에서는 카카오톡으로 파일을 직접 전달할 수 없어 도면 PNG를 저장했습니다. 카카오톡에서 저장된 이미지를 첨부해 주세요.")
+        }
+      }catch(e){
+        console.error(e);setExportProgress(false);
+        alert(file?"카카오톡 공유는 완료되지 않았지만 도면 PNG는 저장되었습니다. 저장된 파일을 직접 첨부해 주세요.":"카카오톡 공유용 도면을 만드는 중 오류가 발생했습니다.")
+      }
+    }
 
     function restore(){try{const v=JSON.parse(localStorage.getItem("gwangtelecom_drawing_v85"));if(v&&Array.isArray(v.cabinets))Object.assign(drawingState,v)}catch(e){console.warn(e)}}
     const stackPointers=new Map();let stackRotateDrag=null,stackPinchStart=null;
@@ -3786,7 +3842,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.18: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
+    // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
+    // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
     const materialCatalog = {
       "통합배선": [
@@ -3849,9 +3906,10 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       return items.find(item => item.id === itemId) || null;
     }
 
-    function applyMaterialSelection(item, variant) {
-      selectedMaterialKey = variant ? variant.id : item.id;
+    function applyMaterialSelection(item, variant, groupName = materialGroupSelect.value) {
+      selectedMaterialKey = `${groupName}:${variant ? variant.id : item.id}`;
       window.currentMaterialSelectionName = variant ? `${item.name} ${variant.spec}` : item.name;
+      window.currentMaterialSelectionGroup = groupName;
       document.querySelectorAll(".material-price-row, .material-variant-row").forEach(row => {
         const selected = row.dataset.selectionKey === selectedMaterialKey;
         row.classList.toggle("selected", selected);
@@ -3893,8 +3951,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       return escapeMaterialHTML(text).replace(new RegExp(`(${escapedKeyword})`, "gi"), '<mark class="material-search-mark">$1</mark>');
     }
 
-    function getMaterialSearchResults(items, keyword) {
-      if (!keyword) return items.map(item => ({ item, nameMatched: false, matchedVariants: null }));
+    function getMaterialSearchResults(items, keyword, groupName) {
+      if (!keyword) return items.map(item => ({ item, groupName, nameMatched: false, matchedVariants: null }));
       const lowerKeyword = keyword.toLocaleLowerCase("ko-KR");
       return items.map(item => {
         const nameMatched = item.name.toLocaleLowerCase("ko-KR").includes(lowerKeyword);
@@ -3902,23 +3960,34 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           ? item.variants.filter(variant => String(variant.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword))
           : [];
         const specMatched = !item.variants && String(item.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword);
-        return (nameMatched || specMatched || matchedVariants.length) ? { item, nameMatched, specMatched, matchedVariants } : null;
+        return (nameMatched || specMatched || matchedVariants.length)
+          ? { item, groupName, nameMatched, specMatched, matchedVariants }
+          : null;
       }).filter(Boolean);
     }
 
+    function getMaterialResults(groupName, keyword) {
+      if (groupName) return getMaterialSearchResults(materialCatalog[groupName] || [], keyword, groupName);
+      if (!keyword) return [];
+      return Object.entries(materialCatalog).flatMap(([catalogGroup, items]) =>
+        getMaterialSearchResults(items, keyword, catalogGroup)
+      );
+    }
+
     function renderMaterialTable(groupName) {
-      const items = materialCatalog[groupName] || [];
       const keyword = materialSearchInput.value.trim();
-      const searchResults = getMaterialSearchResults(items, keyword);
+      const selectedGroupItems = materialCatalog[groupName] || [];
+      const searchResults = getMaterialResults(groupName, keyword);
+      const isGlobalSearch = !groupName && Boolean(keyword);
       materialPriceArea.className = "material-price-placeholder";
       materialPriceArea.innerHTML = "";
 
-      if (!groupName) {
-        materialPriceArea.textContent = "제품군을 선택하면 해당 자재의 품목, 규격 및 단가 정보가 이곳에 표시됩니다.";
+      if (!groupName && !keyword) {
+        materialPriceArea.textContent = "제품군을 선택하거나 검색어를 입력하면 품목, 규격 및 단가 정보가 이곳에 표시됩니다.";
         return;
       }
 
-      if (!items.length) {
+      if (groupName && !selectedGroupItems.length) {
         materialPriceArea.textContent = `${groupName} 제품군의 등록된 품목이 없습니다.`;
         return;
       }
@@ -3932,7 +4001,9 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       if (keyword) {
         const status = document.createElement("div");
         status.className = "material-search-status";
-        status.textContent = `“${keyword}” 검색 결과 ${searchResults.length}개 품목`;
+        status.textContent = isGlobalSearch
+          ? `전체 제품군 · “${keyword}” 검색 결과 ${searchResults.length}개 품목`
+          : `“${keyword}” 검색 결과 ${searchResults.length}개 품목`;
         materialPriceArea.appendChild(status);
       }
       const table = document.createElement("table");
@@ -3942,17 +4013,21 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
       searchResults.forEach(result => {
         const item = result.item;
+        const resultGroup = result.groupName;
+        const badge = isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : "";
         const hasVariants = Array.isArray(item.variants) && item.variants.length > 0;
         const row = document.createElement("tr");
         row.className = "material-price-row";
         row.dataset.itemId = item.id;
-        row.dataset.selectionKey = item.id;
+        row.dataset.groupName = resultGroup;
+        row.dataset.selectionKey = `${resultGroup}:${item.id}`;
 
         if (hasVariants) {
           const searchMatchedVariants = keyword ? result.matchedVariants : null;
-          const isExpanded = expandedMaterialItems.has(item.id) || (keyword && searchMatchedVariants.length > 0);
+          const expandKey = `${resultGroup}:${item.id}`;
+          const isExpanded = expandedMaterialItems.has(expandKey) || (keyword && searchMatchedVariants.length > 0);
           row.innerHTML = `
-            <td><strong>${highlightMaterialMatch(item.name, keyword)}</strong></td>
+            <td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td>
             <td class="material-expand-cell">
               <button class="material-expand-btn" type="button" aria-expanded="${isExpanded ? "true" : "false"}" aria-controls="variants-${item.id}">
                 <span class="material-expand-icon" aria-hidden="true"></span>
@@ -3962,12 +4037,14 @@ body:not(.auth-locked) .bottom-nav{display:grid}
             <td class="material-empty-price" aria-label="규격을 펼치면 단가가 표시됩니다.">&nbsp;</td>`;
           row.addEventListener("click", event => {
             if (event.target.closest(".material-expand-btn")) return;
-            applyMaterialSelection(item, null);
+            applyMaterialSelection(item, null, resultGroup);
           });
           row.querySelector(".material-expand-btn").addEventListener("click", event => {
             event.stopPropagation();
-            applyMaterialSelection(item, null);
-            toggleMaterialVariants(item.id);
+            applyMaterialSelection(item, null, resultGroup);
+            if (expandedMaterialItems.has(expandKey)) expandedMaterialItems.delete(expandKey);
+            else expandedMaterialItems.add(expandKey);
+            renderMaterialTable(materialGroupSelect.value);
           });
           row.tabIndex = 0;
           row.setAttribute("role", "option");
@@ -3975,8 +4052,10 @@ body:not(.auth-locked) .bottom-nav{display:grid}
           row.addEventListener("keydown", event => {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
-              applyMaterialSelection(item, null);
-              toggleMaterialVariants(item.id);
+              applyMaterialSelection(item, null, resultGroup);
+              if (expandedMaterialItems.has(expandKey)) expandedMaterialItems.delete(expandKey);
+              else expandedMaterialItems.add(expandKey);
+              renderMaterialTable(materialGroupSelect.value);
             }
           });
           tbody.appendChild(row);
@@ -3988,15 +4067,16 @@ body:not(.auth-locked) .bottom-nav{display:grid}
               variantRow.className = "material-variant-row";
               variantRow.id = `variants-${item.id}-${variant.id}`;
               variantRow.dataset.itemId = item.id;
-              variantRow.dataset.selectionKey = variant.id;
-              variantRow.innerHTML = `<td class="material-variant-name">${highlightMaterialMatch(item.name, keyword)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
-              makeSelectableRow(variantRow, () => applyMaterialSelection(item, variant));
+              variantRow.dataset.groupName = resultGroup;
+              variantRow.dataset.selectionKey = `${resultGroup}:${variant.id}`;
+              variantRow.innerHTML = `<td class="material-variant-name">${isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : ""}${highlightMaterialMatch(item.name, keyword)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
+              makeSelectableRow(variantRow, () => applyMaterialSelection(item, variant, resultGroup));
               tbody.appendChild(variantRow);
             });
           }
         } else {
-          row.innerHTML = `<td><strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td>${highlightMaterialMatch(item.spec || "미등록", keyword)}</td><td>${formatMaterialPrice(item.price)}</td>`;
-          makeSelectableRow(row, () => applyMaterialSelection(item, null));
+          row.innerHTML = `<td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td>${highlightMaterialMatch(item.spec || "미등록", keyword)}</td><td>${formatMaterialPrice(item.price)}</td>`;
+          makeSelectableRow(row, () => applyMaterialSelection(item, null, resultGroup));
           tbody.appendChild(row);
         }
       });
@@ -4024,14 +4104,15 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       expandedMaterialItems.clear();
       selectedMaterialKey = "";
       window.currentMaterialSelectionName = "";
+      window.currentMaterialSelectionGroup = "";
       materialSearchInput.value = "";
-      const enabled = Boolean(materialGroupSelect.value);
-      materialSearchInput.disabled = !enabled;
-      materialSearchBtn.disabled = !enabled;
+      materialSearchInput.placeholder = materialGroupSelect.value
+        ? `${materialGroupSelect.value}에서 품목 또는 규격 검색`
+        : "전체 제품군에서 품목 또는 규격 검색";
       renderMaterialTable(materialGroupSelect.value);
       showMaterialImage(null);
       resetMaterialInfo();
-      if (enabled) materialSearchInput.focus();
+      materialSearchInput.focus();
     });
 
     materialSearchInput.addEventListener("input", () => {
@@ -4289,10 +4370,10 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   function hide(){modal.classList.remove("open");context=null}
   window.openShareModal=function(type){context=type;body.innerHTML="";modal.classList.add("open");
     if(type==="drawing-save"){title.textContent="전체 면 도면 저장";button("PNG 이미지로 저장",()=>saveDrawingAs("png"));button("PDF 파일로 저장",()=>saveDrawingAs("pdf"));help("정면·뒷면·내부·좌측면·우측면·상부면·하부면을 한 장에 배치하여 저장합니다.")}
-    else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingFile("png"));help("카카오톡 버튼은 모바일·지원 브라우저의 시스템 공유창을 열며, 목록에서 카카오톡을 선택합니다. 지원하지 않는 PC에서는 파일을 먼저 저장합니다.")}
+    else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingToKakao());help("카카오톡 공유 시 도면 PNG를 먼저 기기에 저장한 뒤 파일 공유창을 엽니다. 공유창에 이미지가 나타나지 않으면 저장된 ‘광전기통신_손도면.png’를 카카오톡에서 직접 첨부해 주세요.")}
   };
   async function buildProductCard(kind){
-    const isRack=kind==="rack",select=isRack?document.getElementById("rackProductSelect"):null,group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=isRack?(select?.value||"선택된 제품 없음"):(window.currentMaterialSelectionName||"선택된 제품 없음"),sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
+    const isRack=kind==="rack",select=isRack?document.getElementById("rackProductSelect"):null,group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=isRack?(select?.value||"선택된 제품 없음"):(window.currentMaterialSelectionName||"선택된 제품 없음"),sub=isRack?"랙 파트":(((window.currentMaterialSelectionGroup||group?.value)?(window.currentMaterialSelectionGroup||group.value)+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
     if(img&&img.src&&img.style.display!=="none"&&img.complete&&img.naturalWidth){const scale=Math.min(1000/img.naturalWidth,520/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,600-w/2,250+(520-h)/2,w,h)}else{ctx.fillStyle="#f4f7fb";ctx.fillRect(80,230,1040,560);ctx.fillStyle="#8a97a8";ctx.font="700 30px sans-serif";ctx.textAlign="center";ctx.fillText("등록된 제품 이미지가 없습니다.",600,515);ctx.textAlign="left"}
     ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),860,860);const blob=await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("이미지 생성 실패")),"image/png"));return{file:new File([blob],`광전기통신_${name.replace(/[\\/:*?\"<>|]/g,"_")}.png`,{type:"image/png"}),name}
   }
