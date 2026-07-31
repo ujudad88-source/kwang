@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.15</title>
+<title>광전기통신 영업지원 시스템 v0.0.16</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1474,6 +1474,103 @@
       box-shadow: inset 4px 0 0 var(--primary);
     }
 
+
+    .material-select-grid-single {
+      grid-template-columns: minmax(0, 520px);
+    }
+
+    .material-expand-cell {
+      width: 180px;
+    }
+
+    .material-expand-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 1px solid #b9c9e5;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffffff 0%, #f2f6ff 100%);
+      color: var(--primary);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, .08);
+      transition: transform .16s ease, border-color .16s ease, background-color .16s ease, box-shadow .16s ease;
+    }
+
+    .material-expand-btn:hover,
+    .material-expand-btn:focus-visible {
+      border-color: var(--primary);
+      background: #eaf1ff;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, .14);
+      outline: none;
+    }
+
+    .material-expand-btn:active {
+      transform: translateY(1px);
+    }
+
+    .material-expand-icon {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform .18s ease;
+    }
+
+    .material-expand-btn[aria-expanded="true"] .material-expand-icon {
+      transform: rotate(225deg) translate(-1px, -1px);
+    }
+
+    .material-variant-row {
+      background: #fbfcff;
+    }
+
+    .material-variant-row td {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .material-variant-name {
+      position: relative;
+      padding-left: 34px !important;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .material-variant-name::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 0;
+      bottom: 50%;
+      width: 10px;
+      border-left: 1px solid #c8d3e3;
+      border-bottom: 1px solid #c8d3e3;
+      border-bottom-left-radius: 7px;
+    }
+
+    .material-variant-row.selected {
+      background: #edf3ff;
+      box-shadow: inset 4px 0 0 var(--primary);
+    }
+
+    .material-empty-price {
+      color: transparent;
+      user-select: none;
+    }
+
+    @media (max-width: 640px) {
+      .material-expand-cell { width: auto; }
+      .material-expand-btn { min-height: 34px; padding: 6px 10px; font-size: 12px; }
+    }
+
     .material-price-row:focus-visible {
       outline: 3px solid rgba(37, 99, 235, .25);
       outline-offset: -3px;
@@ -2411,7 +2508,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.15</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.16</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2739,19 +2836,13 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <section class="card material-select-card">
 <h3 class="material-layout-title">자재 선택</h3>
 <p class="material-layout-description">
-            왼쪽에서 제품군을 선택한 후 오른쪽에서 해당 제품군의 세부 품목을 선택합니다.
+            제품군을 선택하면 아래 규격 및 단가 영역에서 해당 품목을 확인할 수 있습니다.
           </p>
-<div class="material-select-grid">
+<div class="material-select-grid material-select-grid-single">
 <div class="material-select-group">
 <label class="material-select-label" for="materialGroupSelect">제품군 선택</label>
 <select class="material-select" id="materialGroupSelect">
 <option value="">제품군을 선택하세요</option>
-</select>
-</div>
-<div class="material-select-group">
-<label class="material-select-label" for="materialItemSelect">세부 품목 선택</label>
-<select class="material-select" disabled="" id="materialItemSelect">
-<option value="">먼저 제품군을 선택하세요</option>
 </select>
 </div>
 </div>
@@ -2773,7 +2864,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <section class="card material-price-card">
 <h3 class="material-layout-title">규격 및 단가</h3>
 <p class="material-layout-description">
-            제품군의 품목을 클릭하면 선택 상태가 유지되며 제품 이미지와 용도 및 참고사항이 함께 변경됩니다.
+            품목을 선택하면 제품 이미지와 용도 및 참고사항이 함께 변경됩니다. 여러 규격이 있는 품목은 ‘규격 보기’를 눌러 펼칠 수 있습니다.
           </p>
 <div class="material-price-placeholder" id="materialPriceArea">
             제품군을 선택하면 해당 자재의 품목, 규격 및 단가 정보가 이곳에 표시됩니다.
@@ -3605,7 +3696,6 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
     // V59 자재 파트 레이아웃 기본 동작
     const materialGroupSelect = document.getElementById("materialGroupSelect");
-    const materialItemSelect = document.getElementById("materialItemSelect");
     const materialProductImage = document.getElementById("materialProductImage");
     const materialImagePlaceholder = document.getElementById("materialImagePlaceholder");
     const materialPriceArea = document.getElementById("materialPriceArea");
@@ -3613,15 +3703,30 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialUsage = document.getElementById("materialUsage");
     const materialNote = document.getElementById("materialNote");
 
-    // v0.0.15: 자재 제품군 및 품목 선택 구조. 이미지/설명은 추후 항목별로 등록합니다.
+    // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
     const materialCatalog = {
       "통합배선": [
         { id: "modular-jack", name: "모듈라잭", spec: "미등록", price: null, image: "", usage: "", note: "" },
-        { id: "110-block", name: "110블럭", spec: "미등록", price: null, image: "", usage: "", note: "" }
+        {
+          id: "110-block",
+          name: "110블럭",
+          image: "",
+          usage: "",
+          note: "",
+          variants: [
+            { id: "110-block-24p", spec: "24P", price: null },
+            { id: "110-block-25p", spec: "25P", price: null },
+            { id: "110-block-50p", spec: "50P", price: null },
+            { id: "110-block-100p", spec: "100P", price: null }
+          ]
+        }
       ],
       "광": [],
       "TV": []
     };
+
+    const expandedMaterialItems = new Set();
+    let selectedMaterialKey = "";
 
     function formatMaterialPrice(value) {
       if (value === null || value === undefined || value === "" || !Number.isFinite(Number(value))) return "미등록";
@@ -3652,29 +3757,45 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       title.textContent = item ? `${item.name} 이미지 준비중` : "자재 제품 이미지 영역";
       description.textContent = item
         ? "등록된 제품 이미지가 없습니다."
-        : "제품군에서 품목을 선택하면 해당 제품 이미지가 표시됩니다.";
+        : "제품군을 선택한 후 규격 및 단가에서 품목을 선택하세요.";
     }
 
-    function selectMaterialItem(itemId) {
-      const groupItems = materialCatalog[materialGroupSelect.value] || [];
-      const item = groupItems.find(entry => entry.id === itemId);
-      document.querySelectorAll(".material-price-row").forEach(row => {
-        row.classList.toggle("selected", row.dataset.itemId === itemId);
-        row.setAttribute("aria-selected", row.dataset.itemId === itemId ? "true" : "false");
+    function findMaterialItem(itemId) {
+      const items = materialCatalog[materialGroupSelect.value] || [];
+      return items.find(item => item.id === itemId) || null;
+    }
+
+    function applyMaterialSelection(item, variant) {
+      selectedMaterialKey = variant ? variant.id : item.id;
+      window.currentMaterialSelectionName = variant ? `${item.name} ${variant.spec}` : item.name;
+      document.querySelectorAll(".material-price-row, .material-variant-row").forEach(row => {
+        const selected = row.dataset.selectionKey === selectedMaterialKey;
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-selected", selected ? "true" : "false");
       });
-
-      if (!item) {
-        materialItemSelect.value = "";
-        showMaterialImage(null);
-        resetMaterialInfo();
-        return;
-      }
-
-      materialItemSelect.value = item.id;
       showMaterialImage(item);
-      materialInfoTitle.textContent = item.name;
+      materialInfoTitle.textContent = variant ? `${item.name} · ${variant.spec}` : item.name;
       materialUsage.textContent = item.usage || "등록된 용도가 없습니다.";
       materialNote.textContent = item.note || "등록된 참고사항이 없습니다.";
+    }
+
+    function toggleMaterialVariants(itemId) {
+      if (expandedMaterialItems.has(itemId)) expandedMaterialItems.delete(itemId);
+      else expandedMaterialItems.add(itemId);
+      renderMaterialTable(materialGroupSelect.value);
+    }
+
+    function makeSelectableRow(row, callback) {
+      row.tabIndex = 0;
+      row.setAttribute("role", "option");
+      row.setAttribute("aria-selected", "false");
+      row.addEventListener("click", callback);
+      row.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          callback();
+        }
+      });
     }
 
     function renderMaterialTable(groupName) {
@@ -3699,25 +3820,73 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       const tbody = document.createElement("tbody");
 
       items.forEach(item => {
+        const hasVariants = Array.isArray(item.variants) && item.variants.length > 0;
         const row = document.createElement("tr");
         row.className = "material-price-row";
         row.dataset.itemId = item.id;
-        row.tabIndex = 0;
-        row.setAttribute("role", "option");
-        row.setAttribute("aria-selected", "false");
-        row.innerHTML = `<td><strong>${item.name}</strong></td><td>${item.spec || "미등록"}</td><td>${formatMaterialPrice(item.price)}</td>`;
-        row.addEventListener("click", () => selectMaterialItem(item.id));
-        row.addEventListener("keydown", event => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            selectMaterialItem(item.id);
+        row.dataset.selectionKey = item.id;
+
+        if (hasVariants) {
+          const isExpanded = expandedMaterialItems.has(item.id);
+          row.innerHTML = `
+            <td><strong>${item.name}</strong></td>
+            <td class="material-expand-cell">
+              <button class="material-expand-btn" type="button" aria-expanded="${isExpanded ? "true" : "false"}" aria-controls="variants-${item.id}">
+                <span class="material-expand-icon" aria-hidden="true"></span>
+                <span>${isExpanded ? "규격 닫기" : "규격 보기"}</span>
+              </button>
+            </td>
+            <td class="material-empty-price" aria-label="규격을 펼치면 단가가 표시됩니다.">&nbsp;</td>`;
+          row.addEventListener("click", event => {
+            if (event.target.closest(".material-expand-btn")) return;
+            applyMaterialSelection(item, null);
+          });
+          row.querySelector(".material-expand-btn").addEventListener("click", event => {
+            event.stopPropagation();
+            applyMaterialSelection(item, null);
+            toggleMaterialVariants(item.id);
+          });
+          row.tabIndex = 0;
+          row.setAttribute("role", "option");
+          row.setAttribute("aria-selected", "false");
+          row.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              applyMaterialSelection(item, null);
+              toggleMaterialVariants(item.id);
+            }
+          });
+          tbody.appendChild(row);
+
+          if (isExpanded) {
+            item.variants.forEach(variant => {
+              const variantRow = document.createElement("tr");
+              variantRow.className = "material-variant-row";
+              variantRow.id = `variants-${item.id}-${variant.id}`;
+              variantRow.dataset.itemId = item.id;
+              variantRow.dataset.selectionKey = variant.id;
+              variantRow.innerHTML = `<td class="material-variant-name">${item.name}</td><td><strong>${variant.spec || "미등록"}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
+              makeSelectableRow(variantRow, () => applyMaterialSelection(item, variant));
+              tbody.appendChild(variantRow);
+            });
           }
-        });
-        tbody.appendChild(row);
+        } else {
+          row.innerHTML = `<td><strong>${item.name}</strong></td><td>${item.spec || "미등록"}</td><td>${formatMaterialPrice(item.price)}</td>`;
+          makeSelectableRow(row, () => applyMaterialSelection(item, null));
+          tbody.appendChild(row);
+        }
       });
 
       table.appendChild(tbody);
       materialPriceArea.appendChild(table);
+
+      if (selectedMaterialKey) {
+        document.querySelectorAll("[data-selection-key]").forEach(row => {
+          const selected = row.dataset.selectionKey === selectedMaterialKey;
+          row.classList.toggle("selected", selected);
+          row.setAttribute("aria-selected", selected ? "true" : "false");
+        });
+      }
     }
 
     Object.keys(materialCatalog).forEach(groupName => {
@@ -3727,32 +3896,15 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       materialGroupSelect.appendChild(option);
     });
 
-    function populateMaterialItems(groupName) {
-      const items = materialCatalog[groupName] || [];
-      materialItemSelect.innerHTML = groupName
-        ? '<option value="">세부 품목을 선택하세요</option>'
-        : '<option value="">먼저 제품군을 선택하세요</option>';
-      items.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item.id;
-        option.textContent = item.name;
-        materialItemSelect.appendChild(option);
-      });
-      materialItemSelect.disabled = !groupName || !items.length;
-    }
-
     materialGroupSelect.addEventListener("change", () => {
-      populateMaterialItems(materialGroupSelect.value);
+      expandedMaterialItems.clear();
+      selectedMaterialKey = "";
+      window.currentMaterialSelectionName = "";
       renderMaterialTable(materialGroupSelect.value);
       showMaterialImage(null);
       resetMaterialInfo();
     });
 
-    materialItemSelect.addEventListener("change", () => {
-      selectMaterialItem(materialItemSelect.value);
-    });
-
-    populateMaterialItems("");
     renderMaterialTable("");
     showMaterialImage(null);
     resetMaterialInfo();
@@ -3995,7 +4147,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     else if(type==="drawing-share"){title.textContent="손도면 공유";button("PNG 파일 공유",()=>shareDrawingFile("png"));button("PDF 파일 공유",()=>shareDrawingFile("pdf"));button("이메일로 내용 공유",()=>location.href="mailto:?subject="+encodeURIComponent("광전기통신 손도면")+"&body="+encodeURIComponent("광전기통신 손도면 파일을 첨부합니다."));button("문자메시지로 내용 공유",()=>location.href="sms:?&body="+encodeURIComponent("광전기통신 손도면 파일을 공유합니다."));button("카카오톡으로 공유",()=>shareDrawingFile("png"));help("카카오톡 버튼은 모바일·지원 브라우저의 시스템 공유창을 열며, 목록에서 카카오톡을 선택합니다. 지원하지 않는 PC에서는 파일을 먼저 저장합니다.")}
   };
   async function buildProductCard(kind){
-    const isRack=kind==="rack",select=document.getElementById(isRack?"rackProductSelect":"materialItemSelect"),group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=select?.value||"선택된 제품 없음",sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
+    const isRack=kind==="rack",select=isRack?document.getElementById("rackProductSelect"):null,group=document.getElementById("materialGroupSelect"),img=document.getElementById(isRack?"rackProductImage":"materialProductImage"),name=isRack?(select?.value||"선택된 제품 없음"):(window.currentMaterialSelectionName||"선택된 제품 없음"),sub=isRack?"랙 파트":((group?.value?group.value+" · ":"")+"자재 파트"),canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,1200,900);ctx.fillStyle="#172033";ctx.font="700 46px sans-serif";ctx.fillText("제품정보",60,72);ctx.fillStyle="#174f91";ctx.font="700 34px sans-serif";ctx.fillText(name,60,130);ctx.fillStyle="#667085";ctx.font="25px sans-serif";ctx.fillText(sub,60,172);ctx.strokeStyle="#d3dce8";ctx.strokeRect(60,210,1080,600);
     if(img&&img.src&&img.style.display!=="none"&&img.complete&&img.naturalWidth){const scale=Math.min(1000/img.naturalWidth,520/img.naturalHeight),w=img.naturalWidth*scale,h=img.naturalHeight*scale;ctx.drawImage(img,600-w/2,250+(520-h)/2,w,h)}else{ctx.fillStyle="#f4f7fb";ctx.fillRect(80,230,1040,560);ctx.fillStyle="#8a97a8";ctx.font="700 30px sans-serif";ctx.textAlign="center";ctx.fillText("등록된 제품 이미지가 없습니다.",600,515);ctx.textAlign="left"}
     ctx.fillStyle="#7a8797";ctx.font="20px sans-serif";ctx.fillText(new Date().toLocaleString("ko-KR"),860,860);const blob=await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("이미지 생성 실패")),"image/png"));return{file:new File([blob],`광전기통신_${name.replace(/[\\/:*?\"<>|]/g,"_")}.png`,{type:"image/png"}),name}
   }
