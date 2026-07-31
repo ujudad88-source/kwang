@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.3</title>
+<title>광전기통신 영업지원 시스템 v0.0.6</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2125,7 +2125,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 }
 
 
-/* v0.0.5: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
+/* v0.0.6: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
 .auth-version-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
 .auth-version-item{padding:10px 8px;border:1px solid #dce6f2;border-radius:10px;background:#f7faff;text-align:center}
 .auth-version-item strong{display:block;font-size:12px;color:#174f91;margin-bottom:3px}.auth-version-item span{font-size:11px;color:#667085}
@@ -2139,6 +2139,145 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 @media(max-width:760px){.back-button{min-height:38px;padding:0 9px;font-size:12px}.breadcrumb{margin:-18px 0 12px;padding:0 2px}.auth-version-box{grid-template-columns:1fr 1fr}.auth-actions{grid-template-columns:1fr}.topbar-actions{flex-wrap:wrap;justify-content:flex-end}}
 @media(prefers-reduced-motion:reduce){.panel.active{animation:none!important}}
 
+
+
+/* v0.0.6: 메인 카드 모바일 레이아웃 확정 패치
+   - 제목 + 한 줄 요약
+   - iOS Safari/Android Chrome에서 세로 글자 깨짐 방지
+   - 카드 장식 최소화 및 전체 터치 영역 유지 */
+#homePanel .part-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+#homePanel .part-card,
+#homePanel .drawing-part-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) 30px;
+  grid-template-rows:auto auto;
+  align-items:center;
+  column-gap:14px;
+  row-gap:4px;
+  min-width:0;
+  min-height:112px;
+  padding:20px;
+  overflow:hidden;
+  text-align:left;
+}
+#homePanel .part-card::after{display:none!important;content:none!important}
+#homePanel .part-icon{
+  grid-column:1;
+  grid-row:1 / span 2;
+  width:52px;
+  height:52px;
+  margin:0;
+  align-self:center;
+}
+#homePanel .part-title{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+  margin:0;
+  font-size:19px;
+  line-height:1.25;
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  writing-mode:horizontal-tb!important;
+}
+#homePanel .part-description{
+  grid-column:2;
+  grid-row:2;
+  display:block;
+  min-width:0;
+  max-width:100%;
+  margin:0;
+  color:#667085;
+  font-size:13px;
+  line-height:1.4;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  writing-mode:horizontal-tb!important;
+}
+#homePanel .part-arrow{
+  position:static;
+  grid-column:3;
+  grid-row:1 / span 2;
+  width:30px;
+  height:30px;
+  margin:0;
+  align-self:center;
+  border-radius:50%;
+  background:#eef5ff;
+  color:var(--primary);
+  font-size:16px;
+}
+@media(max-width:900px){
+  #homePanel .part-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  #homePanel .hero{margin-bottom:18px}
+  #homePanel .hero h1{font-size:28px;line-height:1.25}
+  #homePanel .hero .subtitle{
+    display:-webkit-box;
+    margin-top:9px;
+    font-size:14px;
+    line-height:1.55;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  #homePanel .part-grid{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+  #homePanel .part-card,
+  #homePanel .drawing-part-card{
+    grid-template-columns:48px minmax(0,1fr) 28px!important;
+    grid-template-rows:auto auto!important;
+    min-height:86px!important;
+    padding:14px 15px!important;
+    column-gap:12px!important;
+    row-gap:3px!important;
+    border-radius:16px!important;
+  }
+  #homePanel .part-icon{
+    width:46px!important;
+    height:46px!important;
+    border-radius:13px!important;
+    font-size:21px!important;
+  }
+  #homePanel .part-title{
+    font-size:17px!important;
+    line-height:1.25!important;
+  }
+  #homePanel .part-description{
+    font-size:12px!important;
+    line-height:1.35!important;
+  }
+  #homePanel .part-arrow{
+    width:28px!important;
+    height:28px!important;
+    font-size:15px!important;
+  }
+}
+@media(max-width:390px){
+  #homePanel .part-card,
+  #homePanel .drawing-part-card{
+    grid-template-columns:44px minmax(0,1fr) 24px!important;
+    min-height:80px!important;
+    padding:12px!important;
+    column-gap:10px!important;
+  }
+  #homePanel .part-icon{width:42px!important;height:42px!important;font-size:19px!important}
+  #homePanel .part-title{font-size:16px!important}
+  #homePanel .part-description{font-size:11px!important}
+  #homePanel .part-arrow{width:24px!important;height:24px!important;font-size:13px!important}
+}
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2166,7 +2305,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.5</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.6</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
