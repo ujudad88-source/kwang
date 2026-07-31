@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.14</title>
+<title>광전기통신 영업지원 시스템 v0.0.15</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1432,6 +1432,84 @@
       line-height: 1.7;
     }
 
+    .material-price-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .material-price-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+    }
+
+    .material-price-table th,
+    .material-price-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .material-price-table th {
+      background: #f7f9fc;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .material-price-row {
+      cursor: pointer;
+      transition: background-color .16s ease, box-shadow .16s ease;
+    }
+
+    .material-price-row:hover {
+      background: var(--primary-soft);
+    }
+
+    .material-price-row.selected {
+      background: #e8f0ff;
+      box-shadow: inset 4px 0 0 var(--primary);
+    }
+
+    .material-price-row:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, .25);
+      outline-offset: -3px;
+    }
+
+    .material-info-card {
+      padding: 24px;
+    }
+
+    .material-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .material-info-box {
+      min-height: 120px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #f8faff;
+    }
+
+    .material-info-box strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .material-info-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
     @media (max-width: 640px) {
       .material-select-card,
       .material-image-card,
@@ -1450,6 +1528,14 @@
 
       .material-product-image {
         max-height: 420px;
+      }
+
+      .material-info-card {
+        padding: 18px;
+      }
+
+      .material-info-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -2325,7 +2411,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.14</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.15</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2687,11 +2773,19 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <section class="card material-price-card">
 <h3 class="material-layout-title">규격 및 단가</h3>
 <p class="material-layout-description">
-            선택한 세부 품목의 규격과 단가가 표시되는 영역입니다.
+            제품군의 품목을 클릭하면 선택 상태가 유지되며 제품 이미지와 용도 및 참고사항이 함께 변경됩니다.
           </p>
 <div class="material-price-placeholder" id="materialPriceArea">
-            세부 품목을 선택하면 해당 자재의 규격 및 단가 정보가 이곳에 표시됩니다.
+            제품군을 선택하면 해당 자재의 품목, 규격 및 단가 정보가 이곳에 표시됩니다.
           </div>
+</section>
+<section class="card material-info-card">
+<h3 class="material-layout-title">용도 및 참고사항</h3>
+<p class="material-layout-description" id="materialInfoTitle">품목을 선택하면 해당 자재의 정보가 표시됩니다.</p>
+<div class="material-info-grid">
+<div class="material-info-box"><strong>용도</strong><p id="materialUsage">등록된 용도가 없습니다.</p></div>
+<div class="material-info-box"><strong>참고사항</strong><p id="materialNote">등록된 참고사항이 없습니다.</p></div>
+</div>
 </section>
 </div>
 </section>
@@ -3515,35 +3609,153 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialProductImage = document.getElementById("materialProductImage");
     const materialImagePlaceholder = document.getElementById("materialImagePlaceholder");
     const materialPriceArea = document.getElementById("materialPriceArea");
+    const materialInfoTitle = document.getElementById("materialInfoTitle");
+    const materialUsage = document.getElementById("materialUsage");
+    const materialNote = document.getElementById("materialNote");
 
-    function resetMaterialDisplay(message) {
+    // v0.0.15: 자재 제품군 및 품목 선택 구조. 이미지/설명은 추후 항목별로 등록합니다.
+    const materialCatalog = {
+      "통합배선": [
+        { id: "modular-jack", name: "모듈라잭", spec: "미등록", price: null, image: "", usage: "", note: "" },
+        { id: "110-block", name: "110블럭", spec: "미등록", price: null, image: "", usage: "", note: "" }
+      ],
+      "광": [],
+      "TV": []
+    };
+
+    function formatMaterialPrice(value) {
+      if (value === null || value === undefined || value === "" || !Number.isFinite(Number(value))) return "미등록";
+      return `${Number(value).toLocaleString("ko-KR")}원`;
+    }
+
+    function resetMaterialInfo() {
+      materialInfoTitle.textContent = "품목을 선택하면 해당 자재의 정보가 표시됩니다.";
+      materialUsage.textContent = "등록된 용도가 없습니다.";
+      materialNote.textContent = "등록된 참고사항이 없습니다.";
+    }
+
+    function showMaterialImage(item) {
       materialProductImage.removeAttribute("src");
       materialProductImage.style.display = "none";
       materialImagePlaceholder.hidden = false;
-      materialPriceArea.textContent = message;
+      const title = materialImagePlaceholder.querySelector("strong");
+      const description = materialImagePlaceholder.querySelector("span");
+
+      if (item && item.image) {
+        materialProductImage.src = item.image;
+        materialProductImage.alt = `${item.name} 제품 이미지`;
+        materialProductImage.style.display = "block";
+        materialImagePlaceholder.hidden = true;
+        return;
+      }
+
+      title.textContent = item ? `${item.name} 이미지 준비중` : "자재 제품 이미지 영역";
+      description.textContent = item
+        ? "등록된 제품 이미지가 없습니다."
+        : "제품군에서 품목을 선택하면 해당 제품 이미지가 표시됩니다.";
+    }
+
+    function selectMaterialItem(itemId) {
+      const groupItems = materialCatalog[materialGroupSelect.value] || [];
+      const item = groupItems.find(entry => entry.id === itemId);
+      document.querySelectorAll(".material-price-row").forEach(row => {
+        row.classList.toggle("selected", row.dataset.itemId === itemId);
+        row.setAttribute("aria-selected", row.dataset.itemId === itemId ? "true" : "false");
+      });
+
+      if (!item) {
+        materialItemSelect.value = "";
+        showMaterialImage(null);
+        resetMaterialInfo();
+        return;
+      }
+
+      materialItemSelect.value = item.id;
+      showMaterialImage(item);
+      materialInfoTitle.textContent = item.name;
+      materialUsage.textContent = item.usage || "등록된 용도가 없습니다.";
+      materialNote.textContent = item.note || "등록된 참고사항이 없습니다.";
+    }
+
+    function renderMaterialTable(groupName) {
+      const items = materialCatalog[groupName] || [];
+      materialPriceArea.className = "material-price-placeholder";
+      materialPriceArea.innerHTML = "";
+
+      if (!groupName) {
+        materialPriceArea.textContent = "제품군을 선택하면 해당 자재의 품목, 규격 및 단가 정보가 이곳에 표시됩니다.";
+        return;
+      }
+
+      if (!items.length) {
+        materialPriceArea.textContent = `${groupName} 제품군의 등록된 품목이 없습니다.`;
+        return;
+      }
+
+      materialPriceArea.className = "material-price-table-wrap";
+      const table = document.createElement("table");
+      table.className = "material-price-table";
+      table.innerHTML = "<thead><tr><th>품목</th><th>규격</th><th>단가</th></tr></thead>";
+      const tbody = document.createElement("tbody");
+
+      items.forEach(item => {
+        const row = document.createElement("tr");
+        row.className = "material-price-row";
+        row.dataset.itemId = item.id;
+        row.tabIndex = 0;
+        row.setAttribute("role", "option");
+        row.setAttribute("aria-selected", "false");
+        row.innerHTML = `<td><strong>${item.name}</strong></td><td>${item.spec || "미등록"}</td><td>${formatMaterialPrice(item.price)}</td>`;
+        row.addEventListener("click", () => selectMaterialItem(item.id));
+        row.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectMaterialItem(item.id);
+          }
+        });
+        tbody.appendChild(row);
+      });
+
+      table.appendChild(tbody);
+      materialPriceArea.appendChild(table);
+    }
+
+    Object.keys(materialCatalog).forEach(groupName => {
+      const option = document.createElement("option");
+      option.value = groupName;
+      option.textContent = groupName;
+      materialGroupSelect.appendChild(option);
+    });
+
+    function populateMaterialItems(groupName) {
+      const items = materialCatalog[groupName] || [];
+      materialItemSelect.innerHTML = groupName
+        ? '<option value="">세부 품목을 선택하세요</option>'
+        : '<option value="">먼저 제품군을 선택하세요</option>';
+      items.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        materialItemSelect.appendChild(option);
+      });
+      materialItemSelect.disabled = !groupName || !items.length;
     }
 
     materialGroupSelect.addEventListener("change", () => {
-      materialItemSelect.innerHTML = materialGroupSelect.value
-        ? '<option value="">세부 품목을 선택하세요</option>'
-        : '<option value="">먼저 제품군을 선택하세요</option>';
-
-      materialItemSelect.disabled = !materialGroupSelect.value;
-
-      resetMaterialDisplay(
-        materialGroupSelect.value
-          ? "세부 품목을 선택하면 해당 자재의 규격 및 단가 정보가 이곳에 표시됩니다."
-          : "제품군과 세부 품목을 선택하면 해당 자재의 규격 및 단가 정보가 이곳에 표시됩니다."
-      );
+      populateMaterialItems(materialGroupSelect.value);
+      renderMaterialTable(materialGroupSelect.value);
+      showMaterialImage(null);
+      resetMaterialInfo();
     });
 
     materialItemSelect.addEventListener("change", () => {
-      resetMaterialDisplay(
-        materialItemSelect.value
-          ? `${materialItemSelect.value} 제품의 규격 및 단가 정보가 표시됩니다.`
-          : "세부 품목을 선택하면 해당 자재의 규격 및 단가 정보가 이곳에 표시됩니다."
-      );
+      selectMaterialItem(materialItemSelect.value);
     });
+
+    populateMaterialItems("");
+    renderMaterialTable("");
+    showMaterialImage(null);
+    resetMaterialInfo();
 
   </script>
 <!-- V76: 랙 이미지 외부 자산 분리 -->
