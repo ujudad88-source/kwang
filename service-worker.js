@@ -1,4 +1,4 @@
-const CACHE_NAME = "gwang-v0.0.21";
+const CACHE_NAME = "gwang-v0.0.23";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,9 @@ const APP_ASSETS = [
   './assets/server_rack.png',
   './assets/gwangtelecom_logo.png',
   './assets/cable_hook_horizontal.png',
+  './data/materials_integrated.json',
+  './data/materials_optical.json',
+  './data/materials_tv.json',
   './assets/ground/iron_up.png',
   './assets/ground/iron_down.png',
   './assets/ground/iron_left.png',

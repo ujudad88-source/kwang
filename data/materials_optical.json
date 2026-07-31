@@ -1,0 +1,491 @@
+{
+  "group": "광",
+  "items": [
+    {
+      "id": "fdf",
+      "name": "광분배함(FDF)",
+      "image": "",
+      "usage": "광케이블의 접속·분배·정리 및 광어댑터 수용에 사용합니다.",
+      "note": "설치 방식과 심선 수, 함체 규격 및 어댑터 포함 여부를 확인하세요.",
+      "children": [
+        {
+          "id": "fdf-mini-steel",
+          "name": "MINI STEEL",
+          "image": "",
+          "usage": "소규모 광회선의 벽부 또는 소형 공간 설치용 광분배함입니다.",
+          "note": "함과 어댑터가 포함된 단가입니다.",
+          "variants": [
+            {
+              "id": "fdf-mini-4c",
+              "spec": "FDF 4C",
+              "size": "118×136×45",
+              "price": 7100,
+              "remark": ""
+            },
+            {
+              "id": "fdf-mini-6c",
+              "spec": "FDF 6C",
+              "size": "118×136×45",
+              "price": 7500,
+              "remark": ""
+            },
+            {
+              "id": "fdf-mini-8c",
+              "spec": "FDF 8C",
+              "size": "118×136×45",
+              "price": 7900,
+              "remark": ""
+            },
+            {
+              "id": "fdf-mini-12c",
+              "spec": "FDF 12C",
+              "size": "140×190×45",
+              "price": 15400,
+              "remark": ""
+            }
+          ]
+        },
+        {
+          "id": "fdf-rack-type",
+          "name": "RACK TYPE",
+          "image": "",
+          "usage": "19인치 랙에 장착하여 광회선을 접속·분배하는 광패치패널형 FDF입니다.",
+          "note": "랙 유닛(1U·2U)과 심선 수를 함께 확인하세요.",
+          "variants": [
+            {
+              "id": "fdf-rack-4c-1u",
+              "spec": "FDF 4C 1U",
+              "size": "480×300×44",
+              "price": 17800,
+              "remark": "1U"
+            },
+            {
+              "id": "fdf-rack-8c-1u",
+              "spec": "FDF 8C 1U",
+              "size": "480×300×44",
+              "price": 18600,
+              "remark": "1U"
+            },
+            {
+              "id": "fdf-rack-12c-1u",
+              "spec": "FDF 12C 1U",
+              "size": "480×300×44",
+              "price": 19400,
+              "remark": "1U"
+            },
+            {
+              "id": "fdf-rack-24c-1u",
+              "spec": "FDF 24C 1U",
+              "size": "480×300×44",
+              "price": 21800,
+              "remark": "1U"
+            },
+            {
+              "id": "fdf-rack-36c-2u",
+              "spec": "FDF 36C 2U",
+              "size": "480×300×88",
+              "price": 39200,
+              "remark": "2U"
+            },
+            {
+              "id": "fdf-rack-48c-2u",
+              "spec": "FDF 48C 2U",
+              "size": "480×300×88",
+              "price": 41600,
+              "remark": "2U"
+            }
+          ]
+        },
+        {
+          "id": "fdf-wall-type",
+          "name": "WALL TYPE",
+          "image": "",
+          "usage": "벽부형 함체에 광접속 및 분배 부품을 수용하는 옥내용 광분배함입니다.",
+          "note": "비고의 함 규격과 심선 수를 함께 확인하세요.",
+          "variants": [
+            {
+              "id": "fdf-wall-48c",
+              "spec": "FDF 48C",
+              "size": "310×310×100",
+              "price": 47840,
+              "remark": "48함"
+            },
+            {
+              "id": "fdf-wall-56c",
+              "spec": "FDF 56C",
+              "size": "350×330×100",
+              "price": 72680,
+              "remark": "72함"
+            },
+            {
+              "id": "fdf-wall-60c",
+              "spec": "FDF 60C",
+              "size": "350×330×100",
+              "price": 73600,
+              "remark": "72함"
+            },
+            {
+              "id": "fdf-wall-64c",
+              "spec": "FDF 64C",
+              "size": "350×330×100",
+              "price": 74520,
+              "remark": "72함"
+            },
+            {
+              "id": "fdf-wall-68c",
+              "spec": "FDF 68C",
+              "size": "350×330×100",
+              "price": 75440,
+              "remark": "72함"
+            },
+            {
+              "id": "fdf-wall-72c",
+              "spec": "FDF 72C",
+              "size": "350×330×100",
+              "price": 76360,
+              "remark": "72함"
+            },
+            {
+              "id": "fdf-wall-76c",
+              "spec": "FDF 76C",
+              "size": "350×330×100",
+              "price": 80730,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-80c",
+              "spec": "FDF 80C",
+              "size": "350×330×100",
+              "price": 81650,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-84c",
+              "spec": "FDF 84C",
+              "size": "350×330×100",
+              "price": 82570,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-88c",
+              "spec": "FDF 88C",
+              "size": "350×330×100",
+              "price": 83490,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-92c",
+              "spec": "FDF 92C",
+              "size": "350×330×100",
+              "price": 84410,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-96c",
+              "spec": "FDF 96C",
+              "size": "350×330×100",
+              "price": 85330,
+              "remark": "96함"
+            },
+            {
+              "id": "fdf-wall-100c",
+              "spec": "FDF 100C",
+              "size": "350×410×100",
+              "price": 92000,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-104c",
+              "spec": "FDF 104C",
+              "size": "350×410×100",
+              "price": 92920,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-108c",
+              "spec": "FDF 108C",
+              "size": "350×410×100",
+              "price": 93840,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-112c",
+              "spec": "FDF 112C",
+              "size": "350×410×100",
+              "price": 94760,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-116c",
+              "spec": "FDF 116C",
+              "size": "350×410×100",
+              "price": 95680,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-120c",
+              "spec": "FDF 120C",
+              "size": "350×410×100",
+              "price": 96600,
+              "remark": "120함"
+            },
+            {
+              "id": "fdf-wall-124c",
+              "spec": "FDF 124C",
+              "size": "350×488×100",
+              "price": 99820,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-128c",
+              "spec": "FDF 128C",
+              "size": "350×488×100",
+              "price": 100740,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-132c",
+              "spec": "FDF 132C",
+              "size": "350×488×100",
+              "price": 101660,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-136c",
+              "spec": "FDF 136C",
+              "size": "350×488×100",
+              "price": 102580,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-140c",
+              "spec": "FDF 140C",
+              "size": "350×488×100",
+              "price": 103500,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-144c",
+              "spec": "FDF 144C",
+              "size": "350×488×100",
+              "price": 104420,
+              "remark": "144함"
+            },
+            {
+              "id": "fdf-wall-148c",
+              "spec": "FDF 148C",
+              "size": "350×490×100",
+              "price": 137540,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-152c",
+              "spec": "FDF 152C",
+              "size": "350×490×100",
+              "price": 138460,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-156c",
+              "spec": "FDF 156C",
+              "size": "350×490×100",
+              "price": 139380,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-164c",
+              "spec": "FDF 164C",
+              "size": "350×490×100",
+              "price": 141220,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-168c",
+              "spec": "FDF 168C",
+              "size": "350×490×100",
+              "price": 142140,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-172c",
+              "spec": "FDF 172C",
+              "size": "350×490×100",
+              "price": 143060,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-176c",
+              "spec": "FDF 176C",
+              "size": "350×490×100",
+              "price": 143980,
+              "remark": "176함"
+            },
+            {
+              "id": "fdf-wall-180c",
+              "spec": "FDF 180C",
+              "size": "350×520×100",
+              "price": 167900,
+              "remark": "192함"
+            },
+            {
+              "id": "fdf-wall-184c",
+              "spec": "FDF 184C",
+              "size": "350×520×100",
+              "price": 168820,
+              "remark": "192함"
+            },
+            {
+              "id": "fdf-wall-188c",
+              "spec": "FDF 188C",
+              "size": "350×520×100",
+              "price": 169740,
+              "remark": "192함"
+            },
+            {
+              "id": "fdf-wall-216c",
+              "spec": "FDF 216C",
+              "size": "350×610×90",
+              "price": 222180,
+              "remark": "228함"
+            },
+            {
+              "id": "fdf-wall-224c",
+              "spec": "FDF 224C",
+              "size": "350×610×90",
+              "price": 224020,
+              "remark": "228함"
+            },
+            {
+              "id": "fdf-wall-280c",
+              "spec": "FDF 280C",
+              "size": "350×770×90",
+              "price": 271400,
+              "remark": "288함"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optical-closure",
+      "name": "광접속함",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-patch-panel",
+      "name": "광패치판넬",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-adapter",
+      "name": "광어댑터",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-pigtail",
+      "name": "광피그테일",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-jumper",
+      "name": "광점퍼코드",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "plc-splitter",
+      "name": "PLC Splitter",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-attenuator",
+      "name": "광감쇠기",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-coupler",
+      "name": "광커플러",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-tray",
+      "name": "광트레이",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "splice-sleeve",
+      "name": "광융착슬리브",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "optical-etc",
+      "name": "기타",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    }
+  ]
+}

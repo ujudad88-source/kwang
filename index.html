@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.21</title>
+<title>광전기통신 영업지원 시스템 v0.0.23</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1469,6 +1469,17 @@
       background: var(--primary-soft);
     }
 
+
+    .material-category-row {
+      background: #f8fbff;
+    }
+    .material-category-row td:first-child {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .material-price-table {
+      min-width: 760px;
+    }
     .material-price-row.selected {
       background: #e8f0ff;
       box-shadow: inset 4px 0 0 var(--primary);
@@ -1501,6 +1512,17 @@
       font: inherit;
       font-weight: 700;
       outline: none;
+    }
+
+    /* v0.0.22: iOS Safari 입력 포커스 시 자동 확대 및 헤더 축소 방지 */
+    @media (max-width: 760px) {
+      .material-search-input {
+        font-size: 16px;
+      }
+      body:has(#materialPanel.active) .topbar {
+        flex-shrink: 0;
+        width: 100%;
+      }
     }
 
     .material-search-input:focus {
@@ -2598,7 +2620,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.21</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.23</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -3853,30 +3875,552 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.21: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
+    // v0.0.23: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
+    // v0.0.23: 자재 데이터 구조를 제품군 > 품목 > 분류 > 규격으로 확장.
     const materialCatalog = {
       "통합배선": [
-        { id: "modular-jack", name: "모듈라잭", spec: "미등록", price: null, image: "", usage: "", note: "" },
-        {
-          id: "110-block",
-          name: "110블럭",
-          image: "",
-          usage: "",
-          note: "",
-          variants: [
-            { id: "110-block-24p", spec: "24P", price: null },
-            { id: "110-block-25p", spec: "25P", price: null },
-            { id: "110-block-50p", spec: "50P", price: null },
-            { id: "110-block-100p", spec: "100P", price: null }
-          ]
-        }
+            {
+                  "id": "modular-jack",
+                  "name": "모듈라잭",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "110-block",
+                  "name": "110블럭",
+                  "image": "",
+                  "usage": "",
+                  "note": "",
+                  "variants": [
+                        {
+                              "id": "110-block-24p",
+                              "spec": "24P",
+                              "size": "",
+                              "price": null,
+                              "remark": ""
+                        },
+                        {
+                              "id": "110-block-25p",
+                              "spec": "25P",
+                              "size": "",
+                              "price": null,
+                              "remark": ""
+                        },
+                        {
+                              "id": "110-block-50p",
+                              "spec": "50P",
+                              "size": "",
+                              "price": null,
+                              "remark": ""
+                        },
+                        {
+                              "id": "110-block-100p",
+                              "spec": "100P",
+                              "size": "",
+                              "price": null,
+                              "remark": ""
+                        }
+                  ]
+            }
       ],
-      "광": [],
+      "광": [
+            {
+                  "id": "fdf",
+                  "name": "광분배함(FDF)",
+                  "image": "",
+                  "usage": "광케이블의 접속·분배·정리 및 광어댑터 수용에 사용합니다.",
+                  "note": "설치 방식과 심선 수, 함체 규격 및 어댑터 포함 여부를 확인하세요.",
+                  "children": [
+                        {
+                              "id": "fdf-mini-steel",
+                              "name": "MINI STEEL",
+                              "image": "",
+                              "usage": "소규모 광회선의 벽부 또는 소형 공간 설치용 광분배함입니다.",
+                              "note": "함과 어댑터가 포함된 단가입니다.",
+                              "variants": [
+                                    {
+                                          "id": "fdf-mini-4c",
+                                          "spec": "FDF 4C",
+                                          "size": "118×136×45",
+                                          "price": 7100,
+                                          "remark": ""
+                                    },
+                                    {
+                                          "id": "fdf-mini-6c",
+                                          "spec": "FDF 6C",
+                                          "size": "118×136×45",
+                                          "price": 7500,
+                                          "remark": ""
+                                    },
+                                    {
+                                          "id": "fdf-mini-8c",
+                                          "spec": "FDF 8C",
+                                          "size": "118×136×45",
+                                          "price": 7900,
+                                          "remark": ""
+                                    },
+                                    {
+                                          "id": "fdf-mini-12c",
+                                          "spec": "FDF 12C",
+                                          "size": "140×190×45",
+                                          "price": 15400,
+                                          "remark": ""
+                                    }
+                              ]
+                        },
+                        {
+                              "id": "fdf-rack-type",
+                              "name": "RACK TYPE",
+                              "image": "",
+                              "usage": "19인치 랙에 장착하여 광회선을 접속·분배하는 광패치패널형 FDF입니다.",
+                              "note": "랙 유닛(1U·2U)과 심선 수를 함께 확인하세요.",
+                              "variants": [
+                                    {
+                                          "id": "fdf-rack-4c-1u",
+                                          "spec": "FDF 4C 1U",
+                                          "size": "480×300×44",
+                                          "price": 17800,
+                                          "remark": "1U"
+                                    },
+                                    {
+                                          "id": "fdf-rack-8c-1u",
+                                          "spec": "FDF 8C 1U",
+                                          "size": "480×300×44",
+                                          "price": 18600,
+                                          "remark": "1U"
+                                    },
+                                    {
+                                          "id": "fdf-rack-12c-1u",
+                                          "spec": "FDF 12C 1U",
+                                          "size": "480×300×44",
+                                          "price": 19400,
+                                          "remark": "1U"
+                                    },
+                                    {
+                                          "id": "fdf-rack-24c-1u",
+                                          "spec": "FDF 24C 1U",
+                                          "size": "480×300×44",
+                                          "price": 21800,
+                                          "remark": "1U"
+                                    },
+                                    {
+                                          "id": "fdf-rack-36c-2u",
+                                          "spec": "FDF 36C 2U",
+                                          "size": "480×300×88",
+                                          "price": 39200,
+                                          "remark": "2U"
+                                    },
+                                    {
+                                          "id": "fdf-rack-48c-2u",
+                                          "spec": "FDF 48C 2U",
+                                          "size": "480×300×88",
+                                          "price": 41600,
+                                          "remark": "2U"
+                                    }
+                              ]
+                        },
+                        {
+                              "id": "fdf-wall-type",
+                              "name": "WALL TYPE",
+                              "image": "",
+                              "usage": "벽부형 함체에 광접속 및 분배 부품을 수용하는 옥내용 광분배함입니다.",
+                              "note": "비고의 함 규격과 심선 수를 함께 확인하세요.",
+                              "variants": [
+                                    {
+                                          "id": "fdf-wall-48c",
+                                          "spec": "FDF 48C",
+                                          "size": "310×310×100",
+                                          "price": 47840,
+                                          "remark": "48함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-56c",
+                                          "spec": "FDF 56C",
+                                          "size": "350×330×100",
+                                          "price": 72680,
+                                          "remark": "72함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-60c",
+                                          "spec": "FDF 60C",
+                                          "size": "350×330×100",
+                                          "price": 73600,
+                                          "remark": "72함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-64c",
+                                          "spec": "FDF 64C",
+                                          "size": "350×330×100",
+                                          "price": 74520,
+                                          "remark": "72함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-68c",
+                                          "spec": "FDF 68C",
+                                          "size": "350×330×100",
+                                          "price": 75440,
+                                          "remark": "72함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-72c",
+                                          "spec": "FDF 72C",
+                                          "size": "350×330×100",
+                                          "price": 76360,
+                                          "remark": "72함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-76c",
+                                          "spec": "FDF 76C",
+                                          "size": "350×330×100",
+                                          "price": 80730,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-80c",
+                                          "spec": "FDF 80C",
+                                          "size": "350×330×100",
+                                          "price": 81650,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-84c",
+                                          "spec": "FDF 84C",
+                                          "size": "350×330×100",
+                                          "price": 82570,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-88c",
+                                          "spec": "FDF 88C",
+                                          "size": "350×330×100",
+                                          "price": 83490,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-92c",
+                                          "spec": "FDF 92C",
+                                          "size": "350×330×100",
+                                          "price": 84410,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-96c",
+                                          "spec": "FDF 96C",
+                                          "size": "350×330×100",
+                                          "price": 85330,
+                                          "remark": "96함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-100c",
+                                          "spec": "FDF 100C",
+                                          "size": "350×410×100",
+                                          "price": 92000,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-104c",
+                                          "spec": "FDF 104C",
+                                          "size": "350×410×100",
+                                          "price": 92920,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-108c",
+                                          "spec": "FDF 108C",
+                                          "size": "350×410×100",
+                                          "price": 93840,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-112c",
+                                          "spec": "FDF 112C",
+                                          "size": "350×410×100",
+                                          "price": 94760,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-116c",
+                                          "spec": "FDF 116C",
+                                          "size": "350×410×100",
+                                          "price": 95680,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-120c",
+                                          "spec": "FDF 120C",
+                                          "size": "350×410×100",
+                                          "price": 96600,
+                                          "remark": "120함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-124c",
+                                          "spec": "FDF 124C",
+                                          "size": "350×488×100",
+                                          "price": 99820,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-128c",
+                                          "spec": "FDF 128C",
+                                          "size": "350×488×100",
+                                          "price": 100740,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-132c",
+                                          "spec": "FDF 132C",
+                                          "size": "350×488×100",
+                                          "price": 101660,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-136c",
+                                          "spec": "FDF 136C",
+                                          "size": "350×488×100",
+                                          "price": 102580,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-140c",
+                                          "spec": "FDF 140C",
+                                          "size": "350×488×100",
+                                          "price": 103500,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-144c",
+                                          "spec": "FDF 144C",
+                                          "size": "350×488×100",
+                                          "price": 104420,
+                                          "remark": "144함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-148c",
+                                          "spec": "FDF 148C",
+                                          "size": "350×490×100",
+                                          "price": 137540,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-152c",
+                                          "spec": "FDF 152C",
+                                          "size": "350×490×100",
+                                          "price": 138460,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-156c",
+                                          "spec": "FDF 156C",
+                                          "size": "350×490×100",
+                                          "price": 139380,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-164c",
+                                          "spec": "FDF 164C",
+                                          "size": "350×490×100",
+                                          "price": 141220,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-168c",
+                                          "spec": "FDF 168C",
+                                          "size": "350×490×100",
+                                          "price": 142140,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-172c",
+                                          "spec": "FDF 172C",
+                                          "size": "350×490×100",
+                                          "price": 143060,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-176c",
+                                          "spec": "FDF 176C",
+                                          "size": "350×490×100",
+                                          "price": 143980,
+                                          "remark": "176함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-180c",
+                                          "spec": "FDF 180C",
+                                          "size": "350×520×100",
+                                          "price": 167900,
+                                          "remark": "192함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-184c",
+                                          "spec": "FDF 184C",
+                                          "size": "350×520×100",
+                                          "price": 168820,
+                                          "remark": "192함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-188c",
+                                          "spec": "FDF 188C",
+                                          "size": "350×520×100",
+                                          "price": 169740,
+                                          "remark": "192함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-216c",
+                                          "spec": "FDF 216C",
+                                          "size": "350×610×90",
+                                          "price": 222180,
+                                          "remark": "228함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-224c",
+                                          "spec": "FDF 224C",
+                                          "size": "350×610×90",
+                                          "price": 224020,
+                                          "remark": "228함"
+                                    },
+                                    {
+                                          "id": "fdf-wall-280c",
+                                          "spec": "FDF 280C",
+                                          "size": "350×770×90",
+                                          "price": 271400,
+                                          "remark": "288함"
+                                    }
+                              ]
+                        }
+                  ]
+            },
+            {
+                  "id": "optical-closure",
+                  "name": "광접속함",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-patch-panel",
+                  "name": "광패치판넬",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-adapter",
+                  "name": "광어댑터",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-pigtail",
+                  "name": "광피그테일",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-jumper",
+                  "name": "광점퍼코드",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "plc-splitter",
+                  "name": "PLC Splitter",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-attenuator",
+                  "name": "광감쇠기",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-coupler",
+                  "name": "광커플러",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-tray",
+                  "name": "광트레이",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "splice-sleeve",
+                  "name": "광융착슬리브",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            },
+            {
+                  "id": "optical-etc",
+                  "name": "기타",
+                  "spec": "미등록",
+                  "size": "",
+                  "price": null,
+                  "remark": "",
+                  "image": "",
+                  "usage": "",
+                  "note": ""
+            }
+      ],
       "TV": []
-    };
+};
 
     const expandedMaterialItems = new Set();
     let selectedMaterialKey = "";
@@ -3963,17 +4507,27 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       return escapeMaterialHTML(text).replace(new RegExp(`(${escapedKeyword})`, "gi"), '<mark class="material-search-mark">$1</mark>');
     }
 
+    function materialTextMatches(value, keyword) {
+      return String(value || "").toLocaleLowerCase("ko-KR").includes(keyword.toLocaleLowerCase("ko-KR"));
+    }
+
     function getMaterialSearchResults(items, keyword, groupName) {
-      if (!keyword) return items.map(item => ({ item, groupName, nameMatched: false, matchedVariants: null }));
-      const lowerKeyword = keyword.toLocaleLowerCase("ko-KR");
+      if (!keyword) return items.map(item => ({ item, groupName, nameMatched: false, matchedVariants: null, matchedChildren: null }));
       return items.map(item => {
-        const nameMatched = item.name.toLocaleLowerCase("ko-KR").includes(lowerKeyword);
+        const nameMatched = materialTextMatches(item.name, keyword);
         const matchedVariants = Array.isArray(item.variants)
-          ? item.variants.filter(variant => String(variant.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword))
+          ? item.variants.filter(variant => [variant.spec, variant.size, variant.remark].some(value => materialTextMatches(value, keyword)))
           : [];
-        const specMatched = !item.variants && String(item.spec || "").toLocaleLowerCase("ko-KR").includes(lowerKeyword);
-        return (nameMatched || specMatched || matchedVariants.length)
-          ? { item, groupName, nameMatched, specMatched, matchedVariants }
+        const specMatched = !item.variants && !item.children && [item.spec, item.size, item.remark].some(value => materialTextMatches(value, keyword));
+        const matchedChildren = Array.isArray(item.children)
+          ? item.children.map(child => {
+              const childNameMatched = materialTextMatches(child.name, keyword);
+              const childVariants = (child.variants || []).filter(variant => [variant.spec, variant.size, variant.remark].some(value => materialTextMatches(value, keyword)));
+              return (childNameMatched || childVariants.length) ? { child, childNameMatched, matchedVariants: childVariants } : null;
+            }).filter(Boolean)
+          : [];
+        return (nameMatched || specMatched || matchedVariants.length || matchedChildren.length)
+          ? { item, groupName, nameMatched, specMatched, matchedVariants, matchedChildren }
           : null;
       }).filter(Boolean);
     }
@@ -3984,6 +4538,24 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       return Object.entries(materialCatalog).flatMap(([catalogGroup, items]) =>
         getMaterialSearchResults(items, keyword, catalogGroup)
       );
+    }
+
+    function makeExpandButton(label, expanded, controlsId) {
+      return `<button class="material-expand-btn" type="button" aria-expanded="${expanded ? "true" : "false"}" aria-controls="${controlsId}"><span class="material-expand-icon" aria-hidden="true"></span><span>${expanded ? label.replace("보기", "닫기") : label}</span></button>`;
+    }
+
+    function appendVariantRows(tbody, parentItem, variants, resultGroup, keyword, isGlobalSearch, prefixName) {
+      variants.forEach(variant => {
+        const variantRow = document.createElement("tr");
+        variantRow.className = "material-variant-row";
+        variantRow.dataset.itemId = parentItem.id;
+        variantRow.dataset.groupName = resultGroup;
+        variantRow.dataset.selectionKey = `${resultGroup}:${variant.id}`;
+        const badge = isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : "";
+        variantRow.innerHTML = `<td class="material-variant-name">${badge}${escapeMaterialHTML(prefixName || parentItem.name)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${highlightMaterialMatch(variant.size || "-", keyword)}</td><td>${formatMaterialPrice(variant.price)}</td><td>${highlightMaterialMatch(variant.remark || "-", keyword)}</td>`;
+        makeSelectableRow(variantRow, () => applyMaterialSelection(parentItem, variant, resultGroup));
+        tbody.appendChild(variantRow);
+      });
     }
 
     function renderMaterialTable(groupName) {
@@ -3998,12 +4570,10 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         materialPriceArea.textContent = "제품군을 선택하거나 검색어를 입력하면 품목, 규격 및 단가 정보가 이곳에 표시됩니다.";
         return;
       }
-
       if (groupName && !selectedGroupItems.length) {
         materialPriceArea.textContent = `${groupName} 제품군의 등록된 품목이 없습니다.`;
         return;
       }
-
       if (keyword && !searchResults.length) {
         materialPriceArea.innerHTML = `<strong>검색 결과가 없습니다.</strong><br>품목명 또는 규격을 다시 확인해 주세요.`;
         return;
@@ -4013,20 +4583,19 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       if (keyword) {
         const status = document.createElement("div");
         status.className = "material-search-status";
-        status.textContent = isGlobalSearch
-          ? `전체 제품군 · “${keyword}” 검색 결과 ${searchResults.length}개 품목`
-          : `“${keyword}” 검색 결과 ${searchResults.length}개 품목`;
+        status.textContent = isGlobalSearch ? `전체 제품군 · “${keyword}” 검색 결과 ${searchResults.length}개 품목` : `“${keyword}” 검색 결과 ${searchResults.length}개 품목`;
         materialPriceArea.appendChild(status);
       }
       const table = document.createElement("table");
       table.className = "material-price-table";
-      table.innerHTML = "<thead><tr><th>품목</th><th>규격</th><th>단가</th></tr></thead>";
+      table.innerHTML = "<thead><tr><th>품목</th><th>규격</th><th>사이즈</th><th>단가</th><th>비고</th></tr></thead>";
       const tbody = document.createElement("tbody");
 
       searchResults.forEach(result => {
         const item = result.item;
         const resultGroup = result.groupName;
         const badge = isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : "";
+        const hasChildren = Array.isArray(item.children) && item.children.length > 0;
         const hasVariants = Array.isArray(item.variants) && item.variants.length > 0;
         const row = document.createElement("tr");
         row.className = "material-price-row";
@@ -4034,60 +4603,56 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         row.dataset.groupName = resultGroup;
         row.dataset.selectionKey = `${resultGroup}:${item.id}`;
 
-        if (hasVariants) {
-          const searchMatchedVariants = keyword ? result.matchedVariants : null;
-          const expandKey = `${resultGroup}:${item.id}`;
-          const isExpanded = expandedMaterialItems.has(expandKey) || (keyword && searchMatchedVariants.length > 0);
-          row.innerHTML = `
-            <td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td>
-            <td class="material-expand-cell">
-              <button class="material-expand-btn" type="button" aria-expanded="${isExpanded ? "true" : "false"}" aria-controls="variants-${item.id}">
-                <span class="material-expand-icon" aria-hidden="true"></span>
-                <span>${isExpanded ? "규격 닫기" : "규격 보기"}</span>
-              </button>
-            </td>
-            <td class="material-empty-price" aria-label="규격을 펼치면 단가가 표시됩니다.">&nbsp;</td>`;
-          row.addEventListener("click", event => {
-            if (event.target.closest(".material-expand-btn")) return;
-            applyMaterialSelection(item, null, resultGroup);
-          });
+        if (hasChildren) {
+          const parentKey = `${resultGroup}:${item.id}`;
+          const searchChildren = keyword ? result.matchedChildren : null;
+          const isExpanded = expandedMaterialItems.has(parentKey) || (keyword && (result.nameMatched || (searchChildren && searchChildren.length)));
+          row.innerHTML = `<td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td class="material-expand-cell">${makeExpandButton("분류 보기", isExpanded, `children-${item.id}`)}</td><td>-</td><td class="material-empty-price">&nbsp;</td><td>-</td>`;
           row.querySelector(".material-expand-btn").addEventListener("click", event => {
             event.stopPropagation();
             applyMaterialSelection(item, null, resultGroup);
-            if (expandedMaterialItems.has(expandKey)) expandedMaterialItems.delete(expandKey);
-            else expandedMaterialItems.add(expandKey);
+            if (expandedMaterialItems.has(parentKey)) expandedMaterialItems.delete(parentKey); else expandedMaterialItems.add(parentKey);
             renderMaterialTable(materialGroupSelect.value);
           });
-          row.tabIndex = 0;
-          row.setAttribute("role", "option");
-          row.setAttribute("aria-selected", "false");
-          row.addEventListener("keydown", event => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              applyMaterialSelection(item, null, resultGroup);
-              if (expandedMaterialItems.has(expandKey)) expandedMaterialItems.delete(expandKey);
-              else expandedMaterialItems.add(expandKey);
-              renderMaterialTable(materialGroupSelect.value);
-            }
-          });
           tbody.appendChild(row);
-
           if (isExpanded) {
-            const variantsToRender = keyword && searchMatchedVariants.length > 0 ? searchMatchedVariants : item.variants;
-            variantsToRender.forEach(variant => {
-              const variantRow = document.createElement("tr");
-              variantRow.className = "material-variant-row";
-              variantRow.id = `variants-${item.id}-${variant.id}`;
-              variantRow.dataset.itemId = item.id;
-              variantRow.dataset.groupName = resultGroup;
-              variantRow.dataset.selectionKey = `${resultGroup}:${variant.id}`;
-              variantRow.innerHTML = `<td class="material-variant-name">${isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : ""}${highlightMaterialMatch(item.name, keyword)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${formatMaterialPrice(variant.price)}</td>`;
-              makeSelectableRow(variantRow, () => applyMaterialSelection(item, variant, resultGroup));
-              tbody.appendChild(variantRow);
+            const childrenToRender = keyword && searchChildren && searchChildren.length ? searchChildren : item.children.map(child => ({ child, childNameMatched:false, matchedVariants:[] }));
+            childrenToRender.forEach(childResult => {
+              const child = childResult.child;
+              const childKey = `${resultGroup}:${item.id}:${child.id}`;
+              const childExpanded = expandedMaterialItems.has(childKey) || (keyword && (childResult.childNameMatched || childResult.matchedVariants.length));
+              const childRow = document.createElement("tr");
+              childRow.className = "material-price-row material-category-row";
+              childRow.dataset.selectionKey = `${resultGroup}:${child.id}`;
+              childRow.innerHTML = `<td class="material-variant-name">${escapeMaterialHTML(item.name)}</td><td><strong>${highlightMaterialMatch(child.name, keyword)}</strong></td><td>${makeExpandButton("규격 보기", childExpanded, `variants-${child.id}`)}</td><td class="material-empty-price">&nbsp;</td><td>-</td>`;
+              childRow.querySelector(".material-expand-btn").addEventListener("click", event => {
+                event.stopPropagation();
+                applyMaterialSelection({...child, name:`${item.name} · ${child.name}`}, null, resultGroup);
+                if (expandedMaterialItems.has(childKey)) expandedMaterialItems.delete(childKey); else expandedMaterialItems.add(childKey);
+                renderMaterialTable(materialGroupSelect.value);
+              });
+              tbody.appendChild(childRow);
+              if (childExpanded) {
+                const variants = keyword && childResult.matchedVariants.length ? childResult.matchedVariants : child.variants;
+                appendVariantRows(tbody, {...child, name:`${item.name} · ${child.name}`}, variants, resultGroup, keyword, isGlobalSearch, child.name);
+              }
             });
           }
+        } else if (hasVariants) {
+          const expandKey = `${resultGroup}:${item.id}`;
+          const searchMatchedVariants = keyword ? result.matchedVariants : null;
+          const isExpanded = expandedMaterialItems.has(expandKey) || (keyword && searchMatchedVariants.length > 0);
+          row.innerHTML = `<td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td class="material-expand-cell">${makeExpandButton("규격 보기", isExpanded, `variants-${item.id}`)}</td><td>-</td><td class="material-empty-price">&nbsp;</td><td>-</td>`;
+          row.querySelector(".material-expand-btn").addEventListener("click", event => {
+            event.stopPropagation();
+            applyMaterialSelection(item, null, resultGroup);
+            if (expandedMaterialItems.has(expandKey)) expandedMaterialItems.delete(expandKey); else expandedMaterialItems.add(expandKey);
+            renderMaterialTable(materialGroupSelect.value);
+          });
+          tbody.appendChild(row);
+          if (isExpanded) appendVariantRows(tbody, item, keyword && searchMatchedVariants.length ? searchMatchedVariants : item.variants, resultGroup, keyword, isGlobalSearch, item.name);
         } else {
-          row.innerHTML = `<td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td>${highlightMaterialMatch(item.spec || "미등록", keyword)}</td><td>${formatMaterialPrice(item.price)}</td>`;
+          row.innerHTML = `<td>${badge}<strong>${highlightMaterialMatch(item.name, keyword)}</strong></td><td>${highlightMaterialMatch(item.spec || "미등록", keyword)}</td><td>${highlightMaterialMatch(item.size || "-", keyword)}</td><td>${formatMaterialPrice(item.price)}</td><td>${highlightMaterialMatch(item.remark || "-", keyword)}</td>`;
           makeSelectableRow(row, () => applyMaterialSelection(item, null, resultGroup));
           tbody.appendChild(row);
         }
@@ -4095,7 +4660,6 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
       table.appendChild(tbody);
       materialPriceArea.appendChild(table);
-
       if (selectedMaterialKey) {
         document.querySelectorAll("[data-selection-key]").forEach(row => {
           const selected = row.dataset.selectionKey === selectedMaterialKey;
@@ -4124,7 +4688,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       renderMaterialTable(materialGroupSelect.value);
       showMaterialImage(null);
       resetMaterialInfo();
-      materialSearchInput.focus();
+      // v0.0.22: 제품군 변경만으로 검색창을 자동 활성화하지 않습니다.
+      // 사용자가 검색창을 직접 선택했을 때만 모바일 키보드가 열립니다.
     });
 
     materialSearchInput.addEventListener("input", () => {

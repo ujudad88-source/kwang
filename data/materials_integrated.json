@@ -1,0 +1,53 @@
+{
+  "group": "통합배선",
+  "items": [
+    {
+      "id": "modular-jack",
+      "name": "모듈라잭",
+      "spec": "미등록",
+      "size": "",
+      "price": null,
+      "remark": "",
+      "image": "",
+      "usage": "",
+      "note": ""
+    },
+    {
+      "id": "110-block",
+      "name": "110블럭",
+      "image": "",
+      "usage": "",
+      "note": "",
+      "variants": [
+        {
+          "id": "110-block-24p",
+          "spec": "24P",
+          "size": "",
+          "price": null,
+          "remark": ""
+        },
+        {
+          "id": "110-block-25p",
+          "spec": "25P",
+          "size": "",
+          "price": null,
+          "remark": ""
+        },
+        {
+          "id": "110-block-50p",
+          "spec": "50P",
+          "size": "",
+          "price": null,
+          "remark": ""
+        },
+        {
+          "id": "110-block-100p",
+          "spec": "100P",
+          "size": "",
+          "price": null,
+          "remark": ""
+        }
+      ]
+    }
+  ]
+}
