@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.6</title>
+<title>광전기통신 영업지원 시스템 v0.0.7</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2125,7 +2125,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 }
 
 
-/* v0.0.6: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
+/* v0.0.7: 로그인 액션 · 모바일 뒤로가기 · 화면 이력 · 전환 효과 */
 .auth-version-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
 .auth-version-item{padding:10px 8px;border:1px solid #dce6f2;border-radius:10px;background:#f7faff;text-align:center}
 .auth-version-item strong{display:block;font-size:12px;color:#174f91;margin-bottom:3px}.auth-version-item span{font-size:11px;color:#667085}
@@ -2141,7 +2141,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
 
 
-/* v0.0.6: 메인 카드 모바일 레이아웃 확정 패치
+/* v0.0.7: 메인 카드 모바일 레이아웃 확정 패치
    - 제목 + 한 줄 요약
    - iOS Safari/Android Chrome에서 세로 글자 깨짐 방지
    - 카드 장식 최소화 및 전체 터치 영역 유지 */
@@ -2305,7 +2305,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.6</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.7</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2351,7 +2351,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <span class="part-icon">◇</span>
 <span class="part-title">손도면 생성</span>
 <span class="part-description">
-            가로·세로·깊이를 입력하고 객체를 배치해 정면·측면·상부 도면을 편집합니다.
+            함·랙 도면을 빠르게 작성합니다.
           </span>
 <span class="part-arrow">→</span>
 </button>
@@ -2359,7 +2359,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <span class="part-icon">▦</span>
 <span class="part-title">랙 파트</span>
 <span class="part-description">
-            통신랙, 서버랙, 벽부형랙 등 랙 제품의 규격과 정보를 조회합니다.
+            랙 제품 규격을 조회합니다.
           </span>
 <span class="part-arrow">→</span>
 </button>
@@ -2367,7 +2367,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <span class="part-icon">□</span>
 <span class="part-title">함 파트</span>
 <span class="part-description">
-            함 제품 정보를 등록하고 조회하는 영역입니다.
+            함 제품 규격과 단가를 조회합니다.
           </span>
 <span class="part-arrow">→</span>
 </button>
@@ -2375,7 +2375,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <span class="part-icon">◫</span>
 <span class="part-title">자재 파트</span>
 <span class="part-description">
-            통신공사에 사용하는 부속품과 각종 자재의 상세 정보를 조회합니다.
+            통신 자재 정보를 조회합니다.
           </span>
 <span class="part-arrow">→</span>
 </button>
@@ -2383,19 +2383,19 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <button class="part-card resource-card" data-panel="specGuidePanel" type="button">
 <span class="part-icon">▤</span>
 <span class="part-title">명세서 작성 요령</span>
-<span class="part-description">품명·규격·수량 등 명세서 작성 기준과 실무 예시를 확인합니다.</span>
+<span class="part-description">명세서 작성 기준을 확인합니다.</span>
 <span class="part-arrow">→</span>
 </button>
 <button class="part-card resource-card" data-panel="manualPanel" type="button">
 <span class="part-icon">▥</span>
 <span class="part-title">업무 매뉴얼</span>
-<span class="part-description">제품 조회, 도면 작성, 영업 업무 절차와 시스템 사용법을 확인합니다.</span>
+<span class="part-description">업무 절차와 사용법을 확인합니다.</span>
 <span class="part-arrow">→</span>
 </button>
 <button class="part-card resource-card" data-panel="educationPanel" type="button">
 <span class="part-icon">◈</span>
 <span class="part-title">교육 자료</span>
-<span class="part-description">함·랙·자재·도면 업무에 필요한 사내 교육 자료를 확인합니다.</span>
+<span class="part-description">사내 교육 자료를 확인합니다.</span>
 <span class="part-arrow">→</span>
 </button>
 </div>
@@ -2439,10 +2439,6 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     <div class="price-adjust-status" id="priceAdjustStatus">현재 적용: 기준단가</div>
   </div>
   <div class="quick-rate-grid" id="quickRateGrid" aria-label="빠른 퍼센트 선택">
-    <button class="quick-rate-btn" type="button" data-rate="-20">-20%</button>
-    <button class="quick-rate-btn" type="button" data-rate="-15">-15%</button>
-    <button class="quick-rate-btn" type="button" data-rate="-10">-10%</button>
-    <button class="quick-rate-btn" type="button" data-rate="-5">-5%</button>
     <button class="quick-rate-btn active" type="button" data-rate="0">기준</button>
     <button class="quick-rate-btn" type="button" data-rate="5">+5%</button>
     <button class="quick-rate-btn" type="button" data-rate="10">+10%</button>
@@ -2451,7 +2447,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
   </div>
   <div class="custom-rate-row">
     <label for="customRateInput">직접 입력</label>
-    <input class="custom-rate-input" id="customRateInput" type="number" inputmode="decimal" min="-100" step="0.1" value="0" aria-label="단가 조정 퍼센트">
+    <input class="custom-rate-input" id="customRateInput" type="number" inputmode="decimal" min="0" step="0.1" value="0" aria-label="단가 조정 퍼센트">
     <span class="custom-rate-unit">%</span>
     <button class="custom-rate-apply" id="customRateApply" type="button">적용</button>
   </div>
@@ -3071,7 +3067,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const customRateInput = document.getElementById("customRateInput");
     const customRateApply = document.getElementById("customRateApply");
     const quickRateButtons = Array.from(document.querySelectorAll(".quick-rate-btn"));
-    let priceAdjustmentRate = Number(localStorage.getItem("gwang_price_adjustment_rate") || 0);
+    let priceAdjustmentRate = Math.max(0, Number(localStorage.getItem("gwang_price_adjustment_rate") || 0));
     let selectedSpecKey = localStorage.getItem("gwang_selected_spec_key") || "";
     let selectedSpecDimensions = null;
     const categoryText = document.getElementById("categoryText");
@@ -3147,7 +3143,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 
     function setPriceAdjustment(rate) {
       const parsed = Number(rate);
-      if (!Number.isFinite(parsed) || parsed < -100) { alert("조정률은 -100% 이상으로 입력해 주세요."); return; }
+      if (!Number.isFinite(parsed) || parsed < 0) { alert("조정률은 0% 이상으로 입력해 주세요."); return; }
       priceAdjustmentRate = Math.round(parsed * 10) / 10;
       localStorage.setItem("gwang_price_adjustment_rate", String(priceAdjustmentRate));
       updatePriceAdjustmentUi();
