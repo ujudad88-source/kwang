@@ -17,28 +17,28 @@
           "variants": [
             {
               "id": "fdf-mini-4c",
-              "spec": "FDF 4C",
+              "spec": "4C",
               "size": "118×136×45",
               "price": 8000,
               "remark": ""
             },
             {
               "id": "fdf-mini-6c",
-              "spec": "FDF 6C",
+              "spec": "6C",
               "size": "118×136×45",
               "price": 9000,
               "remark": ""
             },
             {
               "id": "fdf-mini-8c",
-              "spec": "FDF 8C",
+              "spec": "8C",
               "size": "118×136×45",
               "price": 10000,
               "remark": ""
             },
             {
               "id": "fdf-mini-12c",
-              "spec": "FDF 12C",
+              "spec": "12C",
               "size": "140×190×45",
               "price": 18000,
               "remark": ""
@@ -54,42 +54,42 @@
           "variants": [
             {
               "id": "fdf-rack-4c-1u",
-              "spec": "FDF 4C 1U",
+              "spec": "4C 1U",
               "size": "480×300×44",
               "price": 20000,
               "remark": "1U"
             },
             {
               "id": "fdf-rack-8c-1u",
-              "spec": "FDF 8C 1U",
+              "spec": "8C 1U",
               "size": "480×300×44",
               "price": 22000,
               "remark": "1U"
             },
             {
               "id": "fdf-rack-12c-1u",
-              "spec": "FDF 12C 1U",
+              "spec": "12C 1U",
               "size": "480×300×44",
               "price": 24000,
               "remark": "1U"
             },
             {
               "id": "fdf-rack-24c-1u",
-              "spec": "FDF 24C 1U",
+              "spec": "24C 1U",
               "size": "480×300×44",
               "price": 30000,
               "remark": "1U"
             },
             {
               "id": "fdf-rack-36c-2u",
-              "spec": "FDF 36C 2U",
+              "spec": "36C 2U",
               "size": "480×300×88",
               "price": 44000,
               "remark": "2U"
             },
             {
               "id": "fdf-rack-48c-2u",
-              "spec": "FDF 48C 2U",
+              "spec": "48C 2U",
               "size": "480×300×88",
               "price": 50000,
               "remark": "2U"
@@ -105,259 +105,259 @@
           "variants": [
             {
               "id": "fdf-wall-48c",
-              "spec": "FDF 48C",
+              "spec": "48C",
               "size": "310×310×100",
               "price": 47800,
               "remark": "48함"
             },
             {
               "id": "fdf-wall-56c",
-              "spec": "FDF 56C",
+              "spec": "56C",
               "size": "350×330×100",
               "price": 72700,
               "remark": "72함"
             },
             {
               "id": "fdf-wall-60c",
-              "spec": "FDF 60C",
+              "spec": "60C",
               "size": "350×330×100",
               "price": 73600,
               "remark": "72함"
             },
             {
               "id": "fdf-wall-64c",
-              "spec": "FDF 64C",
+              "spec": "64C",
               "size": "350×330×100",
               "price": 74500,
               "remark": "72함"
             },
             {
               "id": "fdf-wall-68c",
-              "spec": "FDF 68C",
+              "spec": "68C",
               "size": "350×330×100",
               "price": 75400,
               "remark": "72함"
             },
             {
               "id": "fdf-wall-72c",
-              "spec": "FDF 72C",
+              "spec": "72C",
               "size": "350×330×100",
               "price": 76400,
               "remark": "72함"
             },
             {
               "id": "fdf-wall-76c",
-              "spec": "FDF 76C",
+              "spec": "76C",
               "size": "350×330×100",
               "price": 80700,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-80c",
-              "spec": "FDF 80C",
+              "spec": "80C",
               "size": "350×330×100",
               "price": 81700,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-84c",
-              "spec": "FDF 84C",
+              "spec": "84C",
               "size": "350×330×100",
               "price": 82600,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-88c",
-              "spec": "FDF 88C",
+              "spec": "88C",
               "size": "350×330×100",
               "price": 83500,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-92c",
-              "spec": "FDF 92C",
+              "spec": "92C",
               "size": "350×330×100",
               "price": 84400,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-96c",
-              "spec": "FDF 96C",
+              "spec": "96C",
               "size": "350×330×100",
               "price": 85300,
               "remark": "96함"
             },
             {
               "id": "fdf-wall-100c",
-              "spec": "FDF 100C",
+              "spec": "100C",
               "size": "350×410×100",
               "price": 92000,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-104c",
-              "spec": "FDF 104C",
+              "spec": "104C",
               "size": "350×410×100",
               "price": 92900,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-108c",
-              "spec": "FDF 108C",
+              "spec": "108C",
               "size": "350×410×100",
               "price": 93800,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-112c",
-              "spec": "FDF 112C",
+              "spec": "112C",
               "size": "350×410×100",
               "price": 94800,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-116c",
-              "spec": "FDF 116C",
+              "spec": "116C",
               "size": "350×410×100",
               "price": 95700,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-120c",
-              "spec": "FDF 120C",
+              "spec": "120C",
               "size": "350×410×100",
               "price": 96600,
               "remark": "120함"
             },
             {
               "id": "fdf-wall-124c",
-              "spec": "FDF 124C",
+              "spec": "124C",
               "size": "350×488×100",
               "price": 99800,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-128c",
-              "spec": "FDF 128C",
+              "spec": "128C",
               "size": "350×488×100",
               "price": 100700,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-132c",
-              "spec": "FDF 132C",
+              "spec": "132C",
               "size": "350×488×100",
               "price": 101700,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-136c",
-              "spec": "FDF 136C",
+              "spec": "136C",
               "size": "350×488×100",
               "price": 102600,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-140c",
-              "spec": "FDF 140C",
+              "spec": "140C",
               "size": "350×488×100",
               "price": 103500,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-144c",
-              "spec": "FDF 144C",
+              "spec": "144C",
               "size": "350×488×100",
               "price": 104400,
               "remark": "144함"
             },
             {
               "id": "fdf-wall-148c",
-              "spec": "FDF 148C",
+              "spec": "148C",
               "size": "350×490×100",
               "price": 137500,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-152c",
-              "spec": "FDF 152C",
+              "spec": "152C",
               "size": "350×490×100",
               "price": 138500,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-156c",
-              "spec": "FDF 156C",
+              "spec": "156C",
               "size": "350×490×100",
               "price": 139400,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-164c",
-              "spec": "FDF 164C",
+              "spec": "164C",
               "size": "350×490×100",
               "price": 141200,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-168c",
-              "spec": "FDF 168C",
+              "spec": "168C",
               "size": "350×490×100",
               "price": 142100,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-172c",
-              "spec": "FDF 172C",
+              "spec": "172C",
               "size": "350×490×100",
               "price": 143100,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-176c",
-              "spec": "FDF 176C",
+              "spec": "176C",
               "size": "350×490×100",
               "price": 143200,
               "remark": "176함"
             },
             {
               "id": "fdf-wall-180c",
-              "spec": "FDF 180C",
+              "spec": "180C",
               "size": "350×520×100",
               "price": 167900,
               "remark": "192함"
             },
             {
               "id": "fdf-wall-184c",
-              "spec": "FDF 184C",
+              "spec": "184C",
               "size": "350×520×100",
               "price": 168800,
               "remark": "192함"
             },
             {
               "id": "fdf-wall-188c",
-              "spec": "FDF 188C",
+              "spec": "188C",
               "size": "350×520×100",
               "price": 169700,
               "remark": "192함"
             },
             {
               "id": "fdf-wall-216c",
-              "spec": "FDF 216C",
+              "spec": "216C",
               "size": "350×610×90",
               "price": 222200,
               "remark": "228함"
             },
             {
               "id": "fdf-wall-224c",
-              "spec": "FDF 224C",
+              "spec": "224C",
               "size": "350×610×90",
               "price": 224000,
               "remark": "228함"
             },
             {
               "id": "fdf-wall-280c",
-              "spec": "FDF 280C",
+              "spec": "280C",
               "size": "350×770×90",
               "price": 271400,
               "remark": "288함"
