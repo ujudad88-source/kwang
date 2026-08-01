@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.27</title>
+<title>광전기통신 영업지원 시스템 v0.0.28</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2632,7 +2632,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.27</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.28</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2882,16 +2882,16 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <div class="drawing-status" id="drawingStatus">객체를 선택한 뒤 도면을 클릭하세요.</div>
 </div>
 </section>
+<section class="drawing-v85-card drawing-3d-panel">
+<div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
+<div class="drawing-3d-wrap"><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
+</section>
 <section class="drawing-v85-card production-notes-card">
 <div class="drawing-v85-card-head">제작 중요사항</div>
 <div class="production-notes-grid">
 <div class="drawing-field"><label for="productionMemo">기타 중요사항</label><textarea id="productionMemo" maxlength="1200" placeholder="예: 도장색상, 케이블 인입 위치, 타공 위치, 용접 및 제작 시 확인할 내용을 자유롭게 입력하세요."></textarea></div>
 </div><p class="production-note-help">입력한 메모는 전체 면 PNG·PDF 및 공유 이미지 하단의 ‘제작 중요사항’에 그대로 포함됩니다.</p>
-<section class="drawing-v85-card drawing-3d-panel">
-<div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
-<div class="drawing-3d-wrap"><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
 </section>
-</div>
 <div class="stack-section">
 <section class="drawing-v85-card">
 <div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
@@ -3316,12 +3316,15 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     function svgToImage(svg){return new Promise((resolve,reject)=>{const source=new XMLSerializer().serializeToString(svg),blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=e=>{URL.revokeObjectURL(url);reject(e)};img.src=url})}
     async function buildDrawingSheetCanvas(){
       setExportProgress(true,"전체 면 도면을 한 장으로 구성하고 있습니다…");
-      const previousSurface=drawingState.surface,previousSelected=drawingState.selectedObjectId;
+      const previousSurface=drawingState.surface,previousSelected=drawingState.selectedObjectId,previousMode3d=drawingState.mode3d;
       const captured=[];
       try{
         drawingState.selectedObjectId=null;
         for(const surface of drawingSurfaces){drawingState.surface=surface.id;render2d();captured.push({label:surface.label,img:await svgToImage(drawingCanvas)})}
-      }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;buildTabs();renderAll()}
+        drawingState.mode3d="single";
+        render3d();
+        captured.push({label:"단독 함체",img:await svgToImage(drawing3dCanvas)});
+      }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;drawingState.mode3d=previousMode3d;buildTabs();renderAll()}
       const noteLines=getProductionNoteLines(),noteH=noteLines.length?Math.max(190,90+noteLines.length*42):0;const canvas=document.createElement("canvas"),W=1800,H=2300+noteH,margin=70,gap=34,header=150,cellW=(W-margin*2-gap)/2,cellH=(2300-header-margin-gap*3)/4;
       canvas.width=W;canvas.height=H;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);ctx.fillStyle="#172033";ctx.font="700 50px sans-serif";ctx.fillText("광전기통신 손도면 생성기",margin,70);ctx.font="26px sans-serif";ctx.fillStyle="#526174";const c=currentCabinet();ctx.fillText(`${c.name} · ${c.width} × ${c.height} × ${c.depth} mm · ${c.material} · ${c.thickness}`,margin,116);
       captured.forEach((item,i)=>{const col=i%2,row=Math.floor(i/2),x=margin+col*(cellW+gap),y=header+row*(cellH+gap);ctx.fillStyle="#f7f9fc";ctx.fillRect(x,y,cellW,cellH);ctx.strokeStyle="#c9d3e1";ctx.lineWidth=2;ctx.strokeRect(x,y,cellW,cellH);ctx.fillStyle="#174f91";ctx.font="700 28px sans-serif";ctx.fillText(item.label,x+22,y+38);const maxW=cellW-32,maxH=cellH-60,scale=Math.min(maxW/item.img.width,maxH/item.img.height),dw=item.img.width*scale,dh=item.img.height*scale;ctx.drawImage(item.img,x+(cellW-dw)/2,y+50+(maxH-dh)/2,dw,dh)});
@@ -3914,7 +3917,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.27: 제작 중요사항을 자유 메모형으로 단순화하고 투명아크릴창의 3D 투명 표현을 개선.
+    // v0.0.28: 3D 미리보기를 선택 객체 설정 우측으로 재배치하고 공유 도면 하부면 우측에 단독 함체 입체도를 포함.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
