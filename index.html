@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.26</title>
+<title>광전기통신 영업지원 시스템 v0.0.27</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2602,8 +2602,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 }
 
     .drawing-object-label-field{display:none}.drawing-object-label-field.show{display:block}
-    .production-notes-card{grid-column:1/-1}.production-notes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}.production-notes-grid .wide{grid-column:1/-1}.production-notes-grid textarea{min-height:100px;resize:vertical}.production-note-help{padding:0 14px 14px;color:#667085;font-size:12px}.production-note-preview{border-left:4px solid #e11d48;background:#fff8f8}
-    @media(max-width:680px){.production-notes-grid{grid-template-columns:1fr}.production-notes-grid .wide{grid-column:auto}}
+    .production-notes-card{grid-column:1/-1}.production-notes-grid{display:block;padding:14px}.production-notes-grid .drawing-field{margin:0}.production-notes-grid textarea{display:block;width:100%;min-height:170px;padding:14px 15px;border:1px solid #c7d2e0;border-radius:12px;background:#fff;color:#172033;font:inherit;font-size:15px;line-height:1.65;resize:vertical;overflow:auto;box-sizing:border-box}.production-notes-grid textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.13)}.production-note-help{padding:0 14px 14px;color:#667085;font-size:12px;line-height:1.5}.production-note-preview{border-left:4px solid #e11d48;background:#fff8f8}
+    @media(max-width:680px){.production-notes-grid{padding:12px}.production-notes-grid textarea{min-height:145px;padding:13px;font-size:16px;line-height:1.6;border-radius:10px;resize:vertical}.production-note-help{padding:0 12px 12px}}
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2632,7 +2632,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.26</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.27</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2885,12 +2885,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <section class="drawing-v85-card production-notes-card">
 <div class="drawing-v85-card-head">제작 중요사항</div>
 <div class="production-notes-grid">
-<div class="drawing-field"><label for="productionPaintColor">도장색상</label><input id="productionPaintColor" type="text" placeholder="예: 5Y7/1, 연회색"/></div>
-<div class="drawing-field"><label for="productionDoorDirection">문 방향</label><select id="productionDoorDirection"><option value="">선택 안 함</option><option>좌경첩</option><option>우경첩</option><option>양문</option></select></div>
-<div class="drawing-field"><label for="productionAcrylic">아크릴창</label><select id="productionAcrylic"><option value="">선택 안 함</option><option>없음</option><option>있음</option></select></div>
-<div class="drawing-field"><label for="productionSilkPrint">실크인쇄</label><input id="productionSilkPrint" type="text" placeholder="예: 있음 / 문구 입력"/></div>
-<div class="drawing-field wide"><label for="productionMemo">기타 중요 메모</label><textarea id="productionMemo" placeholder="케이블 인입 위치, 타공, 용접 등 제작 시 반드시 확인할 내용을 입력하세요."></textarea></div>
-</div><p class="production-note-help">입력한 내용은 전체 면 PNG·PDF 및 공유 이미지 하단의 ‘제작 중요사항’에 포함됩니다.</p>
+<div class="drawing-field"><label for="productionMemo">기타 중요사항</label><textarea id="productionMemo" maxlength="1200" placeholder="예: 도장색상, 케이블 인입 위치, 타공 위치, 용접 및 제작 시 확인할 내용을 자유롭게 입력하세요."></textarea></div>
+</div><p class="production-note-help">입력한 메모는 전체 면 PNG·PDF 및 공유 이미지 하단의 ‘제작 중요사항’에 그대로 포함됩니다.</p>
 <section class="drawing-v85-card drawing-3d-panel">
 <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
 <div class="drawing-3d-wrap"><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
@@ -3192,7 +3188,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       else if(o.type==="anchor")g.appendChild(svgEl("circle",{cx:x+w/2,cy:y+h/2,r:Math.max(2,Math.min(w,h)*.22),fill:black}));
       else if(o.type==="key"){g.appendChild(svgEl("rect",{x:x+w*.22,y,width:w*.56,height:h,rx:Math.min(8,w*.2),fill:"none",stroke:black,"stroke-width":sw}));if(o.option==="탈착키"){g.appendChild(svgEl("rect",{x:x+w*.35,y:y+h*.18,width:w*.3,height:h*.34,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.5,y1:y+h*.52,x2:x+w*.5,y2:y+h*.78,stroke:black,"stroke-width":sw}));g.appendChild(svgEl("polyline",{points:`${x+w*.38},${y+h*.69} ${x+w*.5},${y+h*.8} ${x+w*.62},${y+h*.69}`,fill:"none",stroke:black,"stroke-width":sw}))}else if(o.option==="푸쉬버튼키")g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.25,r:Math.min(w,h)*.12,fill:"none",stroke:black,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.36,y:y+h*.15,width:w*.28,height:h*.7,rx:w*.12,fill:"none",stroke:black,"stroke-width":sw}))}
       else if(o.type==="nameplate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(15,w/7)),fill:black,"font-weight":700},o.label||"명판"))}
-      else if(o.type==="acrylicWindow"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(15,w/8)),fill:black,"font-weight":700},"투명아크릴창"))}
+      else if(o.type==="acrylicWindow"){if(is3d){const edge="#0891b2",inset=Math.max(1.5,Math.min(w,h)*.035);g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"rgba(125,211,252,.07)",stroke:edge,"stroke-width":Math.max(.9,sw),"stroke-opacity":.72}));if(w>18&&h>14)g.appendChild(svgEl("rect",{x:x+inset,y:y+inset,width:Math.max(1,w-inset*2),height:Math.max(1,h-inset*2),rx:1.5,fill:"none",stroke:"#67e8f9","stroke-width":Math.max(.55,sw*.55),"stroke-opacity":.48}));if(w>34&&h>24){g.appendChild(svgEl("line",{x1:x+w*.18,y1:y+h*.12,x2:x+w*.42,y2:y+h*.38,stroke:"#e0f2fe","stroke-width":Math.max(.8,sw*.8),"stroke-opacity":.68}));g.appendChild(svgEl("line",{x1:x+w*.28,y1:y+h*.1,x2:x+w*.5,y2:y+h*.34,stroke:"#bae6fd","stroke-width":Math.max(.55,sw*.55),"stroke-opacity":.48}))}if(w>58&&h>20)g.appendChild(svgEl("text",{x:x+w/2,y:y+Math.min(h*.18,13),"text-anchor":"middle","font-size":Math.max(6,Math.min(9,w/14)),fill:"#0e7490","font-weight":700,"fill-opacity":.7},"투명아크릴창"))}else{g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(15,w/8)),fill:black,"font-weight":700},"투명아크릴창"))}}
       else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
       else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
       else if(o.type==="plate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option))}
@@ -3310,9 +3306,9 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     function cloneCabinet(){const b=currentCabinet(),c=JSON.parse(JSON.stringify(b));c.id=drawingState.nextCabinetId++;c.name=b.name+" 복사";c.objects.forEach(o=>o.id=drawingState.nextObjectId++);drawingState.cabinets.push(c);drawingState.selectedCabinetId=c.id;syncInputs();renderAll()}
     function deleteCabinet(){if(drawingState.cabinets.length<=1){setStatus("함체는 최소 1개가 필요합니다.");return}drawingState.cabinets=drawingState.cabinets.filter(c=>c.id!==drawingState.selectedCabinetId);drawingState.selectedCabinetId=drawingState.cabinets[0].id;syncInputs();renderAll()}
     function renderAll(){buildTabs();render2d();render3d();renderStackList();renderStackPreview();updateObjectPanel()}
-    function syncProductionNotesFromInputs(){drawingState.productionNotes={paintColor:$("productionPaintColor").value.trim(),doorDirection:$("productionDoorDirection").value,acrylic:$("productionAcrylic").value,silkPrint:$("productionSilkPrint").value.trim(),memo:$("productionMemo").value.trim()}}
-    function syncProductionNotesToInputs(){const n=drawingState.productionNotes||{};$("productionPaintColor").value=n.paintColor||"";$("productionDoorDirection").value=n.doorDirection||"";$("productionAcrylic").value=n.acrylic||"";$("productionSilkPrint").value=n.silkPrint||"";$("productionMemo").value=n.memo||""}
-    function getProductionNoteLines(){syncProductionNotesFromInputs();const n=drawingState.productionNotes||{},lines=[];if(n.paintColor)lines.push(["도장색상",n.paintColor]);if(n.doorDirection)lines.push(["문 방향",n.doorDirection]);if(n.acrylic)lines.push(["아크릴창",n.acrylic]);if(n.silkPrint)lines.push(["실크인쇄",n.silkPrint]);if(n.memo)n.memo.split(/\n+/).map(v=>v.trim()).filter(Boolean).forEach((v,i)=>lines.push([i===0?"기타":"",v]));return lines}
+    function syncProductionNotesFromInputs(){const prev=drawingState.productionNotes||{};drawingState.productionNotes={...prev,memo:$("productionMemo").value.trim()}}
+    function syncProductionNotesToInputs(){const n=drawingState.productionNotes||{};$("productionMemo").value=n.memo||""}
+    function getProductionNoteLines(){syncProductionNotesFromInputs();const memo=(drawingState.productionNotes&&drawingState.productionNotes.memo||"").trim(),rows=[];if(!memo)return rows;memo.split(/\n+/).map(v=>v.trim()).filter(Boolean).forEach(line=>{let rest=line;while(rest.length>68){let cut=rest.lastIndexOf(" ",68);if(cut<28)cut=68;rows.push([rows.length===0?"기타 중요사항":"",rest.slice(0,cut).trim()]);rest=rest.slice(cut).trim()}if(rest)rows.push([rows.length===0?"기타 중요사항":"",rest])});return rows}
     function persistDrawing(){syncProductionNotesFromInputs();localStorage.setItem("gwangtelecom_drawing_v85",JSON.stringify(drawingState));setStatus("손도면 작업 상태를 저장했습니다.")}
     function reset(){if(!confirm("손도면 작업을 초기화하시겠습니까?"))return;localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
     function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_현재면_손도면.svg";a.click();URL.revokeObjectURL(url)}
@@ -3397,7 +3393,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const endStackPointer=e=>{stackPointers.delete(e.pointerId);if(stackPointers.size===1){const p=[...stackPointers.values()][0];stackRotateDrag={x:p.x,y:p.y,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};stackPinchStart=null}else if(stackPointers.size===0){stackRotateDrag=null;stackPinchStart=null;stackPreviewCanvas.classList.remove("is-rotating")}};stackPreviewCanvas.addEventListener("pointerup",endStackPointer);stackPreviewCanvas.addEventListener("pointercancel",endStackPointer);
     stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;drawingState.stack3dView.zoom=clamp(drawingState.stack3dView.zoom*(e.deltaY>0?.9:1.1),.55,2.2);renderStackPreview();e.preventDefault()},{passive:false});
     $("stack3dResetBtn").onclick=()=>{drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};renderStackPreview()};
-    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};if(!drawingState.productionNotes)drawingState.productionNotes={paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionPaintColor","productionDoorDirection","productionAcrylic","productionSilkPrint","productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
+    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
     drawingInit();
 
     /*
@@ -3918,7 +3914,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.26: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
+    // v0.0.27: 제작 중요사항을 자유 메모형으로 단순화하고 투명아크릴창의 3D 투명 표현을 개선.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
