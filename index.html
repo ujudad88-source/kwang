@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.23</title>
+<title>광전기통신 영업지원 시스템 v0.0.24</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -1675,12 +1675,20 @@
       user-select: none;
     }
 
+    .material-adjust-panel { display: grid; gap: 14px; }
+    .material-adjust-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .material-adjust-status { font-size: 13px; font-weight: 800; color: #1769df; background: #edf5ff; border: 1px solid #cfe1fb; border-radius: 999px; padding: 7px 11px; }
+    .material-adjust-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; }
+    .material-adjust-custom { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+    .material-rate-mark { display: inline-flex; align-items: center; margin-right: 6px; padding: 2px 6px; border-radius: 999px; background: #fff0ed; color: #d84026; border: 1px solid #ffcfc5; font-size: 11px; line-height: 1.2; font-weight: 900; white-space: nowrap; vertical-align: middle; }
+
     @media (max-width: 640px) {
       .material-select-grid-single { grid-template-columns: 1fr; }
       .material-search-controls { grid-template-columns: minmax(0, 1fr) 82px; }
       .material-search-btn { min-width: 82px; padding: 0 12px; }
       .material-expand-cell { width: auto; }
       .material-expand-btn { min-height: 34px; padding: 6px 10px; font-size: 12px; }
+      .material-adjust-controls { grid-template-columns: 1fr; }
     }
 
     .material-price-row:focus-visible {
@@ -2620,7 +2628,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.23</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.24</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2964,6 +2972,18 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <button class="material-search-btn" id="materialSearchBtn" type="button">검색</button>
 </div>
 </div>
+</div>
+</section>
+<section class="card material-adjust-panel" id="materialPriceAdjustPanel">
+<div class="material-adjust-head">
+<div><h3 class="material-layout-title">단가 조정 계산기</h3><p class="material-layout-description">기준 단가에 적용할 인상률을 선택하면 자재 단가표 전체에 즉시 반영됩니다.</p></div>
+<div class="material-adjust-status" id="materialPriceAdjustStatus">현재 적용: 기준단가</div>
+</div>
+<div class="material-adjust-controls">
+<div><label class="material-select-label">빠른 계산</label><div class="quick-rate-grid" id="materialQuickRateGrid" aria-label="자재 단가 빠른 퍼센트 선택">
+<button class="quick-rate-btn active" type="button" data-material-rate="0">기준</button><button class="quick-rate-btn" type="button" data-material-rate="5">+5%</button><button class="quick-rate-btn" type="button" data-material-rate="10">+10%</button><button class="quick-rate-btn" type="button" data-material-rate="15">+15%</button><button class="quick-rate-btn" type="button" data-material-rate="20">+20%</button>
+</div></div>
+<div><label class="material-select-label" for="materialCustomRateInput">직접 입력</label><div class="material-adjust-custom"><input class="custom-rate-input" id="materialCustomRateInput" type="number" inputmode="decimal" min="0" step="0.1" value="0" aria-label="자재 단가 조정 퍼센트"><button class="price-apply-btn" id="materialCustomRateApply" type="button">적용</button></div></div>
 </div>
 </section>
 <section class="card material-image-card share-card-wrap">
@@ -3869,17 +3889,21 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialProductImage = document.getElementById("materialProductImage");
     const materialImagePlaceholder = document.getElementById("materialImagePlaceholder");
     const materialPriceArea = document.getElementById("materialPriceArea");
+    const materialPriceAdjustStatus = document.getElementById("materialPriceAdjustStatus");
+    const materialQuickRateButtons = [...document.querySelectorAll("[data-material-rate]")];
+    const materialCustomRateInput = document.getElementById("materialCustomRateInput");
+    const materialCustomRateApply = document.getElementById("materialCustomRateApply");
     const materialInfoTitle = document.getElementById("materialInfoTitle");
     const materialUsage = document.getElementById("materialUsage");
     const materialNote = document.getElementById("materialNote");
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.23: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
+    // v0.0.24: 단독·적층·회전형 적층 3D 내부 객체를 후면판에 밀착 표시하고 접촉 그림자와 장착점을 추가.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
-    // v0.0.23: 자재 데이터 구조를 제품군 > 품목 > 분류 > 규격으로 확장.
+    // v0.0.24: FDF 최종 단가, 자재 단가 조정 계산기, 계층형 표 열 배치를 수정.
     const materialCatalog = {
       "통합배선": [
             {
@@ -3950,28 +3974,28 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-mini-4c",
                                           "spec": "FDF 4C",
                                           "size": "118×136×45",
-                                          "price": 7100,
+                                          "price": 8000,
                                           "remark": ""
                                     },
                                     {
                                           "id": "fdf-mini-6c",
                                           "spec": "FDF 6C",
                                           "size": "118×136×45",
-                                          "price": 7500,
+                                          "price": 9000,
                                           "remark": ""
                                     },
                                     {
                                           "id": "fdf-mini-8c",
                                           "spec": "FDF 8C",
                                           "size": "118×136×45",
-                                          "price": 7900,
+                                          "price": 10000,
                                           "remark": ""
                                     },
                                     {
                                           "id": "fdf-mini-12c",
                                           "spec": "FDF 12C",
                                           "size": "140×190×45",
-                                          "price": 15400,
+                                          "price": 18000,
                                           "remark": ""
                                     }
                               ]
@@ -3987,42 +4011,42 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-rack-4c-1u",
                                           "spec": "FDF 4C 1U",
                                           "size": "480×300×44",
-                                          "price": 17800,
+                                          "price": 20000,
                                           "remark": "1U"
                                     },
                                     {
                                           "id": "fdf-rack-8c-1u",
                                           "spec": "FDF 8C 1U",
                                           "size": "480×300×44",
-                                          "price": 18600,
+                                          "price": 22000,
                                           "remark": "1U"
                                     },
                                     {
                                           "id": "fdf-rack-12c-1u",
                                           "spec": "FDF 12C 1U",
                                           "size": "480×300×44",
-                                          "price": 19400,
+                                          "price": 24000,
                                           "remark": "1U"
                                     },
                                     {
                                           "id": "fdf-rack-24c-1u",
                                           "spec": "FDF 24C 1U",
                                           "size": "480×300×44",
-                                          "price": 21800,
+                                          "price": 30000,
                                           "remark": "1U"
                                     },
                                     {
                                           "id": "fdf-rack-36c-2u",
                                           "spec": "FDF 36C 2U",
                                           "size": "480×300×88",
-                                          "price": 39200,
+                                          "price": 44000,
                                           "remark": "2U"
                                     },
                                     {
                                           "id": "fdf-rack-48c-2u",
                                           "spec": "FDF 48C 2U",
                                           "size": "480×300×88",
-                                          "price": 41600,
+                                          "price": 50000,
                                           "remark": "2U"
                                     }
                               ]
@@ -4038,14 +4062,14 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-48c",
                                           "spec": "FDF 48C",
                                           "size": "310×310×100",
-                                          "price": 47840,
+                                          "price": 47800,
                                           "remark": "48함"
                                     },
                                     {
                                           "id": "fdf-wall-56c",
                                           "spec": "FDF 56C",
                                           "size": "350×330×100",
-                                          "price": 72680,
+                                          "price": 72700,
                                           "remark": "72함"
                                     },
                                     {
@@ -4059,63 +4083,63 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-64c",
                                           "spec": "FDF 64C",
                                           "size": "350×330×100",
-                                          "price": 74520,
+                                          "price": 74500,
                                           "remark": "72함"
                                     },
                                     {
                                           "id": "fdf-wall-68c",
                                           "spec": "FDF 68C",
                                           "size": "350×330×100",
-                                          "price": 75440,
+                                          "price": 75400,
                                           "remark": "72함"
                                     },
                                     {
                                           "id": "fdf-wall-72c",
                                           "spec": "FDF 72C",
                                           "size": "350×330×100",
-                                          "price": 76360,
+                                          "price": 76400,
                                           "remark": "72함"
                                     },
                                     {
                                           "id": "fdf-wall-76c",
                                           "spec": "FDF 76C",
                                           "size": "350×330×100",
-                                          "price": 80730,
+                                          "price": 80700,
                                           "remark": "96함"
                                     },
                                     {
                                           "id": "fdf-wall-80c",
                                           "spec": "FDF 80C",
                                           "size": "350×330×100",
-                                          "price": 81650,
+                                          "price": 81700,
                                           "remark": "96함"
                                     },
                                     {
                                           "id": "fdf-wall-84c",
                                           "spec": "FDF 84C",
                                           "size": "350×330×100",
-                                          "price": 82570,
+                                          "price": 82600,
                                           "remark": "96함"
                                     },
                                     {
                                           "id": "fdf-wall-88c",
                                           "spec": "FDF 88C",
                                           "size": "350×330×100",
-                                          "price": 83490,
+                                          "price": 83500,
                                           "remark": "96함"
                                     },
                                     {
                                           "id": "fdf-wall-92c",
                                           "spec": "FDF 92C",
                                           "size": "350×330×100",
-                                          "price": 84410,
+                                          "price": 84400,
                                           "remark": "96함"
                                     },
                                     {
                                           "id": "fdf-wall-96c",
                                           "spec": "FDF 96C",
                                           "size": "350×330×100",
-                                          "price": 85330,
+                                          "price": 85300,
                                           "remark": "96함"
                                     },
                                     {
@@ -4129,28 +4153,28 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-104c",
                                           "spec": "FDF 104C",
                                           "size": "350×410×100",
-                                          "price": 92920,
+                                          "price": 92900,
                                           "remark": "120함"
                                     },
                                     {
                                           "id": "fdf-wall-108c",
                                           "spec": "FDF 108C",
                                           "size": "350×410×100",
-                                          "price": 93840,
+                                          "price": 93800,
                                           "remark": "120함"
                                     },
                                     {
                                           "id": "fdf-wall-112c",
                                           "spec": "FDF 112C",
                                           "size": "350×410×100",
-                                          "price": 94760,
+                                          "price": 94800,
                                           "remark": "120함"
                                     },
                                     {
                                           "id": "fdf-wall-116c",
                                           "spec": "FDF 116C",
                                           "size": "350×410×100",
-                                          "price": 95680,
+                                          "price": 95700,
                                           "remark": "120함"
                                     },
                                     {
@@ -4164,28 +4188,28 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-124c",
                                           "spec": "FDF 124C",
                                           "size": "350×488×100",
-                                          "price": 99820,
+                                          "price": 99800,
                                           "remark": "144함"
                                     },
                                     {
                                           "id": "fdf-wall-128c",
                                           "spec": "FDF 128C",
                                           "size": "350×488×100",
-                                          "price": 100740,
+                                          "price": 100700,
                                           "remark": "144함"
                                     },
                                     {
                                           "id": "fdf-wall-132c",
                                           "spec": "FDF 132C",
                                           "size": "350×488×100",
-                                          "price": 101660,
+                                          "price": 101700,
                                           "remark": "144함"
                                     },
                                     {
                                           "id": "fdf-wall-136c",
                                           "spec": "FDF 136C",
                                           "size": "350×488×100",
-                                          "price": 102580,
+                                          "price": 102600,
                                           "remark": "144함"
                                     },
                                     {
@@ -4199,56 +4223,56 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-144c",
                                           "spec": "FDF 144C",
                                           "size": "350×488×100",
-                                          "price": 104420,
+                                          "price": 104400,
                                           "remark": "144함"
                                     },
                                     {
                                           "id": "fdf-wall-148c",
                                           "spec": "FDF 148C",
                                           "size": "350×490×100",
-                                          "price": 137540,
+                                          "price": 137500,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-152c",
                                           "spec": "FDF 152C",
                                           "size": "350×490×100",
-                                          "price": 138460,
+                                          "price": 138500,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-156c",
                                           "spec": "FDF 156C",
                                           "size": "350×490×100",
-                                          "price": 139380,
+                                          "price": 139400,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-164c",
                                           "spec": "FDF 164C",
                                           "size": "350×490×100",
-                                          "price": 141220,
+                                          "price": 141200,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-168c",
                                           "spec": "FDF 168C",
                                           "size": "350×490×100",
-                                          "price": 142140,
+                                          "price": 142100,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-172c",
                                           "spec": "FDF 172C",
                                           "size": "350×490×100",
-                                          "price": 143060,
+                                          "price": 143100,
                                           "remark": "176함"
                                     },
                                     {
                                           "id": "fdf-wall-176c",
                                           "spec": "FDF 176C",
                                           "size": "350×490×100",
-                                          "price": 143980,
+                                          "price": 143200,
                                           "remark": "176함"
                                     },
                                     {
@@ -4262,28 +4286,28 @@ body:not(.auth-locked) .bottom-nav{display:grid}
                                           "id": "fdf-wall-184c",
                                           "spec": "FDF 184C",
                                           "size": "350×520×100",
-                                          "price": 168820,
+                                          "price": 168800,
                                           "remark": "192함"
                                     },
                                     {
                                           "id": "fdf-wall-188c",
                                           "spec": "FDF 188C",
                                           "size": "350×520×100",
-                                          "price": 169740,
+                                          "price": 169700,
                                           "remark": "192함"
                                     },
                                     {
                                           "id": "fdf-wall-216c",
                                           "spec": "FDF 216C",
                                           "size": "350×610×90",
-                                          "price": 222180,
+                                          "price": 222200,
                                           "remark": "228함"
                                     },
                                     {
                                           "id": "fdf-wall-224c",
                                           "spec": "FDF 224C",
                                           "size": "350×610×90",
-                                          "price": 224020,
+                                          "price": 224000,
                                           "remark": "228함"
                                     },
                                     {
@@ -4425,9 +4449,37 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const expandedMaterialItems = new Set();
     let selectedMaterialKey = "";
 
+    let materialPriceAdjustmentRate = Math.max(0, Number(localStorage.getItem("gwang_material_price_adjustment_rate") || 0));
+
+    function formatMaterialAdjustmentRate(value) {
+      const rounded = Math.round(Number(value) * 10) / 10;
+      return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+    }
+
+    function getAdjustedMaterialPrice(value) {
+      return Math.round(Number(value) * (1 + materialPriceAdjustmentRate / 100));
+    }
+
     function formatMaterialPrice(value) {
       if (value === null || value === undefined || value === "" || !Number.isFinite(Number(value))) return "미등록";
-      return `${Number(value).toLocaleString("ko-KR")}원`;
+      const adjusted = getAdjustedMaterialPrice(value);
+      const mark = materialPriceAdjustmentRate > 0 ? `<span class="material-rate-mark" aria-label="기준단가 대비 ${formatMaterialAdjustmentRate(materialPriceAdjustmentRate)}퍼센트 인상">▲${formatMaterialAdjustmentRate(materialPriceAdjustmentRate)}%</span>` : "";
+      return `${mark}${adjusted.toLocaleString("ko-KR")}원`;
+    }
+
+    function syncMaterialPriceAdjustmentUI() {
+      const rateText = formatMaterialAdjustmentRate(materialPriceAdjustmentRate);
+      materialPriceAdjustStatus.textContent = materialPriceAdjustmentRate === 0 ? "현재 적용: 기준단가" : `현재 적용: 기준단가 +${rateText}%`;
+      materialCustomRateInput.value = rateText;
+      materialQuickRateButtons.forEach(button => button.classList.toggle("active", Number(button.dataset.materialRate) === materialPriceAdjustmentRate));
+    }
+
+    function setMaterialPriceAdjustmentRate(rate) {
+      const parsed = Number(rate);
+      materialPriceAdjustmentRate = Number.isFinite(parsed) ? Math.max(0, Math.round(parsed * 10) / 10) : 0;
+      localStorage.setItem("gwang_material_price_adjustment_rate", String(materialPriceAdjustmentRate));
+      syncMaterialPriceAdjustmentUI();
+      renderMaterialTable(materialGroupSelect.value);
     }
 
     function resetMaterialInfo() {
@@ -4552,7 +4604,8 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         variantRow.dataset.groupName = resultGroup;
         variantRow.dataset.selectionKey = `${resultGroup}:${variant.id}`;
         const badge = isGlobalSearch ? `<span class="material-group-badge">${escapeMaterialHTML(resultGroup)}</span>` : "";
-        variantRow.innerHTML = `<td class="material-variant-name">${badge}${escapeMaterialHTML(prefixName || parentItem.name)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${highlightMaterialMatch(variant.size || "-", keyword)}</td><td>${formatMaterialPrice(variant.price)}</td><td>${highlightMaterialMatch(variant.remark || "-", keyword)}</td>`;
+        const itemCellName = prefixName === "" ? "" : (prefixName || parentItem.name);
+        variantRow.innerHTML = `<td class="material-variant-name">${badge}${escapeMaterialHTML(itemCellName)}</td><td><strong>${highlightMaterialMatch(variant.spec || "미등록", keyword)}</strong></td><td>${highlightMaterialMatch(variant.size || "-", keyword)}</td><td>${formatMaterialPrice(variant.price)}</td><td>${highlightMaterialMatch(variant.remark || "-", keyword)}</td>`;
         makeSelectableRow(variantRow, () => applyMaterialSelection(parentItem, variant, resultGroup));
         tbody.appendChild(variantRow);
       });
@@ -4624,7 +4677,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
               const childRow = document.createElement("tr");
               childRow.className = "material-price-row material-category-row";
               childRow.dataset.selectionKey = `${resultGroup}:${child.id}`;
-              childRow.innerHTML = `<td class="material-variant-name">${escapeMaterialHTML(item.name)}</td><td><strong>${highlightMaterialMatch(child.name, keyword)}</strong></td><td>${makeExpandButton("규격 보기", childExpanded, `variants-${child.id}`)}</td><td class="material-empty-price">&nbsp;</td><td>-</td>`;
+              childRow.innerHTML = `<td class="material-variant-name"><strong>${highlightMaterialMatch(child.name, keyword)}</strong></td><td class="material-expand-cell">${makeExpandButton("규격 보기", childExpanded, `variants-${child.id}`)}</td><td>-</td><td class="material-empty-price">&nbsp;</td><td>-</td>`;
               childRow.querySelector(".material-expand-btn").addEventListener("click", event => {
                 event.stopPropagation();
                 applyMaterialSelection({...child, name:`${item.name} · ${child.name}`}, null, resultGroup);
@@ -4634,7 +4687,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
               tbody.appendChild(childRow);
               if (childExpanded) {
                 const variants = keyword && childResult.matchedVariants.length ? childResult.matchedVariants : child.variants;
-                appendVariantRows(tbody, {...child, name:`${item.name} · ${child.name}`}, variants, resultGroup, keyword, isGlobalSearch, child.name);
+                appendVariantRows(tbody, {...child, name:`${item.name} · ${child.name}`}, variants, resultGroup, keyword, isGlobalSearch, "");
               }
             });
           }
@@ -4707,6 +4760,12 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       renderMaterialTable(materialGroupSelect.value);
       materialSearchInput.focus();
     });
+
+    materialQuickRateButtons.forEach(button => button.addEventListener("click", () => setMaterialPriceAdjustmentRate(button.dataset.materialRate)));
+    materialCustomRateApply.addEventListener("click", () => setMaterialPriceAdjustmentRate(materialCustomRateInput.value));
+    materialCustomRateInput.addEventListener("keydown", event => { if (event.key === "Enter") setMaterialPriceAdjustmentRate(materialCustomRateInput.value); });
+    materialCustomRateInput.addEventListener("input", () => { if (Number(materialCustomRateInput.value) < 0) materialCustomRateInput.value = "0"; });
+    syncMaterialPriceAdjustmentUI();
 
     renderMaterialTable("");
     showMaterialImage(null);
