@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.28</title>
+<title>광전기통신 영업지원 시스템 v0.0.29</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -570,7 +570,7 @@
       }
 
       .drawing-canvas {
-        min-height: 420px;
+        min-height: 540px;
       }
 
       .drawing-settings-grid .drawing-dual {
@@ -2030,7 +2030,9 @@
     .drawing-3d-wrap { padding:12px; }
     .drawing-3d-svg { display:block; width:100%; min-height:490px; height:auto; background:linear-gradient(#fff,#fbfcfe); border-radius:10px; }
     .drawing-3d-note { margin:8px 0 0; color:var(--muted); font-size:12px; line-height:1.55; }
-    .stack-section { display:grid; grid-template-columns:330px minmax(0,1fr) 360px; gap:14px; padding:0 18px 18px; }
+    .stack-section { display:grid; grid-template-columns:minmax(260px,310px) minmax(0,1fr) minmax(300px,340px); gap:14px; padding:0 18px 18px; align-items:stretch; }
+    .stack-section > .drawing-v85-card { min-width:0; }
+    .stack-section > .drawing-v85-card:nth-child(2) { overflow:hidden; }
     .stack-toolbar { display:flex; gap:7px; padding:10px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
     .stack-small-btn { min-height:36px; padding:0 11px; border:1px solid var(--border); border-radius:9px; background:#fff; font-weight:700; }
     .stack-list { padding:8px; display:grid; gap:7px; }
@@ -2045,14 +2047,21 @@
     .stack-summary > div:last-child { border-right:0; }
     .stack-summary span { display:block; color:var(--muted); font-size:11px; }
     .stack-summary strong { display:block; margin-top:4px; font-size:14px; }
-    .stack-preview-grid { display:grid; grid-template-columns:minmax(0,1fr) 190px; min-height:330px; }
-    .stack-preview-svg { width:100%; height:330px; border-right:1px solid var(--border); background:#fff; touch-action:none; user-select:none; }
+    .stack-preview-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(160px,190px); min-height:440px; position:relative; }
+    .stack-preview-stage { position:relative; min-width:0; overflow:hidden; background:#fff; }
+    .stack-view-toolbar { display:none; position:absolute; z-index:3; left:10px; right:10px; top:10px; gap:6px; flex-wrap:wrap; pointer-events:none; }
+    .stack-view-toolbar.active { display:flex; }
+    .stack-view-toolbar button { pointer-events:auto; min-height:30px; padding:0 9px; border:1px solid rgba(148,163,184,.72); border-radius:8px; background:rgba(255,255,255,.94); color:#334155; font-size:11px; font-weight:800; box-shadow:0 2px 8px rgba(15,23,42,.08); }
+    .stack-view-toolbar button:hover { border-color:#1261cf; color:#1261cf; }
+    .stack-zoom-indicator { margin-left:auto; pointer-events:none; min-height:30px; padding:0 9px; display:flex; align-items:center; border-radius:8px; background:rgba(15,23,42,.78); color:#fff; font-size:11px; font-weight:800; }
+    .stack-preview-svg { width:100%; height:440px; border-right:1px solid var(--border); background:#fff; touch-action:none; user-select:none; overscroll-behavior:contain; }
     .stack-3d-controls { display:none; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-top:1px solid var(--border); background:#f8fafc; }
     .stack-3d-controls.active { display:flex; }
     .stack-3d-help { color:#667085; font-size:12px; line-height:1.35; }
     .stack-3d-reset { min-height:34px; padding:0 11px; border:1px solid var(--border); border-radius:8px; background:#fff; font-weight:700; white-space:nowrap; }
     .stack-preview-svg.is-rotating { cursor:grabbing; }
     .stack-preview-svg[data-rotate-enabled="true"] { cursor:grab; }
+    .stack-preview-svg[data-pan-mode="true"] { cursor:move; }
     .stack-info { padding:16px; }
     .stack-info h5 { margin:0 0 12px; font-size:15px; }
     .stack-info-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef2f6; font-size:13px; }
@@ -2150,15 +2159,15 @@
       }
 
       #drawingPanel .stack-section {
-        grid-template-columns: minmax(330px, 380px) minmax(520px, 1fr) minmax(360px, 420px);
+        grid-template-columns: minmax(270px, 310px) minmax(640px, 1fr) minmax(300px, 340px);
         gap: 16px;
         padding: 0 16px 18px;
         align-items: stretch;
       }
 
       #drawingPanel .stack-preview-grid {
-        grid-template-columns: minmax(0, 1fr) 210px;
-        min-height: 420px;
+        grid-template-columns: minmax(0, 1fr) 180px;
+        min-height: 540px;
       }
 
       #drawingPanel .stack-preview-svg {
@@ -2632,7 +2641,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.28</span></div>
+  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.29</span></div>
   <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 </div>
 <div class="auth-actions">
@@ -2901,7 +2910,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 </section>
 <section class="drawing-v85-card">
 <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-stack-preview="2d">적층 미리보기 (2D)</button><button class="drawing-3d-mode" data-stack-preview="3d">적층 미리보기 (3D)</button></div>
-<div class="stack-preview-grid"><div><svg class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430" aria-label="회전 가능한 적층 3D 미리보기"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">마우스 또는 한 손가락으로 드래그하여 360° 회전 · 휠/두 손가락으로 확대·축소</span><button type="button" class="stack-3d-reset" id="stack3dResetBtn">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
+<div class="stack-preview-grid"><div class="stack-preview-stage"><div class="stack-view-toolbar" id="stackViewToolbar"><button type="button" data-stack-view="fit">전체보기</button><button type="button" data-stack-view="front">정면</button><button type="button" data-stack-view="back">후면</button><button type="button" data-stack-view="left">좌측</button><button type="button" data-stack-view="right">우측</button><button type="button" data-stack-view="top">상단</button><button type="button" data-stack-view="bottom">하단</button><span class="stack-zoom-indicator" id="stackZoomIndicator">100%</span></div><svg class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430" aria-label="회전·이동·확대축소 가능한 적층 3D 미리보기"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">드래그: 회전 · Shift+드래그/휠버튼: 이동 · 휠: 확대·축소 · 모바일 두 손가락: 이동/확대</span><button type="button" class="stack-3d-reset" id="stack3dResetBtn">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
 </section>
 <section class="drawing-v85-card stack-properties">
 <div class="drawing-v85-card-head">함체 속성</div>
@@ -3163,7 +3172,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
         {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]}
-      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1},productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
+      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
     };
     drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
     const $=id=>document.getElementById(id);
@@ -3260,11 +3269,11 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       let px=x-center.x,py=y-center.y,pz=z-center.z;
       const x1=px*Math.cos(yaw)+pz*Math.sin(yaw),z1=-px*Math.sin(yaw)+pz*Math.cos(yaw);
       const y1=py*Math.cos(pitch)-z1*Math.sin(pitch);
-      return{x:260+x1*scale*view.zoom,y:202+y1*scale*view.zoom};
+      return{x:260+(view.panX||0)+x1*scale*view.zoom,y:202+(view.panY||0)+y1*scale*view.zoom};
     }
     function renderRotatableStack3d(){
       const cs=drawingState.cabinets,total=cs.reduce((a,c)=>a+c.height,0),maxW=Math.max(...cs.map(c=>c.width)),maxD=Math.max(...cs.map(c=>c.depth));
-      const view=drawingState.stack3dView||(drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1});
+      const view=drawingState.stack3dView||(drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});
       const center={x:maxW/2,y:total/2,z:maxD/2},scale=Math.min(320/maxW,330/total,180/maxD);
       let yOffset=0;
       const line=(p1,p2,attrs={})=>{const a=projectStackPoint(...p1,view,center,scale),b=projectStackPoint(...p2,view,center,scale);stackPreviewCanvas.appendChild(svgEl("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:"#111827","stroke-width":1.45,"stroke-linecap":"round","vector-effect":"non-scaling-stroke",...attrs}))};
@@ -3297,7 +3306,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     }
     function renderStackPreview(){
       stackPreviewCanvas.innerHTML="";stackPreviewCanvas.appendChild(svgEl("rect",{x:0,y:0,width:520,height:430,fill:"#fff"}));
-      const controls=$("stack3dControls"),is3d=drawingState.stackPreview==="3d";controls.classList.toggle("active",is3d);stackPreviewCanvas.dataset.rotateEnabled=is3d?"true":"false";
+      const controls=$("stack3dControls"),toolbar=$("stackViewToolbar"),is3d=drawingState.stackPreview==="3d";controls.classList.toggle("active",is3d);toolbar?.classList.toggle("active",is3d);stackPreviewCanvas.dataset.rotateEnabled=is3d?"true":"false";const zi=$("stackZoomIndicator");if(zi)zi.textContent=Math.round((drawingState.stack3dView?.zoom||1)*100)+"%";
       if(is3d){renderRotatableStack3d();return}
       const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),sc=Math.min(270/maxW,330/total),x=90+(270-maxW*sc)/2;let y=40;drawingState.cabinets.forEach((c,i)=>{const w=c.width*sc,h=c.height*sc,cx=x+(maxW-c.width)*sc/2;stackPreviewCanvas.appendChild(svgEl("rect",{x:cx,y,width:w,height:h,fill:c.id===drawingState.selectedCabinetId?"#eaf1ff":"#fff",stroke:"#111827","stroke-width":1.4}));stackPreviewCanvas.appendChild(svgEl("text",{x:cx+w/2,y:y+h/2,"text-anchor":"middle","font-size":12,"font-weight":700,fill:"#475467"},`${c.width}×${c.height}×${c.depth}`));y+=h});stackPreviewCanvas.appendChild(svgEl("text",{x:225,y:405,"text-anchor":"middle","font-size":13,fill:"#1261cf","font-weight":800},`전체 높이 ${total} mm`))}
     function applyDimensions(){const c=currentCabinet();c.width=Math.max(50,Number(drawingWidthInput.value)||c.width);c.height=Math.max(50,Number(drawingHeightInput.value)||c.height);c.depth=Math.max(30,Number(drawingDepthInput.value)||c.depth);c.objects.forEach(clampObj);syncInputs();renderAll()}
@@ -3389,14 +3398,42 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     }
 
     function restore(){try{const v=JSON.parse(localStorage.getItem("gwangtelecom_drawing_v85"));if(v&&Array.isArray(v.cabinets))Object.assign(drawingState,v)}catch(e){console.warn(e)}}
-    const stackPointers=new Map();let stackRotateDrag=null,stackPinchStart=null;
-    const pointerDistance=()=>{const pts=[...stackPointers.values()];return pts.length<2?0:Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y)};
-    stackPreviewCanvas.addEventListener("pointerdown",e=>{if(drawingState.stackPreview!=="3d")return;stackPreviewCanvas.setPointerCapture?.(e.pointerId);stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(stackPointers.size===1)stackRotateDrag={x:e.clientX,y:e.clientY,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};else if(stackPointers.size===2)stackPinchStart={distance:pointerDistance(),zoom:drawingState.stack3dView.zoom};stackPreviewCanvas.classList.add("is-rotating");e.preventDefault()});
-    stackPreviewCanvas.addEventListener("pointermove",e=>{if(!stackPointers.has(e.pointerId)||drawingState.stackPreview!=="3d")return;stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(stackPointers.size>=2&&stackPinchStart){const d=pointerDistance();if(d>0)drawingState.stack3dView.zoom=clamp(stackPinchStart.zoom*d/stackPinchStart.distance,.55,2.2)}else if(stackRotateDrag){drawingState.stack3dView.yaw=stackRotateDrag.yaw+(e.clientX-stackRotateDrag.x)*.65;drawingState.stack3dView.pitch=clamp(stackRotateDrag.pitch+(e.clientY-stackRotateDrag.y)*.45,-85,85)}renderStackPreview();e.preventDefault()},{passive:false});
-    const endStackPointer=e=>{stackPointers.delete(e.pointerId);if(stackPointers.size===1){const p=[...stackPointers.values()][0];stackRotateDrag={x:p.x,y:p.y,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};stackPinchStart=null}else if(stackPointers.size===0){stackRotateDrag=null;stackPinchStart=null;stackPreviewCanvas.classList.remove("is-rotating")}};stackPreviewCanvas.addEventListener("pointerup",endStackPointer);stackPreviewCanvas.addEventListener("pointercancel",endStackPointer);
-    stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;drawingState.stack3dView.zoom=clamp(drawingState.stack3dView.zoom*(e.deltaY>0?.9:1.1),.55,2.2);renderStackPreview();e.preventDefault()},{passive:false});
-    $("stack3dResetBtn").onclick=()=>{drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};renderStackPreview()};
-    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
+    const stackPointers=new Map();let stackRotateDrag=null,stackPanDrag=null,stackPinchStart=null;
+    const pointerDistance=()=>{const p=[...stackPointers.values()];return p.length<2?0:Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)};
+    const pointerCenter=()=>{const p=[...stackPointers.values()];return p.length<2?{x:0,y:0}:{x:(p[0].x+p[1].x)/2,y:(p[0].y+p[1].y)/2}};
+    function setStackViewPreset(name){
+      const v=drawingState.stack3dView||(drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});
+      const presets={front:{yaw:0,pitch:0},back:{yaw:180,pitch:0},left:{yaw:-90,pitch:0},right:{yaw:90,pitch:0},top:{yaw:0,pitch:-90},bottom:{yaw:0,pitch:90}};
+      if(name==='fit'){Object.assign(v,{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0})}
+      else if(presets[name])Object.assign(v,presets[name],{panX:0,panY:0});
+      renderStackPreview();
+    }
+    document.querySelectorAll('[data-stack-view]').forEach(b=>b.addEventListener('click',()=>setStackViewPreset(b.dataset.stackView)));
+    stackPreviewCanvas.addEventListener("pointerdown",e=>{
+      if(drawingState.stackPreview!=="3d")return;
+      stackPreviewCanvas.setPointerCapture?.(e.pointerId);stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      const view=drawingState.stack3dView;
+      const isPan=e.button===1||e.shiftKey;
+      if(stackPointers.size===1){
+        if(isPan){stackPanDrag={x:e.clientX,y:e.clientY,panX:view.panX||0,panY:view.panY||0};stackPreviewCanvas.dataset.panMode='true'}
+        else stackRotateDrag={x:e.clientX,y:e.clientY,yaw:view.yaw,pitch:view.pitch};
+      }else if(stackPointers.size===2){const c=pointerCenter();stackPinchStart={distance:pointerDistance(),zoom:view.zoom,centerX:c.x,centerY:c.y,panX:view.panX||0,panY:view.panY||0};stackRotateDrag=null;stackPanDrag=null;stackPreviewCanvas.dataset.panMode='true'}
+      stackPreviewCanvas.classList.add("is-rotating");e.preventDefault()
+    });
+    stackPreviewCanvas.addEventListener("pointermove",e=>{
+      if(!stackPointers.has(e.pointerId)||drawingState.stackPreview!=="3d")return;stackPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      const view=drawingState.stack3dView;
+      if(stackPointers.size>=2&&stackPinchStart){const d=pointerDistance(),c=pointerCenter();if(d>0)view.zoom=clamp(stackPinchStart.zoom*d/stackPinchStart.distance,.3,8);view.panX=stackPinchStart.panX+(c.x-stackPinchStart.centerX);view.panY=stackPinchStart.panY+(c.y-stackPinchStart.centerY)}
+      else if(stackPanDrag){view.panX=stackPanDrag.panX+(e.clientX-stackPanDrag.x);view.panY=stackPanDrag.panY+(e.clientY-stackPanDrag.y)}
+      else if(stackRotateDrag){view.yaw=stackRotateDrag.yaw+(e.clientX-stackRotateDrag.x)*.65;view.pitch=clamp(stackRotateDrag.pitch+(e.clientY-stackRotateDrag.y)*.45,-89,89)}
+      renderStackPreview();e.preventDefault()
+    },{passive:false});
+    const endStackPointer=e=>{stackPointers.delete(e.pointerId);if(stackPointers.size===1){const p=[...stackPointers.values()][0];stackRotateDrag={x:p.x,y:p.y,yaw:drawingState.stack3dView.yaw,pitch:drawingState.stack3dView.pitch};stackPinchStart=null}else if(stackPointers.size===0){stackRotateDrag=null;stackPanDrag=null;stackPinchStart=null;stackPreviewCanvas.classList.remove("is-rotating");delete stackPreviewCanvas.dataset.panMode}};
+    stackPreviewCanvas.addEventListener("pointerup",endStackPointer);stackPreviewCanvas.addEventListener("pointercancel",endStackPointer);
+    stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;const view=drawingState.stack3dView;if(e.shiftKey){view.panX=(view.panX||0)-e.deltaY*.35}else{const rect=stackPreviewCanvas.getBoundingClientRect(),mx=(e.clientX-rect.left)*(520/rect.width),my=(e.clientY-rect.top)*(430/rect.height),old=view.zoom,newZoom=clamp(old*Math.exp(-e.deltaY*.0015),.3,8),ratio=newZoom/old;view.panX=mx-260-(mx-260-(view.panX||0))*ratio;view.panY=my-202-(my-202-(view.panY||0))*ratio;view.zoom=newZoom}renderStackPreview();e.preventDefault()},{passive:false});
+    stackPreviewCanvas.addEventListener('dblclick',e=>{if(drawingState.stackPreview!=="3d")return;const view=drawingState.stack3dView,rect=stackPreviewCanvas.getBoundingClientRect(),mx=(e.clientX-rect.left)*(520/rect.width),my=(e.clientY-rect.top)*(430/rect.height),old=view.zoom,newZoom=clamp(old*1.65,.3,8),ratio=newZoom/old;view.panX=mx-260-(mx-260-(view.panX||0))*ratio;view.panY=my-202-(my-202-(view.panY||0))*ratio;view.zoom=newZoom;renderStackPreview()});
+    $("stack3dResetBtn").onclick=()=>setStackViewPreset('fit');
+    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
     drawingInit();
 
     /*
@@ -3917,7 +3954,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.28: 3D 미리보기를 선택 객체 설정 우측으로 재배치하고 공유 도면 하부면 우측에 단독 함체 입체도를 포함.
+    // v0.0.29: 3D 미리보기를 선택 객체 설정 우측으로 재배치하고 공유 도면 하부면 우측에 단독 함체 입체도를 포함.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
