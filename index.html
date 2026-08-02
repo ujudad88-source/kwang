@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v1.0.0</title>
+<title>KENC 영업지원시스템 v1.0.1</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2738,6 +2738,45 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 .employee-table-wrap{overflow:auto;max-height:58dvh;border:1px solid #e1e7ef;border-radius:12px}.employee-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px}.employee-table th{position:sticky;top:0;z-index:1;background:#eaf1f8;color:#203b59;padding:11px 10px;text-align:left;font-size:12px}.employee-table td{padding:11px 10px;border-top:1px solid #edf1f5;font-size:13px}.employee-table tbody tr:hover td{background:#f7faff}.admin-state{display:inline-block;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:900}.admin-state.on{background:#e5f7ec;color:#14753b}.admin-state.off{background:#fdeaea;color:#aa2e2e}.admin-hash{font-family:ui-monospace,monospace;color:#6c7d90}.admin-mini{border:0;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:800;cursor:pointer}.admin-mini.edit{background:#e6f0fb;color:#135c9e}.admin-mini.danger{background:#fdecec;color:#a52f2f;margin-left:4px}
 body.admin-panel-open{overflow:hidden}
 @media(max-width:850px){.admin-panel{padding:0}.admin-panel-dialog{width:100%;height:100dvh;max-height:none;border-radius:0}.admin-panel-header{border-radius:0;padding:18px}.admin-panel-grid{grid-template-columns:1fr;padding:12px}.employee-table-wrap{max-height:45dvh}.admin-manage-button{padding:9px 10px;font-size:12px}}
+
+
+/* v1.0.1 KENC Theme Engine + responsive UX */
+:root{--header-bg:#0b2b53;--header-text:#fff;--radius:16px;--button-radius:12px;--panel-bg:#fff;--nav-bg:#0b2b53;--nav-text:#fff;--focus-ring:rgba(37,99,235,.18)}
+html[data-theme="apple"]{--bg:#f5f5f7;--card:#fff;--text:#1d1d1f;--muted:#6e6e73;--border:#d9d9de;--primary:#0071e3;--primary-dark:#005bb5;--primary-soft:#eaf4ff;--header-bg:#fff;--header-text:#1d1d1f;--radius:20px;--button-radius:14px;--shadow:0 10px 30px rgba(0,0,0,.08)}
+html[data-theme="autodesk"]{--bg:#1d232a;--card:#2a3139;--text:#edf3f8;--muted:#a8b3be;--border:#46515d;--primary:#28a8ea;--primary-dark:#1288c3;--primary-soft:#173c50;--header-bg:#151a20;--header-text:#fff;--radius:8px;--button-radius:6px;--shadow:0 12px 28px rgba(0,0,0,.3)}
+html[data-theme="fluent"]{--bg:#f3f6fb;--card:rgba(255,255,255,.92);--text:#202124;--muted:#657080;--border:#d8e0ea;--primary:#2563eb;--primary-dark:#1d4ed8;--primary-soft:#edf3ff;--header-bg:#eef4fb;--header-text:#1c3657;--radius:18px;--button-radius:12px}
+html[data-theme="notion"]{--bg:#f7f7f5;--card:#fff;--text:#37352f;--muted:#787774;--border:#deddd9;--primary:#2f3437;--primary-dark:#191919;--primary-soft:#efefed;--header-bg:#fff;--header-text:#37352f;--radius:8px;--button-radius:6px;--shadow:0 2px 8px rgba(0,0,0,.05)}
+html[data-theme="industrial"]{--bg:#e9f0f7;--card:#fff;--text:#102b46;--muted:#60748a;--border:#bfcddd;--primary:#0f5ca8;--primary-dark:#0a477f;--primary-soft:#dcecff;--header-bg:#063b70;--header-text:#fff;--radius:10px;--button-radius:8px}
+html[data-theme="dark"]{--bg:#10151c;--card:#1b222c;--text:#edf2f7;--muted:#9aa9b7;--border:#34404d;--primary:#5da8ff;--primary-dark:#338be9;--primary-soft:#18344f;--header-bg:#0b1016;--header-text:#fff;--radius:14px;--button-radius:10px;--shadow:0 14px 36px rgba(0,0,0,.34)}
+html[data-theme="bim"]{--bg:#eef5f0;--card:#fff;--text:#163226;--muted:#64766c;--border:#cbd9cf;--primary:#168653;--primary-dark:#0d673f;--primary-soft:#e1f3e8;--header-bg:#0d5b39;--header-text:#fff;--radius:12px;--button-radius:8px}
+html[data-theme="erp"]{--bg:#f6f3ef;--card:#fff;--text:#332b24;--muted:#766b61;--border:#e0d6cd;--primary:#d96a1b;--primary-dark:#ad4f0d;--primary-soft:#fff0e5;--header-bg:#40362d;--header-text:#fff;--radius:10px;--button-radius:8px}
+html[data-theme="minimal"]{--bg:#fff;--card:#fff;--text:#122033;--muted:#6b7280;--border:#d9dee6;--primary:#173b66;--primary-dark:#0f2a4b;--primary-soft:#f1f5f9;--header-bg:#fff;--header-text:#122033;--radius:4px;--button-radius:4px;--shadow:none}
+html[data-theme="kenc"]{--bg:#f2f6fb;--card:#fff;--text:#14233a;--muted:#617187;--border:#d6e0eb;--primary:#1768c4;--primary-dark:#0c4f9a;--primary-soft:#e8f2ff;--header-bg:#082b55;--header-text:#fff;--radius:14px;--button-radius:9px;--shadow:0 12px 34px rgba(8,43,85,.10)}
+body{min-height:100dvh;background:var(--bg);transition:background .2s ease,color .2s ease}
+.card,.part-card,.drawing-part-card,.material-select-card,.material-image-card,.material-price-card,.employee-editor,.employee-list-panel{border-radius:var(--radius)!important;background:var(--card)!important;color:var(--text)}
+button,.auth-submit,.material-search-btn{border-radius:var(--button-radius)}
+.topbar{background:var(--header-bg);color:var(--header-text);border-radius:0 0 16px 16px;padding:14px 18px;margin:0 0 22px;width:100%;box-shadow:0 8px 22px rgba(8,43,85,.10)}
+.topbar .brand-title,.topbar .brand-subtitle{color:var(--header-text)}
+.brand-title{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.brand-title>strong{font-size:21px;letter-spacing:.04em}.brand-title-sub{font-size:14px;font-weight:700}.brand-subtitle{opacity:.72}
+.theme-manage-button{border:1px solid color-mix(in srgb,var(--header-text) 30%,transparent);background:color-mix(in srgb,var(--header-text) 12%,transparent);color:var(--header-text);min-height:42px;padding:0 13px;font-weight:800;white-space:nowrap}
+.theme-panel[hidden]{display:none}.theme-panel{position:fixed;inset:0;z-index:5200;display:grid;place-items:center;padding:20px}.theme-panel-backdrop{position:absolute;inset:0;border:0;background:rgba(4,17,32,.72);backdrop-filter:blur(4px)}
+.theme-panel-dialog{position:relative;width:min(1040px,100%);max-height:calc(100dvh - 40px);overflow:auto;background:var(--bg);border-radius:20px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.theme-panel-header{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;gap:16px;padding:20px 22px;background:#082b55;color:#fff}.theme-panel-header h2{margin:3px 0 4px}.theme-panel-header p{margin:0;color:#c8d7e7;font-size:13px}.theme-kicker{font-size:11px;letter-spacing:.12em;color:#71b5ff;font-weight:900}.theme-panel-close{width:42px;height:42px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:27px}
+.theme-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:18px}.theme-card{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:7px;text-align:left;padding:10px;border:2px solid transparent;background:var(--card);color:var(--text);box-shadow:0 6px 18px rgba(20,35,58,.08)}.theme-card:hover{transform:translateY(-2px);border-color:var(--primary)}.theme-card.active{border-color:var(--primary);box-shadow:0 0 0 3px var(--focus-ring)}.theme-card strong{font-size:13px}.theme-card small{color:var(--muted);line-height:1.35}.theme-card em{position:absolute;top:7px;right:7px;padding:3px 7px;background:#eaf2ff;color:#0d5aaf;border-radius:999px;font-size:10px;font-style:normal;font-weight:800}
+.theme-preview{height:80px;border-radius:8px;border:1px solid rgba(0,0,0,.1);background:linear-gradient(90deg,#0b2b53 0 24%,#f5f8fc 24% 100%);position:relative;overflow:hidden}.theme-preview:after{content:"";position:absolute;left:31%;right:7%;top:16%;height:17%;border-radius:4px;background:rgba(37,99,235,.23);box-shadow:0 20px 0 rgba(37,99,235,.10),0 40px 0 rgba(37,99,235,.10)}
+.preview-apple{background:linear-gradient(90deg,#f5f5f7 0 24%,#fff 24%)}.preview-autodesk{background:linear-gradient(90deg,#151a20 0 24%,#2a3139 24%)}.preview-fluent{background:linear-gradient(90deg,#e7eef7 0 24%,#f8fbff 24%)}.preview-notion{background:linear-gradient(90deg,#f7f7f5 0 24%,#fff 24%)}.preview-industrial{background:linear-gradient(90deg,#063b70 0 24%,#eaf1f8 24%)}.preview-dark{background:linear-gradient(90deg,#0b1016 0 24%,#1b222c 24%)}.preview-bim{background:linear-gradient(90deg,#0d5b39 0 24%,#eef5f0 24%)}.preview-erp{background:linear-gradient(90deg,#40362d 0 24%,#f6f3ef 24%)}.preview-minimal{background:linear-gradient(90deg,#fff 0 24%,#fff 24%)}.preview-kenc{background:linear-gradient(90deg,#082b55 0 24%,#f2f6fb 24%)}
+.theme-panel-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-top:1px solid var(--border);background:var(--card);font-weight:700}.theme-panel-footer button{padding:9px 13px;border:1px solid var(--border);background:var(--card);color:var(--text)}
+/* mobile login compaction */
+@media(max-width:680px){
+  .auth-gate{min-height:100dvh!important;padding:calc(14px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom))!important;align-items:flex-start!important;overflow:auto}
+  .auth-shell{width:100%;gap:9px}.auth-logo{max-width:210px!important;max-height:155px!important;margin:0 auto 4px!important}.auth-card{padding:18px!important}.auth-guide{margin:6px 0 12px!important}.auth-version-box{display:flex!important;grid-template-columns:none!important;gap:8px!important;flex-wrap:wrap!important;margin-top:16px!important}.auth-version-item{flex:1 1 30%;min-width:92px;padding:9px!important}.auth-version-item strong{font-size:11px!important}.auth-version-item span{font-size:12px!important}.auth-actions{display:flex!important;gap:8px!important}.auth-actions .auth-secondary{flex:1;min-height:40px!important;font-size:13px!important}.auth-actions #authRefresh{font-size:0;flex:0 0 44px}.auth-actions #authRefresh:after{content:"↻";font-size:22px}.auth-notice{margin-top:10px!important}
+  .page{width:100%;padding:0 12px calc(92px + env(safe-area-inset-bottom))}.topbar{width:calc(100% + 24px);margin-left:-12px;margin-right:-12px;border-radius:0;padding:12px;align-items:flex-start}.brand{min-width:0;flex:1}.company-logo{width:64px!important}.brand-title{gap:3px}.brand-title>strong{font-size:18px}.brand-title-sub{display:block;width:100%;font-size:12px}.brand-subtitle{font-size:10px!important}.topbar-actions{display:grid!important;grid-template-columns:repeat(3,auto);gap:7px!important;justify-content:end}.user-badge{grid-column:1/-1;justify-self:end}.theme-manage-button,.admin-manage-button,.lock-button,.back-button,.home-button{min-height:38px!important;padding:0 9px!important;font-size:12px!important}
+  .theme-panel{padding:0}.theme-panel-dialog{width:100%;height:100dvh;max-height:none;border-radius:0}.theme-panel-header{padding:16px}.theme-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;gap:9px}.theme-preview{height:64px}.theme-panel-footer{position:sticky;bottom:0;padding-bottom:calc(12px + env(safe-area-inset-bottom));font-size:12px}
+  .admin-panel{padding:0;overflow:hidden}.admin-panel-dialog{width:100%;height:100dvh;max-height:none;border-radius:0;overflow:auto}.admin-panel-header{border-radius:0;padding:15px 14px}.admin-panel-header h2{font-size:22px}.admin-panel-header p{font-size:12px;line-height:1.45}.admin-panel-grid{grid-template-columns:1fr;padding:10px;gap:10px}.employee-editor,.employee-list-panel{padding:14px;border-radius:12px}.employee-form-actions{position:sticky;bottom:0;background:var(--card);padding:10px 0 calc(6px + env(safe-area-inset-bottom));z-index:2}
+  .employee-table thead{display:none}.employee-table,.employee-table tbody,.employee-table tr,.employee-table td{display:block;width:100%}.employee-table tr{margin-bottom:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card)}.employee-table td{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;padding:7px 0;border:0;text-align:left;overflow-wrap:anywhere}.employee-table td:before{font-weight:800;color:var(--muted)}.employee-table td:nth-child(1):before{content:"이름"}.employee-table td:nth-child(2):before{content:"직급"}.employee-table td:nth-child(3):before{content:"권한"}.employee-table td:nth-child(4):before{content:"상태"}.employee-table td:nth-child(5):before{content:"번호 식별값"}.employee-table td:nth-child(6):before{content:"관리"}.employee-table td[colspan]{display:block}.employee-table td[colspan]:before{content:""}.employee-table-wrap{max-height:none;overflow:visible}
+}
+@media(max-width:390px){.theme-grid{grid-template-columns:1fr}.topbar-actions{grid-template-columns:repeat(2,auto)}.theme-manage-button{grid-column:auto}.brand-title-sub{font-size:11px}}
+
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2770,7 +2809,7 @@ body.admin-panel-open{overflow:hidden}
       <p aria-live="polite" class="auth-status" id="authStatus"></p>
       <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
       <div class="auth-version-box" aria-label="시스템 정보">
-        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.0.0</span></div>
+        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.0.1</span></div>
         <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
         <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
       </div>
@@ -2801,8 +2840,8 @@ body.admin-panel-open{overflow:hidden}
 <div class="brand">
 <img alt="(주)광전기통신 로고" class="company-logo" src="assets/gwangtelecom_logo.png"/>
 <div>
-<p class="brand-title">광전기통신 제품 정보</p>
-<p class="brand-subtitle">랙 · 함 · 자재 · 도면 · 업무 자료를 한곳에서 확인합니다.</p>
+<p class="brand-title"><strong>KENC</strong><span class="brand-title-sub">광전기통신 영업지원시스템</span></p>
+<p class="brand-subtitle">Kwang Engineering Network Center</p>
 </div>
 </div>
 <div class="topbar-actions">
@@ -2813,6 +2852,7 @@ body.admin-panel-open{overflow:hidden}
 <span class="user-name" id="userName">황철준 차장</span>
 </span>
 </div>
+<button class="theme-manage-button" id="themeManageButton" type="button" aria-label="디자인 테마 선택">◐ 테마</button>
 <button class="admin-manage-button" hidden id="adminManageButton" type="button">⚙ 사용자 관리</button>
 <button class="lock-button" hidden="" id="lockButton" type="button">🔒 잠금</button>
 <button class="back-button" id="backButton" type="button" aria-label="이전 화면">← 뒤로</button>
@@ -3209,6 +3249,28 @@ body.admin-panel-open{overflow:hidden}
   <button class="bottom-nav-btn" type="button" data-target="drawingPanel"><span class="bottom-nav-icon">✎</span><span class="bottom-nav-label">손도면</span></button>
 </nav>
 
+<section class="theme-panel" hidden id="themePanel" aria-label="KENC 디자인 테마 선택">
+  <button class="theme-panel-backdrop" id="themePanelBackdrop" type="button" aria-label="테마 화면 닫기"></button>
+  <div class="theme-panel-dialog">
+    <header class="theme-panel-header">
+      <div><span class="theme-kicker">KENC DESIGN STUDIO</span><h2>디자인 테마</h2><p>기능과 도면 객체는 유지하고 색상·카드·버튼·메뉴 표현만 변경합니다.</p></div>
+      <button class="theme-panel-close" id="themePanelClose" type="button" aria-label="닫기">×</button>
+    </header>
+    <div class="theme-grid" id="themeGrid">
+      <button class="theme-card" data-theme-choice="apple"><span class="theme-preview preview-apple"></span><strong>Apple Professional</strong><small>밝고 정돈된 프리미엄</small></button>
+      <button class="theme-card" data-theme-choice="autodesk"><span class="theme-preview preview-autodesk"></span><strong>Autodesk CAD</strong><small>도면 작업 중심의 다크 CAD</small></button>
+      <button class="theme-card" data-theme-choice="fluent"><span class="theme-preview preview-fluent"></span><strong>Microsoft Fluent</strong><small>부드럽고 익숙한 업무 UI</small></button>
+      <button class="theme-card" data-theme-choice="notion"><span class="theme-preview preview-notion"></span><strong>Notion Style</strong><small>정보 정리와 가독성 중심</small></button>
+      <button class="theme-card" data-theme-choice="industrial"><span class="theme-preview preview-industrial"></span><strong>Industrial Blue</strong><small>통신·산업 현장형 블루</small></button>
+      <button class="theme-card" data-theme-choice="dark"><span class="theme-preview preview-dark"></span><strong>Dark Professional</strong><small>저조도 환경과 도면 집중</small></button>
+      <button class="theme-card" data-theme-choice="bim"><span class="theme-preview preview-bim"></span><strong>BIM Style</strong><small>건설·프로젝트 중심 그린</small></button>
+      <button class="theme-card" data-theme-choice="erp"><span class="theme-preview preview-erp"></span><strong>ERP Style</strong><small>데이터와 관리 업무 중심</small></button>
+      <button class="theme-card" data-theme-choice="minimal"><span class="theme-preview preview-minimal"></span><strong>Minimal Engineering</strong><small>최소 장식·빠른 작업</small></button>
+      <button class="theme-card recommended" data-theme-choice="kenc"><span class="theme-preview preview-kenc"></span><strong>KENC 전용 디자인</strong><small>전문성·직관성·효율성 균형</small><em>추천</em></button>
+    </div>
+    <footer class="theme-panel-footer"><span id="themeCurrentLabel">현재 테마: KENC 전용 디자인</span><button id="themeResetButton" type="button">기본 테마로</button></footer>
+  </div>
+</section>
 <section class="admin-panel" hidden id="adminPanel" aria-label="관리자 사용자 관리">
   <button class="admin-panel-backdrop" id="adminPanelBackdrop" type="button" aria-label="관리자 화면 닫기"></button>
   <div class="admin-panel-dialog">
@@ -5086,6 +5148,28 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   });
 })();
 </script>
+<script>
+(function(){
+  "use strict";
+  const THEMES={apple:"Apple Professional",autodesk:"Autodesk CAD",fluent:"Microsoft Fluent",notion:"Notion Style",industrial:"Industrial Blue",dark:"Dark Professional",bim:"BIM Style",erp:"ERP Style",minimal:"Minimal Engineering",kenc:"KENC 전용 디자인"};
+  const root=document.documentElement;
+  const panel=document.getElementById("themePanel");
+  const openBtn=document.getElementById("themeManageButton");
+  const closeBtn=document.getElementById("themePanelClose");
+  const backdrop=document.getElementById("themePanelBackdrop");
+  const label=document.getElementById("themeCurrentLabel");
+  function loadTheme(){try{return localStorage.getItem("kenc-theme")||"kenc"}catch(_){return "kenc"}}
+  function setTheme(name,persist=true){if(!THEMES[name])name="kenc";root.dataset.theme=name;document.querySelectorAll("[data-theme-choice]").forEach(b=>b.classList.toggle("active",b.dataset.themeChoice===name));if(label)label.textContent="현재 테마: "+THEMES[name];if(persist){try{localStorage.setItem("kenc-theme",name)}catch(_){}}}
+  function open(){panel.hidden=false;document.body.style.overflow="hidden";setTheme(root.dataset.theme||loadTheme(),false)}
+  function close(){panel.hidden=true;document.body.style.overflow=""}
+  setTheme(loadTheme(),false);
+  openBtn?.addEventListener("click",open);closeBtn?.addEventListener("click",close);backdrop?.addEventListener("click",close);
+  document.getElementById("themeGrid")?.addEventListener("click",e=>{const b=e.target.closest("[data-theme-choice]");if(b)setTheme(b.dataset.themeChoice)});
+  document.getElementById("themeResetButton")?.addEventListener("click",()=>setTheme("kenc"));
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden)close()});
+})();
+</script>
+
 <script type="module" src="./js/firebase-auth.js"></script>
 
 <script>
