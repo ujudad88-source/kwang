@@ -1,9 +1,16 @@
-광전기통신 영업지원시스템 v1.0.1 배포 안내
+KENC v1.1.0 관리자 통제형 다중 빌드 검증판 배포 순서
 
-1. Firebase 콘솔의 Firestore Database > 규칙에서 firestore.rules 내용을 붙여 넣고 게시합니다.
-2. Authentication > 설정 > 승인된 도메인에 ujudad88-source.github.io를 추가합니다.
-3. 이 ZIP의 내부 파일과 폴더를 GitHub 저장소 루트에 그대로 업로드합니다.
-4. GitHub Pages가 갱신된 뒤 관리자 로그인으로 접속해 첫 직원을 등록합니다.
-5. 자세한 내용은 README.md를 확인합니다.
+1. Firebase 콘솔 → Firestore Database → 규칙
+2. 이 압축에 포함된 firestore.rules 내용을 전체 복사하여 기존 규칙과 교체 후 게시
+3. GitHub 저장소에 압축을 푼 모든 파일/폴더를 같은 경로로 덮어쓰기
+4. GitHub Pages 배포 완료 후 사이트를 강력 새로고침
+5. 관리자 로그인 → 시스템 관리
+6. Classic / KENC Professional / Autodesk CAD 중 '내 기기 미리보기'로 점검
+7. 마음에 드는 빌드의 '전체 적용' 선택
+8. 직원은 다음 로그인 또는 새로고침부터 관리자 지정 빌드만 사용
 
-주의: 관리자 비밀번호와 서비스 계정 비공개 키는 GitHub에 업로드하지 마세요.
+안전장치
+- Firebase 설정을 읽지 못하면 마지막 정상 빌드 또는 Classic으로 복구
+- 미리보기는 관리자 기기에만 적용
+- 손도면 엔진과 객체(접지, 투명아크릴창, 이중시건, 명판 등)는 변경하지 않음
+- v1.0.0 원본은 별도 백업 보관 권장
