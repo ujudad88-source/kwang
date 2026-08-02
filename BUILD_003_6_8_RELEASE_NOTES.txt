@@ -1,0 +1,6 @@
+KENC UI 2.0 Build 003.6.8
+
+기준: Build 003.6.5
+- 하단 Workspace를 독립 형제 Grid로 재구성
+- PC 30:18:34:18, 일반 화면 2x2, 모바일 1열
+- 기존 객체/도면/Firebase 로직 유지
