@@ -372,7 +372,8 @@
       getState:()=>drawingState,
       getCurrentCabinet:()=>currentCabinet(),
       render3d:()=>render3d(),
-      renderAll:()=>renderAll()
+      renderAll:()=>renderAll(),
+      drawObjectShape:(group,object,x,y,width,height,is3d=false)=>drawShape(group,object,x,y,width,height,is3d)
     };
     document.dispatchEvent(new CustomEvent("kenc:drawing-api-ready"));
     drawingInit();
