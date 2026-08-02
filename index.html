@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.4</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.5</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.4 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.5 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.4 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.5 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.4
+   KENC UI 2.0 Build 003.5
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3327,7 +3327,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 
 <style id="build0034-responsive-layout-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.4
+   KENC UI 2.0 Build 003.5
    Desktop clipping + mobile object palette accessibility fix.
    Object geometry, attachment shapes and drawing calculations are untouched.
    ========================================================= */
@@ -3449,6 +3449,115 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 }
 </style>
 
+
+<style id="build0035-critical-layout-fix">
+/* KENC UI 2.0 Build 003.5 - focus mode, panel overflow and dock stabilization */
+html,body{max-width:100%;overflow-x:hidden}
+#drawingPanel,#drawingPanel .drawing-pro-workspace,#drawingPanel .drawing-v85-main,#drawingPanel .stack-section{min-width:0;max-width:100%;box-sizing:border-box}
+#drawingPanel .drawing-v85-main>* ,#drawingPanel .stack-section>*{min-width:0;max-width:100%;box-sizing:border-box}
+
+/* focus mode is a true viewport workspace; unrelated sections can never leak in */
+body.drawing-focus-active{overflow:hidden!important;overscroll-behavior:none!important}
+body.drawing-focus-active .app-shell>aside,
+body.drawing-focus-active .app-header,
+body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events:none!important}
+#drawingPanel .drawing-pro-workspace.focus-mode{
+ position:fixed!important;inset:0!important;z-index:2147483000!important;
+ width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+ margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+ display:grid!important;grid-template-rows:auto minmax(0,1fr)!important;background:#08111d!important;overflow:hidden!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode > :not(.drawing-toolbar):not(.drawing-v85-main){display:none!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar{
+ display:flex!important;position:relative!important;inset:auto!important;z-index:4!important;
+ min-height:54px!important;height:auto!important;padding:8px 12px!important;overflow-x:auto!important;overflow-y:hidden!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-title{flex:0 0 auto!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions{margin-left:auto!important;flex:0 0 auto!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-areas:'focus'!important;
+ width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+ margin:0!important;padding:8px!important;overflow:hidden!important;background:#08111d!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main > section{display:none!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main > section.focus-active{
+ display:grid!important;grid-area:focus!important;width:100%!important;height:100%!important;
+ min-height:0!important;max-height:none!important;margin:0!important;overflow:hidden!important;border-radius:8px!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-canvas-panel.focus-active{
+ grid-template-rows:auto auto minmax(0,1fr)!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-3d-panel.focus-active{
+ grid-template-rows:auto auto minmax(0,1fr)!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .focus-active .drawing-v85-canvas-wrap,
+#drawingPanel .drawing-pro-workspace.focus-mode .focus-active .drawing-3d-wrap{
+ width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+ overflow:auto!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#0b1522!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-canvas-panel.focus-active #drawingCanvas{
+ width:min(100%,1100px)!important;height:100%!important;min-height:0!important;max-height:100%!important;flex:0 1 auto!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-3d-panel.focus-active .drawing-3d-wrap{flex-direction:column!important;padding:8px!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-3d-panel.focus-active #drawing3dCanvas{
+ display:block!important;width:min(100%,900px)!important;height:calc(100% - 56px)!important;min-height:240px!important;max-height:none!important;background:#fff!important
+}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-3d-note{display:none!important}
+#drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar:after{content:'ESC 또는 집중 버튼을 다시 눌러 복귀';color:#9fb1c8!important;font-size:11px!important;white-space:nowrap!important}
+
+/* 3D controls provide clear selected camera feedback */
+#drawingPanel .drawing-pro-3d-controls button.active{background:#2f73df!important;border-color:#5594f4!important;color:#fff!important}
+#drawingPanel #drawing3dCanvas{transform-origin:center center;transition:transform .2s ease,filter .2s ease}
+#drawingPanel #drawing3dCanvas[data-camera="front"]{transform:scaleX(.84);filter:saturate(.82)}
+#drawingPanel #drawing3dCanvas[data-camera="iso"]{transform:none;filter:none}
+
+/* production notes: no text/button overlap at any width */
+#drawingPanel .drawing-bottom-dock{min-width:0!important;overflow:hidden!important}
+#drawingPanel .drawing-dock-tabs{min-width:0!important;flex-wrap:nowrap!important}
+#drawingPanel .drawing-dock-body{min-width:0!important;overflow:auto!important}
+#drawingPanel .drawing-dock-pane,#drawingPanel .production-notes-card,#drawingPanel .production-notes-grid,#drawingPanel .drawing-field{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+#drawingPanel .production-notes-grid{display:block!important;padding:12px!important}
+#drawingPanel .production-notes-grid label{display:block!important;margin:0 0 7px!important;color:#dbe8f8!important;line-height:1.3!important}
+#drawingPanel #productionMemo{display:block!important;width:100%!important;max-width:100%!important;min-height:120px!important;height:auto!important;padding:12px!important;box-sizing:border-box!important;resize:vertical!important;line-height:1.55!important;white-space:pre-wrap!important;overflow:auto!important}
+#drawingPanel .production-note-help{display:block!important;margin:0!important;padding:0 12px 12px!important;color:#9dafc5!important;line-height:1.5!important;overflow-wrap:anywhere!important}
+#drawingPanel .drawing-check-summary{grid-template-columns:minmax(0,1fr) auto!important}
+#drawingPanel .drawing-check-summary button{position:static!important;min-width:100px!important}
+
+/* cabinet properties never exceed their card */
+#drawingPanel .stack-properties{min-width:0!important;overflow:hidden!important}
+#drawingPanel .cabinet-property-grid{
+ display:grid!important;grid-template-columns:minmax(70px,90px) minmax(0,1fr)!important;
+ width:100%!important;max-width:100%!important;gap:8px 10px!important;padding:12px!important;box-sizing:border-box!important
+}
+#drawingPanel .cabinet-property-grid label{min-width:0!important;overflow-wrap:anywhere!important}
+#drawingPanel .cabinet-property-grid input,#drawingPanel .cabinet-property-grid select{min-width:0!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+#drawingPanel #cabinetApplyBtn{max-width:100%!important;box-sizing:border-box!important}
+
+@media(max-width:900px){
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar:after{display:none!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar{min-height:48px!important;padding:6px 8px!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-title small{display:none!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main{padding:4px!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-view-tabs{overflow-x:auto!important;white-space:nowrap!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-pro-view-tools{overflow-x:auto!important;white-space:nowrap!important}
+ #drawingPanel .cabinet-property-grid{grid-template-columns:1fr!important}
+ #drawingPanel .cabinet-property-grid label{margin-top:2px!important}
+ #drawingPanel .drawing-dock-tabs button{min-height:40px!important;padding:8px 10px!important}
+ #drawingPanel .drawing-check-summary{grid-template-columns:1fr!important}
+ #drawingPanel .drawing-check-summary button{grid-column:auto!important;grid-row:auto!important;width:100%!important}
+}
+@media(max-width:560px){
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions .drawing-toolbar-sep,
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions #drawingShareBtn,
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions #drawingSaveBtn,
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions #drawingResetBtn,
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-toolbar-actions #drawingExportBtn{display:none!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-action-btn{min-height:38px!important;font-size:12px!important}
+ #drawingPanel .drawing-pro-workspace.focus-mode .drawing-3d-panel.focus-active #drawing3dCanvas{height:calc(100% - 50px)!important}
+ #drawingPanel #productionMemo{font-size:16px!important}
+}
+</style>
+
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
@@ -3490,7 +3599,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.4</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.5</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3513,7 +3622,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.4</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.5</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3531,7 +3640,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.4</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.5</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3589,7 +3698,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.4 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.5 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
@@ -3764,7 +3873,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <div class="drawing-3d-wrap"><div class="drawing-pro-3d-controls">
 <button data-3d-action="fit" type="button">전체보기</button>
 <button data-3d-action="front" type="button">정면</button>
-<button data-3d-action="iso" type="button">등각</button>
+<button class="active" data-3d-action="iso" type="button">등각</button>
 <button data-focus-target="drawing-3d-panel" type="button">확대</button>
 </div><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
 </section>
@@ -4098,7 +4207,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
       {id:"doubleLock",label:"이중시건",icon:"⊃",options:["기본형"],w:70,h:80}
     ];
     const drawingSurfaces=[
-      {id:"front",label:"정면"},{id:"back",label:"뒷면"},{id:"inside",label:"내부"},{id:"left",label:"좌측면"},{id:"right",label:"우측면"},{id:"top",label:"상부면"},{id:"bottom",label:"하부면"}
+      {id:"front",label:"정면"},{id:"back",label:"뒷면"},{id:"inside",label:"내부"},{id:"left",label:"좌측"},{id:"right",label:"우측"},{id:"top",label:"상부"},{id:"bottom",label:"하부"}
     ];
     const drawingState={
       cabinets:[
@@ -5988,5 +6097,65 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  document.addEventListener('visibilitychange',()=>{if(document.hidden) release();});
 })();
 </script>
+
+<script id="build0035-focus-camera-fix">
+(()=>{
+ const shell=document.querySelector('#drawingPanel .drawing-pro-workspace');
+ if(!shell) return;
+ const canvasPanel=shell.querySelector('.drawing-canvas-panel');
+ const previewPanel=shell.querySelector('.drawing-3d-panel');
+ const clear=()=>{
+   shell.classList.remove('focus-mode','focus-2d','focus-3d');
+   document.body.classList.remove('drawing-focus-active');
+   [canvasPanel,previewPanel].forEach(p=>p&&p.classList.remove('focus-active'));
+ };
+ const open=(panel,type)=>{
+   clear();
+   shell.classList.add('focus-mode','focus-'+type);
+   document.body.classList.add('drawing-focus-active');
+   panel.classList.add('focus-active');
+   requestAnimationFrame(()=>{
+     if(type==='3d') document.getElementById('drawing3dCanvas')?.setAttribute('viewBox','0 0 420 560');
+     else document.getElementById('drawingCanvas')?.setAttribute('viewBox','0 0 760 700');
+   });
+ };
+ // Capture phase replaces the older focus handler so only the intended panel can open.
+ shell.addEventListener('click',e=>{
+   const btn=e.target.closest('[data-focus-target]');
+   if(!btn) return;
+   e.preventDefault();e.stopImmediatePropagation();
+   const is3d=btn.dataset.focusTarget==='drawing-3d-panel';
+   const target=is3d?previewPanel:canvasPanel;
+   if(shell.classList.contains('focus-mode')&&target?.classList.contains('focus-active')) clear();
+   else if(target) open(target,is3d?'3d':'2d');
+ },true);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&shell.classList.contains('focus-mode'))clear();},true);
+
+ const svg=document.getElementById('drawing3dCanvas');
+ const cameraButtons=[...shell.querySelectorAll('[data-3d-action]')];
+ let camera='iso';
+ const setCamera=mode=>{
+   if(!svg) return;
+   camera=mode==='front'?'front':'iso';
+   svg.dataset.camera=camera;
+   svg.setAttribute('viewBox','0 0 420 560');
+   cameraButtons.forEach(b=>b.classList.toggle('active',b.dataset['3dAction']===camera));
+ };
+ shell.addEventListener('click',e=>{
+   const btn=e.target.closest('[data-3d-action]');
+   if(!btn) return;
+   e.preventDefault();e.stopImmediatePropagation();
+   const action=btn.dataset['3dAction'];
+   if(action==='front'||action==='iso') setCamera(action);
+   else if(action==='fit'){svg?.setAttribute('viewBox','0 0 420 560');}
+ },true);
+ if(svg){
+   const observer=new MutationObserver(()=>{svg.dataset.camera=camera;});
+   observer.observe(svg,{childList:true,subtree:true});
+   setCamera('iso');
+ }
+})();
+</script>
+
 </body>
 </html>
