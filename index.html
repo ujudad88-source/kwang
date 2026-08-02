@@ -3808,41 +3808,71 @@ input,select,textarea,button{max-width:100%}
 @media(max-width:720px){#drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:1fr!important;grid-template-areas:"notes" "stack" "review" "properties"!important} .price-table-wrap,.spec-table-wrap,.box-price-wrap{overflow:auto!important;max-height:72vh!important;overscroll-behavior:contain} .price-table thead th,.spec-table thead th,.box-price-table thead th{position:sticky!important;top:0!important;z-index:8!important} .price-table th:nth-child(-n+3),.price-table td:nth-child(-n+3),.spec-table th:nth-child(-n+3),.spec-table td:nth-child(-n+3),.box-price-table th:nth-child(-n+3),.box-price-table td:nth-child(-n+3){position:sticky!important;z-index:6!important;background:inherit} .price-table th:nth-child(1),.price-table td:nth-child(1),.spec-table th:nth-child(1),.spec-table td:nth-child(1),.box-price-table th:nth-child(1),.box-price-table td:nth-child(1){left:0} .price-table th:nth-child(2),.price-table td:nth-child(2),.spec-table th:nth-child(2),.spec-table td:nth-child(2),.box-price-table th:nth-child(2),.box-price-table td:nth-child(2){left:72px} .price-table th:nth-child(3),.price-table td:nth-child(3),.spec-table th:nth-child(3),.spec-table td:nth-child(3),.box-price-table th:nth-child(3),.box-price-table td:nth-child(3){left:144px;box-shadow:3px 0 5px rgba(15,23,42,.14)}}
 </style>
 
-<style id="build00365-canvas-fix">
+<style id="build00366-canvas-fix">
 #drawingPanel .drawing-v85-canvas-wrap,#drawingPanel .drawing-v85-canvas{background:#242424!important;}
 #drawingPanel .drawing-v85-canvas-wrap{overflow:hidden!important;}
 #drawingPanel [data-view-action].active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;}
 </style>
 
-<style id="build00366-bottom-layout-ratio">
-/* Build 003.6.6 — fixed lower workspace ratio: 30 / 18 / 34 / 18 */
+<style id="build00366-corrected-bottom-layout">
+/* Corrected reissue: preserve Build 003.6.5 structure and avoid compressed 4-column layout */
 #drawingPanel .drawing-pro-workspace .stack-section{
   display:grid!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  gap:10px!important;
+  align-items:stretch!important;
+  justify-items:stretch!important;
   grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr)!important;
   grid-template-areas:"notes stack review properties"!important;
-  gap:10px!important;
+}
+#drawingPanel .drawing-pro-workspace .stack-section>*{
+  min-width:0!important;
   width:100%!important;
   max-width:100%!important;
-  align-items:stretch!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
 }
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-bottom-dock{grid-area:notes!important;min-width:0!important;width:100%!important;max-width:none!important;margin:0!important}
-#drawingPanel .drawing-pro-workspace .stack-section>section:nth-of-type(1){grid-area:stack!important;min-width:0!important;width:100%!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-review-workbench{grid-area:review!important;min-width:0!important;width:100%!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.stack-properties{grid-area:properties!important;min-width:0!important;width:100%!important;max-width:none!important;margin:0!important}
-#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs{display:flex!important;flex-wrap:nowrap!important;gap:6px!important;overflow-x:auto!important;padding:8px!important}
-#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs button{flex:1 0 auto!important;width:auto!important;min-width:92px!important;white-space:nowrap!important}
-@media(max-width:1180px){
+#drawingPanel .drawing-pro-workspace .stack-section>.drawing-bottom-dock{grid-area:notes!important;margin:0!important}
+#drawingPanel .drawing-pro-workspace .stack-section>section:nth-of-type(1){grid-area:stack!important}
+#drawingPanel .drawing-pro-workspace .stack-section>.drawing-review-workbench{grid-area:review!important}
+#drawingPanel .drawing-pro-workspace .stack-section>.stack-properties{grid-area:properties!important;margin:0!important}
+#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px!important;overflow:visible!important
+}
+#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs button{
+  flex:1 1 110px!important;min-width:0!important;width:auto!important;white-space:nowrap!important
+}
+#drawingPanel .drawing-pro-workspace .drawing-dock-collapse{flex:1 1 100%!important;margin:0!important}
+#drawingPanel .drawing-pro-workspace .drawing-dock-body,
+#drawingPanel .drawing-pro-workspace .drawing-review-body,
+#drawingPanel .drawing-pro-workspace .stack-list,
+#drawingPanel .drawing-pro-workspace .cabinet-property-grid{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+#drawingPanel .drawing-pro-workspace .drawing-output-sheet{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+#drawingPanel .drawing-pro-workspace .drawing-output-visuals{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+#drawingPanel .drawing-pro-workspace .drawing-output-visuals svg{width:100%!important;height:auto!important;max-width:100%!important}
+#drawingPanel .drawing-pro-workspace .stack-properties .cabinet-property-grid{
+  grid-template-columns:minmax(70px,.75fr) minmax(0,1.25fr)!important;gap:8px!important;padding:10px!important
+}
+#drawingPanel .drawing-pro-workspace .stack-properties input,
+#drawingPanel .drawing-pro-workspace .stack-properties select{min-width:0!important;width:100%!important;max-width:100%!important}
+/* Use two balanced rows before panels become too narrow. */
+@media (max-width:1540px){
   #drawingPanel .drawing-pro-workspace .stack-section{
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-areas:"notes stack" "review review" "properties properties"!important;
+    grid-template-columns:minmax(0,62fr) minmax(0,38fr)!important;
+    grid-template-areas:"notes stack" "review properties"!important;
   }
 }
-@media(max-width:720px){
+@media (max-width:980px){
   #drawingPanel .drawing-pro-workspace .stack-section{
     grid-template-columns:minmax(0,1fr)!important;
     grid-template-areas:"notes" "stack" "review" "properties"!important;
-    padding:0 6px 8px!important;
+    padding:0 8px 10px!important;
   }
+  #drawingPanel .drawing-pro-workspace .drawing-output-visuals{grid-template-columns:1fr!important}
+  #drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs button{flex:1 1 calc(50% - 6px)!important}
 }
 </style>
 
