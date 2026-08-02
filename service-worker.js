@@ -1,4 +1,4 @@
-const CACHE_NAME = "gwang-v0.0.31";
+const CACHE_NAME = "gwang-v1.0.0";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,9 @@ const APP_ASSETS = [
   './data/materials_integrated.json',
   './data/materials_optical.json',
   './data/materials_tv.json',
+  './data/users.json',
+  './js/firebase-config.js',
+  './js/firebase-auth.js',
   './assets/ground/iron_up.png',
   './assets/ground/iron_down.png',
   './assets/ground/iron_left.png',

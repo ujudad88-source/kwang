@@ -1,0 +1,11 @@
+{
+  "description": "사용자 개인번호, 이름, 직급을 관리합니다. number 값은 문자열로 입력하세요.",
+  "users": [
+    {
+      "numberHash": "45df51e4ea78519b4123b5b652497fddd25169c2752c8efff237dbe475ae6b8c",
+      "name": "황철준",
+      "position": "차장",
+      "role": "관리자"
+    }
+  ]
+}

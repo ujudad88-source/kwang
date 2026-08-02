@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>광전기통신 영업지원 시스템 v0.0.31</title>
+<title>광전기통신 영업지원 시스템 v1.0.0</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2615,7 +2615,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     @media(max-width:680px){.production-notes-grid{padding:12px}.production-notes-grid textarea{min-height:145px;padding:13px;font-size:16px;line-height:1.6;border-radius:10px;resize:vertical}.production-note-help{padding:0 12px 12px}}
 
 
-    /* v0.0.31: 영업표준 단가표 고정 헤더 색상 복원 + 규격 3열 고정 */
+    /* v1.0.0: 영업표준 단가표 고정 헤더 색상 복원 + 규격 3열 고정 */
     #specTableWrap {
       max-height: min(68vh, 720px);
       overflow: auto;
@@ -2704,6 +2704,40 @@ body:not(.auth-locked) .bottom-nav{display:grid}
       #specTableWrap .spec-table:has(thead th:nth-child(10):last-child) tbody tr.row-selected td:first-child { background: #edf4ff; }
     }
 
+
+
+/* v1.0.0 Firebase authentication and administration */
+.auth-shell{width:min(440px,calc(100% - 28px));display:flex;flex-direction:column;align-items:center;gap:12px}
+.auth-shell .auth-card{width:100%}
+.auth-mode-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#e8eef6;border:1px solid #cbd7e6;border-radius:14px}
+.auth-mode-tab{min-height:42px;border:0;border-radius:10px;background:transparent;color:#52657a;font-weight:800;cursor:pointer}
+.auth-mode-tab.active{background:#fff;color:#0f4c81;box-shadow:0 3px 12px rgba(15,76,129,.14)}
+.admin-login-label{display:block;margin:12px 0 6px;color:#34465a;font-size:13px;font-weight:800;text-align:left}
+.admin-auth-input{width:100%;box-sizing:border-box}
+.admin-back-button{width:100%;margin-top:8px}
+.admin-manage-button{border:1px solid #c9d8e8;background:#f4f8fc;color:#0f4c81;border-radius:10px;padding:10px 13px;font-weight:800;cursor:pointer}
+.admin-manage-button:hover{background:#e9f2fb}
+.admin-panel[hidden]{display:none}
+.admin-panel{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:22px}
+.admin-panel-backdrop{position:absolute;inset:0;border:0;background:rgba(5,19,35,.68);backdrop-filter:blur(3px)}
+.admin-panel-dialog{position:relative;width:min(1180px,100%);max-height:calc(100dvh - 44px);overflow:auto;background:#f6f8fb;border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.34)}
+.admin-panel-header{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;gap:20px;padding:24px 26px;background:#0d294c;color:#fff;border-radius:22px 22px 0 0}
+.admin-panel-header h2{margin:4px 0 5px;font-size:25px}.admin-panel-header p{margin:0;color:#cbd9e8;font-size:13px}.admin-kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#79b8ff;font-weight:900}
+.admin-panel-close{align-self:flex-start;width:42px;height:42px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:28px;cursor:pointer}
+.admin-panel-grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;padding:20px}
+.employee-editor,.employee-list-panel{background:#fff;border:1px solid #dce4ee;border-radius:16px;padding:18px;box-shadow:0 8px 26px rgba(15,41,76,.06)}
+.employee-editor h3,.employee-list-panel h3{margin:0 0 15px;color:#132f50}
+.employee-editor label{display:block;margin:12px 0 5px;color:#34465a;font-size:13px;font-weight:800}
+.employee-editor input,.employee-editor select{width:100%;box-sizing:border-box;min-height:43px;margin-top:6px;padding:9px 11px;border:1px solid #cbd7e6;border-radius:10px;background:#fff;font-size:15px}
+.employee-editor input:disabled{background:#edf1f5;color:#66788b}
+.employee-field-help{margin:7px 0 12px;color:#708196;font-size:11px;line-height:1.45}
+.employee-check{display:flex!important;align-items:center;gap:9px}.employee-check input{width:18px!important;min-height:auto!important;margin:0!important}
+.employee-form-actions{display:flex;gap:8px;margin-top:16px}.employee-save,.employee-cancel{min-height:43px;border:0;border-radius:10px;padding:0 15px;font-weight:800;cursor:pointer}.employee-save{flex:1;background:#0f66c3;color:#fff}.employee-cancel{background:#e8eef5;color:#42566e}
+.employee-form-message{min-height:20px;color:#0f66c3;font-size:12px;font-weight:700}
+.employee-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.employee-list-head h3{margin:0}.employee-list-head span{font-size:12px;color:#718096}.employee-list-head button{border:1px solid #cbd7e6;background:#fff;border-radius:9px;padding:8px 11px;font-weight:700;cursor:pointer}
+.employee-table-wrap{overflow:auto;max-height:58dvh;border:1px solid #e1e7ef;border-radius:12px}.employee-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px}.employee-table th{position:sticky;top:0;z-index:1;background:#eaf1f8;color:#203b59;padding:11px 10px;text-align:left;font-size:12px}.employee-table td{padding:11px 10px;border-top:1px solid #edf1f5;font-size:13px}.employee-table tbody tr:hover td{background:#f7faff}.admin-state{display:inline-block;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:900}.admin-state.on{background:#e5f7ec;color:#14753b}.admin-state.off{background:#fdeaea;color:#aa2e2e}.admin-hash{font-family:ui-monospace,monospace;color:#6c7d90}.admin-mini{border:0;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:800;cursor:pointer}.admin-mini.edit{background:#e6f0fb;color:#135c9e}.admin-mini.danger{background:#fdecec;color:#a52f2f;margin-left:4px}
+body.admin-panel-open{overflow:hidden}
+@media(max-width:850px){.admin-panel{padding:0}.admin-panel-dialog{width:100%;height:100dvh;max-height:none;border-radius:0}.admin-panel-header{border-radius:0;padding:18px}.admin-panel-grid{grid-template-columns:1fr;padding:12px}.employee-table-wrap{max-height:45dvh}.admin-manage-button{padding:9px 10px;font-size:12px}}
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2718,29 +2752,49 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
-<form autocomplete="off" class="auth-card" id="authForm">
-<img alt="(주)광전기통신 로고" class="auth-company-logo" src="assets/gwangtelecom_logo.png"/>
+  <div class="auth-shell">
+    <img alt="(주)광전기통신 로고" class="auth-company-logo" src="assets/gwangtelecom_logo.png"/>
+    <div aria-label="로그인 방식 선택" class="auth-mode-tabs">
+      <button class="auth-mode-tab active" id="employeeLoginTab" type="button">직원 로그인</button>
+      <button class="auth-mode-tab" id="adminLoginTab" type="button">관리자 로그인</button>
+    </div>
 
+    <form autocomplete="off" class="auth-card firebase-auth-card" id="authForm">
+      <div aria-hidden="true" class="auth-lock-icon">🔒</div>
+      <p class="auth-guide">등록된 개인번호를 입력해 주세요.</p>
+      <div class="auth-input-wrap">
+        <input aria-label="개인번호 입력" class="auth-input" id="authPassword" inputmode="numeric" maxlength="20" placeholder="개인번호 입력" required="" type="password"/>
+        <button aria-label="개인번호 표시" class="auth-toggle" id="authToggle" type="button">◉</button>
+      </div>
+      <button class="auth-submit" id="authSubmit" type="submit">로그인</button>
+      <p aria-live="polite" class="auth-status" id="authStatus"></p>
+      <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
+      <div class="auth-version-box" aria-label="시스템 정보">
+        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.0.0</span></div>
+        <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
+        <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
+      </div>
+      <div class="auth-actions">
+        <button class="auth-secondary" id="authClear" type="button">입력 지우기</button>
+        <button class="auth-secondary" id="authRefresh" type="button">화면 새로고침</button>
+      </div>
+      <p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
+    </form>
 
-<div aria-hidden="true" class="auth-lock-icon">🔒</div>
-<p class="auth-guide">보안을 위해 개인 암호를 입력해 주세요.</p>
-<div class="auth-input-wrap">
-<input aria-label="암호 입력" class="auth-input" id="authPassword" inputmode="numeric" maxlength="20" placeholder="암호 입력" required="" type="password"/>
-<button aria-label="암호 표시" class="auth-toggle" id="authToggle" type="button">◉</button>
-</div>
-<button class="auth-submit" id="authSubmit" type="submit">로그인</button>
-<p aria-live="polite" class="auth-status" id="authStatus"></p>
-<p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
-<div class="auth-version-box" aria-label="시스템 정보">
-  <div class="auth-version-item"><strong>현재 버전</strong><span>v0.0.31</span></div>
-  <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
-</div>
-<div class="auth-actions">
-  <button class="auth-secondary" id="authClear" type="button">입력 지우기</button>
-  <button class="auth-secondary" id="authRefresh" type="button">화면 새로고침</button>
-</div>
-<p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
-</form>
+    <form autocomplete="off" class="auth-card firebase-auth-card admin-auth-card" hidden id="adminAuthForm">
+      <div aria-hidden="true" class="auth-lock-icon">⚙</div>
+      <p class="auth-guide">Firebase 관리자 계정으로 로그인하세요.</p>
+      <label class="admin-login-label" for="adminEmail">관리자 이메일</label>
+      <input class="auth-input admin-auth-input" id="adminEmail" autocomplete="username" type="email" value="ujudad88@gmail.com" required/>
+      <label class="admin-login-label" for="adminPassword">관리자 비밀번호</label>
+      <input class="auth-input admin-auth-input" id="adminPassword" autocomplete="current-password" type="password" placeholder="비밀번호 입력" required/>
+      <button class="auth-submit" id="adminAuthSubmit" type="submit">관리자 로그인</button>
+      <p aria-live="polite" class="auth-status" id="adminAuthStatus"></p>
+      <p aria-live="polite" class="auth-error" id="adminAuthError" role="alert"></p>
+      <button class="auth-secondary admin-back-button" id="adminBackToEmployee" type="button">직원 로그인으로 돌아가기</button>
+      <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
+    </form>
+  </div>
 </section>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -2759,6 +2813,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 <span class="user-name" id="userName">황철준 차장</span>
 </span>
 </div>
+<button class="admin-manage-button" hidden id="adminManageButton" type="button">⚙ 사용자 관리</button>
 <button class="lock-button" hidden="" id="lockButton" type="button">🔒 잠금</button>
 <button class="back-button" id="backButton" type="button" aria-label="이전 화면">← 뒤로</button>
 <button class="home-button" id="homeButton" type="button">⌂ 첫 화면</button>
@@ -3154,6 +3209,33 @@ body:not(.auth-locked) .bottom-nav{display:grid}
   <button class="bottom-nav-btn" type="button" data-target="drawingPanel"><span class="bottom-nav-icon">✎</span><span class="bottom-nav-label">손도면</span></button>
 </nav>
 
+<section class="admin-panel" hidden id="adminPanel" aria-label="관리자 사용자 관리">
+  <button class="admin-panel-backdrop" id="adminPanelBackdrop" type="button" aria-label="관리자 화면 닫기"></button>
+  <div class="admin-panel-dialog">
+    <header class="admin-panel-header">
+      <div><span class="admin-kicker">Firebase Administration</span><h2>사용자 관리</h2><p>직원 개인번호는 SHA-256 해시로 저장되며 원문은 보관하지 않습니다.</p></div>
+      <button class="admin-panel-close" id="adminPanelClose" type="button" aria-label="닫기">×</button>
+    </header>
+    <div class="admin-panel-grid">
+      <form class="employee-editor" id="employeeForm">
+        <input id="employeeEditId" type="hidden"/>
+        <h3 id="employeeFormTitle">직원 추가</h3>
+        <label>개인번호<input id="employeeNumber" inputmode="numeric" maxlength="20" placeholder="직원이 사용할 번호" required/></label>
+        <p class="employee-field-help">등록 후 번호 원문은 다시 표시되지 않습니다. 번호 변경 시 기존 계정을 삭제하고 새로 등록하세요.</p>
+        <label>이름<input id="employeeName" maxlength="30" placeholder="예: 김철수" required/></label>
+        <label>직급<input id="employeePosition" maxlength="30" placeholder="예: 과장" required/></label>
+        <label>권한<select id="employeeRole"><option value="viewer">조회 사용자</option><option value="editor">편집자(추후 적용)</option></select></label>
+        <label class="employee-check"><input id="employeeActive" type="checkbox" checked/> 사용 가능</label>
+        <div class="employee-form-actions"><button class="employee-save" id="employeeSaveButton" type="submit">직원 저장</button><button class="employee-cancel" hidden id="employeeCancelEdit" type="button">수정 취소</button></div>
+        <p class="employee-form-message" id="employeeFormMessage"></p>
+      </form>
+      <section class="employee-list-panel">
+        <div class="employee-list-head"><div><h3>등록 직원</h3><span id="adminStatus">확인 중</span></div><button id="employeeRefreshButton" type="button">새로고침</button></div>
+        <div class="employee-table-wrap"><table class="employee-table"><thead><tr><th>이름</th><th>직급</th><th>권한</th><th>상태</th><th>번호 식별값</th><th>관리</th></tr></thead><tbody id="employeeTableBody"><tr><td colspan="6">관리자 로그인 후 확인됩니다.</td></tr></tbody></table></div>
+      </section>
+    </div>
+  </div>
+</section>
 <div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
   <div class="share-modal-card">
     <div class="share-modal-head"><h3 id="shareModalTitle">공유 및 저장</h3><button class="share-modal-close" id="shareModalClose" type="button" aria-label="닫기">×</button></div>
@@ -4045,7 +4127,7 @@ body:not(.auth-locked) .bottom-nav{display:grid}
     const materialSearchInput = document.getElementById("materialSearchInput");
     const materialSearchBtn = document.getElementById("materialSearchBtn");
 
-    // v0.0.31: 3D 미리보기를 선택 객체 설정 우측으로 재배치하고 공유 도면 하부면 우측에 단독 함체 입체도를 포함.
+    // v1.0.0: 3D 미리보기를 선택 객체 설정 우측으로 재배치하고 공유 도면 하부면 우측에 단독 함체 입체도를 포함.
     // v0.0.20: 제품군 미선택 시 전체 제품군 통합검색 및 제품군 배지 표시.
     // v0.0.19: 제품군 내 품목명·규격 한 글자 실시간 부분검색 적용.
     // v0.0.16: 세부 품목 선택창 제거 및 다중 규격 펼침 구조 적용.
@@ -5004,142 +5086,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   });
 })();
 </script>
-<script>
-(function () {
-  "use strict";
-
-  // V78 사용자 등록 영역: 추후 사용자별 항목을 같은 형식으로 추가할 수 있습니다.
-  const AUTH_USERS = [
-    {
-      role: "관리자",
-      name: "황철준",
-      position: "차장",
-      passwordHash: "45df51e4ea78519b4123b5b652497fddd25169c2752c8efff237dbe475ae6b8c"
-    }
-  ];
-
-  const SESSION_KEY = "gwangtelecom-v78-user";
-
-  async function sha256(value) {
-    const data = new TextEncoder().encode(value);
-    const digest = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(digest))
-      .map(byte => byte.toString(16).padStart(2, "0"))
-      .join("");
-  }
-
-  function showAuthenticatedUser(user) {
-    const authScreen = document.getElementById("authScreen");
-    const userBadge = document.getElementById("userBadge");
-    const userRole = document.getElementById("userRole");
-    const userName = document.getElementById("userName");
-    const lockButton = document.getElementById("lockButton");
-
-    userRole.textContent = user.role;
-    userName.textContent = user.name + " " + user.position;
-    userBadge.classList.add("active");
-    lockButton.hidden = false;
-    authScreen.hidden = true;
-    document.body.classList.remove("auth-locked");
-  }
-
-  function lockApplication() {
-    sessionStorage.removeItem(SESSION_KEY);
-    const authScreen = document.getElementById("authScreen");
-    const authPassword = document.getElementById("authPassword");
-    const authError = document.getElementById("authError");
-    const userBadge = document.getElementById("userBadge");
-    const lockButton = document.getElementById("lockButton");
-
-    userBadge.classList.remove("active");
-    lockButton.hidden = true;
-    document.body.classList.add("auth-locked");
-    authScreen.hidden = false;
-    authPassword.value = "";
-    authError.textContent = "";
-    setTimeout(() => authPassword.focus(), 50);
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const authForm = document.getElementById("authForm");
-    const authPassword = document.getElementById("authPassword");
-    const authToggle = document.getElementById("authToggle");
-    const authError = document.getElementById("authError");
-    const lockButton = document.getElementById("lockButton");
-    const authSubmit = document.getElementById("authSubmit");
-    const authStatus = document.getElementById("authStatus");
-    const authClear = document.getElementById("authClear");
-    const authRefresh = document.getElementById("authRefresh");
-    const networkStatus = document.getElementById("networkStatus");
-
-    function syncNetworkStatus() { networkStatus.textContent = navigator.onLine ? "온라인" : "오프라인"; }
-    syncNetworkStatus();
-    window.addEventListener("online", syncNetworkStatus);
-    window.addEventListener("offline", syncNetworkStatus);
-
-    authClear.addEventListener("click", function () { authPassword.value = ""; authError.textContent = ""; authStatus.textContent = ""; authPassword.focus(); });
-    authRefresh.addEventListener("click", function () { location.reload(); });
-
-    const savedUserName = sessionStorage.getItem(SESSION_KEY);
-    const savedUser = AUTH_USERS.find(user => user.name === savedUserName);
-    if (savedUser) {
-      showAuthenticatedUser(savedUser);
-    } else {
-      setTimeout(() => authPassword.focus(), 50);
-    }
-
-    authToggle.addEventListener("click", function () {
-      const isHidden = authPassword.type === "password";
-      authPassword.type = isHidden ? "text" : "password";
-      authToggle.setAttribute("aria-label", isHidden ? "암호 숨기기" : "암호 표시");
-      authPassword.focus();
-    });
-
-    authForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      authError.textContent = "";
-      authStatus.textContent = "암호를 확인하고 있습니다…";
-      authSubmit.classList.add("is-loading");
-      authSubmit.textContent = "확인 중…";
-
-      try {
-        const enteredHash = await sha256(authPassword.value.trim());
-        const matchedUser = AUTH_USERS.find(user => user.passwordHash === enteredHash);
-
-        if (!matchedUser) {
-          authStatus.textContent = "";
-          authError.textContent = "암호가 올바르지 않습니다.";
-          authPassword.select();
-          return;
-        }
-
-        authStatus.textContent = "인증 완료. 첫 화면으로 이동합니다.";
-        authSubmit.classList.remove("is-loading");
-        authSubmit.classList.add("is-success");
-        authSubmit.textContent = "인증 완료 ✓";
-        sessionStorage.setItem(SESSION_KEY, matchedUser.name);
-        setTimeout(function () {
-          showAuthenticatedUser(matchedUser);
-          authSubmit.classList.remove("is-success");
-          authSubmit.textContent = "로그인";
-          authStatus.textContent = "";
-        }, 350);
-      } catch (error) {
-        console.error("로그인 처리 오류:", error);
-        authStatus.textContent = "";
-        authError.textContent = "로그인 처리 중 오류가 발생했습니다.";
-      } finally {
-        if (!authSubmit.classList.contains("is-success")) {
-          authSubmit.classList.remove("is-loading");
-          authSubmit.textContent = "로그인";
-        }
-      }
-    });
-
-    lockButton.addEventListener("click", lockApplication);
-  });
-})();
-</script>
+<script type="module" src="./js/firebase-auth.js"></script>
 
 <script>
 (function(){
