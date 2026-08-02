@@ -1,0 +1,52 @@
+/* KENC Build 003.6.10
+   Global shell width module. This file alone owns page/panel width behavior. */
+:root{--kenc-content-gap:20px}
+
+@media (min-width:901px){
+  body:not(.auth-locked) .page,
+  body:not(.auth-locked)[data-build] .page{
+    width:100vw!important;
+    max-width:none!important;
+    margin:0!important;
+    padding-top:18px!important;
+    padding-right:var(--kenc-content-gap)!important;
+    padding-bottom:42px!important;
+    padding-left:calc(var(--ui2-sidebar) + var(--kenc-content-gap))!important;
+    box-sizing:border-box!important;
+    overflow-x:clip!important;
+  }
+}
+
+body:not(.auth-locked) main.page > .panel,
+body:not(.auth-locked) #homePanel,
+body:not(.auth-locked) #boxPanel,
+body:not(.auth-locked) #rackPanel,
+body:not(.auth-locked) #materialPanel,
+body:not(.auth-locked) #drawingPanel{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+
+body:not(.auth-locked) .ui2-home,
+body:not(.auth-locked) .drawing-pro-workspace,
+body:not(.auth-locked) #boxPanel > *,
+body:not(.auth-locked) #rackPanel > *,
+body:not(.auth-locked) #materialPanel > *{
+  max-width:none!important;
+}
+
+@media (max-width:900px){
+  body:not(.auth-locked) .page,
+  body:not(.auth-locked)[data-build] .page{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:10px 10px calc(86px + env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+    overflow-x:hidden!important;
+  }
+}

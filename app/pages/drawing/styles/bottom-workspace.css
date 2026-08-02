@@ -1,0 +1,60 @@
+/* Drawing bottom workspace module.
+   This file exclusively owns the four-panel row and must not style the top workspace. */
+#drawingPanel .kenc-bottom-workspace{
+  display:grid!important;
+  grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr)!important;
+  grid-template-rows:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 8px 8px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  inset:auto!important;
+  float:none!important;
+  clear:both!important;
+}
+#drawingPanel .kenc-bottom-workspace > *{
+  grid-row:1!important;
+  min-width:0!important;
+  max-width:none!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  position:relative!important;
+  inset:auto!important;
+  float:none!important;
+  flex:none!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+#drawingPanel .kenc-bottom-notes{grid-column:1!important}
+#drawingPanel .kenc-bottom-stack{grid-column:2!important}
+#drawingPanel .kenc-bottom-review{grid-column:3!important}
+#drawingPanel .kenc-bottom-properties{grid-column:4!important}
+
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs{
+  display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;gap:4px!important;width:100%!important
+}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs > button{flex:0 1 auto!important;min-width:0!important;white-space:nowrap!important}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-body,
+#drawingPanel .kenc-bottom-workspace .drawing-dock-pane,
+#drawingPanel .kenc-bottom-workspace .production-notes-card,
+#drawingPanel .kenc-bottom-workspace .production-notes-grid,
+#drawingPanel .kenc-bottom-workspace .drawing-review-body,
+#drawingPanel .kenc-bottom-workspace .drawing-review-pane,
+#drawingPanel .kenc-bottom-workspace .drawing-output-sheet{
+  width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important
+}
+#drawingPanel .kenc-bottom-workspace textarea,
+#drawingPanel .kenc-bottom-workspace input,
+#drawingPanel .kenc-bottom-workspace select,
+#drawingPanel .kenc-bottom-workspace button,
+#drawingPanel .kenc-bottom-workspace svg{max-width:100%!important;box-sizing:border-box!important}
+#drawingPanel .kenc-bottom-workspace .drawing-output-visuals{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+#drawingPanel .kenc-bottom-workspace .cabinet-property-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+#drawingPanel .kenc-bottom-workspace .cabinet-property-grid > *{min-width:0!important;width:100%!important}
+#drawingPanel .kenc-bottom-workspace .stack-list{max-height:430px!important;overflow:auto!important}

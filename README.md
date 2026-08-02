@@ -168,3 +168,7 @@ Professional Dark 색상 통일, 객체 팔레트 정렬, 반응형 작업공간
 
 ## Build 003.6
 집중 모드, 3D 카메라 조작, 제작 중요사항 및 함체 속성 영역의 반응형 안정화 패치입니다.
+
+
+## Build 004.0.0 architecture
+See `ARCHITECTURE_LEVEL3_LEVEL4.md`. Existing behavior is preserved through an immutable compatibility layer; all new work belongs in isolated page/component modules.

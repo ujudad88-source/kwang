@@ -1,0 +1,125 @@
+
+/* === KENC UI 2.0 Build 003.2 : Professional Dark Drawing Workspace === */
+.drawing-pro-workspace{--pro-bg:#0e1622;--pro-panel:#151f2d;--pro-panel2:#192535;--pro-line:#2a394d;--pro-text:#e9f0f8;--pro-muted:#8fa0b5;--pro-blue:#4a8dff;--pro-cyan:#49d6d0;--pro-orange:#ff9f43;background:var(--pro-bg)!important;border:1px solid #243248!important;border-radius:16px!important;overflow:hidden;box-shadow:0 18px 50px rgba(9,19,33,.26)!important;color:var(--pro-text)}
+.drawing-pro-workspace .drawing-toolbar{background:#101a28!important;border-bottom:1px solid var(--pro-line)!important;min-height:58px;padding:8px 12px!important;position:sticky;top:0;z-index:20}
+.drawing-pro-brand{display:flex;align-items:center;gap:10px}.drawing-pro-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(145deg,#3978ef,#56a4ff);font-weight:900;color:white;font-size:17px}.drawing-pro-brand strong{display:block;font-size:13px;letter-spacing:.08em}.drawing-pro-brand small{display:block;color:var(--pro-muted);font-size:9px;margin-top:2px;letter-spacing:.04em}
+.drawing-pro-workspace .drawing-action-btn{background:#182536!important;border:1px solid #31435a!important;color:#dbe8f8!important;border-radius:7px!important;min-height:34px!important;padding:0 11px!important;font-size:10px!important}.drawing-pro-workspace .drawing-action-btn:hover{border-color:var(--pro-blue)!important;background:#203149!important}.drawing-pro-workspace .drawing-focus-btn{color:#94bdff!important}.drawing-toolbar-sep{height:24px;width:1px;background:#35445a;margin:0 2px}
+.drawing-pro-workspace .drawing-workspace-meta{background:#0d1520!important;border-bottom:1px solid #223043!important;color:#8192a8!important}.drawing-pro-workspace .drawing-workspace-meta span{background:#121d2b!important;border-color:#2a394d!important}.drawing-pro-workspace .drawing-workspace-meta b{color:#6ea6ff!important}.drawing-pro-workspace .drawing-workspace-meta .drawing-meta-safe{color:#61d6a4!important;background:#10271f!important;border-color:#23543f!important}
+.drawing-pro-workspace .drawing-controls{background:#111b28!important;border-bottom:1px solid var(--pro-line)!important;padding:10px 14px!important;display:grid!important;grid-template-columns:repeat(3,minmax(130px,190px)) minmax(130px,170px)!important;justify-content:start!important;gap:10px!important}.drawing-pro-workspace .drawing-field label{color:#93a5ba!important}.drawing-pro-workspace input,.drawing-pro-workspace select,.drawing-pro-workspace textarea{background:#0f1825!important;border:1px solid #33445b!important;color:#edf4fc!important;border-radius:6px!important}.drawing-pro-workspace input:focus,.drawing-pro-workspace select:focus,.drawing-pro-workspace textarea:focus{border-color:var(--pro-blue)!important;box-shadow:0 0 0 2px rgba(74,141,255,.17)!important}.drawing-pro-workspace .drawing-input-unit span{color:#8497ad!important}
+.drawing-pro-workspace .drawing-v85-main{display:grid!important;grid-template-columns:220px minmax(540px,1fr) 290px!important;grid-template-areas:'palette canvas properties' 'palette canvas preview'!important;gap:8px!important;padding:8px!important;align-items:stretch!important;background:#0b121c!important}.drawing-pro-workspace .drawing-v85-card{background:var(--pro-panel)!important;border:1px solid var(--pro-line)!important;border-radius:8px!important;box-shadow:none!important;color:var(--pro-text)!important;min-width:0}.drawing-pro-workspace .drawing-palette-panel{grid-area:palette}.drawing-pro-workspace .drawing-canvas-panel{grid-area:canvas;min-height:690px}.drawing-pro-workspace .drawing-properties-panel{grid-area:properties}.drawing-pro-workspace .drawing-3d-panel{grid-area:preview;min-height:350px}.drawing-pro-workspace .drawing-v85-card-head{background:#172333!important;border-bottom:1px solid var(--pro-line)!important;color:#f0f5fb!important;padding:10px 12px!important;position:relative}.drawing-pro-workspace [data-panel-label]>.drawing-v85-card-head:after{content:attr(data-panel-label);position:absolute;right:10px;top:11px;font-size:8px;letter-spacing:.12em;color:#70839b;font-weight:800}.drawing-pro-workspace .drawing-v85-card-head small{color:#7f93aa!important}
+.drawing-pro-workspace .drawing-tool-rows{padding:8px!important;max-height:590px;overflow:auto;scrollbar-width:thin;scrollbar-color:#3b4d66 transparent}.drawing-pro-workspace .drawing-tool-row{background:#111c2a!important;border-color:#293a50!important;color:#dfe9f5!important}.drawing-pro-workspace .drawing-tool-row:hover{background:#1a2b40!important;border-color:#4a8dff!important}.drawing-pro-workspace .drawing-tool-hint{background:#101a27!important;color:#7f91a8!important;border-top-color:#29384d!important}
+.drawing-pro-workspace .drawing-view-tabs{background:#111c29!important;border-bottom:1px solid #2b3b50!important}.drawing-pro-workspace .drawing-view-tabs button{color:#91a2b6!important;border-color:transparent!important}.drawing-pro-workspace .drawing-view-tabs button.active{background:#243650!important;color:#fff!important;border-color:#4a8dff!important}.drawing-pro-view-tools{height:36px;display:flex;align-items:center;gap:6px;padding:4px 8px;background:#0f1824;border-bottom:1px solid #26364a}.drawing-pro-view-tools button,.drawing-pro-3d-controls button{border:1px solid #31435a;background:#182536;color:#aebed1;border-radius:5px;font-size:9px;padding:5px 8px}.drawing-pro-view-tools button.active{color:#72a9ff;border-color:#4a8dff}.drawing-pro-workspace .drawing-v85-canvas-wrap{background-color:#111923!important;background-image:linear-gradient(rgba(83,113,148,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(83,113,148,.11) 1px,transparent 1px),linear-gradient(rgba(83,113,148,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(83,113,148,.055) 1px,transparent 1px)!important;background-size:50px 50px,50px 50px,10px 10px,10px 10px!important}.drawing-pro-workspace .drawing-v85-canvas{filter:invert(.88) hue-rotate(175deg) saturate(.8) brightness(1.25)}
+.drawing-pro-workspace .drawing-settings-wrap{padding:10px!important}.drawing-pro-workspace .drawing-settings-actions{gap:7px!important}.drawing-pro-workspace .drawing-status{background:#101a27!important;border-color:#2b3a4e!important;color:#91a2b7!important}.drawing-pro-workspace .drawing-primary-btn{background:linear-gradient(135deg,#3579ef,#2864cf)!important;border:none!important;color:white!important}.drawing-pro-workspace .drawing-danger-btn{background:#2b1820!important;border-color:#6f2f42!important;color:#ff9aae!important}
+.drawing-pro-workspace .drawing-3d-wrap{background:radial-gradient(circle at 50% 35%,#26364a 0,#151f2d 48%,#0f1722 100%)!important;position:relative}.drawing-pro-workspace .drawing-3d-svg{filter:drop-shadow(0 15px 18px rgba(0,0,0,.35))}.drawing-pro-workspace .drawing-3d-note{color:#7f91a8!important;background:#101924!important;border-color:#27364a!important}.drawing-pro-3d-controls{display:flex;gap:5px;position:absolute;left:8px;top:8px;z-index:3;flex-wrap:wrap}.drawing-pro-workspace .drawing-3d-mode-tabs{background:#111b29!important;border-color:#2b3a50!important}.drawing-pro-workspace .drawing-3d-mode{background:#182536!important;color:#8497ad!important;border-color:#30425a!important}.drawing-pro-workspace .drawing-3d-mode.active{background:#2b65c8!important;color:white!important;border-color:#4b8ff9!important}
+.drawing-bottom-dock{margin:0 8px 8px!important;border-radius:8px!important}.drawing-dock-tabs{display:flex;align-items:center;gap:2px;background:#101a27;border-bottom:1px solid #2a394d;padding:5px 6px;overflow-x:auto}.drawing-dock-tabs button{border:0;background:transparent;color:#8ea0b5;font-size:10px;padding:8px 12px;border-radius:5px;white-space:nowrap}.drawing-dock-tabs button.active{background:#22344e;color:#fff}.drawing-dock-tabs button span{display:inline-flex;min-width:16px;height:16px;align-items:center;justify-content:center;border-radius:8px;background:#2e4667;color:#9ec2ff;font-size:8px}.drawing-dock-tabs .drawing-dock-collapse{margin-left:auto;color:#7e91a8}.drawing-dock-body{min-height:150px;max-height:290px;overflow:auto;background:#121c29}.drawing-bottom-dock.collapsed .drawing-dock-body{display:none}.drawing-dock-pane{display:none;padding:12px}.drawing-dock-pane.active{display:block}.drawing-bottom-dock .production-notes-card{margin:0!important;border:0!important;background:transparent!important}.drawing-bottom-dock .production-notes-card>.drawing-v85-card-head{display:none}.drawing-bottom-dock textarea{min-height:105px!important}.drawing-history-list{display:grid;gap:6px}.drawing-history-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #26364a;padding:7px 3px;color:#c9d5e3;font-size:10px}.drawing-history-item time{color:#6f839c;font-variant-numeric:tabular-nums}.drawing-dock-empty{color:#75889f;font-size:10px}.drawing-check-summary{display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center}.drawing-check-summary strong{font-size:12px}.drawing-check-summary p{margin:0;color:#8194aa;font-size:10px}.drawing-check-summary button{grid-column:2;grid-row:1/3}.drawing-check-results{display:grid;gap:5px;margin-top:10px}.drawing-check-item{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:5px;background:#101a27;border:1px solid #29394d;font-size:10px}.drawing-check-item.ok:before{content:'✓';color:#5ed69a}.drawing-check-item.warn:before{content:'!';color:#ffb45f}.drawing-output-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.drawing-output-grid button{background:#101b29;border:1px solid #2d3e54;color:#dce6f2;border-radius:7px;padding:12px;text-align:left}.drawing-output-grid button:hover{border-color:#4a8dff}.drawing-output-grid strong{display:block;font-size:11px}.drawing-output-grid span{display:block;margin-top:5px;color:#7f93aa;font-size:9px}
+.drawing-pro-workspace .stack-section{padding:0 8px 8px!important;background:#0b121c!important;gap:8px!important}.drawing-pro-workspace .stack-summary,.drawing-pro-workspace .stack-info,.drawing-pro-workspace .cabinet-property-grid{background:#101a27!important;border-color:#2b3a50!important}.drawing-pro-workspace .stack-list>*,.drawing-pro-workspace .stack-view-toolbar button,.drawing-pro-workspace .stack-small-btn{background:#172333!important;border-color:#304159!important;color:#c9d6e5!important}.drawing-pro-workspace .stack-preview-stage{background:#111a25!important;border-color:#2d3c50!important}
+.drawing-pro-workspace.focus-mode .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas'!important}.drawing-pro-workspace.focus-mode .drawing-v85-main>section:not(.focus-active){display:none!important}.drawing-pro-workspace.focus-mode .focus-active{display:block!important;grid-area:canvas!important;min-height:calc(100vh - 180px)!important}.drawing-pro-workspace.focus-mode .drawing-bottom-dock,.drawing-pro-workspace.focus-mode .stack-section,.drawing-pro-workspace.focus-mode .drawing-controls,.drawing-pro-workspace.focus-mode .drawing-workspace-meta{display:none!important}.drawing-pro-workspace.focus-mode .drawing-toolbar:after{content:'ESC 또는 2D/3D 집중 버튼을 다시 눌러 전체 작업공간으로 복귀';margin-left:auto;color:#6f8299;font-size:9px}
+@media(max-width:1180px){.drawing-pro-workspace .drawing-v85-main{grid-template-columns:190px minmax(430px,1fr) 250px!important}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr) 140px!important}}
+@media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
+@media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
+
+/* === KENC UI 2.0 Build 003.6 : Unified Dark Workspace and Mobile Drag stabilization === */
+html,body{max-width:100%;overflow-x:hidden}
+.drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
+.drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
+.drawing-pro-workspace button,.drawing-pro-workspace input,.drawing-pro-workspace select,.drawing-pro-workspace textarea{font:inherit}
+.drawing-pro-workspace .drawing-toolbar{gap:10px;min-width:0}
+.drawing-pro-workspace .drawing-pro-brand strong{font-size:13px!important;letter-spacing:.02em}
+.drawing-pro-workspace .drawing-pro-brand small{font-size:9px!important;color:#9eb0c5!important}
+.drawing-pro-workspace .drawing-action-btn{font-size:11px!important;font-weight:750!important;min-height:36px!important}
+.drawing-pro-workspace .drawing-workspace-meta{font-size:10px!important}
+.drawing-pro-workspace .drawing-field label,.drawing-pro-workspace .drawing-v85-card-head,.drawing-pro-workspace .drawing-settings-wrap label{font-size:11px!important;font-weight:800!important;color:#b8c8da!important}
+.drawing-pro-workspace input,.drawing-pro-workspace select,.drawing-pro-workspace textarea{font-size:12px!important;min-width:0!important}
+.drawing-pro-workspace .drawing-tool-row{font-size:11px!important;min-height:46px}
+.drawing-pro-workspace .drawing-tool-row select{font-size:11px!important}
+.drawing-pro-workspace .drawing-status,.drawing-pro-workspace .drawing-3d-note{font-size:10px!important}
+
+/* Desktop: canvas-centered CAD layout with a bounded height. */
+@media(min-width:1500px){
+ .drawing-pro-workspace .drawing-v85-main{
+  display:grid!important;
+  grid-template-columns:230px minmax(520px,1fr) 285px 330px!important;
+  grid-template-areas:'palette canvas properties preview'!important;
+  grid-template-rows:560px!important;
+  gap:8px!important;align-items:stretch!important;overflow:hidden!important
+ }
+ .drawing-pro-workspace .drawing-canvas-panel,.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:0!important;height:560px!important;overflow:hidden!important}
+ .drawing-pro-workspace .drawing-tool-rows,.drawing-pro-workspace .drawing-settings-wrap,.drawing-pro-workspace .drawing-3d-wrap{height:calc(100% - 42px)!important;max-height:none!important;overflow:auto!important}
+ .drawing-pro-workspace .drawing-v85-canvas-wrap{height:calc(100% - 78px)!important;min-height:0!important;overflow:auto!important}
+}
+@media(min-width:1100px) and (max-width:1499px){
+ .drawing-pro-workspace .drawing-v85-main{
+  grid-template-columns:210px minmax(460px,1fr) 285px!important;
+  grid-template-areas:'palette canvas properties' 'palette canvas preview'!important;
+  grid-template-rows:276px 276px!important;
+  gap:8px!important;overflow:hidden!important
+ }
+ .drawing-pro-workspace .drawing-canvas-panel{min-height:0!important;height:560px!important;overflow:hidden!important}
+ .drawing-pro-workspace .drawing-palette-panel{height:560px!important;overflow:hidden!important}
+ .drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:0!important;height:276px!important;overflow:hidden!important}
+ .drawing-pro-workspace .drawing-tool-rows,.drawing-pro-workspace .drawing-settings-wrap,.drawing-pro-workspace .drawing-3d-wrap{height:calc(100% - 42px)!important;max-height:none!important;overflow:auto!important}
+ .drawing-pro-workspace .drawing-v85-canvas-wrap{height:calc(100% - 78px)!important;min-height:0!important;overflow:auto!important}
+}
+@media(min-width:901px){
+ .bottom-nav{display:none!important}
+ body:not(.auth-locked){padding-bottom:0!important}
+ .drawing-pro-workspace .drawing-bottom-dock{position:relative;z-index:2}
+}
+@media(max-width:1099px){
+ .drawing-pro-workspace .drawing-v85-main{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:'canvas' 'properties' 'preview' 'palette'!important;overflow:hidden!important}
+ .drawing-pro-workspace .drawing-canvas-panel{min-height:480px!important;height:auto!important}
+ .drawing-pro-workspace .drawing-v85-canvas-wrap{min-height:390px!important;max-height:520px!important;overflow:auto!important}
+ .drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:0!important;height:auto!important;max-height:none!important}
+ .drawing-pro-workspace .drawing-tool-rows{max-height:330px!important}
+ .drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}
+}
+@media(max-width:700px){
+ .drawing-pro-workspace{border-radius:0!important;margin-left:-12px!important;margin-right:-12px!important;width:calc(100% + 24px)!important}
+ .drawing-pro-workspace .drawing-toolbar{position:sticky!important;top:0!important;padding:7px 8px!important;min-height:52px!important}
+ .drawing-pro-workspace .drawing-toolbar-actions{width:100%;overflow-x:auto!important;scrollbar-width:none;padding-bottom:2px}
+ .drawing-pro-workspace .drawing-toolbar-actions::-webkit-scrollbar{display:none}
+ .drawing-pro-workspace .drawing-action-btn{flex:0 0 auto!important;min-height:34px!important;padding:0 9px!important;font-size:10px!important}
+ .drawing-pro-workspace .drawing-workspace-meta{overflow-x:auto!important;flex-wrap:nowrap!important;padding:7px 8px!important}
+ .drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important;padding:9px!important}
+ .drawing-pro-workspace .drawing-v85-main{padding:6px!important;gap:6px!important}
+ .drawing-pro-workspace .drawing-canvas-panel{min-height:410px!important}
+ .drawing-pro-workspace .drawing-v85-canvas-wrap{min-height:330px!important;max-height:430px!important}
+ .drawing-pro-workspace .drawing-v85-card-head{padding:9px 10px!important;font-size:11px!important}
+ .drawing-pro-workspace .drawing-bottom-dock{margin:0 6px 6px!important;max-width:calc(100% - 12px)!important}
+ .drawing-dock-tabs{overflow-x:auto!important;flex-wrap:nowrap!important;scrollbar-width:none}
+ .drawing-dock-tabs button{flex:0 0 auto!important;white-space:nowrap!important}
+ .drawing-pro-workspace .stack-section{grid-template-columns:1fr!important}
+}
+@media(max-width:420px){
+ .drawing-pro-workspace .drawing-canvas-panel{min-height:370px!important}
+ .drawing-pro-workspace .drawing-v85-canvas-wrap{min-height:300px!important;max-height:380px!important}
+ .drawing-pro-workspace .drawing-pro-brand small{display:none!important}
+}
+
+/* Focus modes are true viewport workspaces, not in-page reflows. */
+body.drawing-focus-active{overflow:hidden!important}
+body.drawing-focus-active .bottom-nav{display:none!important}
+.drawing-pro-workspace.focus-mode{
+ position:fixed!important;inset:0!important;z-index:12000!important;width:100vw!important;height:100dvh!important;
+ max-width:none!important;border-radius:0!important;margin:0!important;overflow:hidden!important;background:#0b121c!important
+}
+.drawing-pro-workspace.focus-mode .drawing-toolbar{position:relative!important;top:0!important;z-index:3!important}
+.drawing-pro-workspace.focus-mode .drawing-v85-main{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-areas:'canvas'!important;
+ grid-template-rows:minmax(0,1fr)!important;height:calc(100dvh - 58px)!important;padding:8px!important;overflow:hidden!important
+}
+.drawing-pro-workspace.focus-mode .drawing-v85-main>section:not(.focus-active),
+.drawing-pro-workspace.focus-mode .drawing-bottom-dock,
+.drawing-pro-workspace.focus-mode .stack-section,
+.drawing-pro-workspace.focus-mode .drawing-controls,
+.drawing-pro-workspace.focus-mode .drawing-workspace-meta{display:none!important}
+.drawing-pro-workspace.focus-mode .focus-active{display:block!important;grid-area:canvas!important;height:100%!important;min-height:0!important;max-height:none!important;overflow:hidden!important}
+.drawing-pro-workspace.focus-mode .focus-active .drawing-v85-canvas-wrap,
+.drawing-pro-workspace.focus-mode .focus-active .drawing-3d-wrap{height:calc(100% - 42px)!important;min-height:0!important;max-height:none!important;overflow:auto!important}
+.drawing-pro-workspace.focus-mode .drawing-toolbar:after{content:'ESC 또는 집중 버튼을 다시 눌러 복귀';margin-left:auto;color:#91a5bd;font-size:10px;white-space:nowrap}
+@media(max-width:700px){
+ .drawing-pro-workspace.focus-mode .drawing-toolbar:after{display:none}
+ .drawing-pro-workspace.focus-mode .drawing-v85-main{height:calc(100dvh - 52px)!important;padding:4px!important}
+}
+

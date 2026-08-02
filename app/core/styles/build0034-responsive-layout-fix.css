@@ -1,0 +1,122 @@
+
+/* =========================================================
+   KENC UI 2.0 Build 003.6
+   Desktop clipping + mobile object palette accessibility fix.
+   Object geometry, attachment shapes and drawing calculations are untouched.
+   ========================================================= */
+#drawingPanel,#drawingPanel .drawing-shell,#drawingPanel .drawing-pro-workspace{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+}
+#drawingPanel .drawing-pro-workspace{overflow:clip!important}
+#drawingPanel .drawing-pro-workspace *{min-width:0}
+#drawingPanel .drawing-pro-workspace .drawing-v85-main{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  overflow:visible!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card,
+#drawingPanel .drawing-pro-workspace .drawing-v85-card>*{max-width:100%!important}
+#drawingPanel .drawing-pro-workspace input,
+#drawingPanel .drawing-pro-workspace select,
+#drawingPanel .drawing-pro-workspace textarea,
+#drawingPanel .drawing-pro-workspace button{max-width:100%!important}
+
+/* Wide desktop: four clearly bounded columns. */
+@media (min-width:1600px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:230px minmax(0,1fr) 280px 310px!important;
+   grid-template-areas:'palette canvas properties preview'!important;
+   grid-template-rows:590px!important;
+ }
+}
+/* Common desktop and laptop: two rows; never wider than the actual content area. */
+@media (min-width:1180px) and (max-width:1599px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:210px minmax(0,1fr) 270px!important;
+   grid-template-areas:'palette canvas properties' 'palette canvas preview'!important;
+   grid-template-rows:286px 286px!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:580px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:286px!important;min-height:0!important}
+}
+/* Narrow desktop / tablet landscape: canvas + properties first, palette below in a usable grid. */
+@media (min-width:760px) and (max-width:1179px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr) 280px!important;
+   grid-template-areas:'canvas properties' 'canvas preview' 'palette palette'!important;
+   grid-template-rows:300px 300px auto!important;
+   overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:608px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:300px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel{height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+   max-height:360px!important;overflow-y:auto!important;overflow-x:hidden!important;
+ }
+}
+
+/* Mobile: object selection comes first and remains inside the viewport. */
+@media (max-width:759px){
+ body:not(.auth-locked) .page{overflow-x:clip!important;padding-left:8px!important;padding-right:8px!important}
+ #drawingPanel{overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace{
+   margin:0!important;width:100%!important;max-width:100%!important;border-radius:10px!important;
+   overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:flex!important;flex-direction:column!important;width:100%!important;
+   padding:6px!important;gap:7px!important;overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel{order:1!important;width:100%!important;height:auto!important;max-height:none!important;overflow:hidden!important}
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{order:2!important;width:100%!important;min-height:390px!important;height:auto!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel{order:3!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{order:4!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{
+   display:flex!important;flex-direction:column!important;gap:7px!important;
+   width:100%!important;max-height:390px!important;padding:7px!important;
+   overflow-y:auto!important;overflow-x:hidden!important;scroll-snap-type:none!important;
+   overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-tool-row{
+   flex:none!important;width:100%!important;max-width:100%!important;min-height:58px!important;
+   grid-template-columns:40px minmax(0,1fr)!important;scroll-snap-align:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-tool-meta,
+ #drawingPanel .drawing-pro-workspace .drawing-tool-option{width:100%!important;max-width:100%!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{
+   width:100%!important;height:min(58vh,470px)!important;min-height:330px!important;
+   max-height:470px!important;padding:5px!important;overflow:auto!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas{
+   width:100%!important;max-width:100%!important;min-width:0!important;height:auto!important;
+   touch-action:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-controls{
+   grid-template-columns:1fr!important;width:100%!important;padding:8px!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-toolbar-actions,
+ #drawingPanel .drawing-pro-workspace .drawing-workspace-meta,
+ #drawingPanel .drawing-pro-workspace .drawing-view-tabs,
+ #drawingPanel .drawing-pro-workspace .drawing-pro-view-tools{
+   max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;
+   scrollbar-width:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-toolbar-actions::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-workspace-meta::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-view-tabs::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-pro-view-tools::-webkit-scrollbar{display:none}
+ #drawingPanel .drawing-pro-workspace .drawing-3d-svg{height:330px!important;max-width:100%!important}
+ #drawingPanel .drawing-pro-workspace .stack-section{display:flex!important;flex-direction:column!important;width:100%!important}
+ #drawingPanel .drawing-pro-workspace .stack-section>*{width:100%!important;max-width:100%!important}
+ #drawingPanel .drawing-bottom-dock{margin-bottom:calc(76px + env(safe-area-inset-bottom))!important}
+}
+@media (max-width:420px){
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{max-height:350px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:430px!important;min-height:310px!important}
+}

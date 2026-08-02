@@ -1,0 +1,51 @@
+{
+  "version": "004.0.0",
+  "pages": {
+    "home": {
+      "root": "#homePanel"
+    },
+    "box": {
+      "root": "#boxPanel"
+    },
+    "rack": {
+      "root": "#rackPanel"
+    },
+    "material": {
+      "root": "#materialPanel"
+    },
+    "drawing": {
+      "root": "#drawingPanel"
+    },
+    "admin": {
+      "root": "#adminRoot"
+    },
+    "manual": {
+      "root": "#manualPanel"
+    },
+    "training": {
+      "root": "#trainingPanel"
+    }
+  },
+  "drawingComponents": [
+    "palette",
+    "canvas2d",
+    "objectInspector",
+    "preview3d",
+    "productionNotes",
+    "stackList",
+    "reviewCenter",
+    "cabinetInspector"
+  ],
+  "protected": [
+    "drawing object geometry",
+    "attachment logic",
+    "coordinate/rotation engine",
+    "firebase auth/data schema"
+  ],
+  "desktopBottomColumns": [
+    "30fr",
+    "18fr",
+    "34fr",
+    "18fr"
+  ]
+}

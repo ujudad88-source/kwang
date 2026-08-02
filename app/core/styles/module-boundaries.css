@@ -1,0 +1,30 @@
+/* KENC Build 004.0.0 module boundaries.
+   New styles MUST be scoped under one of the page roots below. */
+:where(#homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel,#manualPanel,#trainingPanel) *,
+:where(#homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel,#manualPanel,#trainingPanel) *::before,
+:where(#homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel,#manualPanel,#trainingPanel) *::after { box-sizing:border-box; }
+
+/* Drawing bottom workspace contract: same parent, same row on desktop. */
+@media (min-width: 768px){
+  #drawingPanel .kenc-bottom-workspace,
+  #drawingPanel .drawing-v85-bottom,
+  #drawingPanel .drawing-bottom-workspace{
+    display:grid !important;
+    grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr) !important;
+    grid-auto-flow:column !important;
+    grid-auto-rows:auto !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    align-items:stretch !important;
+  }
+  #drawingPanel .kenc-bottom-workspace > *,
+  #drawingPanel .drawing-v85-bottom > *,
+  #drawingPanel .drawing-bottom-workspace > *{
+    grid-row:1 !important;
+    min-width:0 !important;
+    max-width:none !important;
+    width:auto !important;
+    margin:0 !important;
+  }
+}
