@@ -29,7 +29,7 @@
     let off=0; const all=[];
     cabinets.forEach((c,i)=>{const g=cabinetGeometry(c,off,totalH);off+=c.height;const projected=g.pts.map(p=>project(p,v,base));all.push({c,g,projected,i});});
     // rear lines first for depth cue
-    all.forEach(({g,projected,i})=>g.edges.forEach(([a,b],ei)=>{const pa=projected[a],pb=projected[b];const line=svgEl("line",{x1:pa.x,y1:pa.y,x2:pb.x,y2:pb.y,class:ei<4?"kenc-3d-edge rear":"kenc-3d-edge"});svg.appendChild(line);}));
+    all.forEach(({g,projected,i})=>g.edges.forEach(([a,b],ei)=>{const pa=projected[a],pb=projected[b];const line=svgEl("line",{x1:pa.x,y1:pa.y,x2:pb.x,y2:pb.y,class:"kenc-3d-edge"});svg.appendChild(line);}));
     // center crosshair and labels
     svg.appendChild(svgEl("circle",{cx:210+(v.panX||0),cy:270+(v.panY||0),r:2.5,class:"kenc-3d-origin"}));
     const label=s.mode3d==="stack"?`적층 ${cabinets.length}EA · 전체 높이 ${totalH} mm`:`${ctx.currentCabinet.width} × ${ctx.currentCabinet.height} × ${ctx.currentCabinet.depth} mm`;
@@ -42,7 +42,7 @@
   function bind(){
     svg=document.getElementById("drawing3dCanvas"); if(!svg||svg.dataset.kencInteractiveBound)return; svg.dataset.kencInteractiveBound="1";
     const panel=svg.closest('.drawing-3d-panel');
-    panel?.querySelectorAll('[data-3d-action]').forEach(btn=>btn.addEventListener('click',()=>{const a=btn.dataset['3dAction'];if(a==='front'||a==='iso'||a==='fit'||a==='reset')setPreset(a==='fit'?'reset':a);}));
+    document.addEventListener('click',e=>{const btn=e.target.closest('#drawingPanel [data-3d-action]');if(!btn)return;const a=btn.dataset['3dAction'];if(!['front','iso','fit','reset'].includes(a))return;e.preventDefault();e.stopImmediatePropagation();setPreset(a==='fit'?'reset':a);},true);
     svg.addEventListener('pointerdown',e=>{svg.setPointerCapture?.(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=view();dragging={x:e.clientX,y:e.clientY,yaw:v.yaw,pitch:v.pitch,panX:v.panX||0,panY:v.panY||0,pan:e.button===1||e.button===2||e.shiftKey};svg.classList.add('is-interacting');e.preventDefault();});
     svg.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId)||!dragging)return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=view();if(pointers.size>=2){const pts=[...pointers.values()];const dist=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);const cx=(pts[0].x+pts[1].x)/2,cy=(pts[0].y+pts[1].y)/2;if(!pinch)pinch={dist,zoom:v.zoom,cx,cy,panX:v.panX||0,panY:v.panY||0};v.zoom=clamp(pinch.zoom*dist/Math.max(pinch.dist,1),.25,6);v.panX=pinch.panX+(cx-pinch.cx);v.panY=pinch.panY+(cy-pinch.cy);}else if(dragging.pan){v.panX=dragging.panX+(e.clientX-dragging.x);v.panY=dragging.panY+(e.clientY-dragging.y);}else{v.yaw=dragging.yaw+(e.clientX-dragging.x)*.55;v.pitch=clamp(dragging.pitch+(e.clientY-dragging.y)*.45,-89,89);}redraw();e.preventDefault();});
     const end=e=>{pointers.delete(e.pointerId);if(!pointers.size){dragging=null;pinch=null;svg.classList.remove('is-interacting');}};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('contextmenu',e=>e.preventDefault());

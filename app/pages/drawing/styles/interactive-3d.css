@@ -1,9 +1,14 @@
-#drawingPanel .drawing-3d-svg.kenc-interactive-3d{touch-action:none;cursor:grab;user-select:none;background:#202020}
+#drawingPanel .drawing-3d-svg.kenc-interactive-3d{touch-action:none;cursor:grab;user-select:none;background:#202020!important}
 #drawingPanel .drawing-3d-svg.kenc-interactive-3d.is-interacting{cursor:grabbing}
-#drawingPanel .kenc-3d-bg{fill:#202020}
-#drawingPanel .kenc-3d-edge{stroke:#f1f5f9;stroke-width:1.6;vector-effect:non-scaling-stroke;fill:none}
-#drawingPanel .kenc-3d-edge.rear{stroke:#94a3b8;stroke-dasharray:3 3;opacity:.58}
+#drawingPanel .kenc-3d-bg{fill:#202020!important}
+#drawingPanel .kenc-3d-edge{stroke:#f1f5f9;stroke-width:1.6;vector-effect:non-scaling-stroke;fill:none;stroke-dasharray:none!important;opacity:1!important}
 #drawingPanel .kenc-3d-origin{fill:#3b82f6;stroke:#dbeafe;stroke-width:1}
 #drawingPanel .kenc-3d-label{fill:#cbd5e1;font-size:12px;font-weight:600}
 #drawingPanel .drawing-pro-3d-controls{display:flex;flex-wrap:wrap;gap:6px}
 #drawingPanel .drawing-pro-3d-controls button.active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important}
+/* 제작 전달 도면의 3D는 출력 문서 스타일로 분리 */
+#drawingPanel #drawingOutput3d{background:#fff!important;filter:none!important}
+#drawingPanel #drawingOutput3d .kenc-3d-bg{fill:#fff!important}
+#drawingPanel #drawingOutput3d .kenc-3d-edge{stroke:#111827!important;stroke-dasharray:none!important;opacity:1!important}
+#drawingPanel #drawingOutput3d .kenc-3d-origin{display:none!important}
+#drawingPanel #drawingOutput3d .kenc-3d-label{fill:#111827!important}
