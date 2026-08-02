@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.3</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.4</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.3 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.4 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.3 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.4 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.3
+   KENC UI 2.0 Build 003.4
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3324,6 +3324,131 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 body.drawing-object-dragging{overflow:hidden!important;overscroll-behavior:none!important;touch-action:none!important}
 body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 </style>
+
+<style id="build0034-responsive-layout-fix">
+/* =========================================================
+   KENC UI 2.0 Build 003.4
+   Desktop clipping + mobile object palette accessibility fix.
+   Object geometry, attachment shapes and drawing calculations are untouched.
+   ========================================================= */
+#drawingPanel,#drawingPanel .drawing-shell,#drawingPanel .drawing-pro-workspace{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+}
+#drawingPanel .drawing-pro-workspace{overflow:clip!important}
+#drawingPanel .drawing-pro-workspace *{min-width:0}
+#drawingPanel .drawing-pro-workspace .drawing-v85-main{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  overflow:visible!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card,
+#drawingPanel .drawing-pro-workspace .drawing-v85-card>*{max-width:100%!important}
+#drawingPanel .drawing-pro-workspace input,
+#drawingPanel .drawing-pro-workspace select,
+#drawingPanel .drawing-pro-workspace textarea,
+#drawingPanel .drawing-pro-workspace button{max-width:100%!important}
+
+/* Wide desktop: four clearly bounded columns. */
+@media (min-width:1600px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:230px minmax(0,1fr) 280px 310px!important;
+   grid-template-areas:'palette canvas properties preview'!important;
+   grid-template-rows:590px!important;
+ }
+}
+/* Common desktop and laptop: two rows; never wider than the actual content area. */
+@media (min-width:1180px) and (max-width:1599px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:210px minmax(0,1fr) 270px!important;
+   grid-template-areas:'palette canvas properties' 'palette canvas preview'!important;
+   grid-template-rows:286px 286px!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:580px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:286px!important;min-height:0!important}
+}
+/* Narrow desktop / tablet landscape: canvas + properties first, palette below in a usable grid. */
+@media (min-width:760px) and (max-width:1179px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr) 280px!important;
+   grid-template-areas:'canvas properties' 'canvas preview' 'palette palette'!important;
+   grid-template-rows:300px 300px auto!important;
+   overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:608px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel,
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:300px!important;min-height:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel{height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+   max-height:360px!important;overflow-y:auto!important;overflow-x:hidden!important;
+ }
+}
+
+/* Mobile: object selection comes first and remains inside the viewport. */
+@media (max-width:759px){
+ body:not(.auth-locked) .page{overflow-x:clip!important;padding-left:8px!important;padding-right:8px!important}
+ #drawingPanel{overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace{
+   margin:0!important;width:100%!important;max-width:100%!important;border-radius:10px!important;
+   overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+   display:flex!important;flex-direction:column!important;width:100%!important;
+   padding:6px!important;gap:7px!important;overflow:visible!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel{order:1!important;width:100%!important;height:auto!important;max-height:none!important;overflow:hidden!important}
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{order:2!important;width:100%!important;min-height:390px!important;height:auto!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel{order:3!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-3d-panel{order:4!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{
+   display:flex!important;flex-direction:column!important;gap:7px!important;
+   width:100%!important;max-height:390px!important;padding:7px!important;
+   overflow-y:auto!important;overflow-x:hidden!important;scroll-snap-type:none!important;
+   overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-tool-row{
+   flex:none!important;width:100%!important;max-width:100%!important;min-height:58px!important;
+   grid-template-columns:40px minmax(0,1fr)!important;scroll-snap-align:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-tool-meta,
+ #drawingPanel .drawing-pro-workspace .drawing-tool-option{width:100%!important;max-width:100%!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{
+   width:100%!important;height:min(58vh,470px)!important;min-height:330px!important;
+   max-height:470px!important;padding:5px!important;overflow:auto!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas{
+   width:100%!important;max-width:100%!important;min-width:0!important;height:auto!important;
+   touch-action:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-controls{
+   grid-template-columns:1fr!important;width:100%!important;padding:8px!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-toolbar-actions,
+ #drawingPanel .drawing-pro-workspace .drawing-workspace-meta,
+ #drawingPanel .drawing-pro-workspace .drawing-view-tabs,
+ #drawingPanel .drawing-pro-workspace .drawing-pro-view-tools{
+   max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;
+   scrollbar-width:none!important;
+ }
+ #drawingPanel .drawing-pro-workspace .drawing-toolbar-actions::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-workspace-meta::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-view-tabs::-webkit-scrollbar,
+ #drawingPanel .drawing-pro-workspace .drawing-pro-view-tools::-webkit-scrollbar{display:none}
+ #drawingPanel .drawing-pro-workspace .drawing-3d-svg{height:330px!important;max-width:100%!important}
+ #drawingPanel .drawing-pro-workspace .stack-section{display:flex!important;flex-direction:column!important;width:100%!important}
+ #drawingPanel .drawing-pro-workspace .stack-section>*{width:100%!important;max-width:100%!important}
+ #drawingPanel .drawing-bottom-dock{margin-bottom:calc(76px + env(safe-area-inset-bottom))!important}
+}
+@media (max-width:420px){
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{max-height:350px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:430px!important;min-height:310px!important}
+}
+</style>
+
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
@@ -3365,7 +3490,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.3</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.4</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3388,7 +3513,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.3</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.4</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3406,7 +3531,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.3</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.4</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3464,7 +3589,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.3 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.4 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
