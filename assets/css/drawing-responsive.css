@@ -1,0 +1,31 @@
+/* Drawing responsive rules are isolated here. */
+@media (min-width:1180px) and (max-width:1499px){
+  #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+    grid-template-columns:200px minmax(430px,1fr) 270px!important;
+  }
+  #drawingPanel .kenc-bottom-workspace{
+    grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr)!important;
+  }
+}
+@media (min-width:768px) and (max-width:1179px){
+  #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+    grid-template-columns:minmax(0,1fr) 280px!important;
+    grid-template-areas:'canvas properties' 'canvas preview' 'palette palette'!important;
+  }
+  #drawingPanel .kenc-bottom-workspace{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+  }
+  #drawingPanel .kenc-bottom-notes{grid-column:1!important;grid-row:1!important}
+  #drawingPanel .kenc-bottom-stack{grid-column:2!important;grid-row:1!important}
+  #drawingPanel .kenc-bottom-review{grid-column:1!important;grid-row:2!important}
+  #drawingPanel .kenc-bottom-properties{grid-column:2!important;grid-row:2!important}
+}
+@media (max-width:767px){
+  #drawingPanel .drawing-pro-workspace .drawing-v85-main{
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important;
+  }
+  #drawingPanel .kenc-bottom-workspace{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:none!important;padding:0 6px 6px!important}
+  #drawingPanel .kenc-bottom-workspace > *{grid-column:1!important;grid-row:auto!important}
+}

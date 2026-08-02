@@ -1,0 +1,31 @@
+/* Drawing top workspace module: palette / 2D / inspector / live 3D only. */
+#drawingPanel .drawing-pro-workspace{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+#drawingPanel .drawing-pro-workspace .drawing-v85-main{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  grid-template-columns:220px minmax(520px,1fr) minmax(270px,300px)!important;
+  box-sizing:border-box!important;
+}
+
+#drawingPanel .drawing-pro-workspace .drawing-canvas-panel,
+#drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap,
+#drawingPanel .drawing-pro-workspace .drawing-v85-canvas{
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+#drawingPanel .drawing-pro-workspace .drawing-v85-main > section{
+  min-width:0!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}

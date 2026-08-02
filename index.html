@@ -3584,78 +3584,13 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 @media(max-width:560px){#drawingPanel .drawing-review-body{min-height:0}#drawingPanel .drawing-review-pane{padding:7px}#drawingPanel .drawing-output-sheet{padding:8px}#drawingPanel .drawing-output-visuals svg{height:190px}#drawingPanel .drawing-output-meta span{padding:7px}#drawingPanel .drawing-preview-actions{display:grid;grid-template-columns:1fr 1fr}#drawingPanel .drawing-preview-actions button{width:100%!important;min-width:0!important}}
 </style>
 
-<style id="kenc-bottom-workspace-003-6-9">
-/* Build 003.6.9: 하단 4영역을 동일 부모의 동일 행에 고정 */
-#drawingPanel .kenc-bottom-workspace{
-  display:grid !important;
-  grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr) !important;
-  grid-template-rows:auto !important;
-  gap:10px !important;
-  width:100% !important;
-  max-width:none !important;
-  min-width:0 !important;
-  margin:0 !important;
-  padding:0 10px 10px !important;
-  box-sizing:border-box !important;
-  align-items:stretch !important;
-  justify-items:stretch !important;
-  clear:both !important;
-}
-#drawingPanel .kenc-bottom-workspace > *{
-  grid-row:1 !important;
-  grid-column:auto !important;
-  position:relative !important;
-  inset:auto !important;
-  float:none !important;
-  display:block !important;
-  width:auto !important;
-  min-width:0 !important;
-  max-width:none !important;
-  height:auto !important;
-  margin:0 !important;
-  box-sizing:border-box !important;
-  align-self:stretch !important;
-  overflow:hidden !important;
-}
-#drawingPanel .kenc-bottom-notes{grid-column:1 !important;}
-#drawingPanel .kenc-bottom-stack{grid-column:2 !important;}
-#drawingPanel .kenc-bottom-review{grid-column:3 !important;}
-#drawingPanel .kenc-bottom-properties{grid-column:4 !important;}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs{
-  display:flex !important; flex-wrap:wrap !important; gap:6px !important; align-items:center !important;
-}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs > button{flex:0 1 auto !important; min-width:0 !important; white-space:nowrap !important;}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-body,
-#drawingPanel .kenc-bottom-workspace .drawing-dock-pane,
-#drawingPanel .kenc-bottom-workspace .production-notes-card,
-#drawingPanel .kenc-bottom-workspace .production-notes-grid,
-#drawingPanel .kenc-bottom-workspace .drawing-review-body,
-#drawingPanel .kenc-bottom-workspace .drawing-review-pane,
-#drawingPanel .kenc-bottom-workspace .drawing-output-sheet{
-  width:100% !important; min-width:0 !important; max-width:100% !important; box-sizing:border-box !important;
-}
-#drawingPanel .kenc-bottom-workspace textarea,
-#drawingPanel .kenc-bottom-workspace input,
-#drawingPanel .kenc-bottom-workspace select,
-#drawingPanel .kenc-bottom-workspace button,
-#drawingPanel .kenc-bottom-workspace svg{
-  max-width:100% !important; box-sizing:border-box !important;
-}
-#drawingPanel .kenc-bottom-workspace .drawing-output-visuals{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;}
-#drawingPanel .kenc-bottom-workspace .cabinet-property-grid{
-  display:grid !important; grid-template-columns:minmax(64px,.8fr) minmax(0,1.2fr) !important; gap:8px !important;
-}
-#drawingPanel .kenc-bottom-workspace .cabinet-property-grid > *{min-width:0 !important; width:100% !important;}
-#drawingPanel .kenc-bottom-workspace .stack-list{max-height:430px !important; overflow:auto !important;}
-/* 웹 화면에서는 반드시 같은 행. 모바일만 1열 전환 */
-@media (max-width:767px){
-  #drawingPanel .kenc-bottom-workspace{
-    grid-template-columns:minmax(0,1fr) !important;
-    grid-template-rows:auto !important;
-  }
-  #drawingPanel .kenc-bottom-workspace > *{grid-column:1 !important; grid-row:auto !important;}
-}
-</style>
+
+
+  <!-- Build 003.6.10: isolated layout modules -->
+  <link rel="stylesheet" href="assets/css/kenc-shell-layout.css?v=003.6.10">
+  <link rel="stylesheet" href="assets/css/drawing-workspace-layout.css?v=003.6.10">
+  <link rel="stylesheet" href="assets/css/drawing-bottom-workspace.css?v=003.6.10">
+  <link rel="stylesheet" href="assets/css/drawing-responsive.css?v=003.6.10">
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
