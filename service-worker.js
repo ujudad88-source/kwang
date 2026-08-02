@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-v1.2.0-notion-ui";
+const CACHE_NAME = "kenc-v1.2.1-brand-refine";
 const APP_ASSETS = [
   './',
   './index.html',

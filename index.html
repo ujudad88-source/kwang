@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 v1.2.0 UI 검증판</title>
+<title>KENC 광전기통신 영업지원시스템 v1.2.1 브랜딩 개선판</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2851,24 +2851,68 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
 @media(max-width:390px){.auth-login-panel{padding-left:18px!important;padding-right:18px!important}.auth-mobile-brand{margin-bottom:34px}.auth-mobile-brand strong{font-size:36px}.auth-input,.admin-auth-input{min-height:52px!important}.auth-submit{min-height:52px!important}.auth-system-strip{gap:5px 12px}.auth-system-strip span+span:before{margin-right:12px}}
 </style>
 
+
+<style id="kencBrandRefinementV121">
+/* v1.2.1 — 브랜드 타이포그래피와 로그인 소개 영역 정돈 */
+.auth-brand-panel{padding:54px 54px 42px!important;justify-content:flex-start!important;gap:0!important;background:
+  linear-gradient(135deg,rgba(255,255,255,.98),rgba(248,249,247,.96))!important}
+.auth-brand-panel:before{opacity:.42!important;background-size:28px 28px!important}
+.auth-brand-top{margin:0!important}
+.auth-brand-lockup{display:flex;align-items:center;gap:16px;min-height:54px}
+.auth-brand-lockup .auth-wordmark{font-size:42px!important;line-height:1;letter-spacing:-.065em;color:#111827!important}
+.auth-brand-divider{width:1px;height:38px;background:#d7d7d2}
+.auth-brand-name{display:flex;flex-direction:column;gap:4px;line-height:1}
+.auth-brand-name b{font-size:15px;color:#222;letter-spacing:-.025em}
+.auth-brand-name small{font-size:11px;color:#787873;letter-spacing:.04em}
+.auth-brand-copy{margin-top:68px!important;max-width:560px}
+.auth-brand-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:15px;color:#777771;font-size:10px;font-weight:800;letter-spacing:.14em}
+.auth-brand-kicker:before{content:"";width:24px;height:1px;background:#aaa9a3}
+.auth-brand-copy h1{display:flex!important;flex-direction:column;gap:7px;margin:0!important;line-height:1.14!important;letter-spacing:-.045em!important}
+.auth-brand-copy h1 span{font-size:23px;font-weight:650;color:#5f5f5a}
+.auth-brand-copy h1 strong{font-size:37px;font-weight:850;color:#161616}
+.auth-brand-copy>p{margin:18px 0 0!important;max-width:500px;color:#777771!important;font-size:13px!important;line-height:1.7!important}
+.auth-capability-list{display:flex;align-items:center;gap:8px;margin-top:38px;flex-wrap:wrap}
+.auth-capability-list span{display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border:1px solid #dfdfda;border-radius:999px;background:rgba(255,255,255,.8);color:#363632;font-size:12px;font-weight:750}
+.auth-capability-list b{font-size:9px;color:#9b9b95;letter-spacing:.08em}
+.auth-brand-footer{margin-top:auto!important;padding-top:32px!important}
+/* 홈/업무 화면의 KENC 락업 */
+.brand-title{align-items:center!important;gap:12px!important}
+.brand-title>strong{display:inline-grid;place-items:center;min-width:66px;height:34px;padding:0 12px;border-radius:8px;background:#191919;color:#fff!important;font-size:18px!important;letter-spacing:-.045em!important;box-sizing:border-box}
+.brand-title>span{display:flex!important;flex-direction:column;gap:3px;line-height:1!important}
+.brand-title>span b{font-size:13px;color:#222;font-weight:800;letter-spacing:-.02em}
+.brand-title>span small{font-size:10px;color:#85857f;font-weight:650;letter-spacing:.035em}
+@media(max-width:900px){
+  .brand-title>strong{min-width:58px;height:32px;padding:0 10px;font-size:17px!important}
+  .brand-title>span{display:none!important}
+}
+@media(max-width:1100px) and (min-width:901px){
+  .auth-brand-panel{padding:44px 38px 36px!important}
+  .auth-brand-copy{margin-top:54px!important}
+  .auth-brand-copy h1 span{font-size:20px}
+  .auth-brand-copy h1 strong{font-size:31px}
+}
+</style>
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
   <div class="auth-shell">
     <section class="auth-brand-panel" aria-label="KENC 소개">
       <div class="auth-brand-top">
-        <div class="auth-wordmark">KENC</div>
-        <p>광전기통신 영업지원시스템</p>
+        <div class="auth-brand-lockup" aria-label="KENC 광전기통신 영업지원시스템">
+          <strong class="auth-wordmark">KENC</strong>
+          <span class="auth-brand-divider" aria-hidden="true"></span>
+          <span class="auth-brand-name"><b>광전기통신</b><small>영업지원시스템</small></span>
+        </div>
       </div>
       <div class="auth-brand-copy">
-        <span class="auth-brand-line"></span>
-        <h1>통신함, 분전반, 세대단자함<br/>전문 제조·영업 플랫폼</h1>
-        <p>정확한 제품정보 · 빠른 조회 · 안정적인 업무 지원</p>
+        <span class="auth-brand-kicker">COMMUNICATION ENCLOSURE SOLUTIONS</span>
+        <h1><span>통신함 · 분전반 · 세대단자함</span><strong>전문 제조·영업 플랫폼</strong></h1>
+        <p>제품정보 · 규격 · 단가 · 도면을 하나의 업무 흐름으로 연결합니다.</p>
       </div>
-      <div class="auth-product-grid" aria-label="주요 제품군">
-        <div><span class="auth-product-icon">▣</span><strong>통신함</strong><small>매입·노출·스텐</small></div>
-        <div><span class="auth-product-icon">▤</span><strong>분전반</strong><small>규격·단가 정보</small></div>
-        <div><span class="auth-product-icon">▥</span><strong>세대단자함</strong><small>통신·방송·홈넷</small></div>
+      <div class="auth-capability-list" aria-label="주요 제품군">
+        <span><b>01</b> 통신함</span>
+        <span><b>02</b> 분전반</span>
+        <span><b>03</b> 세대단자함</span>
       </div>
       <div class="auth-brand-footer">© 2026 KENC CO., LTD. All rights reserved.</div>
     </section>
@@ -2890,7 +2934,7 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
       <p aria-live="polite" class="auth-status" id="authStatus"></p>
       <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
       <div class="auth-version-box" aria-label="시스템 정보">
-        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.2.0 UI 검증판</span></div>
+        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.2.1 브랜딩 개선판</span></div>
         <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
         <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
       </div>
@@ -2914,7 +2958,7 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
       <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
     </form>
     <div class="auth-system-strip" aria-label="시스템 상태">
-      <span>Version 1.2.0</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+      <span>Version 1.2.1</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
     </div>
     </section>
   </div>
@@ -2924,7 +2968,7 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
 <div class="brand">
 <img alt="(주)광전기통신 로고" class="company-logo" src="assets/gwangtelecom_logo.png"/>
 <div>
-<p class="brand-title"><strong>KENC</strong><span>광전기통신 영업지원시스템</span></p>
+<p class="brand-title"><strong>KENC</strong><span><b>광전기통신</b><small>영업지원시스템</small></span></p>
 <p class="brand-subtitle" id="activeBuildLabel">통신함 · 세대단자함 · 광분배함(FDF) · RACK · 광자재</p>
 </div>
 </div>

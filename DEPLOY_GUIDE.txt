@@ -1,4 +1,4 @@
-KENC v1.2.0 UI 검증판 관리자 통제형 다중 빌드 검증판 배포 순서
+KENC v1.2.1 UI 검증판 관리자 통제형 다중 빌드 검증판 배포 순서
 
 1. Firebase 콘솔 → Firestore Database → 규칙
 2. 이 압축에 포함된 firestore.rules 내용을 전체 복사하여 기존 규칙과 교체 후 게시
