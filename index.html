@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.2.1</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.3</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.2.1 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.3 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.2 : Responsive Professional Workspace stabilization === */
+/* === KENC UI 2.0 Build 003.3 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3190,7 +3190,141 @@ body.drawing-focus-active .bottom-nav{display:none!important}
  .drawing-pro-workspace.focus-mode .drawing-v85-main{height:calc(100dvh - 52px)!important;padding:4px!important}
 }
 
-</style></head>
+</style>
+<style id="build0033-dark-unified-fix">
+/* =========================================================
+   KENC UI 2.0 Build 003.3
+   Unified dark visual system + responsive/mobile drag safety
+   Existing object geometry and drawing engine remain unchanged.
+   ========================================================= */
+#drawingPanel .drawing-pro-workspace{
+ --dw3-bg:#07101b;--dw3-surface:#0d1826;--dw3-surface2:#111f30;
+ --dw3-line:#2a3b51;--dw3-text:#f4f7fb;--dw3-muted:#a8b8cb;
+ --dw3-blue:#3b82f6;--dw3-blue2:#60a5fa;
+ background:var(--dw3-bg)!important;color:var(--dw3-text)!important;
+ border-color:#24364b!important;box-shadow:0 18px 52px rgba(0,0,0,.28)!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-toolbar,
+#drawingPanel .drawing-pro-workspace .drawing-workspace-meta,
+#drawingPanel .drawing-pro-workspace .drawing-controls,
+#drawingPanel .drawing-pro-workspace .drawing-v85-main,
+#drawingPanel .drawing-pro-workspace .stack-section,
+#drawingPanel .drawing-pro-workspace .drawing-bottom-dock{
+ background:var(--dw3-bg)!important;color:var(--dw3-text)!important;border-color:var(--dw3-line)!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card,
+#drawingPanel .drawing-pro-workspace .drawing-palette-panel,
+#drawingPanel .drawing-pro-workspace .drawing-canvas-panel,
+#drawingPanel .drawing-pro-workspace .drawing-properties-panel,
+#drawingPanel .drawing-pro-workspace .drawing-3d-panel,
+#drawingPanel .drawing-pro-workspace .production-notes-card,
+#drawingPanel .drawing-pro-workspace .stack-card{
+ background:var(--dw3-surface)!important;color:var(--dw3-text)!important;
+ border:1px solid var(--dw3-line)!important;box-shadow:none!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card-head,
+#drawingPanel .drawing-pro-workspace .drawing-view-tabs,
+#drawingPanel .drawing-pro-workspace .drawing-3d-mode-tabs,
+#drawingPanel .drawing-pro-workspace .drawing-pro-view-tools,
+#drawingPanel .drawing-pro-workspace .drawing-dock-tabs{
+ background:var(--dw3-surface2)!important;color:var(--dw3-text)!important;border-color:var(--dw3-line)!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card-head span,
+#drawingPanel .drawing-pro-workspace .drawing-v85-card-head,
+#drawingPanel .drawing-pro-workspace .drawing-field label,
+#drawingPanel .drawing-pro-workspace .drawing-settings-wrap label,
+#drawingPanel .drawing-pro-workspace .drawing-tool-name,
+#drawingPanel .drawing-pro-workspace .stack-card h4,
+#drawingPanel .drawing-pro-workspace .stack-card h5{color:var(--dw3-text)!important}
+#drawingPanel .drawing-pro-workspace .drawing-v85-card-head small,
+#drawingPanel .drawing-pro-workspace .drawing-tool-hint,
+#drawingPanel .drawing-pro-workspace .drawing-3d-note,
+#drawingPanel .drawing-pro-workspace .production-note-help,
+#drawingPanel .drawing-pro-workspace .drawing-status{color:var(--dw3-muted)!important}
+#drawingPanel .drawing-pro-workspace input,
+#drawingPanel .drawing-pro-workspace select,
+#drawingPanel .drawing-pro-workspace textarea{
+ background:#f8fafc!important;color:#111827!important;border:1px solid #cbd5e1!important;
+ font-weight:650!important;box-shadow:none!important;
+}
+#drawingPanel .drawing-pro-workspace input::placeholder,
+#drawingPanel .drawing-pro-workspace textarea::placeholder{color:#64748b!important}
+#drawingPanel .drawing-pro-workspace input:focus,
+#drawingPanel .drawing-pro-workspace select:focus,
+#drawingPanel .drawing-pro-workspace textarea:focus{border-color:var(--dw3-blue2)!important;box-shadow:0 0 0 3px rgba(59,130,246,.24)!important}
+#drawingPanel .drawing-pro-workspace .drawing-input-unit span{color:#64748b!important}
+
+/* Palette: one clean row per object, no card collision. */
+#drawingPanel .drawing-pro-workspace .drawing-tool-rows{
+ display:flex!important;flex-direction:column!important;gap:7px!important;padding:8px!important;
+ overflow-y:auto!important;overflow-x:hidden!important;min-width:0!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-tool-row{
+ display:grid!important;grid-template-columns:38px minmax(0,1fr)!important;align-items:center!important;
+ width:100%!important;min-height:62px!important;margin:0!important;padding:7px!important;gap:8px!important;
+ background:#111f30!important;border:1px solid #2a3b51!important;border-radius:9px!important;transform:none!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-tool-row.active{border-color:#4f8df7!important;background:#142b49!important;box-shadow:inset 3px 0 0 #4f8df7!important}
+#drawingPanel .drawing-pro-workspace .drawing-tool-pick{width:36px!important;height:36px!important;min-width:36px!important;background:#0a1421!important;color:#fff!important;border:1px solid #344962!important;border-radius:8px!important}
+#drawingPanel .drawing-pro-workspace .drawing-tool-meta{display:grid!important;grid-template-columns:1fr!important;gap:5px!important;min-width:0!important}
+#drawingPanel .drawing-pro-workspace .drawing-tool-name{font-size:11px!important;line-height:1.2!important;white-space:normal!important}
+#drawingPanel .drawing-pro-workspace .drawing-tool-option{width:100%!important;min-height:31px!important;font-size:10px!important;padding:4px 28px 4px 8px!important}
+
+/* Bounded, centered drawing stage. */
+#drawingPanel .drawing-pro-workspace .drawing-v85-main{width:100%!important;max-width:100%!important;min-width:0!important}
+#drawingPanel .drawing-pro-workspace .drawing-canvas-panel{min-width:0!important}
+#drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{
+ background-color:#0a131e!important;overflow:auto!important;overscroll-behavior:contain!important;
+ align-items:center!important;justify-content:center!important;padding:10px!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-v85-canvas{
+ display:block!important;width:min(100%,760px)!important;min-width:0!important;height:auto!important;
+ min-height:0!important;max-height:100%!important;background:#202020!important;
+ touch-action:none!important;overscroll-behavior:none!important;user-select:none!important;-webkit-user-select:none!important;
+ filter:invert(.88) hue-rotate(175deg) saturate(.8) brightness(1.22)!important;
+}
+#drawingPanel .drawing-pro-workspace .drawing-3d-wrap{background:#0a131e!important;overflow:hidden!important}
+#drawingPanel .drawing-pro-workspace .drawing-3d-svg{
+ width:100%!important;height:100%!important;min-height:0!important;touch-action:none!important;overscroll-behavior:none!important;
+ filter:invert(.9) hue-rotate(175deg) saturate(.75) brightness(1.2)!important;
+}
+
+/* Desktop layouts: stable columns, no detached palette. */
+@media(min-width:1500px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{grid-template-columns:240px minmax(520px,1fr) 292px 320px!important;grid-template-rows:590px!important;grid-template-areas:'palette canvas properties preview'!important}
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel,#drawingPanel .drawing-pro-workspace .drawing-palette-panel,#drawingPanel .drawing-pro-workspace .drawing-properties-panel,#drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:590px!important;min-height:0!important;position:relative!important;top:auto!important}
+}
+@media(min-width:1100px) and (max-width:1499px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{grid-template-columns:220px minmax(480px,1fr) 292px!important;grid-template-rows:286px 286px!important;grid-template-areas:'palette canvas properties' 'palette canvas preview'!important}
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel,#drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:580px!important;min-height:0!important;position:relative!important;top:auto!important}
+ #drawingPanel .drawing-pro-workspace .drawing-properties-panel,#drawingPanel .drawing-pro-workspace .drawing-3d-panel{height:286px!important;min-height:0!important}
+}
+
+/* Tablet/mobile: canvas first, controls remain readable and page cannot move while dragging. */
+@media(max-width:1099px){
+ #drawingPanel .drawing-pro-workspace .drawing-v85-main{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important;padding:6px!important;gap:7px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-canvas-panel{height:auto!important;min-height:440px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:min(62vh,520px)!important;min-height:360px!important;max-height:520px!important;padding:6px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-palette-panel{position:relative!important;top:auto!important;max-height:none!important;height:auto!important;overflow:hidden!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;max-height:340px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-row{min-height:58px!important}
+}
+@media(max-width:620px){
+ #drawingPanel .drawing-pro-workspace{margin:0!important;width:100%!important;border-radius:10px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-toolbar{position:sticky!important;top:0!important}
+ #drawingPanel .drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1!important}
+ #drawingPanel .drawing-pro-workspace .drawing-field label{font-size:10px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:56vh!important;min-height:330px!important;max-height:470px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-rows{display:flex!important;flex-direction:row!important;overflow-x:auto!important;overflow-y:hidden!important;max-height:none!important;scroll-snap-type:x proximity;padding:8px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-tool-row{flex:0 0 176px!important;width:176px!important;scroll-snap-align:start!important}
+ #drawingPanel .drawing-pro-workspace .drawing-settings-grid{gap:7px!important}
+ #drawingPanel .drawing-pro-workspace .drawing-3d-svg{height:360px!important}
+}
+body.drawing-object-dragging{overflow:hidden!important;overscroll-behavior:none!important;touch-action:none!important}
+body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
+</style>
+</head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
 <div class="auth-shell">
@@ -3231,7 +3365,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.2.1</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.3</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3254,7 +3388,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.2</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.3</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3272,7 +3406,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.2</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.3</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3330,7 +3464,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.2.1 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.3 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
@@ -5699,5 +5833,35 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  if(status){new MutationObserver(()=>log(status.textContent)).observe(status,{childList:true,subtree:true,characterData:true});log('Professional Workspace 시작');}
  document.getElementById('drawingRunCheckBtn')?.addEventListener('click',()=>{const out=document.getElementById('drawingCheckResults');if(!out)return;const checks=[];const w=+document.getElementById('drawingWidthInput')?.value,h=+document.getElementById('drawingHeightInput')?.value,d=+document.getElementById('drawingDepthInput')?.value;checks.push({ok:w>0&&h>0&&d>0,text:'함체 규격 입력 확인'});const canvas=document.getElementById('drawingCanvas');checks.push({ok:(canvas?.children.length||0)>0,text:'2D 도면 생성 상태 확인'});const memo=document.getElementById('productionMemo')?.value.trim();checks.push({ok:!!memo,text:memo?'제작 중요사항 작성됨':'제작 중요사항이 비어 있습니다'});const selected=document.getElementById('drawingSelectedName')?.value;const label=document.getElementById('drawingObjectLabel')?.value.trim();checks.push({ok:selected!=='명판'||!!label,text:selected==='명판'&&!label?'선택된 명판의 명판명을 확인하세요':'명판 문구 확인'});out.innerHTML='';checks.forEach(c=>{const el=document.createElement('div');el.className='drawing-check-item '+(c.ok?'ok':'warn');el.textContent=c.text;out.appendChild(el);});log('도면 검사 실행');});
 })();
-</script></body>
+</script>
+<script id="build0033-mobile-drag-fix">
+(()=>{
+ const canvas=document.getElementById('drawingCanvas');
+ if(!canvas) return;
+ let activePointer=null;
+ const stopPageGesture=(e)=>{
+   if(activePointer===null || e.pointerId!==activePointer) return;
+   if(e.cancelable) e.preventDefault();
+ };
+ canvas.addEventListener('pointerdown',(e)=>{
+   activePointer=e.pointerId;
+   document.body.classList.add('drawing-object-dragging');
+   try{ canvas.setPointerCapture(e.pointerId); }catch(_){ }
+   if(e.cancelable) e.preventDefault();
+ },{passive:false,capture:true});
+ canvas.addEventListener('pointermove',stopPageGesture,{passive:false,capture:true});
+ const release=(e)=>{
+   if(activePointer!==null && (!e || e.pointerId===activePointer)){
+     try{ if(e && canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId); }catch(_){ }
+     activePointer=null;
+     document.body.classList.remove('drawing-object-dragging');
+   }
+ };
+ canvas.addEventListener('pointerup',release,{passive:false,capture:true});
+ canvas.addEventListener('pointercancel',release,{passive:false,capture:true});
+ window.addEventListener('blur',()=>release());
+ document.addEventListener('visibilitychange',()=>{if(document.hidden) release();});
+})();
+</script>
+</body>
 </html>
