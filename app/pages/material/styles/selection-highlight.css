@@ -1,0 +1,6 @@
+#materialPanel .material-price-table tbody tr{transition:background-color .16s ease,box-shadow .16s ease,color .16s ease;cursor:pointer}
+#materialPanel .material-price-table tbody tr:hover{background:#eaf2ff!important;box-shadow:inset 4px 0 0 #60a5fa}
+#materialPanel .material-price-table tbody tr:hover>td{background:transparent!important;color:#102a56!important}
+#materialPanel .material-price-table tbody tr.selected,#materialPanel .material-price-table tbody tr[aria-selected="true"]{background:#dbeafe!important;box-shadow:inset 5px 0 0 #2563eb, inset 0 0 0 1px #93c5fd}
+#materialPanel .material-price-table tbody tr.selected>td,#materialPanel .material-price-table tbody tr[aria-selected="true"]>td{background:transparent!important;color:#0f2f63!important;font-weight:700}
+#materialPanel .material-price-table tbody tr:focus-visible{outline:3px solid #60a5fa;outline-offset:-3px}

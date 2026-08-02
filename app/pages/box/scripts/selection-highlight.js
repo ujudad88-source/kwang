@@ -1,0 +1,1 @@
+(function(){"use strict";const body=document.getElementById("specTableBody");if(!body)return;body.addEventListener("click",e=>{const row=e.target.closest("tr");if(!row)return;body.querySelectorAll("tr").forEach(r=>r.setAttribute("aria-selected",r===row?"true":"false"));});})();

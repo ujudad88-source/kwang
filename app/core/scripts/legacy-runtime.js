@@ -99,7 +99,7 @@
         {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]}
-      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
+      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},live3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
     };
     drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
     const $=id=>document.getElementById(id);
@@ -183,7 +183,13 @@
       }
       return{width:fw+dep,height:fh+dep}
     }
-    function render3d(){drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}}
+    function render3d(){
+      if(window.KENC3DViewer&&typeof window.KENC3DViewer.render==="function"){
+        window.KENC3DViewer.render({svg:drawing3dCanvas,state:drawingState,currentCabinet:currentCabinet()});
+        return;
+      }
+      drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}
+    }
     function addObjectAt(px,py){const t=toolById(drawingState.activeTool),option=drawingState.toolOptions[t.id];let ow=t.w,oh=t.h;if(t.id==="groundBar"&&(option.includes("좌(")||option.includes("우("))){ow=55;oh=180}else if(t.id==="cableHook"&&option==="수평"){ow=180;oh=55}const o={id:drawingState.nextObjectId++,type:t.id,option,surface:drawingState.surface,x:px-ow/2,y:py-oh/2,w:ow,h:oh,rot:0,label:t.id==="nameplate"?"명판":""};clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
     drawingCanvas.onpointerdown=e=>{const hit=e.target.closest("[data-id]");const q=toPlane(e);if(hit){const o=currentObjects().find(v=>v.id===Number(hit.dataset.id));drawingState.selectedObjectId=o.id;drawingState.drag={id:o.id,dx:q.x-o.x,dy:q.y-o.y};updateObjectPanel();render2d();e.preventDefault()}else if(q.x>=0&&q.y>=0&&q.x<=drawingState.layout.p.width&&q.y<=drawingState.layout.p.height)addObjectAt(q.x,q.y)};
     window.addEventListener("pointermove",e=>{if(!drawingState.drag)return;const o=currentObjects().find(v=>v.id===drawingState.drag.id),q=toPlane(e);o.x=q.x-drawingState.drag.dx;o.y=q.y-drawingState.drag.dy;clampObj(o);render2d();updateObjectPanel();e.preventDefault()},{passive:false});window.addEventListener("pointerup",()=>drawingState.drag=null);
@@ -362,6 +368,13 @@
     $("stack3dResetBtn").onclick=()=>setStackViewPreset('fit');
     window.kencDrawingState=drawingState;window.kencDrawingToolDefs=drawingToolDefs;window.kencDrawingSurfaces=drawingSurfaces;
     function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
+    window.KENC_DRAWING_API={
+      getState:()=>drawingState,
+      getCurrentCabinet:()=>currentCabinet(),
+      render3d:()=>render3d(),
+      renderAll:()=>renderAll()
+    };
+    document.dispatchEvent(new CustomEvent("kenc:drawing-api-ready"));
     drawingInit();
 
     /*
