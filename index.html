@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.5</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.5 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.6 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.5 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.6 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.5
+   KENC UI 2.0 Build 003.6
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3327,7 +3327,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 
 <style id="build0034-responsive-layout-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.5
+   KENC UI 2.0 Build 003.6
    Desktop clipping + mobile object palette accessibility fix.
    Object geometry, attachment shapes and drawing calculations are untouched.
    ========================================================= */
@@ -3451,7 +3451,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 
 
 <style id="build0035-critical-layout-fix">
-/* KENC UI 2.0 Build 003.5 - focus mode, panel overflow and dock stabilization */
+/* KENC UI 2.0 Build 003.6 - focus mode, panel overflow and dock stabilization */
 html,body{max-width:100%;overflow-x:hidden}
 #drawingPanel,#drawingPanel .drawing-pro-workspace,#drawingPanel .drawing-v85-main,#drawingPanel .stack-section{min-width:0;max-width:100%;box-sizing:border-box}
 #drawingPanel .drawing-v85-main>* ,#drawingPanel .stack-section>*{min-width:0;max-width:100%;box-sizing:border-box}
@@ -3558,6 +3558,36 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 }
 </style>
 
+
+<style id="build0036-review-center-css">
+#drawingPanel .drawing-review-workbench{overflow:hidden!important;min-width:0!important}
+#drawingPanel .drawing-review-tabs{display:flex;gap:4px;padding:8px;border-bottom:1px solid #2a3a4e;background:#0d1723;overflow-x:auto;scrollbar-width:thin}
+#drawingPanel .drawing-review-tabs button{flex:0 0 auto;border:1px solid #34465d;background:#142235;color:#cbd7e6;border-radius:7px;padding:9px 12px;font-weight:800;font-size:12px;white-space:nowrap}
+#drawingPanel .drawing-review-tabs button.active{background:#2563eb;border-color:#3b82f6;color:#fff}
+#drawingPanel .drawing-review-body{min-height:420px;background:#0b141f;overflow:auto}
+#drawingPanel .drawing-review-pane{display:none;padding:10px;min-width:0}
+#drawingPanel .drawing-review-pane.active{display:block}
+#drawingPanel .drawing-output-sheet{background:#fff;color:#111827;border-radius:9px;border:1px solid #d5dde8;padding:14px;min-height:380px;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+#drawingPanel .drawing-output-sheet header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:2px solid #172033}
+#drawingPanel .drawing-output-sheet header div{display:flex;flex-direction:column;gap:2px}#drawingPanel .drawing-output-sheet header strong{font-size:16px}#drawingPanel .drawing-output-sheet header span,#drawingPanel .drawing-output-sheet header small{font-size:10px;color:#667085}
+#drawingPanel .drawing-output-visuals{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(180px,.65fr);gap:10px;padding:10px 0}
+#drawingPanel .drawing-output-visuals>div{min-width:0;border:1px solid #d7dee8;border-radius:7px;overflow:hidden;background:#f8fafc;position:relative}
+#drawingPanel .drawing-output-visuals b{position:absolute;z-index:2;top:7px;left:8px;font-size:10px;color:#475467;background:rgba(255,255,255,.92);padding:3px 6px;border-radius:4px}
+#drawingPanel .drawing-output-visuals svg{display:block;width:100%;height:230px;background:#fff}
+#drawingPanel .drawing-output-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #d7dee8;border-radius:7px;overflow:hidden}
+#drawingPanel .drawing-output-meta span{padding:8px;font-size:10px;color:#667085;border-right:1px solid #e4e7ec}.drawing-output-meta span:last-child{border-right:0}#drawingPanel .drawing-output-meta strong{display:block;color:#101828;margin-top:3px;font-size:11px}
+#drawingPanel .drawing-output-note{margin-top:10px;border:1px solid #d7dee8;border-radius:7px;padding:9px}#drawingPanel .drawing-output-note b{font-size:11px}#drawingPanel .drawing-output-note p{margin:5px 0 0;white-space:pre-wrap;font-size:10px;color:#475467;line-height:1.5;min-height:30px}
+#drawingPanel .drawing-preview-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:9px}
+#drawingPanel .drawing-review-summary{padding:12px;border:1px solid #2c3d52;border-radius:8px;background:#101c2a;color:#e8eef7}#drawingPanel .drawing-review-summary strong{font-size:14px}#drawingPanel .drawing-review-summary p{margin:5px 0 10px;color:#aebcd0;font-size:12px}
+#drawingPanel .drawing-review-checks,#drawingPanel .drawing-bom-list,#drawingPanel .drawing-info-grid{display:grid;gap:7px;margin-top:9px}
+#drawingPanel .review-result,#drawingPanel .drawing-bom-row,#drawingPanel .drawing-info-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid #2e4056;border-radius:7px;background:#111e2d;color:#dce6f2;font-size:12px}
+#drawingPanel .review-result.ok{border-color:#1f6f55}.review-result.warn{border-color:#8c5c25}#drawingPanel .review-result i{font-style:normal;font-weight:900}.review-result.ok i{color:#3dd598}.review-result.warn i{color:#f6b94c}
+#drawingPanel .drawing-bom-row strong{color:#fff}.drawing-bom-row span{color:#9fb0c5}.drawing-bom-row em{font-style:normal;color:#7fb0ff;font-weight:800}
+#drawingPanel .drawing-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#drawingPanel .drawing-info-item{display:block}.drawing-info-item span{display:block;color:#90a3bb;font-size:10px;margin-bottom:4px}.drawing-info-item strong{color:#f7fbff;font-size:13px;word-break:break-word}
+#drawingPanel .legacy-stack-preview,#drawingPanel .legacy-stack-info{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+@media(max-width:900px){#drawingPanel .drawing-output-visuals{grid-template-columns:1fr}#drawingPanel .drawing-output-visuals svg{height:220px}#drawingPanel .drawing-output-meta{grid-template-columns:repeat(2,minmax(0,1fr))}#drawingPanel .drawing-output-meta span:nth-child(2){border-right:0}#drawingPanel .drawing-output-meta span:nth-child(-n+2){border-bottom:1px solid #e4e7ec}#drawingPanel .drawing-info-grid{grid-template-columns:1fr}}
+@media(max-width:560px){#drawingPanel .drawing-review-body{min-height:0}#drawingPanel .drawing-review-pane{padding:7px}#drawingPanel .drawing-output-sheet{padding:8px}#drawingPanel .drawing-output-visuals svg{height:190px}#drawingPanel .drawing-output-meta span{padding:7px}#drawingPanel .drawing-preview-actions{display:grid;grid-template-columns:1fr 1fr}#drawingPanel .drawing-preview-actions button{width:100%!important;min-width:0!important}}
+</style>
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
@@ -3599,7 +3629,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.5</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3622,7 +3652,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.5</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.6</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3640,7 +3670,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.5</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3698,7 +3728,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.5 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.6 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
@@ -3904,9 +3934,30 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <div class="stack-list" id="stackList"></div>
 <div class="stack-summary"><div><span>전체 높이</span><strong id="stackTotalHeight">-</strong></div><div><span>전체 깊이</span><strong id="stackTotalDepth">-</strong></div><div><span>함체 수</span><strong id="stackCount">-</strong></div></div>
 </section>
-<section class="drawing-v85-card">
-<div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-stack-preview="2d">적층 미리보기 (2D)</button><button class="drawing-3d-mode" data-stack-preview="3d">적층 미리보기 (3D)</button></div>
-<div class="stack-preview-grid"><div class="stack-preview-stage"><div class="stack-view-toolbar" id="stackViewToolbar"><button data-stack-view="fit" type="button">전체보기</button><button data-stack-view="front" type="button">정면</button><button data-stack-view="back" type="button">후면</button><button data-stack-view="left" type="button">좌측</button><button data-stack-view="right" type="button">우측</button><button data-stack-view="top" type="button">상단</button><button data-stack-view="bottom" type="button">하단</button><span class="stack-zoom-indicator" id="stackZoomIndicator">100%</span></div><svg aria-label="회전·이동·확대축소 가능한 적층 3D 미리보기" class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">드래그: 회전 · Shift+드래그/휠버튼: 이동 · 휠: 확대·축소 · 모바일 두 손가락: 이동/확대</span><button class="stack-3d-reset" id="stack3dResetBtn" type="button">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
+<section class="drawing-v85-card drawing-review-workbench">
+<div class="drawing-v85-card-head"><span>제작 검토 센터</span><small>출력 · 검사 · BOM · 정보</small></div>
+<div class="drawing-review-tabs" role="tablist">
+<button class="active" data-review-tab="preview" type="button">출력 Preview</button>
+<button data-review-tab="inspection" type="button">도면 검사</button>
+<button data-review-tab="bom" type="button">객체 BOM</button>
+<button data-review-tab="info" type="button">도면 정보</button>
+</div>
+<div class="drawing-review-body">
+<section class="drawing-review-pane active" data-review-pane="preview">
+<div class="drawing-output-sheet" id="drawingOutputPreview">
+<header><div><strong>KENC 제작 전달 도면</strong><span id="drawingPreviewDocNo">자동 미리보기</span></div><small id="drawingPreviewTime">-</small></header>
+<div class="drawing-output-visuals"><div><b>현재 면</b><svg id="drawingOutput2d" viewBox="0 0 760 700" aria-label="현재 면 출력 미리보기"></svg></div><div><b>3D</b><svg id="drawingOutput3d" viewBox="0 0 420 560" aria-label="3D 출력 미리보기"></svg></div></div>
+<div class="drawing-output-meta"><span>규격 <strong id="drawingPreviewSize">-</strong></span><span>재질 <strong id="drawingPreviewMaterial">-</strong></span><span>두께 <strong id="drawingPreviewThickness">-</strong></span><span>객체 <strong id="drawingPreviewObjects">0 EA</strong></span></div>
+<div class="drawing-output-note"><b>제작 중요사항</b><p id="drawingPreviewMemo">작성된 내용이 없습니다.</p></div>
+</div>
+<div class="drawing-preview-actions"><button class="drawing-primary-btn" data-proxy-click="drawingExportBtn" type="button">이미지 출력</button><button class="drawing-action-btn" data-proxy-click="drawingShareBtn" type="button">공유 화면</button></div>
+</section>
+<section class="drawing-review-pane" data-review-pane="inspection"><div class="drawing-review-summary"><strong>제작 전 자동 검사</strong><p>함체 규격, 객체 이탈, 명판명, 제작 중요사항을 점검합니다.</p><button class="drawing-primary-btn" id="drawingReviewCheckBtn" type="button">검사 실행</button></div><div class="drawing-review-checks" id="drawingReviewChecks"></div></section>
+<section class="drawing-review-pane" data-review-pane="bom"><div class="drawing-review-summary"><strong>현재 도면 객체 BOM</strong><p>전체 함체와 모든 면에 배치된 객체를 품목별로 집계합니다.</p></div><div class="drawing-bom-list" id="drawingBomList"></div></section>
+<section class="drawing-review-pane" data-review-pane="info"><div class="drawing-info-grid" id="drawingInfoGrid"></div></section>
+</div>
+<div class="legacy-stack-preview" aria-hidden="true"><div id="stackViewToolbar"><span id="stackZoomIndicator">100%</span></div><svg id="stackPreviewCanvas" viewBox="0 0 520 430"></svg><div id="stack3dControls"><button id="stack3dResetBtn" type="button">초기화</button></div></div>
+<div class="stack-info legacy-stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div>
 </section>
 <section class="drawing-v85-card stack-properties">
 <div class="drawing-v85-card-head">함체 속성</div>
@@ -4475,6 +4526,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
     stackPreviewCanvas.addEventListener("wheel",e=>{if(drawingState.stackPreview!=="3d")return;const view=drawingState.stack3dView;if(e.shiftKey){view.panX=(view.panX||0)-e.deltaY*.35}else{const rect=stackPreviewCanvas.getBoundingClientRect(),mx=(e.clientX-rect.left)*(520/rect.width),my=(e.clientY-rect.top)*(430/rect.height),old=view.zoom,newZoom=clamp(old*Math.exp(-e.deltaY*.0015),.3,8),ratio=newZoom/old;view.panX=mx-260-(mx-260-(view.panX||0))*ratio;view.panY=my-202-(my-202-(view.panY||0))*ratio;view.zoom=newZoom}renderStackPreview();e.preventDefault()},{passive:false});
     stackPreviewCanvas.addEventListener('dblclick',e=>{if(drawingState.stackPreview!=="3d")return;const view=drawingState.stack3dView,rect=stackPreviewCanvas.getBoundingClientRect(),mx=(e.clientX-rect.left)*(520/rect.width),my=(e.clientY-rect.top)*(430/rect.height),old=view.zoom,newZoom=clamp(old*1.65,.3,8),ratio=newZoom/old;view.panX=mx-260-(mx-260-(view.panX||0))*ratio;view.panY=my-202-(my-202-(view.panY||0))*ratio;view.zoom=newZoom;renderStackPreview()});
     $("stack3dResetBtn").onclick=()=>setStackViewPreset('fit');
+    window.kencDrawingState=drawingState;window.kencDrawingToolDefs=drawingToolDefs;window.kencDrawingSurfaces=drawingSurfaces;
     function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
     drawingInit();
 
@@ -6157,5 +6209,27 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
 })();
 </script>
 
+
+<script id="build0036-review-center-js">
+(()=>{
+ const shell=document.querySelector('#drawingPanel .drawing-pro-workspace'); if(!shell) return;
+ const tabs=[...shell.querySelectorAll('[data-review-tab]')], panes=[...shell.querySelectorAll('[data-review-pane]')];
+ const byId=id=>document.getElementById(id);
+ function activate(name){tabs.forEach(b=>b.classList.toggle('active',b.dataset.reviewTab===name));panes.forEach(p=>p.classList.toggle('active',p.dataset.reviewPane===name));refresh();}
+ tabs.forEach(b=>b.addEventListener('click',()=>activate(b.dataset.reviewTab)));
+ function cloneSvg(src,dst){if(!src||!dst)return;dst.innerHTML=src.innerHTML;dst.setAttribute('viewBox',src.getAttribute('viewBox')||src.getAttribute('viewbox')||'0 0 100 100');}
+ function state(){return window.kencDrawingState||null}
+ function totalObjects(st){return st?st.cabinets.reduce((n,c)=>n+(c.objects?.length||0),0):0}
+ function refreshPreview(){const st=state();cloneSvg(byId('drawingCanvas'),byId('drawingOutput2d'));cloneSvg(byId('drawing3dCanvas'),byId('drawingOutput3d'));const c=st?.cabinets?.find(x=>x.id===st.selectedCabinetId)||st?.cabinets?.[0];byId('drawingPreviewTime').textContent=new Date().toLocaleString('ko-KR');byId('drawingPreviewSize').textContent=c?`${c.width} × ${c.height} × ${c.depth} mm`:'-';byId('drawingPreviewMaterial').textContent=c?.material||'-';byId('drawingPreviewThickness').textContent=c?.thickness||'-';byId('drawingPreviewObjects').textContent=`${totalObjects(st)} EA`;byId('drawingPreviewMemo').textContent=byId('productionMemo')?.value.trim()||'작성된 내용이 없습니다.';}
+ function refreshBom(){const st=state(), list=byId('drawingBomList');if(!list)return;const defs=window.kencDrawingToolDefs||[];const counts={};st?.cabinets?.forEach(c=>(c.objects||[]).forEach(o=>counts[o.type]=(counts[o.type]||0)+1));list.innerHTML='';const entries=Object.entries(counts);if(!entries.length){list.innerHTML='<div class="drawing-bom-row"><span>배치된 객체가 없습니다.</span><em>0 EA</em></div>';return;}entries.sort((a,b)=>b[1]-a[1]).forEach(([type,n])=>{const label=defs.find(d=>d.id===type)?.label||type;const row=document.createElement('div');row.className='drawing-bom-row';row.innerHTML=`<strong>${label}</strong><span>전체 함체 · 모든 면</span><em>${n} EA</em>`;list.appendChild(row)});}
+ function refreshInfo(){const st=state(), grid=byId('drawingInfoGrid');if(!grid)return;const c=st?.cabinets?.find(x=>x.id===st.selectedCabinetId)||st?.cabinets?.[0];const surface=(window.kencDrawingSurfaces||[]).find(x=>x.id===st?.surface)?.label||'-';const memo=byId('productionMemo')?.value.trim();const items=[['도면 상태',byId('drawingCanvas')?.children.length?'생성됨':'미생성'],['현재 함체',c?.name||'-'],['함체 규격',c?`${c.width} × ${c.height} × ${c.depth} mm`:'-'],['재질 / 두께',c?`${c.material} / ${c.thickness}`:'-'],['현재 면',surface],['전체 함체 수',`${st?.cabinets?.length||0} EA`],['전체 객체 수',`${totalObjects(st)} EA`],['제작 중요사항',memo?'작성됨':'미작성']];grid.innerHTML=items.map(([k,v])=>`<div class="drawing-info-item"><span>${k}</span><strong>${v}</strong></div>`).join('');}
+ function runReviewCheck(){const st=state(), out=byId('drawingReviewChecks');if(!out)return;const c=st?.cabinets?.find(x=>x.id===st.selectedCabinetId)||st?.cabinets?.[0], objs=st?.cabinets?.flatMap(x=>x.objects||[])||[];const defs=window.kencDrawingToolDefs||[];const nameplateMissing=objs.filter(o=>o.type==='nameplate'&&!String(o.label||'').trim()).length;const outOfBounds=objs.filter(o=>{const cab=st.cabinets.find(c=>c.id===o.cabinetId)||c;const p=(o.surface==='left'||o.surface==='right')?{w:cab.depth,h:cab.height}:(o.surface==='top'||o.surface==='bottom')?{w:cab.width,h:cab.depth}:{w:cab.width,h:cab.height};return o.x<0||o.y<0||o.x+o.w>p.w+.01||o.y+o.h>p.h+.01}).length;const checks=[[(c?.width||0)>0&&(c?.height||0)>0&&(c?.depth||0)>0,'함체 규격이 정상입니다.','함체 규격을 확인하세요.'],[byId('drawingCanvas')?.children.length>0,'도면이 생성되어 있습니다.','도면을 먼저 생성하세요.'],[outOfBounds===0,'모든 객체가 함체 안에 있습니다.',`${outOfBounds}개 객체가 함체 밖에 있습니다.`],[nameplateMissing===0,'명판 문구가 확인되었습니다.',`${nameplateMissing}개 명판의 문구가 비어 있습니다.`],[!!byId('productionMemo')?.value.trim(),'제작 중요사항이 작성되었습니다.','제작 중요사항이 비어 있습니다.']];out.innerHTML='';checks.forEach(([ok,a,b])=>{const d=document.createElement('div');d.className='review-result '+(ok?'ok':'warn');d.innerHTML=`<span>${ok?a:b}</span><i>${ok?'정상':'확인'}</i>`;out.appendChild(d)});}
+ function refresh(){refreshPreview();refreshBom();refreshInfo();}
+ byId('drawingReviewCheckBtn')?.addEventListener('click',runReviewCheck);
+ ['productionMemo','drawingWidthInput','drawingHeightInput','drawingDepthInput','cabinetNameInput','cabinetWidthInput','cabinetHeightInput','cabinetDepthInput','cabinetMaterialSelect','cabinetThicknessSelect'].forEach(id=>byId(id)?.addEventListener('input',refresh));
+ const watch=[byId('drawingCanvas'),byId('drawing3dCanvas'),byId('stackList'),byId('drawingStatus')].filter(Boolean);watch.forEach(el=>new MutationObserver(refresh).observe(el,{childList:true,subtree:true,characterData:true,attributes:true}));
+ window.addEventListener('resize',refresh);setTimeout(refresh,300);setTimeout(refresh,1200);
+})();
+</script>
 </body>
 </html>
