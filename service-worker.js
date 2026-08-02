@@ -1,4 +1,4 @@
-const CACHE_NAME = "gwang-v1.1.0";
+const CACHE_NAME = "kenc-v1.2.0-notion-ui";
 const APP_ASSETS = [
   './',
   './index.html',
