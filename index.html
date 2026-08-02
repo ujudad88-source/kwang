@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 v1.2.1 브랜딩 개선판</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 001</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2891,6 +2891,29 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
   .auth-brand-copy h1 span{font-size:20px}
   .auth-brand-copy h1 strong{font-size:31px}
 }
+
+/* =========================================================
+   KENC UI 2.0 · BUILD 001 · CLEAN WHITE MODERN
+   Login + Home + Common Workspace Shell
+   ========================================================= */
+:root{--ui2-blue:#1769e8;--ui2-navy:#102a4c;--ui2-text:#172033;--ui2-muted:#6f7c90;--ui2-line:#e4eaf1;--ui2-bg:#f7f9fc;--ui2-card:#fff;--ui2-sidebar:196px;--ui2-radius:16px;--ui2-shadow:0 10px 30px rgba(25,47,79,.06)}
+body:not(.auth-locked){background:var(--ui2-bg)!important;color:var(--ui2-text)!important}
+body:not(.auth-locked) .page{max-width:none!important;margin:0!important;padding:18px 24px 42px calc(var(--ui2-sidebar) + 24px)!important}
+.ui2-sidebar{position:fixed;z-index:145;left:0;top:0;bottom:0;width:var(--ui2-sidebar);padding:22px 14px 18px;background:#fff;border-right:1px solid var(--ui2-line);display:flex;flex-direction:column;box-sizing:border-box}
+.ui2-side-brand{display:flex;align-items:center;gap:10px;padding:2px 8px 22px;border-bottom:1px solid #eef2f6}.ui2-side-brand strong{font-size:24px;letter-spacing:-.06em;color:#0f2a4d}.ui2-side-brand span{font-size:10px;line-height:1.35;color:#58667a;font-weight:750}.ui2-sidebar nav{display:flex;flex-direction:column;gap:5px;padding-top:18px}.ui2-side-btn{min-height:44px;border:0;border-radius:11px;background:transparent;color:#59677a;display:flex;align-items:center;gap:12px;padding:0 12px;font-size:13px;font-weight:800;text-align:left;cursor:pointer}.ui2-side-btn i{width:24px;font-size:17px;font-style:normal;text-align:center}.ui2-side-btn:hover{background:#f2f6fc;color:#153d72}.ui2-side-btn.active{background:#eaf2ff;color:#1769e8;box-shadow:inset 3px 0 0 #1769e8}.ui2-side-divider{height:1px;background:#eef2f6;margin:9px 8px}.ui2-side-foot{margin-top:auto;padding:14px 10px;border-radius:12px;background:#f5f8fc;display:flex;justify-content:space-between;align-items:center;color:#718096}.ui2-side-foot strong{font-size:11px;color:#173b67}.ui2-side-foot small{font-size:10px}
+body:not(.auth-locked) .topbar{position:sticky!important;top:10px!important;z-index:120!important;min-height:58px!important;padding:9px 14px!important;border:1px solid var(--ui2-line)!important;border-radius:14px!important;background:rgba(255,255,255,.94)!important;box-shadow:0 8px 30px rgba(26,49,80,.055)!important;backdrop-filter:blur(16px)}
+body:not(.auth-locked) .company-logo{display:none!important}body:not(.auth-locked) .brand-title>strong{background:transparent!important;color:#0f2a4d!important;padding:0!important;min-width:auto!important;height:auto!important;font-size:22px!important}body:not(.auth-locked) .brand-title>span{border-left:1px solid #dfe5ec;padding-left:10px}body:not(.auth-locked) .brand-subtitle{display:none!important}.topbar-actions{gap:7px!important}.user-badge{border:1px solid #e3e9f0!important;background:#fff!important;border-radius:11px!important}.user-avatar{background:#eff4fa!important;color:#193d68!important}.admin-manage-button,.lock-button,.back-button,.home-button{border-radius:10px!important;min-height:40px!important;box-shadow:none!important}.admin-manage-button{background:#eef4ff!important;color:#174f98!important}.breadcrumb{margin:13px 4px 16px!important;padding:0!important;background:transparent!important;color:#8490a0!important;font-size:12px!important}
+.ui2-home{max-width:1440px;margin:0 auto}.ui2-welcome{position:relative;overflow:hidden;min-height:172px;padding:34px 38px;border:1px solid var(--ui2-line);border-radius:var(--ui2-radius);background:linear-gradient(135deg,#fff 0%,#fbfdff 58%,#f0f6ff 100%);box-shadow:var(--ui2-shadow);display:flex;align-items:center}.ui2-welcome-copy{position:relative;z-index:2}.ui2-kicker{display:block;margin-bottom:8px;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.14em}.ui2-welcome h1{margin:0;color:#172033;font-size:31px;line-height:1.2;letter-spacing:-.045em}.ui2-welcome p{margin:10px 0 0;color:#718096;font-size:14px}.ui2-blueprint{position:absolute;right:3%;bottom:-4px;width:42%;height:148px;opacity:.65;background-image:linear-gradient(rgba(93,151,229,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(93,151,229,.13) 1px,transparent 1px);background-size:22px 22px;clip-path:polygon(5% 100%,5% 55%,18% 55%,18% 37%,31% 37%,31% 63%,45% 63%,45% 25%,61% 25%,61% 49%,76% 49%,76% 10%,93% 10%,93% 100%)}.ui2-blueprint:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12))}
+.ui2-section-title{display:flex;align-items:flex-end;justify-content:space-between;margin:27px 3px 14px}.ui2-section-title span{display:block;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.11em}.ui2-section-title h2{margin:4px 0 0;font-size:20px;letter-spacing:-.03em}.ui2-section-title small{color:#8a96a6;font-size:12px}.ui2-primary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ui2-work-card{position:relative;min-height:154px;padding:20px;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);display:flex;flex-direction:column;align-items:flex-start;text-align:left;cursor:pointer}.ui2-work-card:hover{transform:translateY(-3px);border-color:#cfdbeb;box-shadow:0 14px 28px rgba(24,48,80,.09)}.ui2-work-icon{display:grid;place-items:center;width:48px;height:48px;margin-bottom:17px;border-radius:14px;font-size:23px;font-weight:900}.ui2-work-card.box .ui2-work-icon{color:#1769e8;background:#eaf2ff}.ui2-work-card.rack .ui2-work-icon{color:#188268;background:#e8f7f2}.ui2-work-card.material .ui2-work-icon{color:#7357d7;background:#f0ecff}.ui2-work-card.drawing .ui2-work-icon{color:#d47714;background:#fff1e2}.ui2-work-card span:nth-child(2){display:flex;flex-direction:column;gap:5px}.ui2-work-card strong{font-size:17px;color:#182235}.ui2-work-card small{font-size:11px;color:#778498}.ui2-work-card>b{position:absolute;right:18px;bottom:16px;color:#25364c;font-size:20px}
+.ui2-dashboard-grid{display:grid;grid-template-columns:1.15fr 1fr .95fr;gap:14px;margin-top:16px}.ui2-dashboard-card{min-width:0;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);overflow:hidden}.ui2-dashboard-card>header{min-height:66px;padding:15px 17px;border-bottom:1px solid #edf1f5;display:flex;align-items:center;justify-content:space-between}.ui2-dashboard-card>header span{display:block;color:#8996a7;font-size:9px;font-weight:900;letter-spacing:.12em}.ui2-dashboard-card>header h3{margin:4px 0 0;font-size:15px}.ui2-dashboard-card>header button{border:0;background:transparent;color:#758196;font-size:11px;font-weight:800;cursor:pointer}.ui2-list{padding:5px 14px 13px}.ui2-list button{width:100%;min-height:55px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;text-align:left;cursor:pointer}.ui2-list button:last-child{border-bottom:0}.ui2-list i{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;font-style:normal;font-weight:900}.ui2-list i.blue{color:#1769e8;background:#eaf2ff}.ui2-list i.green{color:#188268;background:#e8f7f2}.ui2-list i.purple{color:#7357d7;background:#f0ecff}.ui2-list i.orange{color:#d47714;background:#fff1e2}.ui2-list span{display:flex;flex-direction:column;gap:3px}.ui2-list strong{font-size:12px}.ui2-list small,.ui2-list time{font-size:10px;color:#8995a5}.ui2-notice-list{padding:7px 16px 15px}.ui2-notice-list article{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0f3f6}.ui2-notice-list article:last-child{border-bottom:0}.ui2-notice-list em{width:6px;height:6px;margin-top:5px;border-radius:50%;background:#ff4d5e}.ui2-notice-list div{display:flex;flex-direction:column;gap:4px}.ui2-notice-list strong{font-size:12px}.ui2-notice-list small{font-size:10px;line-height:1.45;color:#8591a1}.ui2-notice-list time{padding:3px 6px;border-radius:99px;background:#fff0f2;color:#e53449;font-size:8px;font-weight:900}.ui2-resource-list{padding:9px 12px 14px}.ui2-resource-list button{width:100%;min-height:62px;padding:8px 6px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;text-align:left;cursor:pointer}.ui2-resource-list button:last-child{border-bottom:0}.ui2-resource-list i{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#f1f5fa;color:#31557e;font-style:normal}.ui2-resource-list span{display:flex;flex-direction:column;gap:4px}.ui2-resource-list strong{font-size:12px}.ui2-resource-list small{font-size:10px;color:#8995a5}.ui2-resource-list b{color:#9aa5b4}
+/* common cards/forms for Build 001 */
+body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not(.auth-locked) .table-card,body:not(.auth-locked) .drawing-side-card,body:not(.auth-locked) .drawing-center-card,body:not(.auth-locked) .drawing-highlights{border-color:var(--ui2-line)!important;border-radius:var(--ui2-radius)!important;box-shadow:0 7px 24px rgba(24,48,80,.045)!important;background:#fff!important}body:not(.auth-locked) input,body:not(.auth-locked) select,body:not(.auth-locked) textarea{border-color:#dfe6ee!important;border-radius:10px!important;background:#fff!important}body:not(.auth-locked) input:focus,body:not(.auth-locked) select:focus,body:not(.auth-locked) textarea:focus{border-color:#75a8ee!important;box-shadow:0 0 0 3px rgba(23,105,232,.10)!important}.section-head h2{letter-spacing:-.04em!important}.eyebrow{color:#1769e8!important}
+/* login refinements */
+.auth-shell{max-width:1280px!important;border-radius:24px!important;box-shadow:0 24px 70px rgba(22,44,75,.13)!important}.auth-brand-panel{background:linear-gradient(145deg,#fff,#f8fbff)!important}.auth-brand-copy{margin-top:48px!important}.auth-brand-copy h1{gap:3px!important}.auth-brand-copy h1 span{font-size:20px!important}.auth-brand-copy h1 strong{font-size:32px!important}.auth-capability-list{margin-top:28px!important}.auth-login-panel{padding-top:54px!important;padding-bottom:46px!important}.auth-card{max-width:430px!important}.auth-submit{background:#121826!important;border-radius:10px!important}.auth-submit:hover{background:#1769e8!important}.auth-company-logo{display:none!important}.auth-mobile-brand{margin-bottom:28px!important}
+@media(max-width:1100px){:root{--ui2-sidebar:172px}.ui2-primary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ui2-dashboard-grid{grid-template-columns:1fr 1fr}.ui2-resources{grid-column:1/-1}.ui2-resource-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ui2-resource-list button{border:1px solid #edf1f5;border-radius:11px}}
+@media(max-width:900px){body:not(.auth-locked) .page{padding:10px 12px calc(84px + env(safe-area-inset-bottom))!important}.ui2-sidebar{display:none}.ui2-home{max-width:none}.topbar{top:4px!important}.topbar-actions .user-badge{display:none!important}.admin-manage-button,.lock-button{font-size:0!important;width:42px!important;padding:0!important}.admin-manage-button:after{content:"⚙";font-size:17px}.lock-button:after{content:"🔒";font-size:15px}.home-button{display:none!important}.ui2-welcome{min-height:142px;padding:24px 21px}.ui2-welcome h1{font-size:24px}.ui2-welcome p{font-size:12px;max-width:64%}.ui2-blueprint{width:50%;height:110px;right:-3%}.ui2-section-title{margin-top:21px}.ui2-section-title small{display:none}.ui2-primary-grid{gap:10px}.ui2-work-card{min-height:139px;padding:15px}.ui2-work-icon{width:42px;height:42px;margin-bottom:14px;font-size:20px}.ui2-work-card strong{font-size:15px}.ui2-work-card small{font-size:10px;line-height:1.35}.ui2-dashboard-grid{grid-template-columns:1fr}.ui2-resources{grid-column:auto}.ui2-resource-list{display:block}.ui2-resource-list button{border:0;border-bottom:1px solid #f0f3f6;border-radius:0}.bottom-nav{display:grid!important}.breadcrumb{display:none!important}}
+@media(max-width:520px){.ui2-welcome{min-height:132px}.ui2-kicker{font-size:9px}.ui2-welcome h1{font-size:21px}.ui2-primary-grid{grid-template-columns:1fr 1fr}.ui2-work-card{min-height:132px}.ui2-work-card>b{right:13px;bottom:11px}.ui2-dashboard-card>header{min-height:58px}.auth-mobile-brand strong{font-size:34px!important}.auth-mobile-brand span{font-size:12px!important}}
+
 </style>
 </head>
 <body class="auth-locked">
@@ -2934,7 +2957,7 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
       <p aria-live="polite" class="auth-status" id="authStatus"></p>
       <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
       <div class="auth-version-box" aria-label="시스템 정보">
-        <div class="auth-version-item"><strong>현재 버전</strong><span>v1.2.1 브랜딩 개선판</span></div>
+        <div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 001</span></div>
         <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
         <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
       </div>
@@ -2958,11 +2981,25 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
       <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
     </form>
     <div class="auth-system-strip" aria-label="시스템 상태">
-      <span>Version 1.2.1</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+      <span>UI 2.0 · Build 001</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
     </div>
     </section>
   </div>
 </section>
+<aside class="ui2-sidebar" id="ui2Sidebar" aria-label="KENC 주요 메뉴">
+  <div class="ui2-side-brand"><strong>KENC</strong><span>광전기통신<br>영업지원시스템</span></div>
+  <nav>
+    <button class="ui2-side-btn active" type="button" data-target="homePanel"><i>⌂</i><span>홈</span></button>
+    <button class="ui2-side-btn" type="button" data-target="boxPanel"><i>□</i><span>함 파트</span></button>
+    <button class="ui2-side-btn" type="button" data-target="rackPanel"><i>▦</i><span>랙 파트</span></button>
+    <button class="ui2-side-btn" type="button" data-target="materialPanel"><i>◫</i><span>자재 파트</span></button>
+    <button class="ui2-side-btn" type="button" data-target="drawingPanel"><i>✎</i><span>손도면 생성</span></button>
+    <span class="ui2-side-divider"></span>
+    <button class="ui2-side-btn" type="button" data-target="manualPanel"><i>▥</i><span>업무 매뉴얼</span></button>
+    <button class="ui2-side-btn" type="button" data-target="educationPanel"><i>◈</i><span>교육 자료</span></button>
+  </nav>
+  <div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 001</strong></div>
+</aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
 <div class="brand">
@@ -2987,67 +3024,55 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
 </div>
 </div>
 <div class="breadcrumb" id="breadcrumb" aria-label="현재 위치"><span class="breadcrumb-home">홈</span><span class="breadcrumb-sep">›</span><span id="breadcrumbCurrent">첫 화면</span></div>
-<section class="panel active" id="homePanel">
-<header class="hero">
-<span class="eyebrow">제품 정보 통합 관리</span>
-<h1>조회할 파트를 선택하세요</h1>
-<p class="subtitle">
-          필요한 제품군을 선택하면 해당 제품의 규격과 정보를 빠르게 확인할 수 있습니다.
-        </p>
-</header>
-<div class="part-grid">
-<button class="part-card drawing-part-card" data-panel="drawingPanel" type="button">
-<span class="part-icon">◇</span>
-<span class="part-title">손도면 생성</span>
-<span class="part-description">
-            함·랙 도면을 빠르게 작성합니다.
-          </span>
-<span class="part-arrow">→</span>
-</button>
-<button class="part-card" data-panel="rackPanel" type="button">
-<span class="part-icon">▦</span>
-<span class="part-title">랙 파트</span>
-<span class="part-description">
-            랙 제품 규격을 조회합니다.
-          </span>
-<span class="part-arrow">→</span>
-</button>
-<button class="part-card" data-panel="boxPanel" type="button">
-<span class="part-icon">□</span>
-<span class="part-title">함 파트</span>
-<span class="part-description">
-            함 제품 규격과 단가를 조회합니다.
-          </span>
-<span class="part-arrow">→</span>
-</button>
-<button class="part-card" data-panel="materialPanel" type="button">
-<span class="part-icon">◫</span>
-<span class="part-title">자재 파트</span>
-<span class="part-description">
-            통신 자재 정보를 조회합니다.
-          </span>
-<span class="part-arrow">→</span>
-</button>
+<section class="panel active ui2-home" id="homePanel">
+  <section class="ui2-welcome" aria-label="사용자 환영 영역">
+    <div class="ui2-welcome-copy">
+      <span class="ui2-kicker">KENC WORKSPACE</span>
+      <h1><span id="homeWelcomeName">사용자</span>님, 환영합니다.</h1>
+      <p>오늘도 필요한 제품 정보와 도면 업무를 빠르게 시작하세요.</p>
+    </div>
+    <div class="ui2-blueprint" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </section>
 
-<button class="part-card resource-card" data-panel="specGuidePanel" type="button">
-<span class="part-icon">▤</span>
-<span class="part-title">명세서 작성 요령</span>
-<span class="part-description">명세서 작성 기준을 확인합니다.</span>
-<span class="part-arrow">→</span>
-</button>
-<button class="part-card resource-card" data-panel="manualPanel" type="button">
-<span class="part-icon">▥</span>
-<span class="part-title">업무 매뉴얼</span>
-<span class="part-description">업무 절차와 사용법을 확인합니다.</span>
-<span class="part-arrow">→</span>
-</button>
-<button class="part-card resource-card" data-panel="educationPanel" type="button">
-<span class="part-icon">◈</span>
-<span class="part-title">교육 자료</span>
-<span class="part-description">사내 교육 자료를 확인합니다.</span>
-<span class="part-arrow">→</span>
-</button>
-</div>
+  <div class="ui2-section-title"><div><span>주요 업무</span><h2>바로가기</h2></div><small>자주 사용하는 업무를 한 번에 실행합니다.</small></div>
+  <div class="ui2-primary-grid">
+    <button class="ui2-work-card box" data-panel="boxPanel" type="button"><span class="ui2-work-icon">□</span><span><strong>함 파트</strong><small>통신함 · 분전반 · 세대단자함</small></span><b>→</b></button>
+    <button class="ui2-work-card rack" data-panel="rackPanel" type="button"><span class="ui2-work-icon">▦</span><span><strong>랙 파트</strong><small>통신 RACK · 장비 RACK</small></span><b>→</b></button>
+    <button class="ui2-work-card material" data-panel="materialPanel" type="button"><span class="ui2-work-icon">◫</span><span><strong>자재 파트</strong><small>통신 자재 · 광자재</small></span><b>→</b></button>
+    <button class="ui2-work-card drawing" data-panel="drawingPanel" type="button"><span class="ui2-work-icon">✎</span><span><strong>손도면 생성</strong><small>2D · 3D 도면 작성</small></span><b>→</b></button>
+  </div>
+
+  <div class="ui2-dashboard-grid">
+    <section class="ui2-dashboard-card ui2-recent">
+      <header><div><span>RECENT</span><h3>최근 사용 메뉴</h3></div><button type="button" data-panel="boxPanel">전체 보기</button></header>
+      <div class="ui2-list">
+        <button type="button" data-panel="boxPanel"><i class="blue">□</i><span><strong>함 규격 및 표준 단가</strong><small>함 파트</small></span><time>바로가기</time></button>
+        <button type="button" data-panel="rackPanel"><i class="green">▦</i><span><strong>랙 제품 규격</strong><small>랙 파트</small></span><time>바로가기</time></button>
+        <button type="button" data-panel="materialPanel"><i class="purple">◫</i><span><strong>통신 자재 통합 검색</strong><small>자재 파트</small></span><time>바로가기</time></button>
+        <button type="button" data-panel="drawingPanel"><i class="orange">✎</i><span><strong>신규 손도면 작업</strong><small>도면 생성</small></span><time>바로가기</time></button>
+      </div>
+    </section>
+
+    <section class="ui2-dashboard-card ui2-notice">
+      <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
+      <div class="ui2-notice-list">
+        <article><em></em><div><strong>KENC UI 2.0 Build 001 적용</strong><small>로그인·홈·공통 디자인 시스템 리빌드</small></div><time>NEW</time></article>
+        <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
+        <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
+      </div>
+    </section>
+
+    <section class="ui2-dashboard-card ui2-resources">
+      <header><div><span>RESOURCES</span><h3>업무 자료 바로가기</h3></div></header>
+      <div class="ui2-resource-list">
+        <button type="button" data-panel="manualPanel"><i>▥</i><span><strong>업무 매뉴얼</strong><small>업무 절차 및 사용법</small></span><b>›</b></button>
+        <button type="button" data-panel="specGuidePanel"><i>▤</i><span><strong>명세서 작성 요령</strong><small>표준 품명과 규격 작성 기준</small></span><b>›</b></button>
+        <button type="button" data-panel="educationPanel"><i>◈</i><span><strong>교육 자료</strong><small>제품·자재·도면 교육 자료</small></span><b>›</b></button>
+      </div>
+    </section>
+  </div>
 </section>
 <section class="panel" id="boxPanel">
 <header class="section-head">
@@ -5314,5 +5339,29 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     });
   }
 </script>
+
+<script>
+(function(){
+  function go(panel){
+    if(!panel || !document.getElementById(panel)) return;
+    const original=document.querySelector('.bottom-nav-btn[data-target="'+panel+'"]');
+    if(original){ original.click(); return; }
+    document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===panel));
+    location.hash=panel;
+  }
+  document.querySelectorAll('.ui2-side-btn').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.target)));
+  document.querySelectorAll('.ui2-home [data-panel]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.panel)));
+  const nameSource=document.getElementById('userName');
+  const welcome=document.getElementById('homeWelcomeName');
+  function syncName(){if(nameSource&&welcome){const t=(nameSource.textContent||'사용자').trim();welcome.textContent=t.replace(/\s+(사원|주임|대리|과장|차장|부장|이사|대표|관리자)$/,'')||'사용자';}}
+  syncName();
+  if(nameSource)new MutationObserver(syncName).observe(nameSource,{childList:true,subtree:true,characterData:true});
+  const panels=[...document.querySelectorAll('.panel')];
+  const syncActive=()=>{const active=panels.find(p=>p.classList.contains('active'));document.querySelectorAll('.ui2-side-btn').forEach(b=>b.classList.toggle('active',b.dataset.target===active?.id));};
+  new MutationObserver(syncActive).observe(document.querySelector('main.page'),{subtree:true,attributes:true,attributeFilter:['class']});
+  syncActive();
+})();
+</script>
+
 </body>
 </html>
