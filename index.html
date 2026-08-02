@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6.8</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.6.8 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.6 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.6.8 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.6 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.6.8
+   KENC UI 2.0 Build 003.6
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3324,10 +3324,9 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 body.drawing-object-dragging{overflow:hidden!important;overscroll-behavior:none!important;touch-action:none!important}
 body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 </style>
-
 <style id="build0034-responsive-layout-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.6.8
+   KENC UI 2.0 Build 003.6
    Desktop clipping + mobile object palette accessibility fix.
    Object geometry, attachment shapes and drawing calculations are untouched.
    ========================================================= */
@@ -3448,10 +3447,8 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
  #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:430px!important;min-height:310px!important}
 }
 </style>
-
-
 <style id="build0035-critical-layout-fix">
-/* KENC UI 2.0 Build 003.6.8 - focus mode, panel overflow and dock stabilization */
+/* KENC UI 2.0 Build 003.6 - focus mode, panel overflow and dock stabilization */
 html,body{max-width:100%;overflow-x:hidden}
 #drawingPanel,#drawingPanel .drawing-pro-workspace,#drawingPanel .drawing-v85-main,#drawingPanel .stack-section{min-width:0;max-width:100%;box-sizing:border-box}
 #drawingPanel .drawing-v85-main>* ,#drawingPanel .stack-section>*{min-width:0;max-width:100%;box-sizing:border-box}
@@ -3557,8 +3554,6 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
  #drawingPanel #productionMemo{font-size:16px!important}
 }
 </style>
-
-
 <style id="build0036-review-center-css">
 #drawingPanel .drawing-review-workbench{overflow:hidden!important;min-width:0!important}
 #drawingPanel .drawing-review-tabs{display:flex;gap:4px;padding:8px;border-bottom:1px solid #2a3a4e;background:#0d1723;overflow-x:auto;scrollbar-width:thin}
@@ -3589,287 +3584,76 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 @media(max-width:560px){#drawingPanel .drawing-review-body{min-height:0}#drawingPanel .drawing-review-pane{padding:7px}#drawingPanel .drawing-output-sheet{padding:8px}#drawingPanel .drawing-output-visuals svg{height:190px}#drawingPanel .drawing-output-meta span{padding:7px}#drawingPanel .drawing-preview-actions{display:grid;grid-template-columns:1fr 1fr}#drawingPanel .drawing-preview-actions button{width:100%!important;min-width:0!important}}
 </style>
 
-<style id="kenc-wide-responsive-patch">
-/* =========================================================
-   KENC UI 2.0 Build 003.6.8.1 — Full-width responsive shell
-   Base: Build 003.6.8. Function/data structure unchanged.
-   ========================================================= */
-*,*::before,*::after{box-sizing:border-box}
-html,body{width:100%;max-width:100%;overflow-x:clip}
-
-/* The app shell consumes the full usable viewport beside the sidebar. */
-@media (min-width:901px){
-  body:not(.auth-locked) .page,
-  body[data-build]:not(.auth-locked) .page{
-    width:100%!important;
-    max-width:none!important;
-    min-width:0!important;
-    margin:0!important;
-    padding:18px clamp(14px,1.4vw,28px) 48px calc(var(--ui2-sidebar) + clamp(14px,1.4vw,28px))!important;
-  }
-  body.ui2-sidebar-collapsed:not(.auth-locked) .page{
-    padding-left:calc(var(--ui2-sidebar-closed) + clamp(14px,1.4vw,28px))!important;
-  }
-}
-
-/* No individual work panel may retain a desktop max-width. */
-#homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel,
-#specGuidePanel,#educationPanel,
-#homePanel>.ui2-home,#boxPanel>.card,
-#rackPanel>.rack-layout,#materialPanel>.material-layout,
-#drawingPanel>.drawing-shell{
-  width:100%!important;
-  max-width:none!important;
-  min-width:0!important;
-  margin-left:0!important;
-  margin-right:0!important;
-}
-.panel,.panel>*{min-width:0}
-.section-head{width:100%;max-width:none;margin-left:0;margin-right:0}
-.card,.config-card,.table-card,.spec-table-panel,.notice-panel{min-width:0;max-width:100%}
-input,select,textarea,button{max-width:100%}
-.field,.material-select-group,.material-search-group{min-width:0}
-
-/* Home: use the available width while keeping text lines readable. */
-.ui2-home{width:100%!important;max-width:none!important}
-.ui2-welcome{width:100%}
-.ui2-welcome-copy{max-width:min(720px,64%)}
-.ui2-primary-grid{grid-template-columns:repeat(4,minmax(190px,1fr))!important}
-.ui2-dashboard-grid{grid-template-columns:minmax(280px,1.05fr) minmax(320px,1.15fr) minmax(280px,.95fr)!important}
-
-/* Box part: responsive form, full-width table and notices. */
-#boxPanel>.card{padding:clamp(14px,1.35vw,24px)!important}
-#boxPanel .form-grid.enclosure-form-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;
-  gap:clamp(10px,1vw,18px)!important;
-  width:100%!important;
-}
-#boxPanel .price-adjust-panel,#boxPanel .spec-table-panel,#boxPanel .notice-panel{width:100%!important}
-#boxPanel .spec-table-wrap{width:100%!important;max-width:100%!important;overflow:auto!important}
-#boxPanel .spec-table{width:100%!important;min-width:1080px!important;table-layout:auto}
-#boxPanel .custom-rate-row{grid-template-columns:minmax(0,1fr) auto auto!important}
-
-/* Rack: selection and image share the first row; price uses full width. */
-#rackPanel .rack-layout{
-  display:grid!important;
-  grid-template-columns:minmax(280px,.72fr) minmax(420px,1.28fr)!important;
-  align-items:start!important;
-  gap:clamp(12px,1.25vw,22px)!important;
-}
-#rackPanel .rack-product-select-card,#rackPanel .rack-image-card,#rackPanel .rack-price-card{min-width:0;width:100%}
-#rackPanel .rack-price-card{grid-column:1/-1}
-#rackPanel .rack-image-stage{min-height:clamp(300px,42vh,620px)!important;max-height:none!important}
-#rackPanel .rack-product-image{max-width:100%!important;max-height:min(68vh,720px)!important}
-#rackPanel .rack-price-placeholder{width:100%;min-height:220px}
-
-/* Materials: balanced two-column workbench with full-width information. */
-#materialPanel .material-layout{
-  display:grid!important;
-  grid-template-columns:repeat(12,minmax(0,1fr))!important;
-  gap:clamp(12px,1.2vw,22px)!important;
-  align-items:start!important;
-}
-#materialPanel .material-select-card{grid-column:span 7}
-#materialPanel .material-adjust-panel{grid-column:span 5}
-#materialPanel .material-image-card{grid-column:span 5}
-#materialPanel .material-price-card{grid-column:span 7}
-#materialPanel .material-info-card{grid-column:1/-1}
-#materialPanel .material-select-card,#materialPanel .material-adjust-panel,
-#materialPanel .material-image-card,#materialPanel .material-price-card,#materialPanel .material-info-card{min-width:0;width:100%}
-#materialPanel .material-select-grid{grid-template-columns:minmax(220px,.75fr) minmax(320px,1.25fr)!important}
-#materialPanel .material-search-controls{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important}
-#materialPanel .material-adjust-controls{grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr)!important}
-#materialPanel .material-image-stage{min-height:clamp(300px,40vh,580px)!important}
-#materialPanel .material-price-placeholder{width:100%!important;max-width:100%!important;overflow:auto!important}
-#materialPanel .material-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-
-/* Drawing: let the canvas absorb extra monitor width. */
-#drawingPanel .drawing-shell,#drawingPanel .drawing-pro-workspace{width:100%!important;max-width:none!important}
-#drawingPanel .drawing-v85-main{
-  width:100%!important;
-  min-width:0!important;
-  grid-template-columns:clamp(210px,15vw,270px) minmax(520px,1fr) clamp(270px,21vw,360px)!important;
-}
-#drawingPanel .drawing-canvas-panel,#drawingPanel .drawing-v85-canvas-wrap,#drawingPanel .drawing-v85-canvas{min-width:0!important;max-width:100%!important}
-#drawingPanel .drawing-v85-canvas{width:100%!important}
-#drawingPanel .stack-section{
-  width:100%!important;
-  min-width:0!important;
-  grid-template-columns:clamp(260px,20vw,340px) minmax(500px,1fr) clamp(280px,21vw,360px)!important;
-}
-#drawingPanel .drawing-review-workbench,#drawingPanel .stack-properties,#drawingPanel .stack-list-card{min-width:0!important;max-width:100%!important}
-#drawingPanel .drawing-output-visuals{grid-template-columns:minmax(0,1.35fr) minmax(230px,.65fr)!important}
-#drawingPanel .drawing-output-sheet,#drawingPanel .drawing-review-body{max-width:100%!important}
-#drawingPanel .cabinet-property-grid{grid-template-columns:minmax(82px,auto) minmax(0,1fr)!important}
-
-/* Large-but-not-ultrawide desktops. */
-@media (max-width:1380px) and (min-width:901px){
-  .ui2-primary-grid{grid-template-columns:repeat(2,minmax(220px,1fr))!important}
-  .ui2-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .ui2-resources{grid-column:1/-1}
-  #rackPanel .rack-layout{grid-template-columns:minmax(250px,.65fr) minmax(360px,1.35fr)!important}
-  #materialPanel .material-select-card,#materialPanel .material-adjust-panel{grid-column:1/-1}
-  #materialPanel .material-image-card{grid-column:span 5}
-  #materialPanel .material-price-card{grid-column:span 7}
-  #drawingPanel .drawing-v85-main{grid-template-columns:200px minmax(440px,1fr) 270px!important}
-  #drawingPanel .stack-section{grid-template-columns:260px minmax(430px,1fr)!important}
-  #drawingPanel .stack-properties{grid-column:1/-1}
-}
-
-/* Tablet/mobile: preserve full width, eliminate overflow, stack by task order. */
-@media (max-width:900px){
-  body:not(.auth-locked) .page,body[data-build]:not(.auth-locked) .page{
-    width:100%!important;max-width:none!important;margin:0!important;
-    padding:10px 10px calc(86px + env(safe-area-inset-bottom))!important;
-  }
-  #homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel{width:100%!important;max-width:none!important;overflow:visible!important}
-  .ui2-welcome-copy{max-width:100%}
-  .ui2-primary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .ui2-dashboard-grid{grid-template-columns:1fr!important}
-  #rackPanel .rack-layout,#materialPanel .material-layout{display:grid!important;grid-template-columns:1fr!important}
-  #rackPanel .rack-price-card,#materialPanel .material-select-card,#materialPanel .material-adjust-panel,
-  #materialPanel .material-image-card,#materialPanel .material-price-card,#materialPanel .material-info-card{grid-column:auto!important}
-  #materialPanel .material-select-grid,#materialPanel .material-adjust-controls,#materialPanel .material-info-grid{grid-template-columns:1fr!important}
-  #drawingPanel .drawing-v85-main{grid-template-columns:1fr!important}
-  #drawingPanel .stack-section{grid-template-columns:1fr!important}
-  #drawingPanel .drawing-output-visuals{grid-template-columns:1fr!important}
-}
-@media (max-width:520px){
-  .ui2-primary-grid{grid-template-columns:1fr!important}
-  #boxPanel>.card,.rack-product-select-card,.rack-image-card,.rack-price-card,
-  .material-select-card,.material-adjust-panel,.material-image-card,.material-price-card,.material-info-card{padding:14px!important}
-  #boxPanel .spec-table{min-width:920px!important}
-  #materialPanel .material-search-controls{grid-template-columns:1fr!important}
-  #materialPanel .material-search-btn{width:100%!important}
-}
-</style>
-
-
-<style id="build00362-layout-balance">
-/* Build 003.6.8 — preserve 003.6 engine, full-width patch, and always-visible live 3D */
-#drawingPanel .drawing-pro-workspace .stack-section{
-  display:grid!important;
-  grid-template-columns:minmax(240px,22fr) minmax(230px,18fr) minmax(480px,40fr) minmax(250px,20fr)!important;
-  grid-template-areas:"notes stack review properties"!important;
-  gap:10px!important;
-  width:100%!important;
-  max-width:100%!important;
-  align-items:stretch!important;
-}
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-bottom-dock{grid-area:notes!important;margin:0!important;min-width:0!important;max-width:none!important;height:100%!important}
-#drawingPanel .drawing-pro-workspace .stack-section>section:nth-of-type(1){grid-area:stack!important;min-width:0!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-review-workbench{grid-area:review!important;min-width:0!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.stack-properties{grid-area:properties!important;min-width:0!important;margin:0!important}
-#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;padding:8px!important}
-#drawingPanel .drawing-pro-workspace .drawing-bottom-dock .drawing-dock-tabs button{width:100%!important;min-width:0!important;white-space:normal!important;line-height:1.25!important;min-height:38px!important}
-#drawingPanel .drawing-pro-workspace .drawing-dock-collapse{grid-column:1/-1!important;margin-left:0!important}
-#drawingPanel .drawing-pro-workspace .drawing-dock-body{height:calc(100% - 112px)!important;max-height:none!important;overflow:auto!important}
-#drawingPanel .drawing-pro-workspace .production-notes-card{height:100%!important}
-#drawingPanel .drawing-pro-workspace .production-notes-grid textarea{min-height:220px!important;resize:vertical!important}
-#drawingPanel .drawing-pro-workspace .drawing-review-tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;padding:8px!important}
-#drawingPanel .drawing-pro-workspace .drawing-review-tabs button{width:100%!important;min-width:0!important;white-space:normal!important;min-height:38px!important}
-#drawingPanel .drawing-pro-workspace .drawing-review-body{min-width:0!important;overflow:auto!important}
-#drawingPanel .drawing-pro-workspace .stack-properties .cabinet-property-grid{grid-template-columns:minmax(72px,.7fr) minmax(0,1.3fr)!important;gap:9px 10px!important;padding:12px!important}
-#drawingPanel .drawing-pro-workspace .stack-properties input,
-#drawingPanel .drawing-pro-workspace .stack-properties select{width:100%!important;max-width:100%!important;min-width:0!important}
-#drawingPanel .drawing-pro-workspace .drawing-3d-panel{display:block!important;visibility:visible!important;opacity:1!important}
-@media(max-width:1450px){
- #drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:minmax(220px,1fr) minmax(220px,1fr) minmax(430px,1.8fr)!important;grid-template-areas:"notes stack review" "properties properties review"!important}
-}
-@media(max-width:1050px){
- #drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:1fr 1fr!important;grid-template-areas:"notes stack" "review review" "properties properties"!important}
-}
-@media(max-width:700px){
- #drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:1fr!important;grid-template-areas:"notes" "stack" "review" "properties"!important;padding:0 6px 8px!important}
- #drawingPanel .drawing-pro-workspace .drawing-dock-body{height:auto!important;max-height:none!important}
- #drawingPanel .drawing-pro-workspace .drawing-review-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- #drawingPanel .drawing-pro-workspace .production-notes-grid textarea{min-height:170px!important}
-}
-</style>
-
-<style id="build00363-patch">
-/* Build 003.6.8 cumulative patch */
-#drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:minmax(320px,1.35fr) minmax(240px,.9fr) minmax(520px,2fr) minmax(260px,.95fr)!important;grid-template-areas:"notes stack review properties"!important;align-items:stretch!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-bottom-dock{grid-area:notes!important}
-#drawingPanel .drawing-pro-workspace .stack-section>section:nth-of-type(1){grid-area:stack!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.drawing-review-workbench{grid-area:review!important}
-#drawingPanel .drawing-pro-workspace .stack-section>.stack-properties{grid-area:properties!important}
-#drawingPanel .drawing-bottom-dock .drawing-dock-tabs{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
-#drawingPanel .drawing-bottom-dock .drawing-dock-tabs button{flex:1 1 110px!important;width:auto!important;white-space:nowrap!important}
-#drawingPanel #productionMemo{min-height:190px!important}
-#drawingPanel .drawing-3d-svg{touch-action:none!important;cursor:grab}
-#drawingPanel .drawing-3d-svg:active{cursor:grabbing}
-/* price/spec hover and selected state */
-.price-table tbody tr,.spec-table tbody tr,.box-price-table tbody tr{transition:background .15s ease,box-shadow .15s ease}
-.price-table tbody tr:hover,.spec-table tbody tr:hover,.box-price-table tbody tr:hover{background:#eaf3ff!important;box-shadow:inset 3px 0 0 #2563eb}
-.price-table tbody tr.is-selected,.spec-table tbody tr.is-selected,.box-price-table tbody tr.is-selected{background:#dbeafe!important;box-shadow:inset 4px 0 0 #1d4ed8}
-@media(max-width:1180px){#drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:1fr 1fr!important;grid-template-areas:"notes stack" "review review" "properties properties"!important}}
-@media(max-width:720px){#drawingPanel .drawing-pro-workspace .stack-section{grid-template-columns:1fr!important;grid-template-areas:"notes" "stack" "review" "properties"!important} .price-table-wrap,.spec-table-wrap,.box-price-wrap{overflow:auto!important;max-height:72vh!important;overscroll-behavior:contain} .price-table thead th,.spec-table thead th,.box-price-table thead th{position:sticky!important;top:0!important;z-index:8!important} .price-table th:nth-child(-n+3),.price-table td:nth-child(-n+3),.spec-table th:nth-child(-n+3),.spec-table td:nth-child(-n+3),.box-price-table th:nth-child(-n+3),.box-price-table td:nth-child(-n+3){position:sticky!important;z-index:6!important;background:inherit} .price-table th:nth-child(1),.price-table td:nth-child(1),.spec-table th:nth-child(1),.spec-table td:nth-child(1),.box-price-table th:nth-child(1),.box-price-table td:nth-child(1){left:0} .price-table th:nth-child(2),.price-table td:nth-child(2),.spec-table th:nth-child(2),.spec-table td:nth-child(2),.box-price-table th:nth-child(2),.box-price-table td:nth-child(2){left:72px} .price-table th:nth-child(3),.price-table td:nth-child(3),.spec-table th:nth-child(3),.spec-table td:nth-child(3),.box-price-table th:nth-child(3),.box-price-table td:nth-child(3){left:144px;box-shadow:3px 0 5px rgba(15,23,42,.14)}}
-</style>
-
-<style id="build00365-canvas-fix">
-#drawingPanel .drawing-v85-canvas-wrap,#drawingPanel .drawing-v85-canvas{background:#242424!important;}
-#drawingPanel .drawing-v85-canvas-wrap{overflow:hidden!important;}
-#drawingPanel [data-view-action].active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;}
-</style>
-
-<style id="kenc-bottom-workspace-rebuild">
-/* Build 003.6.8: isolated bottom workspace. This block intentionally owns all geometry. */
+<style id="kenc-bottom-workspace-003-6-9">
+/* Build 003.6.9: 하단 4영역을 동일 부모의 동일 행에 고정 */
 #drawingPanel .kenc-bottom-workspace{
-  display:grid!important;
-  grid-template-columns:minmax(300px,30fr) minmax(230px,18fr) minmax(420px,34fr) minmax(250px,18fr)!important;
-  gap:10px!important;
-  width:100%!important;
-  max-width:none!important;
-  min-width:0!important;
-  padding:0 8px 10px!important;
-  margin:0!important;
-  box-sizing:border-box!important;
-  align-items:stretch!important;
-  background:#0b121c!important;
+  display:grid !important;
+  grid-template-columns:minmax(0,30fr) minmax(0,18fr) minmax(0,34fr) minmax(0,18fr) !important;
+  grid-template-rows:auto !important;
+  gap:10px !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 10px 10px !important;
+  box-sizing:border-box !important;
+  align-items:stretch !important;
+  justify-items:stretch !important;
+  clear:both !important;
 }
-#drawingPanel .kenc-bottom-workspace > .drawing-bottom-dock{
-  grid-column:1!important; margin:0!important; width:auto!important; max-width:none!important; min-width:0!important;
+#drawingPanel .kenc-bottom-workspace > *{
+  grid-row:1 !important;
+  grid-column:auto !important;
+  position:relative !important;
+  inset:auto !important;
+  float:none !important;
+  display:block !important;
+  width:auto !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:auto !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+  align-self:stretch !important;
+  overflow:hidden !important;
 }
-#drawingPanel .kenc-bottom-workspace > .stack-section{
-  display:contents!important;
+#drawingPanel .kenc-bottom-notes{grid-column:1 !important;}
+#drawingPanel .kenc-bottom-stack{grid-column:2 !important;}
+#drawingPanel .kenc-bottom-review{grid-column:3 !important;}
+#drawingPanel .kenc-bottom-properties{grid-column:4 !important;}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs{
+  display:flex !important; flex-wrap:wrap !important; gap:6px !important; align-items:center !important;
 }
-#drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-v85-card:nth-child(1){grid-column:2!important;}
-#drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-review-workbench{grid-column:3!important;}
-#drawingPanel .kenc-bottom-workspace > .stack-section > .stack-properties{grid-column:4!important;}
-#drawingPanel .kenc-bottom-workspace > *,
-#drawingPanel .kenc-bottom-workspace > .stack-section > *{
-  min-width:0!important; max-width:none!important; width:auto!important; margin:0!important; box-sizing:border-box!important;
-}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs{display:flex!important;flex-wrap:wrap!important;gap:4px!important;overflow:visible!important;}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs .drawing-dock-collapse{margin-left:auto!important;}
-#drawingPanel .kenc-bottom-workspace .drawing-dock-body{max-height:none!important;min-height:360px!important;overflow:auto!important;}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs > button{flex:0 1 auto !important; min-width:0 !important; white-space:nowrap !important;}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-body,
+#drawingPanel .kenc-bottom-workspace .drawing-dock-pane,
+#drawingPanel .kenc-bottom-workspace .production-notes-card,
 #drawingPanel .kenc-bottom-workspace .production-notes-grid,
-#drawingPanel .kenc-bottom-workspace textarea{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}
-#drawingPanel .kenc-bottom-workspace textarea{min-height:260px!important;resize:vertical!important;}
-#drawingPanel .kenc-bottom-workspace .drawing-review-body{min-width:0!important;overflow:hidden!important;}
-#drawingPanel .kenc-bottom-workspace .drawing-output-sheet{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}
-#drawingPanel .kenc-bottom-workspace .cabinet-property-grid{grid-template-columns:minmax(72px,.7fr) minmax(0,1.3fr)!important;}
+#drawingPanel .kenc-bottom-workspace .drawing-review-body,
+#drawingPanel .kenc-bottom-workspace .drawing-review-pane,
+#drawingPanel .kenc-bottom-workspace .drawing-output-sheet{
+  width:100% !important; min-width:0 !important; max-width:100% !important; box-sizing:border-box !important;
+}
+#drawingPanel .kenc-bottom-workspace textarea,
 #drawingPanel .kenc-bottom-workspace input,
 #drawingPanel .kenc-bottom-workspace select,
-#drawingPanel .kenc-bottom-workspace button{max-width:100%!important;box-sizing:border-box!important;}
-@media (max-width:1500px){
- #drawingPanel .kenc-bottom-workspace{grid-template-columns:minmax(280px,1fr) minmax(220px,.72fr)!important;}
- #drawingPanel .kenc-bottom-workspace > .drawing-bottom-dock{grid-column:1!important;grid-row:1!important;}
- #drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-v85-card:nth-child(1){grid-column:2!important;grid-row:1!important;}
- #drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-review-workbench{grid-column:1!important;grid-row:2!important;}
- #drawingPanel .kenc-bottom-workspace > .stack-section > .stack-properties{grid-column:2!important;grid-row:2!important;}
+#drawingPanel .kenc-bottom-workspace button,
+#drawingPanel .kenc-bottom-workspace svg{
+  max-width:100% !important; box-sizing:border-box !important;
 }
-@media (max-width:900px){
- #drawingPanel .kenc-bottom-workspace{grid-template-columns:minmax(0,1fr)!important;padding:0 6px calc(82px + env(safe-area-inset-bottom))!important;}
- #drawingPanel .kenc-bottom-workspace > .drawing-bottom-dock,
- #drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-v85-card:nth-child(1),
- #drawingPanel .kenc-bottom-workspace > .stack-section > .drawing-review-workbench,
- #drawingPanel .kenc-bottom-workspace > .stack-section > .stack-properties{grid-column:1!important;grid-row:auto!important;}
- #drawingPanel .kenc-bottom-workspace .drawing-dock-tabs{flex-wrap:nowrap!important;overflow-x:auto!important;}
- #drawingPanel .kenc-bottom-workspace .drawing-dock-body{min-height:280px!important;}
- #drawingPanel .kenc-bottom-workspace textarea{min-height:190px!important;}
+#drawingPanel .kenc-bottom-workspace .drawing-output-visuals{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;}
+#drawingPanel .kenc-bottom-workspace .cabinet-property-grid{
+  display:grid !important; grid-template-columns:minmax(64px,.8fr) minmax(0,1.2fr) !important; gap:8px !important;
+}
+#drawingPanel .kenc-bottom-workspace .cabinet-property-grid > *{min-width:0 !important; width:100% !important;}
+#drawingPanel .kenc-bottom-workspace .stack-list{max-height:430px !important; overflow:auto !important;}
+/* 웹 화면에서는 반드시 같은 행. 모바일만 1열 전환 */
+@media (max-width:767px){
+  #drawingPanel .kenc-bottom-workspace{
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+  }
+  #drawingPanel .kenc-bottom-workspace > *{grid-column:1 !important; grid-row:auto !important;}
 }
 </style>
 </head>
@@ -3913,7 +3697,7 @@ input,select,textarea,button{max-width:100%}
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6.8</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3936,7 +3720,7 @@ input,select,textarea,button{max-width:100%}
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.6.8</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.6</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3954,7 +3738,7 @@ input,select,textarea,button{max-width:100%}
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6.8</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -4012,7 +3796,7 @@ input,select,textarea,button{max-width:100%}
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.6.8 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.6 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
@@ -4162,8 +3946,8 @@ input,select,textarea,button{max-width:100%}
 <section class="drawing-v85-card drawing-canvas-panel drawing-canvas-panel">
 <div class="drawing-view-tabs" id="drawingTabbar"></div><div aria-label="도면 보기 도구" class="drawing-pro-view-tools">
 <button data-view-action="fit" title="전체 도면 보기" type="button">전체보기</button>
-<button data-view-action="grid" title="그리드 표시 전환" type="button">그리드</button>
-<button data-view-action="center" title="함체 중심선 표시 전환" type="button">중심</button>
+<button class="active" data-view-action="grid" title="그리드 표시 전환" type="button">그리드</button>
+<button data-view-action="center" title="선택 객체 중심 보기" type="button">중심</button>
 </div>
 <div class="drawing-v85-canvas-wrap"><svg class="drawing-v85-canvas" id="drawingCanvas" viewbox="0 0 760 700"></svg></div>
 </section>
@@ -4192,8 +3976,7 @@ input,select,textarea,button{max-width:100%}
 </div><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
 </section>
 
-<div class="kenc-bottom-workspace">
-<section aria-label="도면 보조 패널" class="drawing-bottom-dock drawing-v85-card">
+</div><div aria-label="하단 도면 작업영역" class="kenc-bottom-workspace"><section aria-label="도면 보조 패널" class="drawing-bottom-dock drawing-v85-card kenc-bottom-notes">
 <div class="drawing-dock-tabs" role="tablist">
 <button class="active" data-dock-tab="notes" type="button">제작 중요사항</button>
 <button data-dock-tab="history" type="button">작업 이력 <span id="drawingHistoryCount">0</span></button>
@@ -4212,14 +3995,12 @@ input,select,textarea,button{max-width:100%}
 <div class="drawing-dock-pane" data-dock-pane="check"><div class="drawing-check-summary"><strong>공유 전 도면 점검</strong><p>함체 규격, 객체 배치, 명판 문구와 제작 메모를 빠르게 확인합니다.</p><button class="drawing-primary-btn" id="drawingRunCheckBtn" type="button">지금 검사</button></div><div class="drawing-check-results" id="drawingCheckResults"></div></div>
 <div class="drawing-dock-pane" data-dock-pane="output"><div class="drawing-output-grid"><button data-proxy-click="drawingShareBtn" type="button"><strong>공유</strong><span>현재 도면 공유 화면 열기</span></button><button data-proxy-click="drawingSaveBtn" type="button"><strong>저장</strong><span>현재 작업 브라우저 저장</span></button><button data-proxy-click="drawingExportBtn" type="button"><strong>이미지 출력</strong><span>제작 전달용 이미지 생성</span></button><button data-proxy-click="drawingResetBtn" type="button"><strong>초기화</strong><span>새 도면 작업 시작</span></button></div></div>
 </div>
-</section><div class="stack-section">
-<section class="drawing-v85-card">
+</section><section class="drawing-v85-card kenc-bottom-stack">
 <div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
 <div class="stack-toolbar"><button class="stack-small-btn" id="stackAddBtn">＋ 함체 추가</button><button class="stack-small-btn" id="stackCloneBtn">복사</button><button class="stack-small-btn" id="stackDeleteBtn">삭제</button></div>
 <div class="stack-list" id="stackList"></div>
 <div class="stack-summary"><div><span>전체 높이</span><strong id="stackTotalHeight">-</strong></div><div><span>전체 깊이</span><strong id="stackTotalDepth">-</strong></div><div><span>함체 수</span><strong id="stackCount">-</strong></div></div>
-</section>
-<section class="drawing-v85-card drawing-review-workbench">
+</section><section class="drawing-v85-card drawing-review-workbench kenc-bottom-review">
 <div class="drawing-v85-card-head"><span>제작 검토 센터</span><small>출력 · 검사 · BOM · 정보</small></div>
 <div class="drawing-review-tabs" role="tablist">
 <button class="active" data-review-tab="preview" type="button">출력 Preview</button>
@@ -4231,7 +4012,7 @@ input,select,textarea,button{max-width:100%}
 <section class="drawing-review-pane active" data-review-pane="preview">
 <div class="drawing-output-sheet" id="drawingOutputPreview">
 <header><div><strong>KENC 제작 전달 도면</strong><span id="drawingPreviewDocNo">자동 미리보기</span></div><small id="drawingPreviewTime">-</small></header>
-<div class="drawing-output-visuals"><div><b>현재 면</b><svg id="drawingOutput2d" viewBox="0 0 760 700" aria-label="현재 면 출력 미리보기"></svg></div><div><b>3D</b><svg id="drawingOutput3d" viewBox="0 0 420 560" aria-label="3D 출력 미리보기"></svg></div></div>
+<div class="drawing-output-visuals"><div><b>현재 면</b><svg aria-label="현재 면 출력 미리보기" id="drawingOutput2d" viewbox="0 0 760 700"></svg></div><div><b>3D</b><svg aria-label="3D 출력 미리보기" id="drawingOutput3d" viewbox="0 0 420 560"></svg></div></div>
 <div class="drawing-output-meta"><span>규격 <strong id="drawingPreviewSize">-</strong></span><span>재질 <strong id="drawingPreviewMaterial">-</strong></span><span>두께 <strong id="drawingPreviewThickness">-</strong></span><span>객체 <strong id="drawingPreviewObjects">0 EA</strong></span></div>
 <div class="drawing-output-note"><b>제작 중요사항</b><p id="drawingPreviewMemo">작성된 내용이 없습니다.</p></div>
 </div>
@@ -4241,10 +4022,9 @@ input,select,textarea,button{max-width:100%}
 <section class="drawing-review-pane" data-review-pane="bom"><div class="drawing-review-summary"><strong>현재 도면 객체 BOM</strong><p>전체 함체와 모든 면에 배치된 객체를 품목별로 집계합니다.</p></div><div class="drawing-bom-list" id="drawingBomList"></div></section>
 <section class="drawing-review-pane" data-review-pane="info"><div class="drawing-info-grid" id="drawingInfoGrid"></div></section>
 </div>
-<div class="legacy-stack-preview" aria-hidden="true"><div id="stackViewToolbar"><span id="stackZoomIndicator">100%</span></div><svg id="stackPreviewCanvas" viewBox="0 0 520 430"></svg><div id="stack3dControls"><button id="stack3dResetBtn" type="button">초기화</button></div></div>
+<div aria-hidden="true" class="legacy-stack-preview"><div id="stackViewToolbar"><span id="stackZoomIndicator">100%</span></div><svg id="stackPreviewCanvas" viewbox="0 0 520 430"></svg><div id="stack3dControls"><button id="stack3dResetBtn" type="button">초기화</button></div></div>
 <div class="stack-info legacy-stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div>
-</section>
-<section class="drawing-v85-card stack-properties">
+</section><section class="drawing-v85-card stack-properties kenc-bottom-properties">
 <div class="drawing-v85-card-head">함체 속성</div>
 <div class="cabinet-property-grid">
 <label for="cabinetNameInput">함체명</label><input id="cabinetNameInput" type="text"/>
@@ -4255,10 +4035,7 @@ input,select,textarea,button{max-width:100%}
 <label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option selected="" value="1.6T">1.6T</option></select>
 </div>
 <div style="padding:0 14px 14px"><button class="drawing-primary-btn" id="cabinetApplyBtn" style="width:100%">함체 속성 적용</button></div>
-</section>
-</div>
-</div>
-</div></section>
+</section></div></section>
 </section>
 <section class="panel" id="rackPanel">
 <header class="section-head">
@@ -4551,7 +4328,7 @@ input,select,textarea,button{max-width:100%}
         {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
         {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]}
-      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},live3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},showGrid:false,showCenter:false,productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
+      ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
     };
     drawingToolDefs.forEach(t=>drawingState.toolOptions[t.id]=t.options[0]);
     const $=id=>document.getElementById(id);
@@ -4592,22 +4369,7 @@ input,select,textarea,button{max-width:100%}
       else if(o.type==="cover"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));[[.5,.1],[.5,.9],[.1,.5],[.9,.5]].forEach(([a,b])=>g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(1.5,Math.min(w,h)*.035),fill:"none",stroke:black,"stroke-width":sw})))}
       else if(o.type==="doubleLock")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(20,h*.72),fill:black},"⊃"));
     }
-    function render2d(){
-      const c=currentCabinet(),p=plane(drawingState.surface),vw=760,vh=700,pad={l:105,r:55,t:60,b:90},s=Math.min((vw-pad.l-pad.r)/p.width,(vh-pad.t-pad.b)/p.height),w=p.width*s,h=p.height*s,x=pad.l+(vw-pad.l-pad.r-w)/2,y=pad.t+(vh-pad.t-pad.b-h)/2;
-      drawingState.layout={x,y,s,w,h,p};drawingCanvas.innerHTML="";
-      const defs=svgEl("defs");
-      const pattern=svgEl("pattern",{id:"kencGridPattern",width:20,height:20,patternUnits:"userSpaceOnUse"});
-      pattern.appendChild(svgEl("path",{d:"M 20 0 L 0 0 0 20",fill:"none",stroke:"#4b5563","stroke-width":1}));defs.appendChild(pattern);drawingCanvas.appendChild(defs);
-      drawingCanvas.append(svgEl("rect",{x:0,y:0,width:vw,height:vh,fill:drawingState.showGrid?"url(#kencGridPattern)":"#242424"}),svgEl("text",{x:24,y:30,"font-size":16,"font-weight":800,fill:"#f8fafc"},`${drawingSurfaces.find(v=>v.id===drawingState.surface).label} · ${c.name}`));
-      drawingCanvas.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"#242424",stroke:"#f8fafc","stroke-width":2}));
-      if(drawingState.showCenter){
-        const cx=x+w/2,cy=y+h/2;
-        drawingCanvas.append(
-          svgEl("line",{x1:cx,y1:y,x2:cx,y2:y+h,stroke:"#22d3ee","stroke-width":1.5,"stroke-dasharray":"8 6","pointer-events":"none"}),
-          svgEl("line",{x1:x,y1:cy,x2:x+w,y2:cy,stroke:"#22d3ee","stroke-width":1.5,"stroke-dasharray":"8 6","pointer-events":"none"}),
-          svgEl("circle",{cx,cy,r:5,fill:"#242424",stroke:"#22d3ee","stroke-width":1.5,"pointer-events":"none"})
-        );
-      }
+    function render2d(){const c=currentCabinet(),p=plane(drawingState.surface),vw=760,vh=700,pad={l:105,r:55,t:60,b:90},s=Math.min((vw-pad.l-pad.r)/p.width,(vh-pad.t-pad.b)/p.height),w=p.width*s,h=p.height*s,x=pad.l+(vw-pad.l-pad.r-w)/2,y=pad.t+(vh-pad.t-pad.b-h)/2;drawingState.layout={x,y,s,w,h,p};drawingCanvas.innerHTML="";drawingCanvas.append(svgEl("rect",{x:0,y:0,width:vw,height:vh,fill:"#fff"}),svgEl("text",{x:24,y:30,"font-size":16,"font-weight":800,fill:"#111827"},`${drawingSurfaces.find(v=>v.id===drawingState.surface).label} · ${c.name}`));drawingCanvas.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"#fff",stroke:"#111827","stroke-width":2}));
       currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
       drawingCanvas.append(svgEl("line",{x1:x,y1:y+h+30,x2:x+w,y2:y+h+30,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x+w/2,y:y+h+53,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800},`${p.width}`),svgEl("line",{x1:x-30,y1:y,x2:x-30,y2:y+h,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x-42,y:y+h/2,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800,transform:`rotate(-90 ${x-42} ${y+h/2})`},`${p.height}`));
     }
@@ -4650,25 +4412,7 @@ input,select,textarea,button{max-width:100%}
       }
       return{width:fw+dep,height:fh+dep}
     }
-    function projectLivePoint(x,y,z,view,center,scale){
-      const yaw=view.yaw*Math.PI/180,pitch=view.pitch*Math.PI/180;let px=x-center.x,py=y-center.y,pz=z-center.z;
-      const x1=px*Math.cos(yaw)+pz*Math.sin(yaw),z1=-px*Math.sin(yaw)+pz*Math.cos(yaw),y1=py*Math.cos(pitch)-z1*Math.sin(pitch);
-      return{x:210+(view.panX||0)+x1*scale*view.zoom,y:270+(view.panY||0)+y1*scale*view.zoom};
-    }
-    function render3d(){
-      const svg=drawing3dCanvas;svg.innerHTML="";svg.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));
-      const view=drawingState.live3dView||(drawingState.live3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});
-      const cs=drawingState.mode3d==="single"?[currentCabinet()]:drawingState.cabinets,total=cs.reduce((a,c)=>a+c.height,0),maxW=Math.max(...cs.map(c=>c.width)),maxD=Math.max(...cs.map(c=>c.depth));
-      const center={x:maxW/2,y:total/2,z:maxD/2},scale=Math.min(260/maxW,360/total,150/maxD);let yOffset=0;
-      const line=(p1,p2,attrs={})=>{const a=projectLivePoint(...p1,view,center,scale),b=projectLivePoint(...p2,view,center,scale);svg.appendChild(svgEl("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:"#111827","stroke-width":1.45,"stroke-linecap":"round","vector-effect":"non-scaling-stroke",...attrs}))};
-      cs.forEach(c=>{const x0=(maxW-c.width)/2,z0=(maxD-c.depth)/2,y0=yOffset,y1=yOffset+c.height,x1=x0+c.width,z1=z0+c.depth;const pts={A:[x0,y0,z0],B:[x1,y0,z0],C:[x1,y1,z0],D:[x0,y1,z0],E:[x0,y0,z1],F:[x1,y0,z1],G:[x1,y1,z1],H:[x0,y1,z1]};
-        [["A","B"],["B","C"],["C","D"],["D","A"],["E","F"],["F","G"],["G","H"],["H","E"],["A","E"],["B","F"],["C","G"],["D","H"]].forEach(([a,b])=>line(pts[a],pts[b]));
-        const faces={front:{o:[x0,y0,z0],u:[1,0,0],v:[0,1,0],opacity:1},back:{o:[x0,y0,z1],u:[1,0,0],v:[0,1,0],opacity:.5},inside:{o:[x0,y0,z0+c.depth*.92],u:[1,0,0],v:[0,1,0],opacity:.96,mounted:true},left:{o:[x0,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.72},right:{o:[x1,y0,z0],u:[0,0,1],v:[0,1,0],opacity:.9},top:{o:[x0,y0,z0],u:[1,0,0],v:[0,0,1],opacity:.86},bottom:{o:[x0,y1,z0],u:[1,0,0],v:[0,0,1],opacity:.78}};
-        ["back","inside","left","right","top","bottom","front"].forEach(surface=>{const f=faces[surface],po=projectLivePoint(...f.o,view,center,scale),pu=projectLivePoint(f.o[0]+f.u[0],f.o[1]+f.u[1],f.o[2]+f.u[2],view,center,scale),pv=projectLivePoint(f.o[0]+f.v[0],f.o[1]+f.v[1],f.o[2]+f.v[2],view,center,scale);
-          c.objects.filter(o=>o.surface===surface).forEach(o=>{const outer=svgEl("g",{transform:`matrix(${pu.x-po.x} ${pu.y-po.y} ${pv.x-po.x} ${pv.y-po.y} ${po.x} ${po.y})`,opacity:f.opacity});const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`});drawShape(inner,o,o.x,o.y,o.w,o.h,true);outer.appendChild(inner);svg.appendChild(outer)})});yOffset=y1;
-      });
-      svg.appendChild(svgEl("text",{x:210,y:532,"text-anchor":"middle","font-size":12,fill:"#667085","font-weight":700},`${drawingState.mode3d==="single"?"단독 함체":"적층 함체"} · 회전 ${Math.round(view.yaw)}° · 기울기 ${Math.round(view.pitch)}° · ${Math.round(view.zoom*100)}%`));
-    }
+    function render3d(){drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}}
     function addObjectAt(px,py){const t=toolById(drawingState.activeTool),option=drawingState.toolOptions[t.id];let ow=t.w,oh=t.h;if(t.id==="groundBar"&&(option.includes("좌(")||option.includes("우("))){ow=55;oh=180}else if(t.id==="cableHook"&&option==="수평"){ow=180;oh=55}const o={id:drawingState.nextObjectId++,type:t.id,option,surface:drawingState.surface,x:px-ow/2,y:py-oh/2,w:ow,h:oh,rot:0,label:t.id==="nameplate"?"명판":""};clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
     drawingCanvas.onpointerdown=e=>{const hit=e.target.closest("[data-id]");const q=toPlane(e);if(hit){const o=currentObjects().find(v=>v.id===Number(hit.dataset.id));drawingState.selectedObjectId=o.id;drawingState.drag={id:o.id,dx:q.x-o.x,dy:q.y-o.y};updateObjectPanel();render2d();e.preventDefault()}else if(q.x>=0&&q.y>=0&&q.x<=drawingState.layout.p.width&&q.y<=drawingState.layout.p.height)addObjectAt(q.x,q.y)};
     window.addEventListener("pointermove",e=>{if(!drawingState.drag)return;const o=currentObjects().find(v=>v.id===drawingState.drag.id),q=toPlane(e);o.x=q.x-drawingState.drag.dx;o.y=q.y-drawingState.drag.dy;clampObj(o);render2d();updateObjectPanel();e.preventDefault()},{passive:false});window.addEventListener("pointerup",()=>drawingState.drag=null);
@@ -4731,24 +4475,7 @@ input,select,textarea,button{max-width:100%}
     function syncProductionNotesToInputs(){const n=drawingState.productionNotes||{};$("productionMemo").value=n.memo||""}
     function getProductionNoteLines(){syncProductionNotesFromInputs();const memo=(drawingState.productionNotes&&drawingState.productionNotes.memo||"").trim(),rows=[];if(!memo)return rows;memo.split(/\n+/).map(v=>v.trim()).filter(Boolean).forEach(line=>{let rest=line;while(rest.length>68){let cut=rest.lastIndexOf(" ",68);if(cut<28)cut=68;rows.push([rows.length===0?"기타 중요사항":"",rest.slice(0,cut).trim()]);rest=rest.slice(cut).trim()}if(rest)rows.push([rows.length===0?"기타 중요사항":"",rest])});return rows}
     function persistDrawing(){syncProductionNotesFromInputs();localStorage.setItem("gwangtelecom_drawing_v85",JSON.stringify(drawingState));setStatus("손도면 작업 상태를 저장했습니다.")}
-    function reset(){
-      if(!confirm("손도면 작업을 초기화하시겠습니까?"))return;
-      localStorage.removeItem("gwangtelecom_drawing_v85");
-      const fresh={
-        cabinets:[
-          {id:1,name:"함체 1 (상단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
-          {id:2,name:"함체 2 (중단)",width:600,height:200,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]},
-          {id:3,name:"함체 3 (하단)",width:600,height:700,depth:130,material:"일반 철판",thickness:"1.6T",objects:[]}
-        ],selectedCabinetId:1,nextCabinetId:4,nextObjectId:1,surface:"front",activeTool:"vent",toolOptions:{},selectedObjectId:null,drag:null,layout:null,mode3d:"single",stackPreview:"2d",stack3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},live3dView:{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0},showGrid:false,showCenter:false,productionNotes:{paintColor:"",doorDirection:"",acrylic:"",silkPrint:"",memo:""}
-      };
-      Object.keys(drawingState).forEach(k=>delete drawingState[k]);
-      Object.assign(drawingState,fresh);
-      syncInputs();
-      syncProductionNotesToInputs();
-      renderAll();
-      document.querySelectorAll('[data-view-action="grid"],[data-view-action="center"]').forEach(b=>b.classList.remove('active'));
-      setStatus("손도면 작업을 초기화했습니다.");
-    }
+    function reset(){if(!confirm("손도면 작업을 초기화하시겠습니까?"))return;localStorage.removeItem("gwangtelecom_drawing_v85");location.reload()}
     function exportPng(){const source=new XMLSerializer().serializeToString(drawingCanvas),blob=new Blob([source],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="광전기통신_현재면_손도면.svg";a.click();URL.revokeObjectURL(url)}
     function setExportProgress(show,text="파일을 생성하고 있습니다…"){const el=$("exportProgress");if(!el)return;el.textContent=text;el.classList.toggle("show",show)}
     function svgToImage(svg){return new Promise((resolve,reject)=>{const source=new XMLSerializer().serializeToString(svg),blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=e=>{URL.revokeObjectURL(url);reject(e)};img.src=url})}
@@ -4863,14 +4590,7 @@ input,select,textarea,button{max-width:100%}
     stackPreviewCanvas.addEventListener('dblclick',e=>{if(drawingState.stackPreview!=="3d")return;const view=drawingState.stack3dView,rect=stackPreviewCanvas.getBoundingClientRect(),mx=(e.clientX-rect.left)*(520/rect.width),my=(e.clientY-rect.top)*(430/rect.height),old=view.zoom,newZoom=clamp(old*1.65,.3,8),ratio=newZoom/old;view.panX=mx-260-(mx-260-(view.panX||0))*ratio;view.panY=my-202-(my-202-(view.panY||0))*ratio;view.zoom=newZoom;renderStackPreview()});
     $("stack3dResetBtn").onclick=()=>setStackViewPreset('fit');
     window.kencDrawingState=drawingState;window.kencDrawingToolDefs=drawingToolDefs;window.kencDrawingSurfaces=drawingSurfaces;
-    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};if(!drawingState.live3dView)drawingState.live3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};drawingState.showGrid=false;if(typeof drawingState.showCenter!=="boolean")drawingState.showCenter=false;if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs));
-      let liveDrag=null;drawing3dCanvas.style.touchAction="none";
-      drawing3dCanvas.addEventListener("pointerdown",e=>{drawing3dCanvas.setPointerCapture?.(e.pointerId);liveDrag={id:e.pointerId,x:e.clientX,y:e.clientY,mode:(e.button===1||e.shiftKey)?"pan":"orbit"};e.preventDefault()});
-      drawing3dCanvas.addEventListener("pointermove",e=>{if(!liveDrag||liveDrag.id!==e.pointerId)return;const v=drawingState.live3dView,dx=e.clientX-liveDrag.x,dy=e.clientY-liveDrag.y;liveDrag.x=e.clientX;liveDrag.y=e.clientY;if(liveDrag.mode==="pan"){v.panX+=dx;v.panY+=dy}else{v.yaw+=dx*.55;v.pitch=Math.max(-89,Math.min(89,v.pitch+dy*.45))}render3d();e.preventDefault()});
-      drawing3dCanvas.addEventListener("pointerup",e=>{if(liveDrag&&liveDrag.id===e.pointerId)liveDrag=null});
-      drawing3dCanvas.addEventListener("wheel",e=>{const v=drawingState.live3dView;v.zoom=Math.max(.28,Math.min(4,v.zoom*(e.deltaY<0?1.1:.9)));render3d();e.preventDefault()},{passive:false});
-      drawing3dCanvas.addEventListener("dblclick",()=>{drawingState.live3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};render3d()});
-    }
+    function drawingInit(){restore();drawingState.cabinets.forEach(c=>{if(!["1.0T","1.2T","1.4T","1.6T"].includes(c.thickness))c.thickness="1.6T"});if(!drawingState.stack3dView)drawingState.stack3dView={yaw:-35,pitch:-18,zoom:1,panX:0,panY:0};if(!drawingState.productionNotes)drawingState.productionNotes={memo:""};buildTools();syncInputs();syncProductionNotesToInputs();renderAll();drawingGenerateBtn.onclick=applyDimensions;drawingApplyBtn.onclick=applyObj;drawingDeleteBtn.onclick=deleteObj;drawingSaveBtn.onclick=()=>openShareModal("drawing-save");$("drawingShareBtn").onclick=()=>openShareModal("drawing-share");drawingResetBtn.onclick=reset;drawingExportBtn.onclick=exportPng;$("stackAddBtn").onclick=addCabinet;$("stackCloneBtn").onclick=cloneCabinet;$("stackDeleteBtn").onclick=deleteCabinet;$("cabinetApplyBtn").onclick=applyCabinetProps;document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{drawingState.mode3d=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render3d()});document.querySelectorAll("[data-stack-preview]").forEach(b=>b.onclick=()=>{drawingState.stackPreview=b.dataset.stackPreview;document.querySelectorAll("[data-stack-preview]").forEach(x=>x.classList.toggle("active",x===b));renderStackPreview()});[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation].forEach(i=>i.onchange=applyObj);drawingObjectLabel.oninput=()=>{const o=selectedObj();if(o&&o.type==="nameplate"){o.label=drawingObjectLabel.value;renderAll()}};["productionMemo"].forEach(id=>$(id).addEventListener("input",syncProductionNotesFromInputs))}
     drawingInit();
 
     /*
@@ -6451,7 +6171,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   const tab=e.target.closest('[data-dock-tab]');
   if(tab){shell.querySelectorAll('[data-dock-tab]').forEach(b=>b.classList.toggle('active',b===tab));shell.querySelectorAll('[data-dock-pane]').forEach(p=>p.classList.toggle('active',p.dataset.dockPane===tab.dataset.dockTab));return;}
   const proxy=e.target.closest('[data-proxy-click]');if(proxy){document.getElementById(proxy.dataset.proxyClick)?.click();return;}
-  const va=e.target.closest('[data-view-action]');if(va){const svg=document.getElementById('drawingCanvas');if(va.dataset.viewAction==='grid'){drawingState.showGrid=!drawingState.showGrid;va.classList.toggle('active',drawingState.showGrid);render2d();}else if(va.dataset.viewAction==='fit'){if(svg)svg.setAttribute('viewBox','0 0 760 700');}else if(va.dataset.viewAction==='center'){drawingState.showCenter=!drawingState.showCenter;va.classList.toggle('active',drawingState.showCenter);render2d();}return;}
+  const va=e.target.closest('[data-view-action]');if(va){if(va.dataset.viewAction==='grid'){va.classList.toggle('active');shell.querySelector('.drawing-v85-canvas-wrap')?.classList.toggle('grid-hidden');}else if(va.dataset.viewAction==='fit'){const svg=document.getElementById('drawingCanvas');if(svg){svg.setAttribute('viewBox','0 0 760 700');}}else if(va.dataset.viewAction==='center'){document.getElementById('drawingCanvas')?.scrollIntoView({block:'center'});}return;}
   const a3=e.target.closest('[data-3d-action]');if(a3){const svg=document.getElementById('drawing3dCanvas');if(svg){svg.setAttribute('viewBox','0 0 420 560');}return;}
  });
  document.addEventListener('keydown',e=>{if(e.key==='Escape')clearFocus();});
@@ -6492,7 +6212,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  document.addEventListener('visibilitychange',()=>{if(document.hidden) release();});
 })();
 </script>
-
 <script id="build0035-focus-camera-fix">
 (()=>{
  const shell=document.querySelector('#drawingPanel .drawing-pro-workspace');
@@ -6551,8 +6270,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  }
 })();
 </script>
-
-
 <script id="build0036-review-center-js">
 (()=>{
  const shell=document.querySelector('#drawingPanel .drawing-pro-workspace'); if(!shell) return;
@@ -6572,18 +6289,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  ['productionMemo','drawingWidthInput','drawingHeightInput','drawingDepthInput','cabinetNameInput','cabinetWidthInput','cabinetHeightInput','cabinetDepthInput','cabinetMaterialSelect','cabinetThicknessSelect'].forEach(id=>byId(id)?.addEventListener('input',refresh));
  const watch=[byId('drawingCanvas'),byId('drawing3dCanvas'),byId('stackList'),byId('drawingStatus')].filter(Boolean);watch.forEach(el=>new MutationObserver(refresh).observe(el,{childList:true,subtree:true,characterData:true,attributes:true}));
  window.addEventListener('resize',refresh);setTimeout(refresh,300);setTimeout(refresh,1200);
-})();
-</script>
-
-<script id="build00362-layout-js">
-(()=>{
- const shell=document.querySelector('#drawingPanel .drawing-pro-workspace');
- if(!shell) return;
- const stack=shell.querySelector('.stack-section');
- const dock=shell.querySelector(':scope > .drawing-bottom-dock');
- if(stack&&dock&&dock.parentElement!==stack){stack.insertBefore(dock,stack.firstElementChild);}
- const live3d=shell.querySelector('.drawing-3d-panel');
- if(live3d){live3d.hidden=false;live3d.style.removeProperty('display');live3d.setAttribute('aria-hidden','false');}
 })();
 </script>
 </body>
