@@ -1,0 +1,222 @@
+/* KENC Drawing Workspace component layout — Build 003.6.7
+   Isolated from legacy layout rules. Each region is managed as an explicit component. */
+
+#drawingPanel .drawing-pro-workspace .kenc-bottom-workspace {
+  display: grid !important;
+  grid-template-columns: minmax(0, 30fr) minmax(0, 18fr) minmax(0, 34fr) minmax(0, 18fr) !important;
+  grid-template-areas: "notes stack review properties" !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 8px 8px !important;
+  box-sizing: border-box !important;
+  background: #0b121c !important;
+}
+
+#drawingPanel .kenc-bottom-workspace > * {
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+#drawingPanel .kenc-bottom-workspace > .drawing-bottom-dock {
+  grid-area: notes !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#drawingPanel .kenc-bottom-workspace > .kenc-stack-list-component {
+  grid-area: stack !important;
+}
+
+#drawingPanel .kenc-bottom-workspace > .drawing-review-workbench {
+  grid-area: review !important;
+}
+
+#drawingPanel .kenc-bottom-workspace > .stack-properties {
+  grid-area: properties !important;
+}
+
+/* Notes/history component */
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 4px !important;
+  overflow-x: auto !important;
+  scrollbar-width: thin;
+  padding: 6px !important;
+}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-tabs button {
+  flex: 1 0 auto !important;
+  min-width: max-content !important;
+  padding: 8px 10px !important;
+  text-align: center !important;
+}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-collapse {
+  margin-left: 0 !important;
+}
+#drawingPanel .kenc-bottom-workspace .drawing-dock-body {
+  flex: 1 1 auto !important;
+  min-height: 360px !important;
+  max-height: none !important;
+  overflow: auto !important;
+}
+#drawingPanel .kenc-bottom-workspace .production-notes-grid,
+#drawingPanel .kenc-bottom-workspace .production-notes-grid .drawing-field,
+#drawingPanel .kenc-bottom-workspace .production-notes-grid textarea {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+#drawingPanel .kenc-bottom-workspace .production-notes-grid textarea {
+  min-height: 240px !important;
+  resize: vertical !important;
+}
+
+/* Stack list component */
+#drawingPanel .kenc-stack-list-component {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+#drawingPanel .kenc-stack-list-component .stack-toolbar {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
+  padding: 10px !important;
+}
+#drawingPanel .kenc-stack-list-component .stack-toolbar button:first-child {
+  grid-column: 1 / -1 !important;
+}
+#drawingPanel .kenc-stack-list-component .stack-list {
+  flex: 1 1 auto !important;
+  min-height: 260px !important;
+  overflow: auto !important;
+}
+#drawingPanel .kenc-stack-list-component .stack-summary {
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+}
+#drawingPanel .kenc-stack-list-component .stack-summary span,
+#drawingPanel .kenc-stack-list-component .stack-summary strong {
+  overflow-wrap: anywhere !important;
+}
+
+/* Review center component */
+#drawingPanel .drawing-review-workbench {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+#drawingPanel .drawing-review-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+  gap: 5px !important;
+  padding: 7px !important;
+}
+#drawingPanel .drawing-review-tabs button {
+  min-width: 0 !important;
+  padding: 9px 5px !important;
+  white-space: normal !important;
+  line-height: 1.25 !important;
+}
+#drawingPanel .drawing-review-body {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: auto !important;
+}
+#drawingPanel .drawing-output-sheet,
+#drawingPanel .drawing-output-visuals,
+#drawingPanel .drawing-output-visuals > div,
+#drawingPanel .drawing-output-sheet svg {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+#drawingPanel .drawing-output-visuals {
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+}
+#drawingPanel .drawing-output-sheet svg {
+  width: 100% !important;
+  height: auto !important;
+}
+#drawingPanel .drawing-output-meta {
+  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+}
+#drawingPanel .drawing-preview-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+/* Cabinet properties component */
+#drawingPanel .stack-properties {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+#drawingPanel .stack-properties .cabinet-property-grid {
+  display: grid !important;
+  grid-template-columns: minmax(68px, .7fr) minmax(0, 1.3fr) !important;
+  gap: 8px !important;
+  align-items: center !important;
+  padding: 12px !important;
+  min-width: 0 !important;
+}
+#drawingPanel .stack-properties .cabinet-property-grid label {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+}
+#drawingPanel .stack-properties input,
+#drawingPanel .stack-properties select,
+#drawingPanel .stack-properties button {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Normal desktop: preserve exact requested ratio whenever content width permits. */
+@media (max-width: 1180px) {
+  #drawingPanel .drawing-pro-workspace .kenc-bottom-workspace {
+    grid-template-columns: minmax(0, 30fr) minmax(0, 18fr) minmax(0, 34fr) minmax(0, 18fr) !important;
+  }
+  #drawingPanel .drawing-output-visuals { grid-template-columns: 1fr !important; }
+  #drawingPanel .drawing-output-meta { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  #drawingPanel .stack-properties .cabinet-property-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Tablet: components become two stable rows rather than being crushed. */
+@media (max-width: 980px) {
+  #drawingPanel .drawing-pro-workspace .kenc-bottom-workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-areas: "notes stack" "review review" "properties properties" !important;
+  }
+  #drawingPanel .stack-properties .cabinet-property-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+}
+
+/* Mobile: task-flow order, full width, no horizontal escape. */
+@media (max-width: 720px) {
+  #drawingPanel .drawing-pro-workspace .kenc-bottom-workspace {
+    grid-template-columns: minmax(0,1fr) !important;
+    grid-template-areas: "notes" "stack" "review" "properties" !important;
+    padding: 0 6px 8px !important;
+    gap: 8px !important;
+  }
+  #drawingPanel .kenc-bottom-workspace .drawing-dock-body { min-height: 260px !important; }
+  #drawingPanel .kenc-bottom-workspace .production-notes-grid textarea { min-height: 180px !important; }
+  #drawingPanel .drawing-review-tabs { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  #drawingPanel .drawing-output-meta { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  #drawingPanel .stack-properties .cabinet-property-grid { grid-template-columns: 1fr !important; }
+}

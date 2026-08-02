@@ -2,6 +2,8 @@ const CACHE_NAME = "kenc-ui-2-build-003-5";
 const APP_ASSETS = [
   './',
   './index.html',
+  './assets/kenc-workspace.css',
+  './js/kenc-workspace-layout.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
