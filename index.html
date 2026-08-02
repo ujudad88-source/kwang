@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.1.1</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2806,8 +2806,7 @@ body:not(.auth-locked) .topbar>.brand>div{min-width:0}.brand-title{min-width:0;w
 <link href="./manifest.webmanifest" rel="manifest"/>
 <link href="./icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="./icons/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link rel="icon" href="favicon.png">
-
+<link href="favicon.png" rel="icon"/>
 <style id="kencMultiBuildStyles">
 :root{--build-rail:0px;--build-toolbar:0px}
 body{transition:background-color .2s ease,color .2s ease}
@@ -2824,15 +2823,11 @@ body[data-build="cad"]{--build-rail:72px;--build-toolbar:42px;background:#1d252d
 @media(max-width:920px){.build-choice-grid{grid-template-columns:1fr}.build-choice p{min-height:0}.build-admin-intro{flex-direction:column}.build-admin-card{margin:12px 12px 0;padding:14px}body[data-build="kenc"] .build-shell-nav,body[data-build="cad"] .build-shell-nav,body[data-build="cad"] .cad-commandbar{display:none}body[data-build="kenc"],body[data-build="cad"]{--build-rail:0px;--build-toolbar:0px}body[data-build="kenc"] .page,body[data-build="cad"] .page{margin-left:0;padding:10px 10px calc(84px + env(safe-area-inset-bottom))}body[data-build="kenc"] .topbar{border-radius:12px;padding:10px}body[data-build="kenc"] .brand-title{font-size:14px}body[data-build="kenc"] .brand-title strong{font-size:19px}body[data-build="kenc"] .brand-subtitle{display:none}body[data-build="kenc"] .part-grid,body[data-build="cad"] .part-grid{grid-template-columns:1fr 1fr}body[data-build="kenc"] .part-card{min-height:112px;padding:14px}body[data-build="kenc"] .bottom-nav,body[data-build="cad"] .bottom-nav{display:flex!important}body[data-build="cad"] .topbar{border-radius:4px}body[data-build="cad"] .drawing-layout{grid-template-columns:1fr}body[data-build="cad"] .drawing-canvas{min-height:410px}.admin-panel-grid{grid-template-columns:1fr}.admin-panel-header{padding:15px}.build-card-actions{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){body[data-build="kenc"] .part-grid,body[data-build="cad"] .part-grid{grid-template-columns:1fr}.build-card-actions{grid-template-columns:1fr}.build-admin-card{margin:8px 8px 0;padding:11px}}
 </style>
-
-
 <style id="kencMobileValidationFixes">
 .auth-screen{min-height:100dvh;padding:calc(18px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom));box-sizing:border-box;overflow:auto}.auth-shell{min-height:0}.auth-actions{display:grid;grid-template-columns:1fr auto;gap:8px}.auth-actions #authRefresh{font-size:0;width:44px;padding:0}.auth-actions #authRefresh::before{content:"↻";font-size:20px}.admin-panel{max-width:100%;overflow:hidden}.admin-panel-dialog{max-width:100%}.admin-panel-grid>*{min-width:0}
 @media(max-width:850px){.admin-panel-grid{display:block}.employee-editor,.employee-list-panel{width:100%;box-sizing:border-box;margin-bottom:12px}.employee-table{min-width:0}.employee-table thead{display:none}.employee-table,.employee-table tbody,.employee-table tr,.employee-table td{display:block;width:100%;box-sizing:border-box}.employee-table tr{margin:0 0 10px;border:1px solid #dfe7ef;border-radius:12px;background:#fff;padding:8px}.employee-table td{display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px;border:0!important;padding:6px 7px!important;overflow-wrap:anywhere}.employee-table td:nth-child(1)::before{content:"이름"}.employee-table td:nth-child(2)::before{content:"직급"}.employee-table td:nth-child(3)::before{content:"권한"}.employee-table td:nth-child(4)::before{content:"상태"}.employee-table td:nth-child(5)::before{content:"식별값"}.employee-table td:nth-child(6)::before{content:"관리"}.employee-table td::before{font-size:11px;font-weight:900;color:#6a7c8d}.employee-table td[colspan]{display:block;text-align:center}.employee-table td[colspan]::before{display:none}.employee-table-wrap{overflow:visible;max-height:none;border:0}.admin-panel-header h2{font-size:20px}.admin-panel-header p{font-size:11px}.admin-panel-close{width:38px;height:38px}.topbar{width:100%;box-sizing:border-box}.topbar-actions{min-width:0;flex-wrap:wrap;justify-content:flex-end}.brand{min-width:0}.brand>div{min-width:0}.brand-title,.brand-subtitle{overflow:hidden;text-overflow:ellipsis}}
 @media(max-height:720px) and (max-width:600px){.auth-company-logo{max-height:110px}.auth-card{padding:16px}.auth-version-box{display:none}.auth-guide{margin:5px 0 10px}.auth-mode-tabs{margin-bottom:8px}}
 </style>
-
-
 <style id="kencNotionBuildV120">
 :root{
   --bg:#f7f7f5;--card:#fff;--text:#171717;--muted:#6f6f6b;--border:#e3e3df;
@@ -2908,8 +2903,6 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
 }
 @media(max-width:390px){.auth-login-panel{padding-left:18px!important;padding-right:18px!important}.auth-mobile-brand{margin-bottom:34px}.auth-mobile-brand strong{font-size:36px}.auth-input,.admin-auth-input{min-height:52px!important}.auth-submit{min-height:52px!important}.auth-system-strip{gap:5px 12px}.auth-system-strip span+span:before{margin-right:12px}}
 </style>
-
-
 <style id="kencBrandRefinementV121">
 /* v1.2.1 — 브랜드 타이포그래피와 로그인 소개 영역 정돈 */
 .auth-brand-panel{padding:54px 54px 42px!important;justify-content:flex-start!important;gap:0!important;background:
@@ -2964,7 +2957,7 @@ body:not(.auth-locked) .company-logo{display:none!important}body:not(.auth-locke
 .ui2-home{max-width:1440px;margin:0 auto}.ui2-welcome{position:relative;overflow:hidden;min-height:172px;padding:34px 38px;border:1px solid var(--ui2-line);border-radius:var(--ui2-radius);background:linear-gradient(135deg,#fff 0%,#fbfdff 58%,#f0f6ff 100%);box-shadow:var(--ui2-shadow);display:flex;align-items:center}.ui2-welcome-copy{position:relative;z-index:2}.ui2-kicker{display:block;margin-bottom:8px;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.14em}.ui2-welcome h1{margin:0;color:#172033;font-size:31px;line-height:1.2;letter-spacing:-.045em}.ui2-welcome p{margin:10px 0 0;color:#718096;font-size:14px}.ui2-blueprint{position:absolute;right:3%;bottom:-4px;width:42%;height:148px;opacity:.65;background-image:linear-gradient(rgba(93,151,229,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(93,151,229,.13) 1px,transparent 1px);background-size:22px 22px;clip-path:polygon(5% 100%,5% 55%,18% 55%,18% 37%,31% 37%,31% 63%,45% 63%,45% 25%,61% 25%,61% 49%,76% 49%,76% 10%,93% 10%,93% 100%)}.ui2-blueprint:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12))}
 .ui2-section-title{display:flex;align-items:flex-end;justify-content:space-between;margin:27px 3px 14px}.ui2-section-title span{display:block;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.11em}.ui2-section-title h2{margin:4px 0 0;font-size:20px;letter-spacing:-.03em}.ui2-section-title small{color:#8a96a6;font-size:12px}.ui2-primary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ui2-work-card{position:relative;min-height:154px;padding:20px;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);display:flex;flex-direction:column;align-items:flex-start;text-align:left;cursor:pointer}.ui2-work-card:hover{transform:translateY(-3px);border-color:#cfdbeb;box-shadow:0 14px 28px rgba(24,48,80,.09)}.ui2-work-icon{display:grid;place-items:center;width:48px;height:48px;margin-bottom:17px;border-radius:14px;font-size:23px;font-weight:900}.ui2-work-card.box .ui2-work-icon{color:#1769e8;background:#eaf2ff}.ui2-work-card.rack .ui2-work-icon{color:#188268;background:#e8f7f2}.ui2-work-card.material .ui2-work-icon{color:#7357d7;background:#f0ecff}.ui2-work-card.drawing .ui2-work-icon{color:#d47714;background:#fff1e2}.ui2-work-card span:nth-child(2){display:flex;flex-direction:column;gap:5px}.ui2-work-card strong{font-size:17px;color:#182235}.ui2-work-card small{font-size:11px;color:#778498}.ui2-work-card>b{position:absolute;right:18px;bottom:16px;color:#25364c;font-size:20px}
 .ui2-dashboard-grid{display:grid;grid-template-columns:1.15fr 1fr .95fr;gap:14px;margin-top:16px}.ui2-dashboard-card{min-width:0;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);overflow:hidden}.ui2-dashboard-card>header{min-height:66px;padding:15px 17px;border-bottom:1px solid #edf1f5;display:flex;align-items:center;justify-content:space-between}.ui2-dashboard-card>header span{display:block;color:#8996a7;font-size:9px;font-weight:900;letter-spacing:.12em}.ui2-dashboard-card>header h3{margin:4px 0 0;font-size:15px}.ui2-dashboard-card>header button{border:0;background:transparent;color:#758196;font-size:11px;font-weight:800;cursor:pointer}.ui2-list{padding:5px 14px 13px}.ui2-list button{width:100%;min-height:55px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;text-align:left;cursor:pointer}.ui2-list button:last-child{border-bottom:0}.ui2-list i{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;font-style:normal;font-weight:900}.ui2-list i.blue{color:#1769e8;background:#eaf2ff}.ui2-list i.green{color:#188268;background:#e8f7f2}.ui2-list i.purple{color:#7357d7;background:#f0ecff}.ui2-list i.orange{color:#d47714;background:#fff1e2}.ui2-list span{display:flex;flex-direction:column;gap:3px}.ui2-list strong{font-size:12px}.ui2-list small,.ui2-list time{font-size:10px;color:#8995a5}.ui2-notice-list{padding:7px 16px 15px}.ui2-notice-list article{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0f3f6}.ui2-notice-list article:last-child{border-bottom:0}.ui2-notice-list em{width:6px;height:6px;margin-top:5px;border-radius:50%;background:#ff4d5e}.ui2-notice-list div{display:flex;flex-direction:column;gap:4px}.ui2-notice-list strong{font-size:12px}.ui2-notice-list small{font-size:10px;line-height:1.45;color:#8591a1}.ui2-notice-list time{padding:3px 6px;border-radius:99px;background:#fff0f2;color:#e53449;font-size:8px;font-weight:900}.ui2-resource-list{padding:9px 12px 14px}.ui2-resource-list button{width:100%;min-height:62px;padding:8px 6px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;text-align:left;cursor:pointer}.ui2-resource-list button:last-child{border-bottom:0}.ui2-resource-list i{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#f1f5fa;color:#31557e;font-style:normal}.ui2-resource-list span{display:flex;flex-direction:column;gap:4px}.ui2-resource-list strong{font-size:12px}.ui2-resource-list small{font-size:10px;color:#8995a5}.ui2-resource-list b{color:#9aa5b4}
-/* common cards/forms for Build 003 */
+/* common cards/forms for Build 003.1 */
 body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not(.auth-locked) .table-card,body:not(.auth-locked) .drawing-side-card,body:not(.auth-locked) .drawing-center-card,body:not(.auth-locked) .drawing-highlights{border-color:var(--ui2-line)!important;border-radius:var(--ui2-radius)!important;box-shadow:0 7px 24px rgba(24,48,80,.045)!important;background:#fff!important}body:not(.auth-locked) input,body:not(.auth-locked) select,body:not(.auth-locked) textarea{border-color:#dfe6ee!important;border-radius:10px!important;background:#fff!important}body:not(.auth-locked) input:focus,body:not(.auth-locked) select:focus,body:not(.auth-locked) textarea:focus{border-color:#75a8ee!important;box-shadow:0 0 0 3px rgba(23,105,232,.10)!important}.section-head h2{letter-spacing:-.04em!important}.eyebrow{color:#1769e8!important}
 /* login refinements */
 .auth-shell{max-width:1280px!important;border-radius:24px!important;box-shadow:0 24px 70px rgba(22,44,75,.13)!important}.auth-brand-panel{background:linear-gradient(145deg,#fff,#f8fbff)!important}.auth-brand-copy{margin-top:48px!important}.auth-brand-copy h1{gap:3px!important}.auth-brand-copy h1 span{font-size:20px!important}.auth-brand-copy h1 strong{font-size:32px!important}.auth-capability-list{margin-top:28px!important}.auth-login-panel{padding-top:54px!important;padding-bottom:46px!important}.auth-card{max-width:430px!important}.auth-submit{background:#121826!important;border-radius:10px!important}.auth-submit:hover{background:#1769e8!important}.auth-company-logo{display:none!important}.auth-mobile-brand{margin-bottom:28px!important}
@@ -2975,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.1.1 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3072,95 +3065,112 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
  #drawingPanel .stack-preview-svg{height:340px}
 }
 </style>
-</head>
+<style>
+/* === KENC UI 2.0 Build 003.1 : Professional Dark Drawing Workspace === */
+.drawing-pro-workspace{--pro-bg:#0e1622;--pro-panel:#151f2d;--pro-panel2:#192535;--pro-line:#2a394d;--pro-text:#e9f0f8;--pro-muted:#8fa0b5;--pro-blue:#4a8dff;--pro-cyan:#49d6d0;--pro-orange:#ff9f43;background:var(--pro-bg)!important;border:1px solid #243248!important;border-radius:16px!important;overflow:hidden;box-shadow:0 18px 50px rgba(9,19,33,.26)!important;color:var(--pro-text)}
+.drawing-pro-workspace .drawing-toolbar{background:#101a28!important;border-bottom:1px solid var(--pro-line)!important;min-height:58px;padding:8px 12px!important;position:sticky;top:0;z-index:20}
+.drawing-pro-brand{display:flex;align-items:center;gap:10px}.drawing-pro-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(145deg,#3978ef,#56a4ff);font-weight:900;color:white;font-size:17px}.drawing-pro-brand strong{display:block;font-size:13px;letter-spacing:.08em}.drawing-pro-brand small{display:block;color:var(--pro-muted);font-size:9px;margin-top:2px;letter-spacing:.04em}
+.drawing-pro-workspace .drawing-action-btn{background:#182536!important;border:1px solid #31435a!important;color:#dbe8f8!important;border-radius:7px!important;min-height:34px!important;padding:0 11px!important;font-size:10px!important}.drawing-pro-workspace .drawing-action-btn:hover{border-color:var(--pro-blue)!important;background:#203149!important}.drawing-pro-workspace .drawing-focus-btn{color:#94bdff!important}.drawing-toolbar-sep{height:24px;width:1px;background:#35445a;margin:0 2px}
+.drawing-pro-workspace .drawing-workspace-meta{background:#0d1520!important;border-bottom:1px solid #223043!important;color:#8192a8!important}.drawing-pro-workspace .drawing-workspace-meta span{background:#121d2b!important;border-color:#2a394d!important}.drawing-pro-workspace .drawing-workspace-meta b{color:#6ea6ff!important}.drawing-pro-workspace .drawing-workspace-meta .drawing-meta-safe{color:#61d6a4!important;background:#10271f!important;border-color:#23543f!important}
+.drawing-pro-workspace .drawing-controls{background:#111b28!important;border-bottom:1px solid var(--pro-line)!important;padding:10px 14px!important;display:grid!important;grid-template-columns:repeat(3,minmax(130px,190px)) minmax(130px,170px)!important;justify-content:start!important;gap:10px!important}.drawing-pro-workspace .drawing-field label{color:#93a5ba!important}.drawing-pro-workspace input,.drawing-pro-workspace select,.drawing-pro-workspace textarea{background:#0f1825!important;border:1px solid #33445b!important;color:#edf4fc!important;border-radius:6px!important}.drawing-pro-workspace input:focus,.drawing-pro-workspace select:focus,.drawing-pro-workspace textarea:focus{border-color:var(--pro-blue)!important;box-shadow:0 0 0 2px rgba(74,141,255,.17)!important}.drawing-pro-workspace .drawing-input-unit span{color:#8497ad!important}
+.drawing-pro-workspace .drawing-v85-main{display:grid!important;grid-template-columns:220px minmax(540px,1fr) 290px!important;grid-template-areas:'palette canvas properties' 'palette canvas preview'!important;gap:8px!important;padding:8px!important;align-items:stretch!important;background:#0b121c!important}.drawing-pro-workspace .drawing-v85-card{background:var(--pro-panel)!important;border:1px solid var(--pro-line)!important;border-radius:8px!important;box-shadow:none!important;color:var(--pro-text)!important;min-width:0}.drawing-pro-workspace .drawing-palette-panel{grid-area:palette}.drawing-pro-workspace .drawing-canvas-panel{grid-area:canvas;min-height:690px}.drawing-pro-workspace .drawing-properties-panel{grid-area:properties}.drawing-pro-workspace .drawing-3d-panel{grid-area:preview;min-height:350px}.drawing-pro-workspace .drawing-v85-card-head{background:#172333!important;border-bottom:1px solid var(--pro-line)!important;color:#f0f5fb!important;padding:10px 12px!important;position:relative}.drawing-pro-workspace [data-panel-label]>.drawing-v85-card-head:after{content:attr(data-panel-label);position:absolute;right:10px;top:11px;font-size:8px;letter-spacing:.12em;color:#70839b;font-weight:800}.drawing-pro-workspace .drawing-v85-card-head small{color:#7f93aa!important}
+.drawing-pro-workspace .drawing-tool-rows{padding:8px!important;max-height:590px;overflow:auto;scrollbar-width:thin;scrollbar-color:#3b4d66 transparent}.drawing-pro-workspace .drawing-tool-row{background:#111c2a!important;border-color:#293a50!important;color:#dfe9f5!important}.drawing-pro-workspace .drawing-tool-row:hover{background:#1a2b40!important;border-color:#4a8dff!important}.drawing-pro-workspace .drawing-tool-hint{background:#101a27!important;color:#7f91a8!important;border-top-color:#29384d!important}
+.drawing-pro-workspace .drawing-view-tabs{background:#111c29!important;border-bottom:1px solid #2b3b50!important}.drawing-pro-workspace .drawing-view-tabs button{color:#91a2b6!important;border-color:transparent!important}.drawing-pro-workspace .drawing-view-tabs button.active{background:#243650!important;color:#fff!important;border-color:#4a8dff!important}.drawing-pro-view-tools{height:36px;display:flex;align-items:center;gap:6px;padding:4px 8px;background:#0f1824;border-bottom:1px solid #26364a}.drawing-pro-view-tools button,.drawing-pro-3d-controls button{border:1px solid #31435a;background:#182536;color:#aebed1;border-radius:5px;font-size:9px;padding:5px 8px}.drawing-pro-view-tools button.active{color:#72a9ff;border-color:#4a8dff}.drawing-pro-workspace .drawing-v85-canvas-wrap{background-color:#111923!important;background-image:linear-gradient(rgba(83,113,148,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(83,113,148,.11) 1px,transparent 1px),linear-gradient(rgba(83,113,148,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(83,113,148,.055) 1px,transparent 1px)!important;background-size:50px 50px,50px 50px,10px 10px,10px 10px!important}.drawing-pro-workspace .drawing-v85-canvas{filter:invert(.88) hue-rotate(175deg) saturate(.8) brightness(1.25)}
+.drawing-pro-workspace .drawing-settings-wrap{padding:10px!important}.drawing-pro-workspace .drawing-settings-actions{gap:7px!important}.drawing-pro-workspace .drawing-status{background:#101a27!important;border-color:#2b3a4e!important;color:#91a2b7!important}.drawing-pro-workspace .drawing-primary-btn{background:linear-gradient(135deg,#3579ef,#2864cf)!important;border:none!important;color:white!important}.drawing-pro-workspace .drawing-danger-btn{background:#2b1820!important;border-color:#6f2f42!important;color:#ff9aae!important}
+.drawing-pro-workspace .drawing-3d-wrap{background:radial-gradient(circle at 50% 35%,#26364a 0,#151f2d 48%,#0f1722 100%)!important;position:relative}.drawing-pro-workspace .drawing-3d-svg{filter:drop-shadow(0 15px 18px rgba(0,0,0,.35))}.drawing-pro-workspace .drawing-3d-note{color:#7f91a8!important;background:#101924!important;border-color:#27364a!important}.drawing-pro-3d-controls{display:flex;gap:5px;position:absolute;left:8px;top:8px;z-index:3;flex-wrap:wrap}.drawing-pro-workspace .drawing-3d-mode-tabs{background:#111b29!important;border-color:#2b3a50!important}.drawing-pro-workspace .drawing-3d-mode{background:#182536!important;color:#8497ad!important;border-color:#30425a!important}.drawing-pro-workspace .drawing-3d-mode.active{background:#2b65c8!important;color:white!important;border-color:#4b8ff9!important}
+.drawing-bottom-dock{margin:0 8px 8px!important;border-radius:8px!important}.drawing-dock-tabs{display:flex;align-items:center;gap:2px;background:#101a27;border-bottom:1px solid #2a394d;padding:5px 6px;overflow-x:auto}.drawing-dock-tabs button{border:0;background:transparent;color:#8ea0b5;font-size:10px;padding:8px 12px;border-radius:5px;white-space:nowrap}.drawing-dock-tabs button.active{background:#22344e;color:#fff}.drawing-dock-tabs button span{display:inline-flex;min-width:16px;height:16px;align-items:center;justify-content:center;border-radius:8px;background:#2e4667;color:#9ec2ff;font-size:8px}.drawing-dock-tabs .drawing-dock-collapse{margin-left:auto;color:#7e91a8}.drawing-dock-body{min-height:150px;max-height:290px;overflow:auto;background:#121c29}.drawing-bottom-dock.collapsed .drawing-dock-body{display:none}.drawing-dock-pane{display:none;padding:12px}.drawing-dock-pane.active{display:block}.drawing-bottom-dock .production-notes-card{margin:0!important;border:0!important;background:transparent!important}.drawing-bottom-dock .production-notes-card>.drawing-v85-card-head{display:none}.drawing-bottom-dock textarea{min-height:105px!important}.drawing-history-list{display:grid;gap:6px}.drawing-history-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #26364a;padding:7px 3px;color:#c9d5e3;font-size:10px}.drawing-history-item time{color:#6f839c;font-variant-numeric:tabular-nums}.drawing-dock-empty{color:#75889f;font-size:10px}.drawing-check-summary{display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center}.drawing-check-summary strong{font-size:12px}.drawing-check-summary p{margin:0;color:#8194aa;font-size:10px}.drawing-check-summary button{grid-column:2;grid-row:1/3}.drawing-check-results{display:grid;gap:5px;margin-top:10px}.drawing-check-item{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:5px;background:#101a27;border:1px solid #29394d;font-size:10px}.drawing-check-item.ok:before{content:'✓';color:#5ed69a}.drawing-check-item.warn:before{content:'!';color:#ffb45f}.drawing-output-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.drawing-output-grid button{background:#101b29;border:1px solid #2d3e54;color:#dce6f2;border-radius:7px;padding:12px;text-align:left}.drawing-output-grid button:hover{border-color:#4a8dff}.drawing-output-grid strong{display:block;font-size:11px}.drawing-output-grid span{display:block;margin-top:5px;color:#7f93aa;font-size:9px}
+.drawing-pro-workspace .stack-section{padding:0 8px 8px!important;background:#0b121c!important;gap:8px!important}.drawing-pro-workspace .stack-summary,.drawing-pro-workspace .stack-info,.drawing-pro-workspace .cabinet-property-grid{background:#101a27!important;border-color:#2b3a50!important}.drawing-pro-workspace .stack-list>*,.drawing-pro-workspace .stack-view-toolbar button,.drawing-pro-workspace .stack-small-btn{background:#172333!important;border-color:#304159!important;color:#c9d6e5!important}.drawing-pro-workspace .stack-preview-stage{background:#111a25!important;border-color:#2d3c50!important}
+.drawing-pro-workspace.focus-mode .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas'!important}.drawing-pro-workspace.focus-mode .drawing-v85-main>section:not(.focus-active){display:none!important}.drawing-pro-workspace.focus-mode .focus-active{display:block!important;grid-area:canvas!important;min-height:calc(100vh - 180px)!important}.drawing-pro-workspace.focus-mode .drawing-bottom-dock,.drawing-pro-workspace.focus-mode .stack-section,.drawing-pro-workspace.focus-mode .drawing-controls,.drawing-pro-workspace.focus-mode .drawing-workspace-meta{display:none!important}.drawing-pro-workspace.focus-mode .drawing-toolbar:after{content:'ESC 또는 2D/3D 집중 버튼을 다시 눌러 전체 작업공간으로 복귀';margin-left:auto;color:#6f8299;font-size:9px}
+@media(max-width:1180px){.drawing-pro-workspace .drawing-v85-main{grid-template-columns:190px minmax(430px,1fr) 250px!important}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr) 140px!important}}
+@media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
+@media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
+</style></head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
-  <div class="auth-shell">
-    <section class="auth-brand-panel" aria-label="KENC 소개">
-      <div class="auth-brand-top">
-        <div class="auth-brand-lockup" aria-label="KENC 광전기통신 영업지원시스템">
-          <strong class="auth-wordmark">KENC</strong>
-          <span class="auth-brand-divider" aria-hidden="true"></span>
-          <span class="auth-brand-name"><b>광전기통신</b><small>영업지원시스템</small></span>
-        </div>
-      </div>
-      <div class="auth-brand-copy">
-        <span class="auth-brand-kicker">COMMUNICATION ENCLOSURE SOLUTIONS</span>
-        <h1><span>통신함 · 분전반 · 세대단자함</span><strong>전문 제조·영업 플랫폼</strong></h1>
-        <p>제품정보 · 규격 · 단가 · 도면을 하나의 업무 흐름으로 연결합니다.</p>
-      </div>
-      <div class="auth-capability-list" aria-label="주요 제품군">
-        <span><b>01</b> 통신함</span>
-        <span><b>02</b> 분전반</span>
-        <span><b>03</b> 세대단자함</span>
-      </div>
-      <div class="auth-brand-footer">© 2026 KENC CO., LTD. All rights reserved.</div>
-    </section>
-    <section class="auth-login-panel">
-    <img alt="(주)광전기통신 로고" class="auth-company-logo" src="assets/gwangtelecom_logo.png"/>
-    <div class="auth-mobile-brand"><strong>KENC</strong><span>광전기통신 영업지원시스템</span></div>
-    <div aria-label="로그인 방식 선택" class="auth-mode-tabs">
-      <button class="auth-mode-tab active" id="employeeLoginTab" type="button">직원 로그인</button>
-      <button class="auth-mode-tab" id="adminLoginTab" type="button">관리자 로그인</button>
-    </div>
-
-    <form autocomplete="off" class="auth-card firebase-auth-card" id="authForm">
-      <div class="auth-form-heading"><h2>로그인</h2><p>등록된 개인번호를 입력해 주세요.</p></div>
-      <div class="auth-input-wrap">
-        <input aria-label="개인번호 입력" class="auth-input" id="authPassword" inputmode="numeric" maxlength="20" placeholder="개인번호를 입력해 주세요" required="" type="password"/>
-        <button aria-label="개인번호 표시" class="auth-toggle" id="authToggle" type="button">◉</button>
-      </div>
-      <button class="auth-submit" id="authSubmit" type="submit">로그인 →</button>
-      <p aria-live="polite" class="auth-status" id="authStatus"></p>
-      <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
-      <div class="auth-version-box" aria-label="시스템 정보">
-        <div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003</span></div>
-        <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
-        <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
-      </div>
-      <div class="auth-actions">
-        <button class="auth-secondary" id="authClear" type="button">입력 지우기</button>
-        <button class="auth-secondary" id="authRefresh" type="button">화면 새로고침</button>
-      </div>
-      <p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
-    </form>
-
-    <form autocomplete="off" class="auth-card firebase-auth-card admin-auth-card" hidden id="adminAuthForm">
-      <div class="auth-form-heading"><h2>관리자 로그인</h2><p>Firebase 관리자 계정으로 로그인하세요.</p></div>
-      <label class="admin-login-label" for="adminEmail">관리자 이메일</label>
-      <input class="auth-input admin-auth-input" id="adminEmail" autocomplete="username" type="email" value="ujudad88@gmail.com" required/>
-      <label class="admin-login-label" for="adminPassword">관리자 비밀번호</label>
-      <input class="auth-input admin-auth-input" id="adminPassword" autocomplete="current-password" type="password" placeholder="비밀번호 입력" required/>
-      <button class="auth-submit" id="adminAuthSubmit" type="submit">관리자 로그인</button>
-      <p aria-live="polite" class="auth-status" id="adminAuthStatus"></p>
-      <p aria-live="polite" class="auth-error" id="adminAuthError" role="alert"></p>
-      <button class="auth-secondary admin-back-button" id="adminBackToEmployee" type="button">직원 로그인으로 돌아가기</button>
-      <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
-    </form>
-    <div class="auth-system-strip" aria-label="시스템 상태">
-      <span>UI 2.0 · Build 003</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
-    </div>
-    </section>
-  </div>
+<div class="auth-shell">
+<section aria-label="KENC 소개" class="auth-brand-panel">
+<div class="auth-brand-top">
+<div aria-label="KENC 광전기통신 영업지원시스템" class="auth-brand-lockup">
+<strong class="auth-wordmark">KENC</strong>
+<span aria-hidden="true" class="auth-brand-divider"></span>
+<span class="auth-brand-name"><b>광전기통신</b><small>영업지원시스템</small></span>
+</div>
+</div>
+<div class="auth-brand-copy">
+<span class="auth-brand-kicker">COMMUNICATION ENCLOSURE SOLUTIONS</span>
+<h1><span>통신함 · 분전반 · 세대단자함</span><strong>전문 제조·영업 플랫폼</strong></h1>
+<p>제품정보 · 규격 · 단가 · 도면을 하나의 업무 흐름으로 연결합니다.</p>
+</div>
+<div aria-label="주요 제품군" class="auth-capability-list">
+<span><b>01</b> 통신함</span>
+<span><b>02</b> 분전반</span>
+<span><b>03</b> 세대단자함</span>
+</div>
+<div class="auth-brand-footer">© 2026 KENC CO., LTD. All rights reserved.</div>
 </section>
-<aside class="ui2-sidebar" id="ui2Sidebar" aria-label="KENC 주요 메뉴">
-  <div class="ui2-side-brand"><strong>KENC</strong><span>광전기통신<br>영업지원시스템</span></div>
-  <button class="ui2-sidebar-toggle" id="ui2SidebarToggle" type="button" aria-expanded="true" aria-controls="ui2Sidebar"><i aria-hidden="true">«</i><span>접기</span></button>
-  <nav>
-    <button class="ui2-side-btn active" type="button" data-target="homePanel"><i>⌂</i><span>홈</span></button>
-    <button class="ui2-side-btn" type="button" data-target="boxPanel"><i>□</i><span>함 파트</span></button>
-    <button class="ui2-side-btn" type="button" data-target="rackPanel"><i>▦</i><span>랙 파트</span></button>
-    <button class="ui2-side-btn" type="button" data-target="materialPanel"><i>◫</i><span>자재 파트</span></button>
-    <button class="ui2-side-btn" type="button" data-target="drawingPanel"><i>✎</i><span>손도면 생성</span></button>
-    <span class="ui2-side-divider"></span>
-    <button class="ui2-side-btn" type="button" data-target="manualPanel"><i>▥</i><span>업무 매뉴얼</span></button>
-    <button class="ui2-side-btn" type="button" data-target="educationPanel"><i>◈</i><span>교육 자료</span></button>
-  </nav>
-  <div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003</strong></div>
+<section class="auth-login-panel">
+<img alt="(주)광전기통신 로고" class="auth-company-logo" src="assets/gwangtelecom_logo.png"/>
+<div class="auth-mobile-brand"><strong>KENC</strong><span>광전기통신 영업지원시스템</span></div>
+<div aria-label="로그인 방식 선택" class="auth-mode-tabs">
+<button class="auth-mode-tab active" id="employeeLoginTab" type="button">직원 로그인</button>
+<button class="auth-mode-tab" id="adminLoginTab" type="button">관리자 로그인</button>
+</div>
+<form autocomplete="off" class="auth-card firebase-auth-card" id="authForm">
+<div class="auth-form-heading"><h2>로그인</h2><p>등록된 개인번호를 입력해 주세요.</p></div>
+<div class="auth-input-wrap">
+<input aria-label="개인번호 입력" class="auth-input" id="authPassword" inputmode="numeric" maxlength="20" placeholder="개인번호를 입력해 주세요" required="" type="password"/>
+<button aria-label="개인번호 표시" class="auth-toggle" id="authToggle" type="button">◉</button>
+</div>
+<button class="auth-submit" id="authSubmit" type="submit">로그인 →</button>
+<p aria-live="polite" class="auth-status" id="authStatus"></p>
+<p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
+<div aria-label="시스템 정보" class="auth-version-box">
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.1.1</span></div>
+<div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
+<div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
+</div>
+<div class="auth-actions">
+<button class="auth-secondary" id="authClear" type="button">입력 지우기</button>
+<button class="auth-secondary" id="authRefresh" type="button">화면 새로고침</button>
+</div>
+<p class="auth-notice"><span aria-hidden="true">♢</span> 승인된 사용자만 접근 가능합니다.</p>
+</form>
+<form autocomplete="off" class="auth-card firebase-auth-card admin-auth-card" hidden="" id="adminAuthForm">
+<div class="auth-form-heading"><h2>관리자 로그인</h2><p>Firebase 관리자 계정으로 로그인하세요.</p></div>
+<label class="admin-login-label" for="adminEmail">관리자 이메일</label>
+<input autocomplete="username" class="auth-input admin-auth-input" id="adminEmail" required="" type="email" value="ujudad88@gmail.com"/>
+<label class="admin-login-label" for="adminPassword">관리자 비밀번호</label>
+<input autocomplete="current-password" class="auth-input admin-auth-input" id="adminPassword" placeholder="비밀번호 입력" required="" type="password"/>
+<button class="auth-submit" id="adminAuthSubmit" type="submit">관리자 로그인</button>
+<p aria-live="polite" class="auth-status" id="adminAuthStatus"></p>
+<p aria-live="polite" class="auth-error" id="adminAuthError" role="alert"></p>
+<button class="auth-secondary admin-back-button" id="adminBackToEmployee" type="button">직원 로그인으로 돌아가기</button>
+<p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
+</form>
+<div aria-label="시스템 상태" class="auth-system-strip">
+<span>UI 2.0 · Build 003.1</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+</div>
+</section>
+</div>
+</section>
+<aside aria-label="KENC 주요 메뉴" class="ui2-sidebar" id="ui2Sidebar">
+<div class="ui2-side-brand"><strong>KENC</strong><span>광전기통신<br/>영업지원시스템</span></div>
+<button aria-controls="ui2Sidebar" aria-expanded="true" class="ui2-sidebar-toggle" id="ui2SidebarToggle" type="button"><i aria-hidden="true">«</i><span>접기</span></button>
+<nav>
+<button class="ui2-side-btn active" data-target="homePanel" type="button"><i>⌂</i><span>홈</span></button>
+<button class="ui2-side-btn" data-target="boxPanel" type="button"><i>□</i><span>함 파트</span></button>
+<button class="ui2-side-btn" data-target="rackPanel" type="button"><i>▦</i><span>랙 파트</span></button>
+<button class="ui2-side-btn" data-target="materialPanel" type="button"><i>◫</i><span>자재 파트</span></button>
+<button class="ui2-side-btn" data-target="drawingPanel" type="button"><i>✎</i><span>손도면 생성</span></button>
+<span class="ui2-side-divider"></span>
+<button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
+<button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
+</nav>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.1</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
-<button class="ui2-header-menu" id="ui2HeaderMenu" type="button" aria-label="메뉴 접기 또는 펼치기" aria-expanded="true">☰</button>
+<button aria-expanded="true" aria-label="메뉴 접기 또는 펼치기" class="ui2-header-menu" id="ui2HeaderMenu" type="button">☰</button>
 <div class="brand">
 <img alt="(주)광전기통신 로고" class="company-logo" src="assets/gwangtelecom_logo.png"/>
 <div>
@@ -3176,62 +3186,58 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <span class="user-name" id="userName">황철준 차장</span>
 </span>
 </div>
-<button class="admin-manage-button" hidden id="adminManageButton" type="button">⚙ 시스템 관리</button>
+<button class="admin-manage-button" hidden="" id="adminManageButton" type="button">⚙ 시스템 관리</button>
 <button class="lock-button" hidden="" id="lockButton" type="button">🔒 잠금</button>
-<button class="back-button" id="backButton" type="button" aria-label="이전 화면">← 뒤로</button>
+<button aria-label="이전 화면" class="back-button" id="backButton" type="button">← 뒤로</button>
 <button class="home-button" id="homeButton" type="button">⌂ 첫 화면</button>
 </div>
 </div>
-<div class="breadcrumb" id="breadcrumb" aria-label="현재 위치"><span class="breadcrumb-home">홈</span><span class="breadcrumb-sep">›</span><span id="breadcrumbCurrent">첫 화면</span></div>
+<div aria-label="현재 위치" class="breadcrumb" id="breadcrumb"><span class="breadcrumb-home">홈</span><span class="breadcrumb-sep">›</span><span id="breadcrumbCurrent">첫 화면</span></div>
 <section class="panel active ui2-home" id="homePanel">
-  <section class="ui2-welcome" aria-label="사용자 환영 영역">
-    <div class="ui2-welcome-copy">
-      <span class="ui2-kicker">KENC WORKSPACE</span>
-      <h1><span id="homeWelcomeName">사용자</span>님, 환영합니다.</h1>
-      <p>오늘도 필요한 제품 정보와 도면 업무를 빠르게 시작하세요.</p>
-    </div>
-    <div class="ui2-blueprint" aria-hidden="true">
-      <span></span><span></span><span></span><span></span>
-    </div>
-  </section>
-
-  <div class="ui2-section-title"><div><span>주요 업무</span><h2>바로가기</h2></div><small>자주 사용하는 업무를 한 번에 실행합니다.</small></div>
-  <div class="ui2-primary-grid">
-    <button class="ui2-work-card box" data-panel="boxPanel" type="button"><span class="ui2-work-icon">□</span><span><strong>함 파트</strong><small>통신함 · 분전반 · 세대단자함</small></span><b>→</b></button>
-    <button class="ui2-work-card rack" data-panel="rackPanel" type="button"><span class="ui2-work-icon">▦</span><span><strong>랙 파트</strong><small>통신 RACK · 장비 RACK</small></span><b>→</b></button>
-    <button class="ui2-work-card material" data-panel="materialPanel" type="button"><span class="ui2-work-icon">◫</span><span><strong>자재 파트</strong><small>통신 자재 · 광자재</small></span><b>→</b></button>
-    <button class="ui2-work-card drawing" data-panel="drawingPanel" type="button"><span class="ui2-work-icon">✎</span><span><strong>손도면 생성</strong><small>2D · 3D 도면 작성</small></span><b>→</b></button>
-  </div>
-
-  <div class="ui2-dashboard-grid">
-    <section class="ui2-dashboard-card ui2-recent">
-      <header><div><span>RECENT</span><h3>최근 사용 메뉴</h3></div><button type="button" data-panel="boxPanel">전체 보기</button></header>
-      <div class="ui2-list">
-        <button type="button" data-panel="boxPanel"><i class="blue">□</i><span><strong>함 규격 및 표준 단가</strong><small>함 파트</small></span><time>바로가기</time></button>
-        <button type="button" data-panel="rackPanel"><i class="green">▦</i><span><strong>랙 제품 규격</strong><small>랙 파트</small></span><time>바로가기</time></button>
-        <button type="button" data-panel="materialPanel"><i class="purple">◫</i><span><strong>통신 자재 통합 검색</strong><small>자재 파트</small></span><time>바로가기</time></button>
-        <button type="button" data-panel="drawingPanel"><i class="orange">✎</i><span><strong>신규 손도면 작업</strong><small>도면 생성</small></span><time>바로가기</time></button>
-      </div>
-    </section>
-
-    <section class="ui2-dashboard-card ui2-notice">
-      <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
-      <div class="ui2-notice-list">
-        <article><em></em><div><strong>KENC UI 2.0 Build 003 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
-        <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
-        <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
-      </div>
-    </section>
-
-    <section class="ui2-dashboard-card ui2-resources">
-      <header><div><span>RESOURCES</span><h3>업무 자료 바로가기</h3></div></header>
-      <div class="ui2-resource-list">
-        <button type="button" data-panel="manualPanel"><i>▥</i><span><strong>업무 매뉴얼</strong><small>업무 절차 및 사용법</small></span><b>›</b></button>
-        <button type="button" data-panel="specGuidePanel"><i>▤</i><span><strong>명세서 작성 요령</strong><small>표준 품명과 규격 작성 기준</small></span><b>›</b></button>
-        <button type="button" data-panel="educationPanel"><i>◈</i><span><strong>교육 자료</strong><small>제품·자재·도면 교육 자료</small></span><b>›</b></button>
-      </div>
-    </section>
-  </div>
+<section aria-label="사용자 환영 영역" class="ui2-welcome">
+<div class="ui2-welcome-copy">
+<span class="ui2-kicker">KENC WORKSPACE</span>
+<h1><span id="homeWelcomeName">사용자</span>님, 환영합니다.</h1>
+<p>오늘도 필요한 제품 정보와 도면 업무를 빠르게 시작하세요.</p>
+</div>
+<div aria-hidden="true" class="ui2-blueprint">
+<span></span><span></span><span></span><span></span>
+</div>
+</section>
+<div class="ui2-section-title"><div><span>주요 업무</span><h2>바로가기</h2></div><small>자주 사용하는 업무를 한 번에 실행합니다.</small></div>
+<div class="ui2-primary-grid">
+<button class="ui2-work-card box" data-panel="boxPanel" type="button"><span class="ui2-work-icon">□</span><span><strong>함 파트</strong><small>통신함 · 분전반 · 세대단자함</small></span><b>→</b></button>
+<button class="ui2-work-card rack" data-panel="rackPanel" type="button"><span class="ui2-work-icon">▦</span><span><strong>랙 파트</strong><small>통신 RACK · 장비 RACK</small></span><b>→</b></button>
+<button class="ui2-work-card material" data-panel="materialPanel" type="button"><span class="ui2-work-icon">◫</span><span><strong>자재 파트</strong><small>통신 자재 · 광자재</small></span><b>→</b></button>
+<button class="ui2-work-card drawing" data-panel="drawingPanel" type="button"><span class="ui2-work-icon">✎</span><span><strong>손도면 생성</strong><small>2D · 3D 도면 작성</small></span><b>→</b></button>
+</div>
+<div class="ui2-dashboard-grid">
+<section class="ui2-dashboard-card ui2-recent">
+<header><div><span>RECENT</span><h3>최근 사용 메뉴</h3></div><button data-panel="boxPanel" type="button">전체 보기</button></header>
+<div class="ui2-list">
+<button data-panel="boxPanel" type="button"><i class="blue">□</i><span><strong>함 규격 및 표준 단가</strong><small>함 파트</small></span><time>바로가기</time></button>
+<button data-panel="rackPanel" type="button"><i class="green">▦</i><span><strong>랙 제품 규격</strong><small>랙 파트</small></span><time>바로가기</time></button>
+<button data-panel="materialPanel" type="button"><i class="purple">◫</i><span><strong>통신 자재 통합 검색</strong><small>자재 파트</small></span><time>바로가기</time></button>
+<button data-panel="drawingPanel" type="button"><i class="orange">✎</i><span><strong>신규 손도면 작업</strong><small>도면 생성</small></span><time>바로가기</time></button>
+</div>
+</section>
+<section class="ui2-dashboard-card ui2-notice">
+<header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
+<div class="ui2-notice-list">
+<article><em></em><div><strong>KENC UI 2.0 Build 003.1.1 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
+<article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
+</div>
+</section>
+<section class="ui2-dashboard-card ui2-resources">
+<header><div><span>RESOURCES</span><h3>업무 자료 바로가기</h3></div></header>
+<div class="ui2-resource-list">
+<button data-panel="manualPanel" type="button"><i>▥</i><span><strong>업무 매뉴얼</strong><small>업무 절차 및 사용법</small></span><b>›</b></button>
+<button data-panel="specGuidePanel" type="button"><i>▤</i><span><strong>명세서 작성 요령</strong><small>표준 품명과 규격 작성 기준</small></span><b>›</b></button>
+<button data-panel="educationPanel" type="button"><i>◈</i><span><strong>교육 자료</strong><small>제품·자재·도면 교육 자료</small></span><b>›</b></button>
+</div>
+</section>
+</div>
 </section>
 <section class="panel" id="boxPanel">
 <header class="section-head">
@@ -3271,27 +3277,25 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </select>
 </div>
 </div>
-
-<section class="price-adjust-panel" id="priceAdjustPanel" hidden>
-  <div class="price-adjust-head">
-    <h3>단가 조정</h3>
-    <div class="price-adjust-status" id="priceAdjustStatus">현재 적용: 기준단가</div>
-  </div>
-  <div class="quick-rate-grid" id="quickRateGrid" aria-label="빠른 퍼센트 선택">
-    <button class="quick-rate-btn active" type="button" data-rate="0">기준</button>
-    <button class="quick-rate-btn" type="button" data-rate="5">+5%</button>
-    <button class="quick-rate-btn" type="button" data-rate="10">+10%</button>
-    <button class="quick-rate-btn" type="button" data-rate="15">+15%</button>
-    <button class="quick-rate-btn" type="button" data-rate="20">+20%</button>
-  </div>
-  <div class="custom-rate-row">
-    <label for="customRateInput">직접 입력</label>
-    <input class="custom-rate-input" id="customRateInput" type="number" inputmode="decimal" min="0" step="0.1" value="0" aria-label="단가 조정 퍼센트">
-    <span class="custom-rate-unit">%</span>
-    <button class="custom-rate-apply" id="customRateApply" type="button">적용</button>
-  </div>
+<section class="price-adjust-panel" hidden="" id="priceAdjustPanel">
+<div class="price-adjust-head">
+<h3>단가 조정</h3>
+<div class="price-adjust-status" id="priceAdjustStatus">현재 적용: 기준단가</div>
+</div>
+<div aria-label="빠른 퍼센트 선택" class="quick-rate-grid" id="quickRateGrid">
+<button class="quick-rate-btn active" data-rate="0" type="button">기준</button>
+<button class="quick-rate-btn" data-rate="5" type="button">+5%</button>
+<button class="quick-rate-btn" data-rate="10" type="button">+10%</button>
+<button class="quick-rate-btn" data-rate="15" type="button">+15%</button>
+<button class="quick-rate-btn" data-rate="20" type="button">+20%</button>
+</div>
+<div class="custom-rate-row">
+<label for="customRateInput">직접 입력</label>
+<input aria-label="단가 조정 퍼센트" class="custom-rate-input" id="customRateInput" inputmode="decimal" min="0" step="0.1" type="number" value="0"/>
+<span class="custom-rate-unit">%</span>
+<button class="custom-rate-apply" id="customRateApply" type="button">적용</button>
+</div>
 </section>
-
 <section class="spec-table-panel" id="specTablePanel">
 <div class="spec-table-head">
 <div>
@@ -3344,25 +3348,16 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </section>
 </section>
 <section class="panel" id="drawingPanel">
-
-<section aria-label="함체 설계기" class="drawing-shell card">
+<section aria-label="함체 설계기" class="drawing-shell card drawing-pro-workspace">
 <div class="drawing-toolbar">
-<div class="drawing-toolbar-title">
-<div aria-hidden="true" class="drawing-toolbar-badge">▣</div>
-<div><h3>광전기통신 손도면 생성기</h3></div>
+<div class="drawing-toolbar-title"><div class="drawing-pro-brand"><span class="drawing-pro-mark">K</span><div><strong>KENC DRAW</strong><small>Professional Workspace</small></div></div></div>
+<div class="drawing-toolbar-actions"><button class="drawing-action-btn drawing-focus-btn" data-focus-target="drawing-canvas-panel" type="button">2D 집중</button><button class="drawing-action-btn drawing-focus-btn" data-focus-target="drawing-3d-panel" type="button">3D 집중</button><span aria-hidden="true" class="drawing-toolbar-sep"></span><button class="drawing-action-btn" id="drawingShareBtn" type="button">공유</button><button class="drawing-action-btn" id="drawingSaveBtn" type="button">저장</button><button class="drawing-action-btn" id="drawingResetBtn" type="button">초기화</button><button class="drawing-action-btn" id="drawingExportBtn" type="button">이미지 출력</button></div>
 </div>
-<div class="drawing-toolbar-actions">
-<button class="drawing-action-btn" id="drawingShareBtn" type="button">공유</button>
-<button class="drawing-action-btn" id="drawingSaveBtn" type="button">저장</button>
-<button class="drawing-action-btn" id="drawingResetBtn" type="button">초기화</button>
-<button class="drawing-action-btn" id="drawingExportBtn" type="button">이미지 출력</button>
-</div>
-</div>
-<div class="drawing-workspace-meta" aria-label="도면 작업공간 상태">
-  <span><b>WORKSPACE</b> 2D 설계</span>
-  <span>객체 엔진 v82 유지</span>
-  <span>자동 저장: 브라우저</span>
-  <span class="drawing-meta-safe">기존 객체 보호</span>
+<div aria-label="도면 작업공간 상태" class="drawing-workspace-meta">
+<span><b>WORKSPACE</b> 2D 설계</span>
+<span>객체 엔진 v82 유지</span>
+<span>자동 저장: 브라우저</span>
+<span class="drawing-meta-safe">기존 객체 보호</span>
 </div>
 <div class="drawing-controls">
 <div class="drawing-field"><label for="drawingWidthInput">선택 함체 가로</label><div class="drawing-input-unit"><input id="drawingWidthInput" min="1" type="number" value="600"/><span>mm</span></div></div>
@@ -3371,16 +3366,20 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <button class="drawing-primary-btn" id="drawingGenerateBtn" type="button">도면 생성</button>
 </div>
 <div class="drawing-v85-main">
-<section class="drawing-v85-card drawing-palette-panel">
+<section class="drawing-v85-card drawing-palette-panel" data-panel-label="OBJECTS">
 <div class="drawing-v85-card-head"><span>객체 팔레트</span><small>배치 도구</small></div>
 <div class="drawing-tool-rows" id="drawingToolList"></div>
 <p class="drawing-tool-hint">객체를 선택한 뒤 현재 도면을 클릭하여 배치합니다.</p>
 </section>
-<section class="drawing-v85-card drawing-canvas-panel">
-<div class="drawing-view-tabs" id="drawingTabbar"></div>
+<section class="drawing-v85-card drawing-canvas-panel drawing-canvas-panel">
+<div class="drawing-view-tabs" id="drawingTabbar"></div><div aria-label="도면 보기 도구" class="drawing-pro-view-tools">
+<button data-view-action="fit" title="전체 도면 보기" type="button">전체보기</button>
+<button class="active" data-view-action="grid" title="그리드 표시 전환" type="button">그리드</button>
+<button data-view-action="center" title="선택 객체 중심 보기" type="button">중심</button>
+</div>
 <div class="drawing-v85-canvas-wrap"><svg class="drawing-v85-canvas" id="drawingCanvas" viewbox="0 0 760 700"></svg></div>
 </section>
-<section class="drawing-v85-card drawing-properties-panel">
+<section class="drawing-v85-card drawing-properties-panel" data-panel-label="PROPERTIES">
 <div class="drawing-v85-card-head"><span>객체 속성</span><small>위치 · 크기 · 회전</small></div>
 <div class="drawing-settings-wrap">
 <div class="drawing-settings-grid">
@@ -3388,24 +3387,43 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <div class="drawing-dual"><div class="drawing-field"><label>X 위치</label><div class="drawing-input-unit"><input id="drawingObjectX" type="number"/><span>mm</span></div></div><div class="drawing-field"><label>Y 위치</label><div class="drawing-input-unit"><input id="drawingObjectY" type="number"/><span>mm</span></div></div></div>
 <div class="drawing-dual"><div class="drawing-field"><label>가로</label><div class="drawing-input-unit"><input id="drawingObjectW" type="number"/><span>mm</span></div></div><div class="drawing-field"><label>세로</label><div class="drawing-input-unit"><input id="drawingObjectH" type="number"/><span>mm</span></div></div></div>
 <div class="drawing-field"><label>회전</label><div class="drawing-input-unit"><input id="drawingObjectRotation" max="359" min="0" type="number"/><span>°</span></div></div>
-<div class="drawing-field drawing-object-label-field" id="drawingObjectLabelField"><label for="drawingObjectLabel">명판명</label><input id="drawingObjectLabel" type="text" maxlength="40" placeholder="명판에 표시할 문구"/></div>
+<div class="drawing-field drawing-object-label-field" id="drawingObjectLabelField"><label for="drawingObjectLabel">명판명</label><input id="drawingObjectLabel" maxlength="40" placeholder="명판에 표시할 문구" type="text"/></div>
 </div>
 <div class="drawing-settings-actions"><button class="drawing-primary-btn" id="drawingApplyBtn">적용</button><button class="drawing-danger-btn" id="drawingDeleteBtn">삭제</button></div>
 <div class="drawing-status" id="drawingStatus">객체를 선택한 뒤 도면을 클릭하세요.</div>
 </div>
 </section>
-<section class="drawing-v85-card drawing-3d-panel">
+<section class="drawing-v85-card drawing-3d-panel" data-panel-label="LIVE PREVIEW">
 <div class="drawing-v85-card-head"><span>실시간 미리보기</span><small>단독 · 적층</small></div>
 <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
-<div class="drawing-3d-wrap"><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
+<div class="drawing-3d-wrap"><div class="drawing-pro-3d-controls">
+<button data-3d-action="fit" type="button">전체보기</button>
+<button data-3d-action="front" type="button">정면</button>
+<button data-3d-action="iso" type="button">등각</button>
+<button data-focus-target="drawing-3d-panel" type="button">확대</button>
+</div><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
 </section>
-<section class="drawing-v85-card production-notes-card">
+
+<section aria-label="도면 보조 패널" class="drawing-bottom-dock drawing-v85-card">
+<div class="drawing-dock-tabs" role="tablist">
+<button class="active" data-dock-tab="notes" type="button">제작 중요사항</button>
+<button data-dock-tab="history" type="button">작업 이력 <span id="drawingHistoryCount">0</span></button>
+<button data-dock-tab="check" type="button">도면 검사</button>
+<button data-dock-tab="output" type="button">출력 · 공유</button>
+<button class="drawing-dock-collapse" id="drawingDockCollapse" type="button">접기</button>
+</div>
+<div class="drawing-dock-body">
+<div class="drawing-dock-pane active" data-dock-pane="notes"><section class="drawing-v85-card production-notes-card">
 <div class="drawing-v85-card-head">제작 중요사항</div>
 <div class="production-notes-grid">
 <div class="drawing-field"><label for="productionMemo">기타 중요사항</label><textarea id="productionMemo" maxlength="1200" placeholder="예: 도장색상, 케이블 인입 위치, 타공 위치, 용접 및 제작 시 확인할 내용을 자유롭게 입력하세요."></textarea></div>
 </div><p class="production-note-help">입력한 메모는 전체 면 PNG·PDF 및 공유 이미지 하단의 ‘제작 중요사항’에 그대로 포함됩니다.</p>
-</section>
-<div class="stack-section">
+</section></div>
+<div class="drawing-dock-pane" data-dock-pane="history"><div class="drawing-history-list" id="drawingHistoryList"><p class="drawing-dock-empty">작업을 시작하면 변경 내용이 여기에 기록됩니다.</p></div></div>
+<div class="drawing-dock-pane" data-dock-pane="check"><div class="drawing-check-summary"><strong>공유 전 도면 점검</strong><p>함체 규격, 객체 배치, 명판 문구와 제작 메모를 빠르게 확인합니다.</p><button class="drawing-primary-btn" id="drawingRunCheckBtn" type="button">지금 검사</button></div><div class="drawing-check-results" id="drawingCheckResults"></div></div>
+<div class="drawing-dock-pane" data-dock-pane="output"><div class="drawing-output-grid"><button data-proxy-click="drawingShareBtn" type="button"><strong>공유</strong><span>현재 도면 공유 화면 열기</span></button><button data-proxy-click="drawingSaveBtn" type="button"><strong>저장</strong><span>현재 작업 브라우저 저장</span></button><button data-proxy-click="drawingExportBtn" type="button"><strong>이미지 출력</strong><span>제작 전달용 이미지 생성</span></button><button data-proxy-click="drawingResetBtn" type="button"><strong>초기화</strong><span>새 도면 작업 시작</span></button></div></div>
+</div>
+</section><div class="stack-section">
 <section class="drawing-v85-card">
 <div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
 <div class="stack-toolbar"><button class="stack-small-btn" id="stackAddBtn">＋ 함체 추가</button><button class="stack-small-btn" id="stackCloneBtn">복사</button><button class="stack-small-btn" id="stackDeleteBtn">삭제</button></div>
@@ -3414,7 +3432,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </section>
 <section class="drawing-v85-card">
 <div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-stack-preview="2d">적층 미리보기 (2D)</button><button class="drawing-3d-mode" data-stack-preview="3d">적층 미리보기 (3D)</button></div>
-<div class="stack-preview-grid"><div class="stack-preview-stage"><div class="stack-view-toolbar" id="stackViewToolbar"><button type="button" data-stack-view="fit">전체보기</button><button type="button" data-stack-view="front">정면</button><button type="button" data-stack-view="back">후면</button><button type="button" data-stack-view="left">좌측</button><button type="button" data-stack-view="right">우측</button><button type="button" data-stack-view="top">상단</button><button type="button" data-stack-view="bottom">하단</button><span class="stack-zoom-indicator" id="stackZoomIndicator">100%</span></div><svg class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430" aria-label="회전·이동·확대축소 가능한 적층 3D 미리보기"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">드래그: 회전 · Shift+드래그/휠버튼: 이동 · 휠: 확대·축소 · 모바일 두 손가락: 이동/확대</span><button type="button" class="stack-3d-reset" id="stack3dResetBtn">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
+<div class="stack-preview-grid"><div class="stack-preview-stage"><div class="stack-view-toolbar" id="stackViewToolbar"><button data-stack-view="fit" type="button">전체보기</button><button data-stack-view="front" type="button">정면</button><button data-stack-view="back" type="button">후면</button><button data-stack-view="left" type="button">좌측</button><button data-stack-view="right" type="button">우측</button><button data-stack-view="top" type="button">상단</button><button data-stack-view="bottom" type="button">하단</button><span class="stack-zoom-indicator" id="stackZoomIndicator">100%</span></div><svg aria-label="회전·이동·확대축소 가능한 적층 3D 미리보기" class="stack-preview-svg" id="stackPreviewCanvas" viewbox="0 0 520 430"></svg><div class="stack-3d-controls" id="stack3dControls"><span class="stack-3d-help">드래그: 회전 · Shift+드래그/휠버튼: 이동 · 휠: 확대·축소 · 모바일 두 손가락: 이동/확대</span><button class="stack-3d-reset" id="stack3dResetBtn" type="button">시점 초기화</button></div></div><div class="stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div></div>
 </section>
 <section class="drawing-v85-card stack-properties">
 <div class="drawing-v85-card-head">함체 속성</div>
@@ -3424,12 +3442,12 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <label for="cabinetHeightInput">세로(mm)</label><input id="cabinetHeightInput" min="1" type="number"/>
 <label for="cabinetDepthInput">깊이(mm)</label><input id="cabinetDepthInput" min="1" type="number"/>
 <label for="cabinetMaterialSelect">재질</label><select id="cabinetMaterialSelect"><option>일반 철판</option><option>스테인리스</option></select>
-<label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option value="1.6T" selected>1.6T</option></select>
+<label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option selected="" value="1.6T">1.6T</option></select>
 </div>
 <div style="padding:0 14px 14px"><button class="drawing-primary-btn" id="cabinetApplyBtn" style="width:100%">함체 속성 적용</button></div>
 </section>
 </div>
-</section>
+</div></section>
 </section>
 <section class="panel" id="rackPanel">
 <header class="section-head">
@@ -3453,13 +3471,13 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <div class="product-image-head"><h3 class="rack-layout-title">제품 이미지</h3><button class="product-share-btn" id="rackShareBtn" type="button">공유</button></div>
 <p class="rack-layout-description">선택한 제품의 이미지는 화면 너비와 높이를 벗어나지 않도록 자동 조절됩니다.</p>
 <div class="rack-image-stage">
-<img alt="선택한 랙 제품 이미지" class="rack-product-image" id="rackProductImage">
+<img alt="선택한 랙 제품 이미지" class="rack-product-image" id="rackProductImage"/>
 <div class="rack-image-placeholder" id="rackImagePlaceholder">
 <div class="rack-image-placeholder-icon">▦</div>
 <strong>랙 제품 이미지 영역</strong>
 <span>제품과 이미지를 등록하면 이곳에 최적화된 크기로 표시됩니다.</span>
 </div>
-</img></div>
+</div>
 </section>
 <section class="card rack-price-card">
 <h3 class="rack-layout-title">랙 규격 및 가격</h3>
@@ -3491,7 +3509,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <div class="material-search-group">
 <label class="material-select-label" for="materialSearchInput">품목·규격 검색</label>
 <div class="material-search-controls">
-<input class="material-search-input" id="materialSearchInput" type="search" placeholder="전체 제품군에서 품목 또는 규격 검색" autocomplete="off"/>
+<input autocomplete="off" class="material-search-input" id="materialSearchInput" placeholder="전체 제품군에서 품목 또는 규격 검색" type="search"/>
 <button class="material-search-btn" id="materialSearchBtn" type="button">검색</button>
 </div>
 </div>
@@ -3503,10 +3521,10 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <div class="material-adjust-status" id="materialPriceAdjustStatus">현재 적용: 기준단가</div>
 </div>
 <div class="material-adjust-controls">
-<div><label class="material-select-label">빠른 계산</label><div class="quick-rate-grid" id="materialQuickRateGrid" aria-label="자재 단가 빠른 퍼센트 선택">
-<button class="quick-rate-btn active" type="button" data-material-rate="0">기준</button><button class="quick-rate-btn" type="button" data-material-rate="5">+5%</button><button class="quick-rate-btn" type="button" data-material-rate="10">+10%</button><button class="quick-rate-btn" type="button" data-material-rate="15">+15%</button><button class="quick-rate-btn" type="button" data-material-rate="20">+20%</button>
+<div><label class="material-select-label">빠른 계산</label><div aria-label="자재 단가 빠른 퍼센트 선택" class="quick-rate-grid" id="materialQuickRateGrid">
+<button class="quick-rate-btn active" data-material-rate="0" type="button">기준</button><button class="quick-rate-btn" data-material-rate="5" type="button">+5%</button><button class="quick-rate-btn" data-material-rate="10" type="button">+10%</button><button class="quick-rate-btn" data-material-rate="15" type="button">+15%</button><button class="quick-rate-btn" data-material-rate="20" type="button">+20%</button>
 </div></div>
-<div><label class="material-select-label" for="materialCustomRateInput">직접 입력</label><div class="material-adjust-custom"><input class="custom-rate-input" id="materialCustomRateInput" type="number" inputmode="decimal" min="0" step="0.1" value="0" aria-label="자재 단가 조정 퍼센트"><button class="custom-rate-apply" id="materialCustomRateApply" type="button">적용</button></div></div>
+<div><label class="material-select-label" for="materialCustomRateInput">직접 입력</label><div class="material-adjust-custom"><input aria-label="자재 단가 조정 퍼센트" class="custom-rate-input" id="materialCustomRateInput" inputmode="decimal" min="0" step="0.1" type="number" value="0"/><button class="custom-rate-apply" id="materialCustomRateApply" type="button">적용</button></div></div>
 </div>
 </section>
 <section class="card material-image-card share-card-wrap">
@@ -3542,7 +3560,6 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </section>
 </div>
 </section>
-
 <section class="panel resource-panel" id="specGuidePanel">
 <header class="section-head"><span class="eyebrow">사내 업무 자료</span><h2>명세서 작성 요령</h2><p>품명과 규격을 일관되게 작성할 수 있도록 기본 원칙과 확인 항목을 정리합니다.</p></header>
 <div class="resource-layout">
@@ -3555,78 +3572,73 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 <section class="panel resource-panel" id="educationPanel">
 <header class="section-head"><span class="eyebrow">사내 업무 자료</span><h2>교육 자료</h2><p>신입 및 실무 담당자가 단계적으로 학습할 수 있도록 교육 항목을 구성합니다.</p></header>
 <div class="education-grid"><article class="card education-card"><span>01</span><h3>함 제품 기초</h3><p>함 종류, 재질, 회선수 및 규격표 읽는 방법</p></article><article class="card education-card"><span>02</span><h3>랙 제품 기초</h3><p>오픈랙, 캐비닛랙, 서버랙의 용도와 규격</p></article><article class="card education-card"><span>03</span><h3>자재 기초</h3><p>통신공사 주요 자재의 명칭과 적용 위치</p></article><article class="card education-card"><span>04</span><h3>도면 작성</h3><p>함체 생성, 객체 배치, 방향 설정과 3D 검토</p></article></div></section>
-
 </main>
-
-
-<nav class="bottom-nav" id="bottomNav" aria-label="모바일 하단 메뉴">
-  <button class="bottom-nav-btn active" type="button" data-target="homePanel"><span class="bottom-nav-icon">⌂</span><span class="bottom-nav-label">홈</span></button>
-  <button class="bottom-nav-btn" type="button" data-target="rackPanel"><span class="bottom-nav-icon">▦</span><span class="bottom-nav-label">랙</span></button>
-  <button class="bottom-nav-btn" type="button" data-target="boxPanel"><span class="bottom-nav-icon">□</span><span class="bottom-nav-label">함</span></button>
-  <button class="bottom-nav-btn" type="button" data-target="materialPanel"><span class="bottom-nav-icon">◫</span><span class="bottom-nav-label">자재</span></button>
-  <button class="bottom-nav-btn" type="button" data-target="drawingPanel"><span class="bottom-nav-icon">✎</span><span class="bottom-nav-label">손도면</span></button>
+<nav aria-label="모바일 하단 메뉴" class="bottom-nav" id="bottomNav">
+<button class="bottom-nav-btn active" data-target="homePanel" type="button"><span class="bottom-nav-icon">⌂</span><span class="bottom-nav-label">홈</span></button>
+<button class="bottom-nav-btn" data-target="rackPanel" type="button"><span class="bottom-nav-icon">▦</span><span class="bottom-nav-label">랙</span></button>
+<button class="bottom-nav-btn" data-target="boxPanel" type="button"><span class="bottom-nav-icon">□</span><span class="bottom-nav-label">함</span></button>
+<button class="bottom-nav-btn" data-target="materialPanel" type="button"><span class="bottom-nav-icon">◫</span><span class="bottom-nav-label">자재</span></button>
+<button class="bottom-nav-btn" data-target="drawingPanel" type="button"><span class="bottom-nav-icon">✎</span><span class="bottom-nav-label">손도면</span></button>
 </nav>
-
-<section class="admin-panel" hidden id="adminPanel" aria-label="관리자 사용자 관리">
-  <button class="admin-panel-backdrop" id="adminPanelBackdrop" type="button" aria-label="관리자 화면 닫기"></button>
-  <div class="admin-panel-dialog">
-    <header class="admin-panel-header">
-      <div><span class="admin-kicker">Firebase Administration</span><h2>사용자 관리</h2><p>직원 개인번호는 SHA-256 해시로 저장되며 원문은 보관하지 않습니다.</p></div>
-      <button class="admin-panel-close" id="adminPanelClose" type="button" aria-label="닫기">×</button>
-    </header>
-    <section class="build-admin-card" id="buildAdminCard">
-      <div class="build-admin-intro">
-        <div><span class="admin-kicker">KENC MULTI-BUILD</span><h3>전 직원 화면 디자인 설정</h3><p>미리보기는 관리자 기기에만 적용되고, 전체 적용을 누르면 직원은 다음 로그인 또는 새로고침부터 지정 빌드를 사용합니다.</p></div>
-        <div class="build-current-chip">현재 적용 <strong id="globalBuildName">확인 중</strong></div>
-      </div>
-      <div class="build-choice-grid" role="radiogroup" aria-label="화면 빌드 선택">
-        <article class="build-choice" data-build-card="classic">
-          <div class="build-thumb build-thumb-classic"><span></span><i></i><b></b></div>
-          <h4>Classic</h4><p>현재 화면 구조를 보존한 안전 복구용 빌드</p>
-          <div class="build-card-actions"><button type="button" data-build-preview="classic">내 기기 미리보기</button><button type="button" data-build-apply="classic">전체 적용</button></div>
-        </article>
-        <article class="build-choice recommended" data-build-card="kenc">
-          <span class="recommended-badge">추천</span>
-          <div class="build-thumb build-thumb-kenc"><span></span><i></i><b></b></div>
-          <h4>KENC Professional</h4><p>사이드 내비게이션과 업무 대시보드 중심의 반응형 빌드</p>
-          <div class="build-card-actions"><button type="button" data-build-preview="kenc">내 기기 미리보기</button><button type="button" data-build-apply="kenc">전체 적용</button></div>
-        </article>
-        <article class="build-choice" data-build-card="cad">
-          <div class="build-thumb build-thumb-cad"><span></span><i></i><b></b></div>
-          <h4>Autodesk CAD</h4><p>도구막대·팔레트·고밀도 작업영역 중심의 엔지니어링 빌드</p>
-          <div class="build-card-actions"><button type="button" data-build-preview="cad">내 기기 미리보기</button><button type="button" data-build-apply="cad">전체 적용</button></div>
-        </article>
-      </div>
-      <div class="build-admin-footer"><button type="button" id="cancelBuildPreview" hidden>미리보기 종료</button><span id="buildAdminMessage" aria-live="polite"></span></div>
-    </section>
-    <div class="admin-panel-grid">
-      <form class="employee-editor" id="employeeForm">
-        <input id="employeeEditId" type="hidden"/>
-        <h3 id="employeeFormTitle">직원 추가</h3>
-        <label>개인번호<input id="employeeNumber" inputmode="numeric" maxlength="20" placeholder="직원이 사용할 번호" required/></label>
-        <p class="employee-field-help">등록 후 번호 원문은 다시 표시되지 않습니다. 번호 변경 시 기존 계정을 삭제하고 새로 등록하세요.</p>
-        <label>이름<input id="employeeName" maxlength="30" placeholder="예: 김철수" required/></label>
-        <label>직급<input id="employeePosition" maxlength="30" placeholder="예: 과장" required/></label>
-        <label>권한<select id="employeeRole"><option value="viewer">조회 사용자</option><option value="editor">편집자(추후 적용)</option></select></label>
-        <label class="employee-check"><input id="employeeActive" type="checkbox" checked/> 사용 가능</label>
-        <div class="employee-form-actions"><button class="employee-save" id="employeeSaveButton" type="submit">직원 저장</button><button class="employee-cancel" hidden id="employeeCancelEdit" type="button">수정 취소</button></div>
-        <p class="employee-form-message" id="employeeFormMessage"></p>
-      </form>
-      <section class="employee-list-panel">
-        <div class="employee-list-head"><div><h3>등록 직원</h3><span id="adminStatus">확인 중</span></div><button id="employeeRefreshButton" type="button">새로고침</button></div>
-        <div class="employee-table-wrap"><table class="employee-table"><thead><tr><th>이름</th><th>직급</th><th>권한</th><th>상태</th><th>번호 식별값</th><th>관리</th></tr></thead><tbody id="employeeTableBody"><tr><td colspan="6">관리자 로그인 후 확인됩니다.</td></tr></tbody></table></div>
-      </section>
-    </div>
-  </div>
+<section aria-label="관리자 사용자 관리" class="admin-panel" hidden="" id="adminPanel">
+<button aria-label="관리자 화면 닫기" class="admin-panel-backdrop" id="adminPanelBackdrop" type="button"></button>
+<div class="admin-panel-dialog">
+<header class="admin-panel-header">
+<div><span class="admin-kicker">Firebase Administration</span><h2>사용자 관리</h2><p>직원 개인번호는 SHA-256 해시로 저장되며 원문은 보관하지 않습니다.</p></div>
+<button aria-label="닫기" class="admin-panel-close" id="adminPanelClose" type="button">×</button>
+</header>
+<section class="build-admin-card" id="buildAdminCard">
+<div class="build-admin-intro">
+<div><span class="admin-kicker">KENC MULTI-BUILD</span><h3>전 직원 화면 디자인 설정</h3><p>미리보기는 관리자 기기에만 적용되고, 전체 적용을 누르면 직원은 다음 로그인 또는 새로고침부터 지정 빌드를 사용합니다.</p></div>
+<div class="build-current-chip">현재 적용 <strong id="globalBuildName">확인 중</strong></div>
+</div>
+<div aria-label="화면 빌드 선택" class="build-choice-grid" role="radiogroup">
+<article class="build-choice" data-build-card="classic">
+<div class="build-thumb build-thumb-classic"><span></span><i></i><b></b></div>
+<h4>Classic</h4><p>현재 화면 구조를 보존한 안전 복구용 빌드</p>
+<div class="build-card-actions"><button data-build-preview="classic" type="button">내 기기 미리보기</button><button data-build-apply="classic" type="button">전체 적용</button></div>
+</article>
+<article class="build-choice recommended" data-build-card="kenc">
+<span class="recommended-badge">추천</span>
+<div class="build-thumb build-thumb-kenc"><span></span><i></i><b></b></div>
+<h4>KENC Professional</h4><p>사이드 내비게이션과 업무 대시보드 중심의 반응형 빌드</p>
+<div class="build-card-actions"><button data-build-preview="kenc" type="button">내 기기 미리보기</button><button data-build-apply="kenc" type="button">전체 적용</button></div>
+</article>
+<article class="build-choice" data-build-card="cad">
+<div class="build-thumb build-thumb-cad"><span></span><i></i><b></b></div>
+<h4>Autodesk CAD</h4><p>도구막대·팔레트·고밀도 작업영역 중심의 엔지니어링 빌드</p>
+<div class="build-card-actions"><button data-build-preview="cad" type="button">내 기기 미리보기</button><button data-build-apply="cad" type="button">전체 적용</button></div>
+</article>
+</div>
+<div class="build-admin-footer"><button hidden="" id="cancelBuildPreview" type="button">미리보기 종료</button><span aria-live="polite" id="buildAdminMessage"></span></div>
 </section>
-<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
-  <div class="share-modal-card">
-    <div class="share-modal-head"><h3 id="shareModalTitle">공유 및 저장</h3><button class="share-modal-close" id="shareModalClose" type="button" aria-label="닫기">×</button></div>
-    <div class="share-modal-body" id="shareModalBody"></div>
-  </div>
+<div class="admin-panel-grid">
+<form class="employee-editor" id="employeeForm">
+<input id="employeeEditId" type="hidden"/>
+<h3 id="employeeFormTitle">직원 추가</h3>
+<label>개인번호<input id="employeeNumber" inputmode="numeric" maxlength="20" placeholder="직원이 사용할 번호" required=""/></label>
+<p class="employee-field-help">등록 후 번호 원문은 다시 표시되지 않습니다. 번호 변경 시 기존 계정을 삭제하고 새로 등록하세요.</p>
+<label>이름<input id="employeeName" maxlength="30" placeholder="예: 김철수" required=""/></label>
+<label>직급<input id="employeePosition" maxlength="30" placeholder="예: 과장" required=""/></label>
+<label>권한<select id="employeeRole"><option value="viewer">조회 사용자</option><option value="editor">편집자(추후 적용)</option></select></label>
+<label class="employee-check"><input checked="" id="employeeActive" type="checkbox"/> 사용 가능</label>
+<div class="employee-form-actions"><button class="employee-save" id="employeeSaveButton" type="submit">직원 저장</button><button class="employee-cancel" hidden="" id="employeeCancelEdit" type="button">수정 취소</button></div>
+<p class="employee-form-message" id="employeeFormMessage"></p>
+</form>
+<section class="employee-list-panel">
+<div class="employee-list-head"><div><h3>등록 직원</h3><span id="adminStatus">확인 중</span></div><button id="employeeRefreshButton" type="button">새로고침</button></div>
+<div class="employee-table-wrap"><table class="employee-table"><thead><tr><th>이름</th><th>직급</th><th>권한</th><th>상태</th><th>번호 식별값</th><th>관리</th></tr></thead><tbody id="employeeTableBody"><tr><td colspan="6">관리자 로그인 후 확인됩니다.</td></tr></tbody></table></div>
+</section>
+</div>
+</div>
+</section>
+<div aria-labelledby="shareModalTitle" aria-modal="true" class="share-modal" id="shareModal" role="dialog">
+<div class="share-modal-card">
+<div class="share-modal-head"><h3 id="shareModalTitle">공유 및 저장</h3><button aria-label="닫기" class="share-modal-close" id="shareModalClose" type="button">×</button></div>
+<div class="share-modal-body" id="shareModalBody"></div>
+</div>
 </div>
 <div class="export-progress" id="exportProgress">파일을 생성하고 있습니다…</div>
-
 <script>
     const panels = document.querySelectorAll(".panel");
     const partCards = document.querySelectorAll(".part-card");
@@ -5469,9 +5481,8 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   });
 })();
 </script>
-<script type="module" src="./js/build-manager.js"></script>
-<script type="module" src="./js/firebase-auth.js"></script>
-
+<script src="./js/build-manager.js" type="module"></script>
+<script src="./js/firebase-auth.js" type="module"></script>
 <script>
 (function(){
   "use strict";
@@ -5494,7 +5505,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   document.getElementById("rackShareBtn")?.addEventListener("click",()=>openProduct("rack"));document.getElementById("materialShareBtn")?.addEventListener("click",()=>openProduct("material"));close.onclick=hide;modal.addEventListener("click",e=>{if(e.target===modal)hide()});document.addEventListener("keydown",e=>{if(e.key==="Escape")hide()});
 })();
 </script>
-
 <script>
   // 서비스 워커 등록: 설치 후 오프라인에서도 주요 화면과 이미지를 사용할 수 있습니다.
   if ('serviceWorker' in navigator) {
@@ -5505,7 +5515,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
     });
   }
 </script>
-
 <script>
 (function(){
   function go(panel){
@@ -5528,7 +5537,6 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   syncActive();
 })();
 </script>
-
 <script>
 (function(){
   'use strict';
@@ -5551,7 +5559,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   sidebar.querySelectorAll('[data-target]').forEach(b=>b.addEventListener('click',()=>{if(!desktop())closeMobile();}));
   const saved=localStorage.getItem('kenc-ui2-sidebar');if(desktop())setCollapsed(saved==='collapsed',false);
   window.addEventListener('resize',()=>{if(desktop())closeMobile();else body.classList.remove('ui2-sidebar-collapsed');});
-  // Build 003 module overview cards. They are visual-only and preserve all existing controls and data logic.
+  // Build 003.1 module overview cards. They are visual-only and preserve all existing controls and data logic.
   const modules={
     boxPanel:[['규격 조회','통신함·분전반·세대단자함 규격'],['표준 단가','재질별 영업 표준 단가 확인'],['즉시 적용','선택 결과와 계산을 한 화면에서']],
     rackPanel:[['제품 조회','통신·장비 RACK 규격'],['이미지 확인','선택 제품 이미지와 상세정보'],['업무 공유','제품 정보를 빠르게 공유']],
@@ -5560,6 +5568,30 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   Object.entries(modules).forEach(([id,items])=>{const panel=document.getElementById(id);if(!panel||panel.querySelector('.ui2-module-overview'))return;const head=panel.querySelector(':scope > .section-head');if(!head)return;const wrap=document.createElement('div');wrap.className='ui2-module-overview';items.forEach((item,i)=>{const a=document.createElement('article');a.innerHTML='<i>'+['01','02','03'][i]+'</i><span><strong>'+item[0]+'</strong><small>'+item[1]+'</small></span>';wrap.appendChild(a)});head.insertAdjacentElement('afterend',wrap);panel.classList.add('ui2-product-module');});
 })();
 </script>
-
-</body>
+<script>
+(function(){
+ const shell=document.querySelector('.drawing-pro-workspace'); if(!shell) return;
+ const panels={
+  'drawing-canvas-panel':shell.querySelector('.drawing-canvas-panel'),
+  'drawing-3d-panel':shell.querySelector('.drawing-3d-panel')
+ };
+ function clearFocus(){shell.classList.remove('focus-mode');Object.values(panels).forEach(p=>p&&p.classList.remove('focus-active'));}
+ shell.addEventListener('click',function(e){
+  const focus=e.target.closest('[data-focus-target]');
+  if(focus){const target=panels[focus.dataset.focusTarget];if(target){if(shell.classList.contains('focus-mode')&&target.classList.contains('focus-active')) clearFocus();else{clearFocus();shell.classList.add('focus-mode');target.classList.add('focus-active');target.scrollIntoView({block:'start'});} }return;}
+  const tab=e.target.closest('[data-dock-tab]');
+  if(tab){shell.querySelectorAll('[data-dock-tab]').forEach(b=>b.classList.toggle('active',b===tab));shell.querySelectorAll('[data-dock-pane]').forEach(p=>p.classList.toggle('active',p.dataset.dockPane===tab.dataset.dockTab));return;}
+  const proxy=e.target.closest('[data-proxy-click]');if(proxy){document.getElementById(proxy.dataset.proxyClick)?.click();return;}
+  const va=e.target.closest('[data-view-action]');if(va){if(va.dataset.viewAction==='grid'){va.classList.toggle('active');shell.querySelector('.drawing-v85-canvas-wrap')?.classList.toggle('grid-hidden');}else if(va.dataset.viewAction==='fit'){const svg=document.getElementById('drawingCanvas');if(svg){svg.setAttribute('viewBox','0 0 760 700');}}else if(va.dataset.viewAction==='center'){document.getElementById('drawingCanvas')?.scrollIntoView({block:'center'});}return;}
+  const a3=e.target.closest('[data-3d-action]');if(a3){const svg=document.getElementById('drawing3dCanvas');if(svg){svg.setAttribute('viewBox','0 0 420 560');}return;}
+ });
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')clearFocus();});
+ const collapse=document.getElementById('drawingDockCollapse');collapse?.addEventListener('click',()=>{const dock=collapse.closest('.drawing-bottom-dock');dock.classList.toggle('collapsed');collapse.textContent=dock.classList.contains('collapsed')?'펼치기':'접기';});
+ // Lightweight history: records visible status changes without touching drawing engine.
+ const status=document.getElementById('drawingStatus'), list=document.getElementById('drawingHistoryList'), count=document.getElementById('drawingHistoryCount');let history=[];
+ function log(msg){msg=(msg||'').trim();if(!msg||history[0]?.msg===msg)return;history.unshift({msg,time:new Date()});history=history.slice(0,30);if(count)count.textContent=history.length;if(list){list.innerHTML='';history.forEach(x=>{const row=document.createElement('div');row.className='drawing-history-item';row.innerHTML='<time>'+x.time.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})+'</time><span></span>';row.querySelector('span').textContent=x.msg;list.appendChild(row);});}}
+ if(status){new MutationObserver(()=>log(status.textContent)).observe(status,{childList:true,subtree:true,characterData:true});log('Professional Workspace 시작');}
+ document.getElementById('drawingRunCheckBtn')?.addEventListener('click',()=>{const out=document.getElementById('drawingCheckResults');if(!out)return;const checks=[];const w=+document.getElementById('drawingWidthInput')?.value,h=+document.getElementById('drawingHeightInput')?.value,d=+document.getElementById('drawingDepthInput')?.value;checks.push({ok:w>0&&h>0&&d>0,text:'함체 규격 입력 확인'});const canvas=document.getElementById('drawingCanvas');checks.push({ok:(canvas?.children.length||0)>0,text:'2D 도면 생성 상태 확인'});const memo=document.getElementById('productionMemo')?.value.trim();checks.push({ok:!!memo,text:memo?'제작 중요사항 작성됨':'제작 중요사항이 비어 있습니다'});const selected=document.getElementById('drawingSelectedName')?.value;const label=document.getElementById('drawingObjectLabel')?.value.trim();checks.push({ok:selected!=='명판'||!!label,text:selected==='명판'&&!label?'선택된 명판의 명판명을 확인하세요':'명판 문구 확인'});out.innerHTML='';checks.forEach(c=>{const el=document.createElement('div');el.className='drawing-check-item '+(c.ok?'ok':'warn');el.textContent=c.text;out.appendChild(el);});log('도면 검사 실행');});
+})();
+</script></body>
 </html>
