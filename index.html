@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 001</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 002</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2738,6 +2738,64 @@ body:not(.auth-locked) .bottom-nav{display:grid}
 .employee-table-wrap{overflow:auto;max-height:58dvh;border:1px solid #e1e7ef;border-radius:12px}.employee-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px}.employee-table th{position:sticky;top:0;z-index:1;background:#eaf1f8;color:#203b59;padding:11px 10px;text-align:left;font-size:12px}.employee-table td{padding:11px 10px;border-top:1px solid #edf1f5;font-size:13px}.employee-table tbody tr:hover td{background:#f7faff}.admin-state{display:inline-block;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:900}.admin-state.on{background:#e5f7ec;color:#14753b}.admin-state.off{background:#fdeaea;color:#aa2e2e}.admin-hash{font-family:ui-monospace,monospace;color:#6c7d90}.admin-mini{border:0;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:800;cursor:pointer}.admin-mini.edit{background:#e6f0fb;color:#135c9e}.admin-mini.danger{background:#fdecec;color:#a52f2f;margin-left:4px}
 body.admin-panel-open{overflow:hidden}
 @media(max-width:850px){.admin-panel{padding:0}.admin-panel-dialog{width:100%;height:100dvh;max-height:none;border-radius:0}.admin-panel-header{border-radius:0;padding:18px}.admin-panel-grid{grid-template-columns:1fr;padding:12px}.employee-table-wrap{max-height:45dvh}.admin-manage-button{padding:9px 10px;font-size:12px}}
+
+/* =========================================================
+   KENC UI 2.0 · BUILD 002 · RESPONSIVE WORKSPACE
+   Header containment + collapsible sidebar + product modules
+   ========================================================= */
+:root{--ui2-sidebar-open:196px;--ui2-sidebar-closed:76px;--ui2-sidebar:var(--ui2-sidebar-open)}
+html,body{max-width:100%;overflow-x:hidden}
+body:not(.auth-locked) .page{min-width:0;transition:padding-left .22s ease}
+.ui2-sidebar{transition:width .22s ease,padding .22s ease;overflow:hidden}
+.ui2-side-brand{min-width:0}.ui2-side-brand span,.ui2-side-btn span,.ui2-side-foot small,.ui2-side-foot strong,.ui2-sidebar-toggle span{transition:opacity .14s ease,width .22s ease}
+.ui2-sidebar-toggle{width:100%;min-height:42px;margin:10px 0 2px;padding:0 12px;border:1px solid #e4eaf1;border-radius:11px;background:#fff;color:#536276;display:flex;align-items:center;gap:12px;font-weight:800;cursor:pointer}
+.ui2-sidebar-toggle:hover{background:#f4f7fb;color:#1769e8}.ui2-sidebar-toggle i{width:24px;font-style:normal;font-size:20px;text-align:center}
+.ui2-header-menu{display:none;flex:0 0 40px;width:40px;height:40px;border:1px solid #e3e9f0;border-radius:10px;background:#fff;color:#173b67;font-weight:900;font-size:18px}
+body.ui2-sidebar-collapsed{--ui2-sidebar:var(--ui2-sidebar-closed)}
+body.ui2-sidebar-collapsed .ui2-sidebar{padding-left:9px;padding-right:9px}
+body.ui2-sidebar-collapsed .ui2-side-brand{justify-content:center;padding-left:0;padding-right:0}
+body.ui2-sidebar-collapsed .ui2-side-brand strong{font-size:17px;letter-spacing:-.04em}
+body.ui2-sidebar-collapsed .ui2-side-brand span,body.ui2-sidebar-collapsed .ui2-side-btn span,body.ui2-sidebar-collapsed .ui2-side-foot small,body.ui2-sidebar-collapsed .ui2-side-foot strong,body.ui2-sidebar-collapsed .ui2-sidebar-toggle span{opacity:0;width:0;overflow:hidden;white-space:nowrap}
+body.ui2-sidebar-collapsed .ui2-side-btn,body.ui2-sidebar-collapsed .ui2-sidebar-toggle{justify-content:center;padding-left:0;padding-right:0;gap:0}
+body.ui2-sidebar-collapsed .ui2-side-btn i,body.ui2-sidebar-collapsed .ui2-sidebar-toggle i{width:28px}
+body.ui2-sidebar-collapsed .ui2-sidebar-toggle i{transform:rotate(180deg)}
+body.ui2-sidebar-collapsed .ui2-side-foot{justify-content:center;padding-left:4px;padding-right:4px}.ui2-side-foot:after{content:"002";display:none;color:#1769e8;font-size:10px;font-weight:900}.ui2-sidebar-collapsed .ui2-side-foot:after{display:block}
+body:not(.auth-locked) .topbar{width:100%;max-width:100%;min-width:0;display:flex;overflow:visible}
+body:not(.auth-locked) .topbar>.brand{min-width:0;flex:1 1 auto;overflow:hidden}
+body:not(.auth-locked) .topbar>.brand>div{min-width:0}.brand-title{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-actions{min-width:0;max-width:62%;margin-left:auto;display:flex;align-items:center;justify-content:flex-end;flex-wrap:nowrap;overflow:visible}
+.user-badge{min-width:0;max-width:220px;flex:0 1 auto;padding:6px 10px}.user-info{min-width:0}.user-name,.user-role{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-name{max-width:135px}
+.topbar-actions>button{flex:0 0 auto;white-space:nowrap}
+/* Product module shell */
+#boxPanel,#rackPanel,#materialPanel{max-width:1440px;margin:0 auto}
+#boxPanel>.section-head,#rackPanel>.section-head,#materialPanel>.section-head{position:relative;overflow:hidden;margin-bottom:14px;padding:25px 28px;border:1px solid var(--ui2-line);border-radius:16px;background:linear-gradient(135deg,#fff 0%,#fbfdff 58%,#f1f6ff 100%);box-shadow:var(--ui2-shadow)}
+#boxPanel>.section-head:after,#rackPanel>.section-head:after,#materialPanel>.section-head:after{content:"";position:absolute;right:22px;bottom:-28px;width:220px;height:120px;opacity:.55;background-image:linear-gradient(rgba(91,148,224,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(91,148,224,.14) 1px,transparent 1px);background-size:20px 20px;transform:skewX(-8deg)}
+#boxPanel>.section-head>* ,#rackPanel>.section-head>* ,#materialPanel>.section-head>*{position:relative;z-index:1}
+#boxPanel>.section-head h2,#rackPanel>.section-head h2,#materialPanel>.section-head h2{margin:5px 0 6px;font-size:25px;letter-spacing:-.04em}
+#boxPanel>.section-head p,#rackPanel>.section-head p,#materialPanel>.section-head p{margin:0;color:#768397;font-size:13px}
+.ui2-module-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 14px}
+.ui2-module-overview article{min-height:76px;padding:14px 16px;border:1px solid var(--ui2-line);border-radius:13px;background:#fff;display:flex;align-items:center;gap:12px;box-shadow:0 5px 18px rgba(24,48,80,.035)}
+.ui2-module-overview i{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:11px;background:#eaf2ff;color:#1769e8;font-style:normal;font-weight:900}.ui2-module-overview article:nth-child(2) i{background:#e8f7f2;color:#188268}.ui2-module-overview article:nth-child(3) i{background:#f0ecff;color:#7357d7}
+.ui2-module-overview span{display:flex;flex-direction:column;gap:3px}.ui2-module-overview strong{font-size:12px}.ui2-module-overview small{font-size:10px;color:#8491a2;line-height:1.4}
+#boxPanel>.card,#rackPanel>.card,#materialPanel>.card,#boxPanel .config-card,#rackPanel .config-card,#materialPanel .config-card,#boxPanel .table-card,#rackPanel .table-card,#materialPanel .table-card{border:1px solid var(--ui2-line)!important;border-radius:16px!important;background:#fff!important;box-shadow:0 7px 24px rgba(24,48,80,.045)!important}
+#boxPanel .form-grid,#rackPanel .form-grid,#materialPanel .form-grid{gap:14px}
+#boxPanel input,#boxPanel select,#rackPanel input,#rackPanel select,#materialPanel input,#materialPanel select{min-height:44px;border-radius:10px!important;border-color:#dfe6ee!important;background:#fbfcfe!important}
+#boxPanel table,#rackPanel table,#materialPanel table{border-collapse:separate!important;border-spacing:0!important}#boxPanel table th,#rackPanel table th,#materialPanel table th{background:#f5f8fc!important;color:#536276!important;font-size:11px!important;letter-spacing:.01em}#boxPanel table td,#rackPanel table td,#materialPanel table td{border-color:#edf1f5!important}
+#boxPanel button,#rackPanel button,#materialPanel button{transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}#boxPanel button:hover,#rackPanel button:hover,#materialPanel button:hover{transform:translateY(-1px)}
+@media(max-width:1280px) and (min-width:901px){
+  :root{--ui2-sidebar-open:178px}.topbar-actions{max-width:58%}.user-badge{max-width:175px}.user-name{max-width:98px}
+  .admin-manage-button{font-size:0!important;width:42px!important;padding:0!important}.admin-manage-button:after{content:"⚙";font-size:16px}.home-button{display:none!important}.back-button{font-size:0!important;width:42px!important;padding:0!important}.back-button:after{content:"←";font-size:17px}
+}
+@media(max-width:1040px) and (min-width:901px){.ui2-header-menu{display:flex;align-items:center;justify-content:center}.topbar-actions{max-width:52%}.user-badge{max-width:150px}.user-name{max-width:75px}.lock-button{font-size:0!important;width:42px!important;padding:0!important}.lock-button:after{content:"🔒";font-size:15px}}
+@media(max-width:900px){
+  .ui2-sidebar{display:flex;transform:translateX(-105%);width:min(286px,84vw);box-shadow:18px 0 48px rgba(21,43,74,.18);transition:transform .22s ease;z-index:240}.ui2-sidebar.mobile-open{transform:translateX(0)}
+  .ui2-sidebar .ui2-side-brand span,.ui2-sidebar .ui2-side-btn span,.ui2-sidebar .ui2-side-foot small,.ui2-sidebar .ui2-side-foot strong,.ui2-sidebar .ui2-sidebar-toggle span{opacity:1!important;width:auto!important}.ui2-sidebar .ui2-side-btn,.ui2-sidebar .ui2-sidebar-toggle{justify-content:flex-start!important;padding:0 12px!important;gap:12px!important}.ui2-sidebar .ui2-sidebar-toggle i{transform:none!important}
+  .ui2-header-menu{display:flex;align-items:center;justify-content:center}.topbar-actions{max-width:none;margin-left:auto}.topbar-actions .user-badge{display:flex!important;max-width:132px;padding:5px 7px}.user-avatar{width:30px;height:30px}.user-role{display:none}.user-name{max-width:78px;font-size:11px}.admin-manage-button{display:none!important}.back-button{font-size:0!important;width:40px!important;padding:0!important}.back-button:after{content:"←";font-size:17px}.lock-button{width:40px!important}.brand-title>strong{font-size:20px!important}
+  .ui2-module-overview{grid-template-columns:1fr}.ui2-module-overview article{min-height:64px}#boxPanel>.section-head,#rackPanel>.section-head,#materialPanel>.section-head{padding:20px 18px}#boxPanel>.section-head h2,#rackPanel>.section-head h2,#materialPanel>.section-head h2{font-size:22px}
+}
+@media(max-width:620px){.topbar-actions .user-badge{max-width:92px}.user-name{max-width:48px}.back-button{display:none!important}.topbar{gap:7px!important;padding:8px!important}.brand-title>strong{font-size:18px!important}.ui2-header-menu{width:38px;height:38px;flex-basis:38px}}
+.ui2-sidebar-scrim{position:fixed;z-index:230;inset:0;background:rgba(16,34,59,.28);backdrop-filter:blur(2px);display:none}.ui2-sidebar-scrim.open{display:block}
+
 </style>
 <!-- PWA / 모바일 웹앱 설정 -->
 <meta content="#0f4c81" name="theme-color"/>
@@ -2893,7 +2951,7 @@ table,body[data-build] table{border-color:#e4e4e0!important}table th,body[data-b
 }
 
 /* =========================================================
-   KENC UI 2.0 · BUILD 001 · CLEAN WHITE MODERN
+   KENC UI 2.0 · BUILD 002 · CLEAN WHITE MODERN
    Login + Home + Common Workspace Shell
    ========================================================= */
 :root{--ui2-blue:#1769e8;--ui2-navy:#102a4c;--ui2-text:#172033;--ui2-muted:#6f7c90;--ui2-line:#e4eaf1;--ui2-bg:#f7f9fc;--ui2-card:#fff;--ui2-sidebar:196px;--ui2-radius:16px;--ui2-shadow:0 10px 30px rgba(25,47,79,.06)}
@@ -2906,7 +2964,7 @@ body:not(.auth-locked) .company-logo{display:none!important}body:not(.auth-locke
 .ui2-home{max-width:1440px;margin:0 auto}.ui2-welcome{position:relative;overflow:hidden;min-height:172px;padding:34px 38px;border:1px solid var(--ui2-line);border-radius:var(--ui2-radius);background:linear-gradient(135deg,#fff 0%,#fbfdff 58%,#f0f6ff 100%);box-shadow:var(--ui2-shadow);display:flex;align-items:center}.ui2-welcome-copy{position:relative;z-index:2}.ui2-kicker{display:block;margin-bottom:8px;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.14em}.ui2-welcome h1{margin:0;color:#172033;font-size:31px;line-height:1.2;letter-spacing:-.045em}.ui2-welcome p{margin:10px 0 0;color:#718096;font-size:14px}.ui2-blueprint{position:absolute;right:3%;bottom:-4px;width:42%;height:148px;opacity:.65;background-image:linear-gradient(rgba(93,151,229,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(93,151,229,.13) 1px,transparent 1px);background-size:22px 22px;clip-path:polygon(5% 100%,5% 55%,18% 55%,18% 37%,31% 37%,31% 63%,45% 63%,45% 25%,61% 25%,61% 49%,76% 49%,76% 10%,93% 10%,93% 100%)}.ui2-blueprint:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12))}
 .ui2-section-title{display:flex;align-items:flex-end;justify-content:space-between;margin:27px 3px 14px}.ui2-section-title span{display:block;color:#1769e8;font-size:10px;font-weight:900;letter-spacing:.11em}.ui2-section-title h2{margin:4px 0 0;font-size:20px;letter-spacing:-.03em}.ui2-section-title small{color:#8a96a6;font-size:12px}.ui2-primary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ui2-work-card{position:relative;min-height:154px;padding:20px;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);display:flex;flex-direction:column;align-items:flex-start;text-align:left;cursor:pointer}.ui2-work-card:hover{transform:translateY(-3px);border-color:#cfdbeb;box-shadow:0 14px 28px rgba(24,48,80,.09)}.ui2-work-icon{display:grid;place-items:center;width:48px;height:48px;margin-bottom:17px;border-radius:14px;font-size:23px;font-weight:900}.ui2-work-card.box .ui2-work-icon{color:#1769e8;background:#eaf2ff}.ui2-work-card.rack .ui2-work-icon{color:#188268;background:#e8f7f2}.ui2-work-card.material .ui2-work-icon{color:#7357d7;background:#f0ecff}.ui2-work-card.drawing .ui2-work-icon{color:#d47714;background:#fff1e2}.ui2-work-card span:nth-child(2){display:flex;flex-direction:column;gap:5px}.ui2-work-card strong{font-size:17px;color:#182235}.ui2-work-card small{font-size:11px;color:#778498}.ui2-work-card>b{position:absolute;right:18px;bottom:16px;color:#25364c;font-size:20px}
 .ui2-dashboard-grid{display:grid;grid-template-columns:1.15fr 1fr .95fr;gap:14px;margin-top:16px}.ui2-dashboard-card{min-width:0;border:1px solid var(--ui2-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(24,48,80,.035);overflow:hidden}.ui2-dashboard-card>header{min-height:66px;padding:15px 17px;border-bottom:1px solid #edf1f5;display:flex;align-items:center;justify-content:space-between}.ui2-dashboard-card>header span{display:block;color:#8996a7;font-size:9px;font-weight:900;letter-spacing:.12em}.ui2-dashboard-card>header h3{margin:4px 0 0;font-size:15px}.ui2-dashboard-card>header button{border:0;background:transparent;color:#758196;font-size:11px;font-weight:800;cursor:pointer}.ui2-list{padding:5px 14px 13px}.ui2-list button{width:100%;min-height:55px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;text-align:left;cursor:pointer}.ui2-list button:last-child{border-bottom:0}.ui2-list i{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;font-style:normal;font-weight:900}.ui2-list i.blue{color:#1769e8;background:#eaf2ff}.ui2-list i.green{color:#188268;background:#e8f7f2}.ui2-list i.purple{color:#7357d7;background:#f0ecff}.ui2-list i.orange{color:#d47714;background:#fff1e2}.ui2-list span{display:flex;flex-direction:column;gap:3px}.ui2-list strong{font-size:12px}.ui2-list small,.ui2-list time{font-size:10px;color:#8995a5}.ui2-notice-list{padding:7px 16px 15px}.ui2-notice-list article{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0f3f6}.ui2-notice-list article:last-child{border-bottom:0}.ui2-notice-list em{width:6px;height:6px;margin-top:5px;border-radius:50%;background:#ff4d5e}.ui2-notice-list div{display:flex;flex-direction:column;gap:4px}.ui2-notice-list strong{font-size:12px}.ui2-notice-list small{font-size:10px;line-height:1.45;color:#8591a1}.ui2-notice-list time{padding:3px 6px;border-radius:99px;background:#fff0f2;color:#e53449;font-size:8px;font-weight:900}.ui2-resource-list{padding:9px 12px 14px}.ui2-resource-list button{width:100%;min-height:62px;padding:8px 6px;border:0;border-bottom:1px solid #f0f3f6;background:#fff;display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;text-align:left;cursor:pointer}.ui2-resource-list button:last-child{border-bottom:0}.ui2-resource-list i{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#f1f5fa;color:#31557e;font-style:normal}.ui2-resource-list span{display:flex;flex-direction:column;gap:4px}.ui2-resource-list strong{font-size:12px}.ui2-resource-list small{font-size:10px;color:#8995a5}.ui2-resource-list b{color:#9aa5b4}
-/* common cards/forms for Build 001 */
+/* common cards/forms for Build 002 */
 body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not(.auth-locked) .table-card,body:not(.auth-locked) .drawing-side-card,body:not(.auth-locked) .drawing-center-card,body:not(.auth-locked) .drawing-highlights{border-color:var(--ui2-line)!important;border-radius:var(--ui2-radius)!important;box-shadow:0 7px 24px rgba(24,48,80,.045)!important;background:#fff!important}body:not(.auth-locked) input,body:not(.auth-locked) select,body:not(.auth-locked) textarea{border-color:#dfe6ee!important;border-radius:10px!important;background:#fff!important}body:not(.auth-locked) input:focus,body:not(.auth-locked) select:focus,body:not(.auth-locked) textarea:focus{border-color:#75a8ee!important;box-shadow:0 0 0 3px rgba(23,105,232,.10)!important}.section-head h2{letter-spacing:-.04em!important}.eyebrow{color:#1769e8!important}
 /* login refinements */
 .auth-shell{max-width:1280px!important;border-radius:24px!important;box-shadow:0 24px 70px rgba(22,44,75,.13)!important}.auth-brand-panel{background:linear-gradient(145deg,#fff,#f8fbff)!important}.auth-brand-copy{margin-top:48px!important}.auth-brand-copy h1{gap:3px!important}.auth-brand-copy h1 span{font-size:20px!important}.auth-brand-copy h1 strong{font-size:32px!important}.auth-capability-list{margin-top:28px!important}.auth-login-panel{padding-top:54px!important;padding-bottom:46px!important}.auth-card{max-width:430px!important}.auth-submit{background:#121826!important;border-radius:10px!important}.auth-submit:hover{background:#1769e8!important}.auth-company-logo{display:none!important}.auth-mobile-brand{margin-bottom:28px!important}
@@ -2957,7 +3015,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
       <p aria-live="polite" class="auth-status" id="authStatus"></p>
       <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
       <div class="auth-version-box" aria-label="시스템 정보">
-        <div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 001</span></div>
+        <div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 002</span></div>
         <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
         <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
       </div>
@@ -2981,13 +3039,14 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
       <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
     </form>
     <div class="auth-system-strip" aria-label="시스템 상태">
-      <span>UI 2.0 · Build 001</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+      <span>UI 2.0 · Build 002</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
     </div>
     </section>
   </div>
 </section>
 <aside class="ui2-sidebar" id="ui2Sidebar" aria-label="KENC 주요 메뉴">
   <div class="ui2-side-brand"><strong>KENC</strong><span>광전기통신<br>영업지원시스템</span></div>
+  <button class="ui2-sidebar-toggle" id="ui2SidebarToggle" type="button" aria-expanded="true" aria-controls="ui2Sidebar"><i aria-hidden="true">«</i><span>접기</span></button>
   <nav>
     <button class="ui2-side-btn active" type="button" data-target="homePanel"><i>⌂</i><span>홈</span></button>
     <button class="ui2-side-btn" type="button" data-target="boxPanel"><i>□</i><span>함 파트</span></button>
@@ -2998,10 +3057,11 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
     <button class="ui2-side-btn" type="button" data-target="manualPanel"><i>▥</i><span>업무 매뉴얼</span></button>
     <button class="ui2-side-btn" type="button" data-target="educationPanel"><i>◈</i><span>교육 자료</span></button>
   </nav>
-  <div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 001</strong></div>
+  <div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 002</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
+<button class="ui2-header-menu" id="ui2HeaderMenu" type="button" aria-label="메뉴 접기 또는 펼치기" aria-expanded="true">☰</button>
 <div class="brand">
 <img alt="(주)광전기통신 로고" class="company-logo" src="assets/gwangtelecom_logo.png"/>
 <div>
@@ -3058,7 +3118,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
     <section class="ui2-dashboard-card ui2-notice">
       <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
       <div class="ui2-notice-list">
-        <article><em></em><div><strong>KENC UI 2.0 Build 001 적용</strong><small>로그인·홈·공통 디자인 시스템 리빌드</small></div><time>NEW</time></article>
+        <article><em></em><div><strong>KENC UI 2.0 Build 002 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
         <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
         <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
       </div>
@@ -5360,6 +5420,38 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
   const syncActive=()=>{const active=panels.find(p=>p.classList.contains('active'));document.querySelectorAll('.ui2-side-btn').forEach(b=>b.classList.toggle('active',b.dataset.target===active?.id));};
   new MutationObserver(syncActive).observe(document.querySelector('main.page'),{subtree:true,attributes:true,attributeFilter:['class']});
   syncActive();
+})();
+</script>
+
+<script>
+(function(){
+  'use strict';
+  const body=document.body, sidebar=document.getElementById('ui2Sidebar'), toggle=document.getElementById('ui2SidebarToggle'), headerMenu=document.getElementById('ui2HeaderMenu');
+  if(!sidebar) return;
+  const scrim=document.createElement('div');scrim.className='ui2-sidebar-scrim';scrim.setAttribute('aria-hidden','true');document.body.appendChild(scrim);
+  const desktop=()=>window.matchMedia('(min-width:901px)').matches;
+  function setCollapsed(collapsed,persist=true){
+    body.classList.toggle('ui2-sidebar-collapsed',collapsed);
+    toggle?.setAttribute('aria-expanded',String(!collapsed));headerMenu?.setAttribute('aria-expanded',String(!collapsed));
+    if(toggle){const t=toggle.querySelector('span');if(t)t.textContent=collapsed?'펼치기':'접기';}
+    if(persist) localStorage.setItem('kenc-ui2-sidebar',collapsed?'collapsed':'open');
+  }
+  function closeMobile(){sidebar.classList.remove('mobile-open');scrim.classList.remove('open');}
+  function toggleSidebar(){
+    if(desktop()) setCollapsed(!body.classList.contains('ui2-sidebar-collapsed'));
+    else {const open=!sidebar.classList.contains('mobile-open');sidebar.classList.toggle('mobile-open',open);scrim.classList.toggle('open',open);}
+  }
+  toggle?.addEventListener('click',toggleSidebar);headerMenu?.addEventListener('click',toggleSidebar);scrim.addEventListener('click',closeMobile);
+  sidebar.querySelectorAll('[data-target]').forEach(b=>b.addEventListener('click',()=>{if(!desktop())closeMobile();}));
+  const saved=localStorage.getItem('kenc-ui2-sidebar');if(desktop())setCollapsed(saved==='collapsed',false);
+  window.addEventListener('resize',()=>{if(desktop())closeMobile();else body.classList.remove('ui2-sidebar-collapsed');});
+  // Build 002 module overview cards. They are visual-only and preserve all existing controls and data logic.
+  const modules={
+    boxPanel:[['규격 조회','통신함·분전반·세대단자함 규격'],['표준 단가','재질별 영업 표준 단가 확인'],['즉시 적용','선택 결과와 계산을 한 화면에서']],
+    rackPanel:[['제품 조회','통신·장비 RACK 규격'],['이미지 확인','선택 제품 이미지와 상세정보'],['업무 공유','제품 정보를 빠르게 공유']],
+    materialPanel:[['통합 검색','제품군 미선택 상태에서도 검색'],['단가 관리','기준가와 인상률 즉시 반영'],['규격 비교','품목·규격·단가를 한 번에 확인']]
+  };
+  Object.entries(modules).forEach(([id,items])=>{const panel=document.getElementById(id);if(!panel||panel.querySelector('.ui2-module-overview'))return;const head=panel.querySelector(':scope > .section-head');if(!head)return;const wrap=document.createElement('div');wrap.className='ui2-module-overview';items.forEach((item,i)=>{const a=document.createElement('article');a.innerHTML='<i>'+['01','02','03'][i]+'</i><span><strong>'+item[0]+'</strong><small>'+item[1]+'</small></span>';wrap.appendChild(a)});head.insertAdjacentElement('afterend',wrap);panel.classList.add('ui2-product-module');});
 })();
 </script>
 
