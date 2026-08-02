@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 004.1.1</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 004.1.1 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.6 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 004.1.1 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.6 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 004.1.1
+   KENC UI 2.0 Build 003.6
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3324,9 +3324,10 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 body.drawing-object-dragging{overflow:hidden!important;overscroll-behavior:none!important;touch-action:none!important}
 body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 </style>
+
 <style id="build0034-responsive-layout-fix">
 /* =========================================================
-   KENC UI 2.0 Build 004.1.1
+   KENC UI 2.0 Build 003.6
    Desktop clipping + mobile object palette accessibility fix.
    Object geometry, attachment shapes and drawing calculations are untouched.
    ========================================================= */
@@ -3447,8 +3448,10 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
  #drawingPanel .drawing-pro-workspace .drawing-v85-canvas-wrap{height:430px!important;min-height:310px!important}
 }
 </style>
+
+
 <style id="build0035-critical-layout-fix">
-/* KENC UI 2.0 Build 004.1.1 - focus mode, panel overflow and dock stabilization */
+/* KENC UI 2.0 Build 003.6 - focus mode, panel overflow and dock stabilization */
 html,body{max-width:100%;overflow-x:hidden}
 #drawingPanel,#drawingPanel .drawing-pro-workspace,#drawingPanel .drawing-v85-main,#drawingPanel .stack-section{min-width:0;max-width:100%;box-sizing:border-box}
 #drawingPanel .drawing-v85-main>* ,#drawingPanel .stack-section>*{min-width:0;max-width:100%;box-sizing:border-box}
@@ -3554,6 +3557,8 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
  #drawingPanel #productionMemo{font-size:16px!important}
 }
 </style>
+
+
 <style id="build0036-review-center-css">
 #drawingPanel .drawing-review-workbench{overflow:hidden!important;min-width:0!important}
 #drawingPanel .drawing-review-tabs{display:flex;gap:4px;padding:8px;border-bottom:1px solid #2a3a4e;background:#0d1723;overflow-x:auto;scrollbar-width:thin}
@@ -3583,152 +3588,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 @media(max-width:900px){#drawingPanel .drawing-output-visuals{grid-template-columns:1fr}#drawingPanel .drawing-output-visuals svg{height:220px}#drawingPanel .drawing-output-meta{grid-template-columns:repeat(2,minmax(0,1fr))}#drawingPanel .drawing-output-meta span:nth-child(2){border-right:0}#drawingPanel .drawing-output-meta span:nth-child(-n+2){border-bottom:1px solid #e4e7ec}#drawingPanel .drawing-info-grid{grid-template-columns:1fr}}
 @media(max-width:560px){#drawingPanel .drawing-review-body{min-height:0}#drawingPanel .drawing-review-pane{padding:7px}#drawingPanel .drawing-output-sheet{padding:8px}#drawingPanel .drawing-output-visuals svg{height:190px}#drawingPanel .drawing-output-meta span{padding:7px}#drawingPanel .drawing-preview-actions{display:grid;grid-template-columns:1fr 1fr}#drawingPanel .drawing-preview-actions button{width:100%!important;min-width:0!important}}
 </style>
-<style id="build0037-production-config-css">
-/* Build 004.1: 제작 중요사항 + 함체 속성 통합 및 하단 정렬 */
-#drawingPanel .drawing-dock-tabs{flex-wrap:wrap!important;overflow:visible!important;gap:6px!important;padding:8px!important}
-#drawingPanel .drawing-dock-tabs button{flex:0 0 auto!important;min-height:38px!important;padding:9px 13px!important;font-size:12px!important}
-#drawingPanel .drawing-dock-tabs .drawing-dock-collapse{margin-left:auto!important}
-#drawingPanel .drawing-dock-body{max-height:none!important;overflow:visible!important}
-#drawingPanel .drawing-dock-pane{padding:10px!important}
-#drawingPanel .production-config-card{border:0!important;background:transparent!important;overflow:visible!important}
-#drawingPanel .production-config-card>.drawing-v85-card-head{display:flex!important;border:1px solid #2a3a4f!important;border-bottom:0!important;border-radius:8px 8px 0 0!important;background:#101c2a!important;padding:11px 13px!important;color:#f3f7fc!important}
-#drawingPanel .production-config-grid{display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr)!important;gap:10px!important;padding:10px!important;border:1px solid #2a3a4f!important;border-radius:0 0 8px 8px!important;background:#0d1723!important;align-items:stretch!important}
-#drawingPanel .production-config-section{min-width:0!important;border:1px solid #2d4057!important;border-radius:8px!important;background:#111e2d!important;padding:12px!important;box-sizing:border-box!important}
-#drawingPanel .production-config-section h4{margin:0 0 10px!important;color:#f7fbff!important;font-size:13px!important;line-height:1.3!important}
-#drawingPanel .production-notes-grid{padding:0!important}
-#drawingPanel #productionMemo{min-height:210px!important;max-height:360px!important;background:#f8fafc!important;color:#172033!important;border-color:#b8c5d6!important;font-size:14px!important}
-#drawingPanel .production-note-help{padding:8px 0 0!important;color:#9fb1c7!important}
-#drawingPanel .cabinet-config-section{display:flex!important;flex-direction:column!important}
-#drawingPanel .cabinet-config-section .cabinet-property-grid{display:grid!important;grid-template-columns:92px minmax(0,1fr)!important;gap:9px 10px!important;padding:0!important;background:transparent!important;border:0!important;min-width:0!important}
-#drawingPanel .cabinet-config-section .cabinet-property-grid label{color:#dbe6f3!important;font-size:12px!important;font-weight:800!important;line-height:38px!important;min-width:0!important}
-#drawingPanel .cabinet-config-section .cabinet-property-grid input,#drawingPanel .cabinet-config-section .cabinet-property-grid select{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;background:#f8fafc!important;color:#172033!important;border:1px solid #b8c5d6!important;border-radius:8px!important;min-height:40px!important;padding:0 10px!important}
-#drawingPanel .cabinet-apply-wide{width:100%!important;margin-top:12px!important;min-height:42px!important}
-#drawingPanel .stack-section{grid-template-columns:minmax(260px,320px) minmax(0,1fr)!important;align-items:stretch!important}
-#drawingPanel .stack-section>.drawing-v85-card{min-width:0!important;max-width:100%!important}
-@media(max-width:1100px){
- #drawingPanel .production-config-grid{grid-template-columns:1fr!important}
- #drawingPanel #productionMemo{min-height:150px!important}
- #drawingPanel .stack-section{grid-template-columns:1fr!important}
-}
-@media(max-width:680px){
- #drawingPanel .drawing-dock-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}
- #drawingPanel .drawing-dock-tabs button{width:100%!important;min-width:0!important;white-space:normal!important;line-height:1.25!important;text-align:center!important}
- #drawingPanel .drawing-dock-tabs .drawing-dock-collapse{margin:0!important;grid-column:1/-1!important}
- #drawingPanel .drawing-dock-pane{padding:7px!important}
- #drawingPanel .production-config-grid{padding:7px!important;gap:7px!important}
- #drawingPanel .production-config-section{padding:10px!important}
- #drawingPanel .cabinet-config-section .cabinet-property-grid{grid-template-columns:1fr!important;gap:5px!important}
- #drawingPanel .cabinet-config-section .cabinet-property-grid label{line-height:1.3!important;margin-top:5px!important}
- #drawingPanel #productionMemo{min-height:145px!important;font-size:16px!important}
-}
-</style>
-<link href="build004.css?v=004" rel="stylesheet"/>
-<style>
-/* === KENC UI 2.0 Build 004.1.1.1 : Clean Rebuilt Drawing Workspace === */
-#drawingPanel{--kbg:#07111d;--kpanel:#0d1a29;--kpanel2:#101f31;--kline:#263a52;--ktext:#eef5ff;--kmuted:#9fb0c5;--kblue:#2f73e8;overflow:visible!important}
-#drawingPanel .drawing-pro-workspace{width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;border:1px solid #20344b!important;border-radius:14px!important;background:var(--kbg)!important;color:var(--ktext)!important;overflow:hidden!important;box-sizing:border-box!important}
-#drawingPanel .drawing-pro-workspace *{box-sizing:border-box!important;min-width:0}
-#drawingPanel .drawing-toolbar,#drawingPanel .drawing-workspace-meta,#drawingPanel .drawing-controls{background:#081522!important;color:var(--ktext)!important;border-color:var(--kline)!important}
-#drawingPanel .drawing-toolbar{display:flex!important;align-items:center!important;gap:12px!important;padding:10px 12px!important;flex-wrap:wrap!important}
-#drawingPanel .drawing-toolbar-actions{margin-left:auto!important;display:flex!important;gap:6px!important;flex-wrap:wrap!important}
-#drawingPanel .drawing-workspace-meta{display:flex!important;gap:7px!important;padding:7px 12px!important;overflow-x:auto!important;white-space:nowrap!important}
-#drawingPanel .drawing-controls{display:grid!important;grid-template-columns:repeat(3,minmax(120px,190px)) minmax(130px,170px)!important;gap:10px!important;padding:10px 12px!important;align-items:end!important}
-#drawingPanel .drawing-field label{color:#c9d7e7!important;font-weight:800!important}
-#drawingPanel input,#drawingPanel select,#drawingPanel textarea{width:100%!important;max-width:100%!important;background:#f9fbfe!important;color:#142033!important;border:1px solid #c9d5e3!important}
-#drawingPanel .drawing-action-btn,#drawingPanel .drawing-tool-btn,#drawingPanel .stack-small-btn{background:#14243a!important;color:#dce8f6!important;border:1px solid #334b68!important}
-#drawingPanel .drawing-primary-btn{background:linear-gradient(135deg,#367cf2,#2862ce)!important;color:#fff!important;border:0!important}
-#drawingPanel .drawing-v85-main{display:grid!important;grid-template-columns:240px minmax(480px,1fr) 350px!important;grid-template-areas:'palette canvas inspector'!important;gap:10px!important;padding:10px!important;margin:0!important;background:var(--kbg)!important;align-items:stretch!important;overflow:hidden!important}
-#drawingPanel .drawing-palette-panel{grid-area:palette!important}
-#drawingPanel .drawing-canvas-panel{grid-area:canvas!important}
-#drawingPanel .drawing-inspector-rail{grid-area:inspector!important;display:grid!important;grid-template-rows:minmax(300px,1fr) auto!important;gap:10px!important;min-height:0!important;overflow:hidden!important}
-#drawingPanel .drawing-v85-card{background:var(--kpanel)!important;color:var(--ktext)!important;border:1px solid var(--kline)!important;border-radius:10px!important;box-shadow:none!important;overflow:hidden!important}
-#drawingPanel .drawing-v85-card-head{min-height:42px!important;padding:10px 12px!important;background:#0b1826!important;color:var(--ktext)!important;border-bottom:1px solid var(--kline)!important}
-#drawingPanel .drawing-v85-card-head small{color:var(--kmuted)!important}
-#drawingPanel .drawing-palette-panel,#drawingPanel .drawing-canvas-panel,#drawingPanel .drawing-inspector-rail{height:620px!important}
-#drawingPanel .drawing-tool-rows{height:calc(100% - 78px)!important;overflow:auto!important;padding:8px!important;display:grid!important;align-content:start!important;gap:7px!important}
-#drawingPanel .drawing-tool-row{display:grid!important;grid-template-columns:38px minmax(0,1fr)!important;gap:8px!important;align-items:center!important;min-height:58px!important;padding:7px!important;background:#122238!important;border:1px solid #2b415d!important;border-radius:8px!important;overflow:visible!important}
-#drawingPanel .drawing-tool-row>*{min-width:0!important}
-#drawingPanel .drawing-tool-row label,#drawingPanel .drawing-tool-row span{color:#e7f0fb!important}
-#drawingPanel .drawing-tool-row select{height:36px!important;font-size:12px!important}
-#drawingPanel .drawing-view-tabs,#drawingPanel .drawing-pro-view-tools{background:#0a1725!important;border-color:var(--kline)!important}
-#drawingPanel .drawing-v85-canvas-wrap{height:calc(100% - 82px)!important;min-height:0!important;overflow:auto!important;background-color:#0d1824!important;background-image:linear-gradient(rgba(86,116,151,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(86,116,151,.14) 1px,transparent 1px),linear-gradient(rgba(86,116,151,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(86,116,151,.06) 1px,transparent 1px)!important;background-size:50px 50px,50px 50px,10px 10px,10px 10px!important;overscroll-behavior:contain!important;touch-action:none!important}
-#drawingPanel .drawing-v85-canvas-wrap.grid-hidden{background-image:none!important}
-#drawingPanel #drawingCanvas{display:block!important;width:100%!important;height:100%!important;min-height:500px!important;touch-action:none!important;user-select:none!important;filter:invert(.9) hue-rotate(176deg) saturate(.75) brightness(1.22)!important}
-#drawingPanel .drawing-3d-panel,#drawingPanel .drawing-properties-panel{height:auto!important;min-height:0!important}
-#drawingPanel .drawing-3d-panel{display:flex!important;flex-direction:column!important}
-#drawingPanel .drawing-3d-wrap{flex:1!important;min-height:0!important;overflow:auto!important;background:radial-gradient(circle at 50% 30%,#26394f,#111d2b 58%,#0b1420)!important}
-#drawingPanel #drawing3dCanvas{width:100%!important;height:100%!important;min-height:300px!important}
-#drawingPanel .drawing-settings-wrap{max-height:290px!important;overflow:auto!important;padding:10px!important}
-#drawingPanel .drawing-settings-grid{display:grid!important;gap:8px!important}
-#drawingPanel .drawing-dual{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
-#drawingPanel .drawing-legacy-dock{display:none!important}
-#drawingPanel .stack-section{display:grid!important;grid-template-columns:300px minmax(460px,1fr) 300px!important;gap:10px!important;padding:0 10px 10px!important;background:var(--kbg)!important;align-items:stretch!important;overflow:hidden!important}
-#drawingPanel .stack-section>.drawing-v85-card{min-height:420px!important;max-height:520px!important}
-#drawingPanel .stack-list{max-height:330px!important;overflow:auto!important;padding:8px!important}
-#drawingPanel .stack-item{background:#122238!important;color:#e8f1fb!important;border-color:#2c435f!important}
-#drawingPanel .stack-item.active{background:#173b75!important;border-color:#4389ff!important}
-#drawingPanel .drawing-review-workbench{display:flex!important;flex-direction:column!important}
-#drawingPanel .drawing-review-tabs{display:flex!important;gap:5px!important;padding:8px!important;overflow-x:auto!important;background:#0a1725!important;border-bottom:1px solid var(--kline)!important}
-#drawingPanel .drawing-review-tabs button{flex:0 0 auto!important;background:#14243a!important;color:#cbd9e9!important;border:1px solid #344d6b!important;border-radius:7px!important;padding:9px 12px!important}
-#drawingPanel .drawing-review-tabs button.active{background:#2f73e8!important;color:#fff!important;border-color:#5a9aff!important}
-#drawingPanel .drawing-review-body{flex:1!important;min-height:0!important;overflow:auto!important;padding:10px!important;background:#0d1a29!important}
-#drawingPanel .production-config-grid{display:grid!important;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr)!important;gap:12px!important;padding:0!important}
-#drawingPanel .production-config-section{background:#101f31!important;border:1px solid #2b405a!important;border-radius:9px!important;padding:12px!important;overflow:hidden!important}
-#drawingPanel .production-config-section h4{color:#edf5ff!important;margin:0 0 10px!important}
-#drawingPanel #productionMemo{min-height:180px!important;resize:vertical!important}
-#drawingPanel .cabinet-property-grid{display:grid!important;grid-template-columns:95px minmax(0,1fr)!important;gap:8px 10px!important;align-items:center!important;background:transparent!important}
-#drawingPanel .cabinet-property-grid label{color:#c9d7e7!important}
-#drawingPanel .cabinet-apply-wide{width:100%!important;margin-top:10px!important}
-#drawingPanel .drawing-work-history-card{display:flex!important;flex-direction:column!important}
-#drawingPanel .drawing-work-history-body{flex:1!important;min-height:0!important;overflow:auto!important;padding:10px!important}
-#drawingPanel .drawing-history-item{color:#dce7f4!important;border-color:#293d55!important}
-#drawingPanel .drawing-output-sheet{max-width:100%!important;overflow:hidden!important}
-#drawingPanel .legacy-stack-preview,#drawingPanel .legacy-stack-info{display:none!important}
-#drawingPanel.focus-mode,#drawingPanel .drawing-pro-workspace.focus-mode{position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;border-radius:0!important;overflow:auto!important;background:var(--kbg)!important}
-#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main{display:block!important;padding:10px!important;height:calc(100dvh - 115px)!important}
-#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main>*{display:none!important}
-#drawingPanel .drawing-pro-workspace.focus-mode .drawing-v85-main>.focus-active{display:flex!important;height:100%!important;min-height:0!important}
-@media(max-width:1250px){
- #drawingPanel .drawing-v85-main{grid-template-columns:210px minmax(430px,1fr) 310px!important}
- #drawingPanel .stack-section{grid-template-columns:280px minmax(420px,1fr)!important}
- #drawingPanel .drawing-work-history-card{grid-column:1/-1!important;min-height:230px!important;max-height:300px!important}
-}
-@media(max-width:900px){
- #drawingPanel .drawing-toolbar{position:sticky!important;top:0!important;z-index:20!important;border-radius:0!important}
- #drawingPanel .drawing-toolbar-actions{width:100%!important;margin-left:0!important;overflow-x:auto!important;flex-wrap:nowrap!important;padding-bottom:2px!important}
- #drawingPanel .drawing-toolbar-actions button{flex:0 0 auto!important}
- #drawingPanel .drawing-workspace-meta{display:none!important}
- #drawingPanel .drawing-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:9px!important}
- #drawingPanel .drawing-controls>.drawing-primary-btn{grid-column:1/-1!important}
- #drawingPanel .drawing-v85-main{display:flex!important;flex-direction:column!important;padding:8px!important;overflow:visible!important}
- #drawingPanel .drawing-canvas-panel{order:1!important;height:68dvh!important;min-height:480px!important}
- #drawingPanel .drawing-palette-panel{order:2!important;height:auto!important;max-height:none!important}
- #drawingPanel .drawing-palette-panel .drawing-tool-rows{height:auto!important;max-height:440px!important;overflow:auto!important;grid-template-columns:1fr!important}
- #drawingPanel .drawing-inspector-rail{order:3!important;height:auto!important;display:flex!important;flex-direction:column!important;overflow:visible!important}
- #drawingPanel .drawing-properties-panel{order:1!important}
- #drawingPanel .drawing-3d-panel{order:2!important;min-height:440px!important}
- #drawingPanel .drawing-settings-wrap{max-height:none!important}
- #drawingPanel .stack-section{display:flex!important;flex-direction:column!important;padding:0 8px 90px!important;overflow:visible!important}
- #drawingPanel .stack-section>.drawing-v85-card{min-height:0!important;max-height:none!important}
- #drawingPanel .stack-section>.drawing-v85-card:nth-child(1){order:1!important}
- #drawingPanel .drawing-review-workbench{order:2!important;min-height:520px!important}
- #drawingPanel .drawing-work-history-card{order:3!important;min-height:240px!important}
- #drawingPanel .production-config-grid{grid-template-columns:1fr!important}
- #drawingPanel .cabinet-property-grid{grid-template-columns:105px minmax(0,1fr)!important}
- #drawingPanel #drawingCanvas{min-height:430px!important}
- body.drawing-touch-lock{overflow:hidden!important;touch-action:none!important}
-}
-@media(max-width:540px){
- #drawingPanel .drawing-controls{grid-template-columns:1fr!important}
- #drawingPanel .drawing-controls>.drawing-primary-btn{grid-column:auto!important}
- #drawingPanel .drawing-dual{grid-template-columns:1fr!important}
- #drawingPanel .drawing-canvas-panel{height:62dvh!important;min-height:430px!important}
- #drawingPanel .drawing-view-tabs,#drawingPanel .drawing-pro-view-tools{overflow-x:auto!important;white-space:nowrap!important}
- #drawingPanel .drawing-review-tabs button{padding:8px 10px!important;font-size:11px!important}
- #drawingPanel .cabinet-property-grid{grid-template-columns:1fr!important}
- #drawingPanel .drawing-toolbar-title small{display:none!important}
-}
-</style></head>
+</head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
 <div class="auth-shell">
@@ -3769,7 +3629,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 004.1.1</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3792,7 +3652,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 004.1</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.6</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3810,7 +3670,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 004.1</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3868,7 +3728,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 004.1.1 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.6 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
@@ -3994,7 +3854,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <section class="panel" id="drawingPanel">
 <section aria-label="함체 설계기" class="drawing-shell card drawing-pro-workspace">
 <div class="drawing-toolbar">
-<div class="drawing-toolbar-title"><div class="drawing-pro-brand"><span class="drawing-pro-mark">K</span><div><strong>KENC DRAW</strong><small>Professional Workspace · Build 004.1.1</small></div></div></div>
+<div class="drawing-toolbar-title"><div class="drawing-pro-brand"><span class="drawing-pro-mark">K</span><div><strong>KENC DRAW</strong><small>Professional Workspace</small></div></div></div>
 <div class="drawing-toolbar-actions"><button class="drawing-action-btn drawing-focus-btn" data-focus-target="drawing-canvas-panel" type="button">2D 집중</button><button class="drawing-action-btn drawing-focus-btn" data-focus-target="drawing-3d-panel" type="button">3D 집중</button><span aria-hidden="true" class="drawing-toolbar-sep"></span><button class="drawing-action-btn" id="drawingShareBtn" type="button">공유</button><button class="drawing-action-btn" id="drawingSaveBtn" type="button">저장</button><button class="drawing-action-btn" id="drawingResetBtn" type="button">초기화</button><button class="drawing-action-btn" id="drawingExportBtn" type="button">이미지 출력</button></div>
 </div>
 <div aria-label="도면 작업공간 상태" class="drawing-workspace-meta">
@@ -4023,90 +3883,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 </div>
 <div class="drawing-v85-canvas-wrap"><svg class="drawing-v85-canvas" id="drawingCanvas" viewbox="0 0 760 700"></svg></div>
 </section>
-
-
-<section aria-label="도면 보조 패널" class="drawing-bottom-dock drawing-v85-card drawing-legacy-dock">
-<div class="drawing-dock-tabs" role="tablist">
-<button class="active" data-dock-tab="notes" type="button">제작 중요사항</button>
-<button data-dock-tab="history" type="button">작업 이력 <span id="drawingHistoryCount">0</span></button>
-<button data-dock-tab="check" type="button">도면 검사</button>
-<button data-dock-tab="output" type="button">출력 · 공유</button>
-<button class="drawing-dock-collapse" id="drawingDockCollapse" type="button">접기</button>
-</div>
-<div class="drawing-dock-body">
-<div class="drawing-dock-pane active" data-dock-pane="notes">
-
-</div>
-<div class="drawing-dock-pane" data-dock-pane="history"></div>
-<div class="drawing-dock-pane" data-dock-pane="check"><div class="drawing-check-summary"><strong>공유 전 도면 점검</strong><p>함체 규격, 객체 배치, 명판 문구와 제작 메모를 빠르게 확인합니다.</p><button class="drawing-primary-btn" id="drawingRunCheckBtn" type="button">지금 검사</button></div><div class="drawing-check-results" id="drawingCheckResults"></div></div>
-<div class="drawing-dock-pane" data-dock-pane="output"><div class="drawing-output-grid"><button data-proxy-click="drawingShareBtn" type="button"><strong>공유</strong><span>현재 도면 공유 화면 열기</span></button><button data-proxy-click="drawingSaveBtn" type="button"><strong>저장</strong><span>현재 작업 브라우저 저장</span></button><button data-proxy-click="drawingExportBtn" type="button"><strong>이미지 출력</strong><span>제작 전달용 이미지 생성</span></button><button data-proxy-click="drawingResetBtn" type="button"><strong>초기화</strong><span>새 도면 작업 시작</span></button></div></div>
-</div>
-</section><div class="stack-section">
-<section class="drawing-v85-card">
-<div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
-<div class="stack-toolbar"><button class="stack-small-btn" id="stackAddBtn">＋ 함체 추가</button><button class="stack-small-btn" id="stackCloneBtn">복사</button><button class="stack-small-btn" id="stackDeleteBtn">삭제</button></div>
-<div class="stack-list" id="stackList"></div>
-<div class="stack-summary"><div><span>전체 높이</span><strong id="stackTotalHeight">-</strong></div><div><span>전체 깊이</span><strong id="stackTotalDepth">-</strong></div><div><span>함체 수</span><strong id="stackCount">-</strong></div></div>
-</section>
-<section class="drawing-v85-card drawing-review-workbench">
-<div class="drawing-v85-card-head"><span>제작 검토 센터</span><small>출력 · 검사 · BOM · 정보</small></div>
-<div class="drawing-review-tabs" role="tablist"><button class="active" data-review-tab="production" type="button">제작 중요사항</button>
-<button class="" data-review-tab="preview" type="button">출력 Preview</button>
-<button class="" data-review-tab="inspection" type="button">도면 검사</button>
-<button class="" data-review-tab="bom" type="button">객체 BOM</button>
-<button class="" data-review-tab="info" type="button">도면 정보</button>
-</div>
-<div class="drawing-review-body"><section class="drawing-review-pane active" data-review-pane="production"><section class="drawing-v85-card production-config-card">
-<div class="drawing-v85-card-head"><span>제작 설정</span><small>중요사항 · 함체 속성</small></div>
-<div class="production-config-grid">
-<div class="production-config-section production-notes-section">
-<h4>제작 중요사항</h4>
-<div class="production-notes-grid">
-<div class="drawing-field"><label for="productionMemo">기타 중요사항</label><textarea id="productionMemo" maxlength="1200" placeholder="예: 도장색상, 케이블 인입 위치, 타공 위치, 용접 및 제작 시 확인할 내용을 자유롭게 입력하세요."></textarea></div>
-</div>
-<p class="production-note-help">입력한 메모는 전체 면 PNG·PDF 및 공유 이미지 하단에 그대로 포함됩니다.</p>
-</div>
-<div class="production-config-section cabinet-config-section">
-<h4>함체 속성</h4>
-<div class="cabinet-property-grid">
-<label for="cabinetNameInput">함체명</label><input id="cabinetNameInput" type="text"/>
-<label for="cabinetWidthInput">가로(mm)</label><input id="cabinetWidthInput" min="1" type="number"/>
-<label for="cabinetHeightInput">세로(mm)</label><input id="cabinetHeightInput" min="1" type="number"/>
-<label for="cabinetDepthInput">깊이(mm)</label><input id="cabinetDepthInput" min="1" type="number"/>
-<label for="cabinetMaterialSelect">재질</label><select id="cabinetMaterialSelect"><option>일반 철판</option><option>스테인리스</option></select>
-<label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option selected="" value="1.6T">1.6T</option></select>
-</div>
-<button class="drawing-primary-btn cabinet-apply-wide" id="cabinetApplyBtn" type="button">함체 속성 적용</button>
-</div>
-</div>
-</section></section>
-<section class="drawing-review-pane" data-review-pane="preview">
-<div class="drawing-output-sheet" id="drawingOutputPreview">
-<header><div><strong>KENC 제작 전달 도면</strong><span id="drawingPreviewDocNo">자동 미리보기</span></div><small id="drawingPreviewTime">-</small></header>
-<div class="drawing-output-visuals"><div><b>현재 면</b><svg aria-label="현재 면 출력 미리보기" id="drawingOutput2d" viewbox="0 0 760 700"></svg></div><div><b>3D</b><svg aria-label="3D 출력 미리보기" id="drawingOutput3d" viewbox="0 0 420 560"></svg></div></div>
-<div class="drawing-output-meta"><span>규격 <strong id="drawingPreviewSize">-</strong></span><span>재질 <strong id="drawingPreviewMaterial">-</strong></span><span>두께 <strong id="drawingPreviewThickness">-</strong></span><span>객체 <strong id="drawingPreviewObjects">0 EA</strong></span></div>
-<div class="drawing-output-note"><b>제작 중요사항</b><p id="drawingPreviewMemo">작성된 내용이 없습니다.</p></div>
-</div>
-<div class="drawing-preview-actions"><button class="drawing-primary-btn" data-proxy-click="drawingExportBtn" type="button">이미지 출력</button><button class="drawing-action-btn" data-proxy-click="drawingShareBtn" type="button">공유 화면</button></div>
-</section>
-<section class="drawing-review-pane" data-review-pane="inspection"><div class="drawing-review-summary"><strong>제작 전 자동 검사</strong><p>함체 규격, 객체 이탈, 명판명, 제작 중요사항을 점검합니다.</p><button class="drawing-primary-btn" id="drawingReviewCheckBtn" type="button">검사 실행</button></div><div class="drawing-review-checks" id="drawingReviewChecks"></div></section>
-<section class="drawing-review-pane" data-review-pane="bom"><div class="drawing-review-summary"><strong>현재 도면 객체 BOM</strong><p>전체 함체와 모든 면에 배치된 객체를 품목별로 집계합니다.</p></div><div class="drawing-bom-list" id="drawingBomList"></div></section>
-<section class="drawing-review-pane" data-review-pane="info"><div class="drawing-info-grid" id="drawingInfoGrid"></div></section>
-</div>
-<div aria-hidden="true" class="legacy-stack-preview"><div id="stackViewToolbar"><span id="stackZoomIndicator">100%</span></div><svg id="stackPreviewCanvas" viewbox="0 0 520 430"></svg><div id="stack3dControls"><button id="stack3dResetBtn" type="button">초기화</button></div></div>
-<div class="stack-info legacy-stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div>
-</section>
-<section class="drawing-v85-card drawing-work-history-card"><div class="drawing-v85-card-head"><span>작업 이력</span><small>최근 변경 기록</small></div><div class="drawing-work-history-body"><div class="drawing-history-list" id="drawingHistoryList"><p class="drawing-dock-empty">작업을 시작하면 변경 내용이 여기에 기록됩니다.</p></div></div></section></div>
-<aside aria-label="3D 및 속성 Inspector" class="drawing-inspector-rail"><section class="drawing-v85-card drawing-3d-panel" data-panel-label="LIVE PREVIEW">
-<div class="drawing-v85-card-head"><span>실시간 미리보기</span><small>단독 · 적층</small></div>
-<div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
-<div class="drawing-3d-wrap"><div class="drawing-pro-3d-controls">
-<button data-3d-action="fit" type="button">전체보기</button>
-<button data-3d-action="front" type="button">정면</button>
-<button class="active" data-3d-action="iso" type="button">등각</button>
-<button data-focus-target="drawing-3d-panel" type="button">확대</button>
-</div><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
-</section><section class="drawing-v85-card drawing-properties-panel" data-panel-label="PROPERTIES">
+<section class="drawing-v85-card drawing-properties-panel" data-panel-label="PROPERTIES">
 <div class="drawing-v85-card-head"><span>객체 속성</span><small>위치 · 크기 · 회전</small></div>
 <div class="drawing-settings-wrap">
 <div class="drawing-settings-grid">
@@ -4119,7 +3896,83 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <div class="drawing-settings-actions"><button class="drawing-primary-btn" id="drawingApplyBtn">적용</button><button class="drawing-danger-btn" id="drawingDeleteBtn">삭제</button></div>
 <div class="drawing-status" id="drawingStatus">객체를 선택한 뒤 도면을 클릭하세요.</div>
 </div>
-</section></aside></div></section>
+</section>
+<section class="drawing-v85-card drawing-3d-panel" data-panel-label="LIVE PREVIEW">
+<div class="drawing-v85-card-head"><span>실시간 미리보기</span><small>단독 · 적층</small></div>
+<div class="drawing-3d-mode-tabs"><button class="drawing-3d-mode active" data-mode="single">단독 함체</button><button class="drawing-3d-mode" data-mode="stack">적층 함체</button></div>
+<div class="drawing-3d-wrap"><div class="drawing-pro-3d-controls">
+<button data-3d-action="fit" type="button">전체보기</button>
+<button data-3d-action="front" type="button">정면</button>
+<button class="active" data-3d-action="iso" type="button">등각</button>
+<button data-focus-target="drawing-3d-panel" type="button">확대</button>
+</div><svg class="drawing-3d-svg" id="drawing3dCanvas" viewbox="0 0 420 560"></svg><p class="drawing-3d-note">경첩과 상단 원형 고리는 표시하지 않습니다. 각 함체와 배치 객체의 위치를 입체적으로 확인하는 미리보기입니다.</p></div>
+</section>
+
+<section aria-label="도면 보조 패널" class="drawing-bottom-dock drawing-v85-card">
+<div class="drawing-dock-tabs" role="tablist">
+<button class="active" data-dock-tab="notes" type="button">제작 중요사항</button>
+<button data-dock-tab="history" type="button">작업 이력 <span id="drawingHistoryCount">0</span></button>
+<button data-dock-tab="check" type="button">도면 검사</button>
+<button data-dock-tab="output" type="button">출력 · 공유</button>
+<button class="drawing-dock-collapse" id="drawingDockCollapse" type="button">접기</button>
+</div>
+<div class="drawing-dock-body">
+<div class="drawing-dock-pane active" data-dock-pane="notes"><section class="drawing-v85-card production-notes-card">
+<div class="drawing-v85-card-head">제작 중요사항</div>
+<div class="production-notes-grid">
+<div class="drawing-field"><label for="productionMemo">기타 중요사항</label><textarea id="productionMemo" maxlength="1200" placeholder="예: 도장색상, 케이블 인입 위치, 타공 위치, 용접 및 제작 시 확인할 내용을 자유롭게 입력하세요."></textarea></div>
+</div><p class="production-note-help">입력한 메모는 전체 면 PNG·PDF 및 공유 이미지 하단의 ‘제작 중요사항’에 그대로 포함됩니다.</p>
+</section></div>
+<div class="drawing-dock-pane" data-dock-pane="history"><div class="drawing-history-list" id="drawingHistoryList"><p class="drawing-dock-empty">작업을 시작하면 변경 내용이 여기에 기록됩니다.</p></div></div>
+<div class="drawing-dock-pane" data-dock-pane="check"><div class="drawing-check-summary"><strong>공유 전 도면 점검</strong><p>함체 규격, 객체 배치, 명판 문구와 제작 메모를 빠르게 확인합니다.</p><button class="drawing-primary-btn" id="drawingRunCheckBtn" type="button">지금 검사</button></div><div class="drawing-check-results" id="drawingCheckResults"></div></div>
+<div class="drawing-dock-pane" data-dock-pane="output"><div class="drawing-output-grid"><button data-proxy-click="drawingShareBtn" type="button"><strong>공유</strong><span>현재 도면 공유 화면 열기</span></button><button data-proxy-click="drawingSaveBtn" type="button"><strong>저장</strong><span>현재 작업 브라우저 저장</span></button><button data-proxy-click="drawingExportBtn" type="button"><strong>이미지 출력</strong><span>제작 전달용 이미지 생성</span></button><button data-proxy-click="drawingResetBtn" type="button"><strong>초기화</strong><span>새 도면 작업 시작</span></button></div></div>
+</div>
+</section><div class="stack-section">
+<section class="drawing-v85-card">
+<div class="drawing-v85-card-head">함체 목록 (적층 구성)</div>
+<div class="stack-toolbar"><button class="stack-small-btn" id="stackAddBtn">＋ 함체 추가</button><button class="stack-small-btn" id="stackCloneBtn">복사</button><button class="stack-small-btn" id="stackDeleteBtn">삭제</button></div>
+<div class="stack-list" id="stackList"></div>
+<div class="stack-summary"><div><span>전체 높이</span><strong id="stackTotalHeight">-</strong></div><div><span>전체 깊이</span><strong id="stackTotalDepth">-</strong></div><div><span>함체 수</span><strong id="stackCount">-</strong></div></div>
+</section>
+<section class="drawing-v85-card drawing-review-workbench">
+<div class="drawing-v85-card-head"><span>제작 검토 센터</span><small>출력 · 검사 · BOM · 정보</small></div>
+<div class="drawing-review-tabs" role="tablist">
+<button class="active" data-review-tab="preview" type="button">출력 Preview</button>
+<button data-review-tab="inspection" type="button">도면 검사</button>
+<button data-review-tab="bom" type="button">객체 BOM</button>
+<button data-review-tab="info" type="button">도면 정보</button>
+</div>
+<div class="drawing-review-body">
+<section class="drawing-review-pane active" data-review-pane="preview">
+<div class="drawing-output-sheet" id="drawingOutputPreview">
+<header><div><strong>KENC 제작 전달 도면</strong><span id="drawingPreviewDocNo">자동 미리보기</span></div><small id="drawingPreviewTime">-</small></header>
+<div class="drawing-output-visuals"><div><b>현재 면</b><svg id="drawingOutput2d" viewBox="0 0 760 700" aria-label="현재 면 출력 미리보기"></svg></div><div><b>3D</b><svg id="drawingOutput3d" viewBox="0 0 420 560" aria-label="3D 출력 미리보기"></svg></div></div>
+<div class="drawing-output-meta"><span>규격 <strong id="drawingPreviewSize">-</strong></span><span>재질 <strong id="drawingPreviewMaterial">-</strong></span><span>두께 <strong id="drawingPreviewThickness">-</strong></span><span>객체 <strong id="drawingPreviewObjects">0 EA</strong></span></div>
+<div class="drawing-output-note"><b>제작 중요사항</b><p id="drawingPreviewMemo">작성된 내용이 없습니다.</p></div>
+</div>
+<div class="drawing-preview-actions"><button class="drawing-primary-btn" data-proxy-click="drawingExportBtn" type="button">이미지 출력</button><button class="drawing-action-btn" data-proxy-click="drawingShareBtn" type="button">공유 화면</button></div>
+</section>
+<section class="drawing-review-pane" data-review-pane="inspection"><div class="drawing-review-summary"><strong>제작 전 자동 검사</strong><p>함체 규격, 객체 이탈, 명판명, 제작 중요사항을 점검합니다.</p><button class="drawing-primary-btn" id="drawingReviewCheckBtn" type="button">검사 실행</button></div><div class="drawing-review-checks" id="drawingReviewChecks"></div></section>
+<section class="drawing-review-pane" data-review-pane="bom"><div class="drawing-review-summary"><strong>현재 도면 객체 BOM</strong><p>전체 함체와 모든 면에 배치된 객체를 품목별로 집계합니다.</p></div><div class="drawing-bom-list" id="drawingBomList"></div></section>
+<section class="drawing-review-pane" data-review-pane="info"><div class="drawing-info-grid" id="drawingInfoGrid"></div></section>
+</div>
+<div class="legacy-stack-preview" aria-hidden="true"><div id="stackViewToolbar"><span id="stackZoomIndicator">100%</span></div><svg id="stackPreviewCanvas" viewBox="0 0 520 430"></svg><div id="stack3dControls"><button id="stack3dResetBtn" type="button">초기화</button></div></div>
+<div class="stack-info legacy-stack-info"><h5>적층 정보</h5><div class="stack-info-row"><span>전체 가로</span><strong id="stackInfoWidth">-</strong></div><div class="stack-info-row"><span>전체 세로</span><strong id="stackInfoHeight">-</strong></div><div class="stack-info-row"><span>전체 깊이</span><strong id="stackInfoDepth">-</strong></div><div class="stack-info-row"><span>총 함체 수</span><strong id="stackInfoCount">-</strong></div></div>
+</section>
+<section class="drawing-v85-card stack-properties">
+<div class="drawing-v85-card-head">함체 속성</div>
+<div class="cabinet-property-grid">
+<label for="cabinetNameInput">함체명</label><input id="cabinetNameInput" type="text"/>
+<label for="cabinetWidthInput">가로(mm)</label><input id="cabinetWidthInput" min="1" type="number"/>
+<label for="cabinetHeightInput">세로(mm)</label><input id="cabinetHeightInput" min="1" type="number"/>
+<label for="cabinetDepthInput">깊이(mm)</label><input id="cabinetDepthInput" min="1" type="number"/>
+<label for="cabinetMaterialSelect">재질</label><select id="cabinetMaterialSelect"><option>일반 철판</option><option>스테인리스</option></select>
+<label for="cabinetThicknessSelect">두께</label><select id="cabinetThicknessSelect"><option value="1.0T">1.0T</option><option value="1.2T">1.2T</option><option value="1.4T">1.4T</option><option selected="" value="1.6T">1.6T</option></select>
+</div>
+<div style="padding:0 14px 14px"><button class="drawing-primary-btn" id="cabinetApplyBtn" style="width:100%">함체 속성 적용</button></div>
+</section>
+</div>
+</div></section>
 </section>
 <section class="panel" id="rackPanel">
 <header class="section-head">
@@ -6296,6 +6149,7 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  document.addEventListener('visibilitychange',()=>{if(document.hidden) release();});
 })();
 </script>
+
 <script id="build0035-focus-camera-fix">
 (()=>{
  const shell=document.querySelector('#drawingPanel .drawing-pro-workspace');
@@ -6354,6 +6208,8 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  }
 })();
 </script>
+
+
 <script id="build0036-review-center-js">
 (()=>{
  const shell=document.querySelector('#drawingPanel .drawing-pro-workspace'); if(!shell) return;
@@ -6375,50 +6231,5 @@ window.rackImageMap['서버 랙'] = 'assets/server_rack.png'; // V90_SERVER_RACK
  window.addEventListener('resize',refresh);setTimeout(refresh,300);setTimeout(refresh,1200);
 })();
 </script>
-<script src="build004.js?v=004"></script>
-<script>
-(function(){
- const shell=document.querySelector('#drawingPanel .drawing-pro-workspace');
- if(!shell)return;
- // Review center tabs, including the production tab.
- document.querySelectorAll('#drawingPanel [data-review-tab]').forEach(btn=>btn.addEventListener('click',()=>{
-   const key=btn.dataset.reviewTab;
-   document.querySelectorAll('#drawingPanel [data-review-tab]').forEach(x=>x.classList.toggle('active',x===btn));
-   document.querySelectorAll('#drawingPanel [data-review-pane]').forEach(x=>x.classList.toggle('active',x.dataset.reviewPane===key));
- }));
- // Functional grid / fit / selected-object center controls.
- document.querySelector('#drawingPanel .drawing-pro-view-tools')?.addEventListener('click',function(e){
-   const btn=e.target.closest('[data-view-action]'); if(!btn)return;
-   e.preventDefault(); e.stopImmediatePropagation();
-   const action=btn.dataset.viewAction, svg=document.getElementById('drawingCanvas'), wrap=svg?.closest('.drawing-v85-canvas-wrap');
-   if(!svg)return;
-   if(action==='grid'){
-     const hidden=wrap.classList.toggle('grid-hidden'); btn.classList.toggle('active',!hidden); return;
-   }
-   if(action==='fit'){
-     svg.setAttribute('viewBox','0 0 760 700'); svg.style.transform=''; return;
-   }
-   if(action==='center'){
-     const selected=svg.querySelector('g[data-id] rect[stroke="#2563eb"]')?.closest('g[data-id]') || svg.querySelector('g[data-id]');
-     if(!selected){svg.setAttribute('viewBox','0 0 760 700');return;}
-     try{
-       const b=selected.getBBox(), pad=Math.max(45,Math.max(b.width,b.height)*.45);
-       svg.setAttribute('viewBox',`${b.x-pad} ${b.y-pad} ${Math.max(140,b.width+pad*2)} ${Math.max(140,b.height+pad*2)}`);
-     }catch(_){svg.setAttribute('viewBox','0 0 760 700');}
-   }
- },true);
- // Prevent page scrolling while manipulating the SVG on touch devices.
- const canvas=document.getElementById('drawingCanvas');
- if(canvas){
-   const lock=()=>document.body.classList.add('drawing-touch-lock');
-   const unlock=()=>document.body.classList.remove('drawing-touch-lock');
-   canvas.addEventListener('pointerdown',lock,{passive:true});
-   window.addEventListener('pointerup',unlock,{passive:true});
-   window.addEventListener('pointercancel',unlock,{passive:true});
- }
- // Move history count updates to the visible history card too.
- const hist=document.getElementById('drawingHistoryList');
- if(hist){new MutationObserver(()=>{const n=hist.querySelectorAll('.drawing-history-item').length;const c=document.getElementById('drawingHistoryCount');if(c)c.textContent=n;}).observe(hist,{childList:true,subtree:true});}
-})();
-</script></body>
+</body>
 </html>
