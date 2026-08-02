@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6</title>
+<title>KENC 광전기통신 영업지원시스템 UI 2.0 Build 003.6.1</title>
 <style>
     :root {
       --bg: #f3f6fb;
@@ -2968,7 +2968,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 </style>
 <style>
 /* =========================================================
-   KENC UI 2.0 Build 003.6 — Drawing Workspace Rebuild
+   KENC UI 2.0 Build 003.6.1 — Drawing Workspace Rebuild
    Drawing object engine/data IDs are intentionally unchanged.
    ========================================================= */
 :root{--dw-navy:#0b2443;--dw-blue:#1167d8;--dw-cyan:#eaf4ff;--dw-panel:#ffffff;--dw-line:#dbe5f0;--dw-muted:#68778b;--dw-stage:#f4f7fb}
@@ -3085,7 +3085,7 @@ body:not(.auth-locked) .panel>.card,body:not(.auth-locked) .config-card,body:not
 @media(max-width:900px){.drawing-pro-workspace{border-radius:0!important}.drawing-pro-workspace .drawing-v85-main{grid-template-columns:1fr!important;grid-template-areas:'canvas' 'palette' 'properties' 'preview'!important}.drawing-pro-workspace .drawing-canvas-panel{min-height:560px}.drawing-pro-workspace .drawing-palette-panel,.drawing-pro-workspace .drawing-properties-panel,.drawing-pro-workspace .drawing-3d-panel{min-height:auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:repeat(3,1fr)!important}.drawing-pro-workspace .drawing-controls .drawing-primary-btn{grid-column:1/-1}.drawing-output-grid{grid-template-columns:repeat(2,1fr)}.drawing-dock-body{max-height:380px}.drawing-pro-workspace .drawing-v85-canvas{filter:none}.drawing-pro-workspace .drawing-v85-canvas-wrap{background:#f8fafc!important}.drawing-toolbar-sep{display:none}}
 @media(max-width:560px){.drawing-pro-workspace .drawing-toolbar-actions{overflow-x:auto;flex-wrap:nowrap}.drawing-pro-workspace .drawing-toolbar-actions .drawing-action-btn{flex:0 0 auto}.drawing-pro-workspace .drawing-controls{grid-template-columns:1fr!important}.drawing-pro-view-tools{overflow-x:auto}.drawing-output-grid{grid-template-columns:1fr}.drawing-check-summary{grid-template-columns:1fr}.drawing-check-summary button{grid-column:1;grid-row:auto}.drawing-dock-tabs .drawing-dock-collapse{margin-left:0}.drawing-pro-brand small{display:none}}
 
-/* === KENC UI 2.0 Build 003.6 : Unified Dark Workspace and Mobile Drag stabilization === */
+/* === KENC UI 2.0 Build 003.6.1 : Unified Dark Workspace and Mobile Drag stabilization === */
 html,body{max-width:100%;overflow-x:hidden}
 .drawing-pro-workspace,.drawing-pro-workspace *{box-sizing:border-box}
 .drawing-pro-workspace{width:100%;max-width:100%;font-size:12px;line-height:1.45}
@@ -3193,7 +3193,7 @@ body.drawing-focus-active .bottom-nav{display:none!important}
 </style>
 <style id="build0033-dark-unified-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.6
+   KENC UI 2.0 Build 003.6.1
    Unified dark visual system + responsive/mobile drag safety
    Existing object geometry and drawing engine remain unchanged.
    ========================================================= */
@@ -3327,7 +3327,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 
 <style id="build0034-responsive-layout-fix">
 /* =========================================================
-   KENC UI 2.0 Build 003.6
+   KENC UI 2.0 Build 003.6.1
    Desktop clipping + mobile object palette accessibility fix.
    Object geometry, attachment shapes and drawing calculations are untouched.
    ========================================================= */
@@ -3451,7 +3451,7 @@ body.drawing-object-dragging .bottom-nav{pointer-events:none!important}
 
 
 <style id="build0035-critical-layout-fix">
-/* KENC UI 2.0 Build 003.6 - focus mode, panel overflow and dock stabilization */
+/* KENC UI 2.0 Build 003.6.1 - focus mode, panel overflow and dock stabilization */
 html,body{max-width:100%;overflow-x:hidden}
 #drawingPanel,#drawingPanel .drawing-pro-workspace,#drawingPanel .drawing-v85-main,#drawingPanel .stack-section{min-width:0;max-width:100%;box-sizing:border-box}
 #drawingPanel .drawing-v85-main>* ,#drawingPanel .stack-section>*{min-width:0;max-width:100%;box-sizing:border-box}
@@ -3588,6 +3588,163 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 @media(max-width:900px){#drawingPanel .drawing-output-visuals{grid-template-columns:1fr}#drawingPanel .drawing-output-visuals svg{height:220px}#drawingPanel .drawing-output-meta{grid-template-columns:repeat(2,minmax(0,1fr))}#drawingPanel .drawing-output-meta span:nth-child(2){border-right:0}#drawingPanel .drawing-output-meta span:nth-child(-n+2){border-bottom:1px solid #e4e7ec}#drawingPanel .drawing-info-grid{grid-template-columns:1fr}}
 @media(max-width:560px){#drawingPanel .drawing-review-body{min-height:0}#drawingPanel .drawing-review-pane{padding:7px}#drawingPanel .drawing-output-sheet{padding:8px}#drawingPanel .drawing-output-visuals svg{height:190px}#drawingPanel .drawing-output-meta span{padding:7px}#drawingPanel .drawing-preview-actions{display:grid;grid-template-columns:1fr 1fr}#drawingPanel .drawing-preview-actions button{width:100%!important;min-width:0!important}}
 </style>
+
+<style id="kenc-wide-responsive-patch">
+/* =========================================================
+   KENC UI 2.0 Build 003.6.1.1 — Full-width responsive shell
+   Base: Build 003.6.1. Function/data structure unchanged.
+   ========================================================= */
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;max-width:100%;overflow-x:clip}
+
+/* The app shell consumes the full usable viewport beside the sidebar. */
+@media (min-width:901px){
+  body:not(.auth-locked) .page,
+  body[data-build]:not(.auth-locked) .page{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:18px clamp(14px,1.4vw,28px) 48px calc(var(--ui2-sidebar) + clamp(14px,1.4vw,28px))!important;
+  }
+  body.ui2-sidebar-collapsed:not(.auth-locked) .page{
+    padding-left:calc(var(--ui2-sidebar-closed) + clamp(14px,1.4vw,28px))!important;
+  }
+}
+
+/* No individual work panel may retain a desktop max-width. */
+#homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel,
+#specGuidePanel,#educationPanel,
+#homePanel>.ui2-home,#boxPanel>.card,
+#rackPanel>.rack-layout,#materialPanel>.material-layout,
+#drawingPanel>.drawing-shell{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+.panel,.panel>*{min-width:0}
+.section-head{width:100%;max-width:none;margin-left:0;margin-right:0}
+.card,.config-card,.table-card,.spec-table-panel,.notice-panel{min-width:0;max-width:100%}
+input,select,textarea,button{max-width:100%}
+.field,.material-select-group,.material-search-group{min-width:0}
+
+/* Home: use the available width while keeping text lines readable. */
+.ui2-home{width:100%!important;max-width:none!important}
+.ui2-welcome{width:100%}
+.ui2-welcome-copy{max-width:min(720px,64%)}
+.ui2-primary-grid{grid-template-columns:repeat(4,minmax(190px,1fr))!important}
+.ui2-dashboard-grid{grid-template-columns:minmax(280px,1.05fr) minmax(320px,1.15fr) minmax(280px,.95fr)!important}
+
+/* Box part: responsive form, full-width table and notices. */
+#boxPanel>.card{padding:clamp(14px,1.35vw,24px)!important}
+#boxPanel .form-grid.enclosure-form-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;
+  gap:clamp(10px,1vw,18px)!important;
+  width:100%!important;
+}
+#boxPanel .price-adjust-panel,#boxPanel .spec-table-panel,#boxPanel .notice-panel{width:100%!important}
+#boxPanel .spec-table-wrap{width:100%!important;max-width:100%!important;overflow:auto!important}
+#boxPanel .spec-table{width:100%!important;min-width:1080px!important;table-layout:auto}
+#boxPanel .custom-rate-row{grid-template-columns:minmax(0,1fr) auto auto!important}
+
+/* Rack: selection and image share the first row; price uses full width. */
+#rackPanel .rack-layout{
+  display:grid!important;
+  grid-template-columns:minmax(280px,.72fr) minmax(420px,1.28fr)!important;
+  align-items:start!important;
+  gap:clamp(12px,1.25vw,22px)!important;
+}
+#rackPanel .rack-product-select-card,#rackPanel .rack-image-card,#rackPanel .rack-price-card{min-width:0;width:100%}
+#rackPanel .rack-price-card{grid-column:1/-1}
+#rackPanel .rack-image-stage{min-height:clamp(300px,42vh,620px)!important;max-height:none!important}
+#rackPanel .rack-product-image{max-width:100%!important;max-height:min(68vh,720px)!important}
+#rackPanel .rack-price-placeholder{width:100%;min-height:220px}
+
+/* Materials: balanced two-column workbench with full-width information. */
+#materialPanel .material-layout{
+  display:grid!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  gap:clamp(12px,1.2vw,22px)!important;
+  align-items:start!important;
+}
+#materialPanel .material-select-card{grid-column:span 7}
+#materialPanel .material-adjust-panel{grid-column:span 5}
+#materialPanel .material-image-card{grid-column:span 5}
+#materialPanel .material-price-card{grid-column:span 7}
+#materialPanel .material-info-card{grid-column:1/-1}
+#materialPanel .material-select-card,#materialPanel .material-adjust-panel,
+#materialPanel .material-image-card,#materialPanel .material-price-card,#materialPanel .material-info-card{min-width:0;width:100%}
+#materialPanel .material-select-grid{grid-template-columns:minmax(220px,.75fr) minmax(320px,1.25fr)!important}
+#materialPanel .material-search-controls{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important}
+#materialPanel .material-adjust-controls{grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr)!important}
+#materialPanel .material-image-stage{min-height:clamp(300px,40vh,580px)!important}
+#materialPanel .material-price-placeholder{width:100%!important;max-width:100%!important;overflow:auto!important}
+#materialPanel .material-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+/* Drawing: let the canvas absorb extra monitor width. */
+#drawingPanel .drawing-shell,#drawingPanel .drawing-pro-workspace{width:100%!important;max-width:none!important}
+#drawingPanel .drawing-v85-main{
+  width:100%!important;
+  min-width:0!important;
+  grid-template-columns:clamp(210px,15vw,270px) minmax(520px,1fr) clamp(270px,21vw,360px)!important;
+}
+#drawingPanel .drawing-canvas-panel,#drawingPanel .drawing-v85-canvas-wrap,#drawingPanel .drawing-v85-canvas{min-width:0!important;max-width:100%!important}
+#drawingPanel .drawing-v85-canvas{width:100%!important}
+#drawingPanel .stack-section{
+  width:100%!important;
+  min-width:0!important;
+  grid-template-columns:clamp(260px,20vw,340px) minmax(500px,1fr) clamp(280px,21vw,360px)!important;
+}
+#drawingPanel .drawing-review-workbench,#drawingPanel .stack-properties,#drawingPanel .stack-list-card{min-width:0!important;max-width:100%!important}
+#drawingPanel .drawing-output-visuals{grid-template-columns:minmax(0,1.35fr) minmax(230px,.65fr)!important}
+#drawingPanel .drawing-output-sheet,#drawingPanel .drawing-review-body{max-width:100%!important}
+#drawingPanel .cabinet-property-grid{grid-template-columns:minmax(82px,auto) minmax(0,1fr)!important}
+
+/* Large-but-not-ultrawide desktops. */
+@media (max-width:1380px) and (min-width:901px){
+  .ui2-primary-grid{grid-template-columns:repeat(2,minmax(220px,1fr))!important}
+  .ui2-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .ui2-resources{grid-column:1/-1}
+  #rackPanel .rack-layout{grid-template-columns:minmax(250px,.65fr) minmax(360px,1.35fr)!important}
+  #materialPanel .material-select-card,#materialPanel .material-adjust-panel{grid-column:1/-1}
+  #materialPanel .material-image-card{grid-column:span 5}
+  #materialPanel .material-price-card{grid-column:span 7}
+  #drawingPanel .drawing-v85-main{grid-template-columns:200px minmax(440px,1fr) 270px!important}
+  #drawingPanel .stack-section{grid-template-columns:260px minmax(430px,1fr)!important}
+  #drawingPanel .stack-properties{grid-column:1/-1}
+}
+
+/* Tablet/mobile: preserve full width, eliminate overflow, stack by task order. */
+@media (max-width:900px){
+  body:not(.auth-locked) .page,body[data-build]:not(.auth-locked) .page{
+    width:100%!important;max-width:none!important;margin:0!important;
+    padding:10px 10px calc(86px + env(safe-area-inset-bottom))!important;
+  }
+  #homePanel,#boxPanel,#rackPanel,#materialPanel,#drawingPanel{width:100%!important;max-width:none!important;overflow:visible!important}
+  .ui2-welcome-copy{max-width:100%}
+  .ui2-primary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .ui2-dashboard-grid{grid-template-columns:1fr!important}
+  #rackPanel .rack-layout,#materialPanel .material-layout{display:grid!important;grid-template-columns:1fr!important}
+  #rackPanel .rack-price-card,#materialPanel .material-select-card,#materialPanel .material-adjust-panel,
+  #materialPanel .material-image-card,#materialPanel .material-price-card,#materialPanel .material-info-card{grid-column:auto!important}
+  #materialPanel .material-select-grid,#materialPanel .material-adjust-controls,#materialPanel .material-info-grid{grid-template-columns:1fr!important}
+  #drawingPanel .drawing-v85-main{grid-template-columns:1fr!important}
+  #drawingPanel .stack-section{grid-template-columns:1fr!important}
+  #drawingPanel .drawing-output-visuals{grid-template-columns:1fr!important}
+}
+@media (max-width:520px){
+  .ui2-primary-grid{grid-template-columns:1fr!important}
+  #boxPanel>.card,.rack-product-select-card,.rack-image-card,.rack-price-card,
+  .material-select-card,.material-adjust-panel,.material-image-card,.material-price-card,.material-info-card{padding:14px!important}
+  #boxPanel .spec-table{min-width:920px!important}
+  #materialPanel .material-search-controls{grid-template-columns:1fr!important}
+  #materialPanel .material-search-btn{width:100%!important}
+}
+</style>
+
 </head>
 <body class="auth-locked">
 <section aria-label="사내 사용자 로그인" class="auth-screen" id="authScreen">
@@ -3629,7 +3786,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p aria-live="polite" class="auth-status" id="authStatus"></p>
 <p aria-live="polite" class="auth-error" id="authError" role="alert"></p>
 <div aria-label="시스템 정보" class="auth-version-box">
-<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6</span></div>
+<div class="auth-version-item"><strong>현재 버전</strong><span>UI 2.0 Build 003.6.1</span></div>
 <div class="auth-version-item"><strong>접속 상태</strong><span id="networkStatus">확인 중</span></div>
 <div class="auth-version-item"><strong>데이터</strong><span>Firebase</span></div>
 </div>
@@ -3652,7 +3809,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <p class="auth-notice">관리자 비밀번호는 웹사이트나 Firestore에 저장되지 않습니다.</p>
 </form>
 <div aria-label="시스템 상태" class="auth-system-strip">
-<span>UI 2.0 · Build 003.6</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
+<span>UI 2.0 · Build 003.6.1</span><span>Firebase Online</span><span id="authSystemNetwork">보안 연결</span>
 </div>
 </section>
 </div>
@@ -3670,7 +3827,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <button class="ui2-side-btn" data-target="manualPanel" type="button"><i>▥</i><span>업무 매뉴얼</span></button>
 <button class="ui2-side-btn" data-target="educationPanel" type="button"><i>◈</i><span>교육 자료</span></button>
 </nav>
-<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6</strong></div>
+<div class="ui2-side-foot"><small>UI 2.0</small><strong>Build 003.6.1</strong></div>
 </aside>
 <main class="page">
 <div class="topbar" data-persistent-header="true">
@@ -3728,7 +3885,7 @@ body.drawing-focus-active .bottom-nav{visibility:hidden!important;pointer-events
 <section class="ui2-dashboard-card ui2-notice">
 <header><div><span>NOTICE</span><h3>공지사항</h3></div></header>
 <div class="ui2-notice-list">
-<article><em></em><div><strong>KENC UI 2.0 Build 003.6 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
+<article><em></em><div><strong>KENC UI 2.0 Build 003.6.1 적용</strong><small>반응형 헤더·접이식 메뉴·제품 업무 화면 리빌드</small></div><time>NEW</time></article>
 <article><em></em><div><strong>손도면 엔진 보호 정책</strong><small>기존 객체와 도면 데이터는 그대로 유지됩니다.</small></div></article>
 <article><em></em><div><strong>Firebase 사용자 관리</strong><small>관리자 화면에서 직원 등록과 상태 변경 가능</small></div></article>
 </div>
