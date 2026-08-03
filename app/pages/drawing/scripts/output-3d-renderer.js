@@ -33,8 +33,22 @@
     const b=basisFor(c,o,s,y0);if(!b)return;const r=role(o,s),ow=Number(o.w)||20,oh=Number(o.h)||20,{O,U,V}=b;
     const pts=[[0,0],[ow,0],[ow,oh],[0,oh]].map(([x,y])=>({x:O.x+U.x*x+V.x*y,y:O.y+U.y*x+V.y*y}));
     const poly=el('polygon',{points:pts.map(q=>`${q.x},${q.y}`).join(' '),fill:colors[r],stroke:strokes[r],'stroke-width':4,'vector-effect':'non-scaling-stroke'});svg.appendChild(poly);
-    if(o.type==='vent'){for(let i=1;i<=5;i++){const a={x:O.x+U.x*ow*.18+V.x*oh*i/6,y:O.y+U.y*ow*.18+V.y*oh*i/6},b2={x:O.x+U.x*ow*.82+V.x*oh*i/6,y:O.y+U.y*ow*.82+V.y*oh*i/6};line(svg,a,b2,{stroke:'#111827','stroke-width':2});}}
-    else{const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;const label=o.label||o.option||({nameplate:'명판',plate:'PVC속판',cut:'타공',groundBar:'접지'}[o.type])||o.type;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#111827'},label));}
+    if(o.type==='vent'){
+      for(let i=0;i<5;i++){const yy=oh*(.15+i*.145);const a={x:O.x+U.x*ow*.12+V.x*yy,y:O.y+U.y*ow*.12+V.y*yy},b2={x:O.x+U.x*ow*.88+V.x*yy,y:O.y+U.y*ow*.88+V.y*yy};line(svg,a,b2,{stroke:'#111827','stroke-width':2});}
+    }else if(o.type==='key'){
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const a=cxy(.36,.12),b2=cxy(.64,.88);line(svg,a,{x:b2.x-U.x*ow*.28,y:b2.y-U.y*ow*.28},{stroke:'#374151','stroke-width':5});
+      const mid=cxy(.5,.72);svg.appendChild(el('circle',{cx:mid.x,cy:mid.y,r:5,fill:'#fff',stroke:'#111827','stroke-width':2}));
+      const label=cxy(.5,.50);svg.appendChild(el('text',{x:label.x,y:label.y,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
+    }else if(o.type==='nameplate'){
+      const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#111827'},o.label||o.option));
+    }else if(o.type==='acrylicWindow'){
+      const inset=.10;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#bae6fd','fill-opacity':.35,stroke:'#0891b2','stroke-width':3}));
+    }else if(o.type==='doubleLock'){
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});const m=cxy(.5,.45);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:8,fill:'#fff',stroke:'#111827','stroke-width':3}));svg.appendChild(el('text',{x:m.x,y:m.y+22,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
+    }else{
+      const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;const label=o.label||o.option||({plate:'PVC속판',cut:'타공',groundBar:'접지'}[o.type])||o.type;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#111827'},label));
+    }
   }
   function render(state,cabinet){
     const svg=el('svg',{xmlns:NS,viewBox:'0 0 700 700',width:700,height:700});svg.appendChild(el('rect',{width:700,height:700,fill:'#fff'}));

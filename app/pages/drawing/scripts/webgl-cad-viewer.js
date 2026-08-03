@@ -71,18 +71,43 @@
       }
       localBox(baseM,0,0,.755,.86,.84,.028,[0,0,0,0],bladeEdge,false);
     }else if(type==='key'){
-      localBox(baseM,0,0,.56,.56,.86,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-      if(o.option==='푸쉬버튼키') localBox(baseM,0,-.25,.63,.18,.18,.08,objectMaterial.dark,objectMaterial.detail,true);
-      else if(o.option==='탈착키'){
-        localBox(baseM,0,-.18,.63,.22,.25,.08,objectMaterial.dark,objectMaterial.detail,true);
-        localBox(baseM,0,.20,.63,.05,.28,.06,objectMaterial.detail,objectMaterial.detail,true);
-      }else localBox(baseM,0,0,.63,.22,.62,.08,objectMaterial.dark,objectMaterial.detail,true);
+      const chrome=[0.72,0.76,0.80,1], chromeHi=[0.90,0.92,0.94,1], black=[0.035,0.045,0.06,1];
+      if(o.option==='탈착키'){
+        localBox(baseM,0,0,.58,.62,.88,.12,black,[.35,.38,.42,1],true);
+        localBox(baseM,0,-.18,.66,.34,.30,.08,[.01,.015,.02,1],[.35,.38,.42,1],true);
+        localBox(baseM,0,.20,.68,.16,.16,.06,[0,0,0,0],chromeHi,false);
+        localBox(baseM,0,.29,.70,.035,.19,.035,chromeHi,chromeHi,true);
+      }else if(o.option==='푸쉬버튼키'){
+        localBox(baseM,0,0,.58,.58,.92,.11,chrome,[.25,.28,.32,1],true);
+        localBox(baseM,0,-.18,.67,.31,.34,.08,[.24,.28,.33,1],[.12,.14,.17,1],true);
+        localBox(baseM,0,.17,.67,.34,.12,.07,chromeHi,[.35,.38,.42,1],true);
+        localBox(baseM,0,.34,.68,.13,.13,.07,chromeHi,[.20,.22,.25,1],true);
+      }else{
+        localBox(baseM,0,0,.58,.58,.94,.11,chrome,[.25,.28,.32,1],true);
+        localBox(baseM,0,-.29,.67,.33,.12,.07,[.25,.29,.34,1],[.14,.16,.19,1],true);
+        localBox(baseM,0,-.01,.67,.30,.34,.075,[.45,.49,.54,1],[.22,.25,.28,1],true);
+        localBox(baseM,0,.26,.68,.33,.11,.07,chromeHi,[.30,.32,.35,1],true);
+        localBox(baseM,0,.39,.68,.12,.12,.07,chromeHi,[.20,.22,.25,1],true);
+      }
     }else if(type==='nameplate'){
-      localBox(baseM,0,0,.57,.76,.48,.07,objectMaterial.faceSoft,objectMaterial.detail,true);
-      localBox(baseM,0,0,.62,.58,.08,.04,objectMaterial.detail,objectMaterial.detail,true);
+      localBox(baseM,0,0,.58,.96,.92,.055,[.96,.96,.91,1],[.32,.35,.39,1],true);
+      localBox(baseM,0,0,.615,.90,.78,.018,[0,0,0,0],[.72,.75,.78,1],false);
     }else if(type==='acrylicWindow'){
-      localBox(baseM,0,0,.55,.88,.88,.025,[0,0,0,0],objectMaterial.detail,false);
-      localBox(baseM,0,0,.57,.78,.78,.02,[0,0,0,0],[0.72,0.80,0.86,.75],false);
+      // ABS 프레임 + 투명 아크릴 + 실제 돌출 두께
+      localBox(baseM,0,0,.57,.98,.98,.075,[.78,.80,.82,1],[.25,.28,.32,1],true);
+      localBox(baseM,0,0,.625,.84,.84,.035,[.35,.70,.86,.20],[.18,.62,.78,.85],true);
+      localBox(baseM,-.18,-.20,.652,.30,.028,.012,[.88,.96,1,.70],[.88,.96,1,.70],true);
+      localBox(baseM,-.05,-.12,.653,.34,.022,.010,[.76,.92,1,.55],[.76,.92,1,.55],true);
+    }else if(type==='doubleLock'){
+      const steel=[.72,.75,.78,1], edge=[.25,.28,.31,1];
+      if(o.option==='카바용'){
+        localBox(baseM,0,0,.60,.84,.22,.075,steel,edge,true);
+        localBox(baseM,0,0,.67,.20,.20,.055,[0,0,0,0],edge,false);
+      }else{
+        localBox(baseM,0,.20,.59,.24,.38,.10,steel,edge,true);
+        localBox(baseM,0,-.12,.67,.46,.46,.085,[0,0,0,0],edge,false);
+        localBox(baseM,0,-.12,.69,.20,.20,.055,[0,0,0,0],edge,false);
+      }
     }else if(type==='emboss'){
       localBox(baseM,0,0,.57,.62,.62,.08,objectMaterial.faceSoft,objectMaterial.detail,true);
       localBox(baseM,0,0,.63,.34,.34,.05,objectMaterial.dark,objectMaterial.detail,true);
