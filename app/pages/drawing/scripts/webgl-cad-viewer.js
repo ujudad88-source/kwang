@@ -2,7 +2,7 @@
   'use strict';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
-  const roleColor={external:[0.22,0.74,0.98,1],internal:[0.20,0.83,0.60,1],cutout:[0.96,0.62,0.08,1],utility:[0.76,0.52,0.98,1]};
+  const objectMaterial={face:[0.16,0.19,0.23,0.96],faceSoft:[0.22,0.25,0.29,0.92],glass:[0.48,0.58,0.66,0.16],void:[0.015,0.025,0.04,0.98],edge:[0.88,0.92,0.96,1],detail:[0.72,0.78,0.84,1],dark:[0.04,0.06,0.09,1]};
   const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior'});
   let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
   function state(){return window.KENC_DRAWING_API?.getState?.();}
@@ -49,11 +49,68 @@
     else if(surface==='bottom'){tx=-w/2+x+ow/2;ty=y0+h/2+th/2;tz=d/2-y-oh/2;sy=th;sz=oh;}
     return mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz));
   }
+  function localBox(baseM,tx,ty,tz,sx,sy,sz,face=objectMaterial.face,edge=objectMaterial.edge,showFace=true){
+    const m=mat4Mul(baseM,mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz)));
+    drawBox(m,face,edge,showFace);
+  }
   function addObjectDetails(c,y0,o,surface,baseM,role){
-    const col=roleColor[role]||roleColor.external; drawBox(baseM,[col[0],col[1],col[2],role==='internal'?.46:.78],col,true);
-    if(o.type==='vent'){const n=5;for(let i=0;i<n;i++){const yy=((i-(n-1)/2)/(n+1))*(o.h||60);const m=mat4Mul(baseM,mat4Mul(translate(0,yy/(o.h||60),.56),scale(.72,.035,.1)));drawBox(m,[.04,.08,.12,1],col,true);}}
-    if(o.type==='nameplate'){const m=mat4Mul(baseM,mat4Mul(translate(0,0,.56),scale(.72,.18,.08)));drawBox(m,[.94,.96,.98,1],col,true);}
-    if(o.type==='cut'||o.type==='anchor'){drawBox(baseM,[.03,.05,.08,.95],col,false);}
+    const type=o.type||'';
+    const face=type==='acrylicWindow'?objectMaterial.glass:(type==='cut'||type==='anchor'?objectMaterial.void:objectMaterial.face);
+    drawBox(baseM,face,objectMaterial.edge,type!=='cut'&&type!=='anchor');
+
+    if(type==='vent'){
+      const n=o.option==='루버형'?6:4;
+      for(let i=1;i<=n;i++){
+        const yy=-.36+i*(.72/(n+1));
+        localBox(baseM,0,yy,.56,.72,.022,.08,objectMaterial.dark,objectMaterial.detail,true);
+      }
+      localBox(baseM,0,0,.54,.86,.82,.035,[0,0,0,0],objectMaterial.detail,false);
+    }else if(type==='key'){
+      localBox(baseM,0,0,.56,.56,.86,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      if(o.option==='푸쉬버튼키') localBox(baseM,0,-.25,.63,.18,.18,.08,objectMaterial.dark,objectMaterial.detail,true);
+      else if(o.option==='탈착키'){
+        localBox(baseM,0,-.18,.63,.22,.25,.08,objectMaterial.dark,objectMaterial.detail,true);
+        localBox(baseM,0,.20,.63,.05,.28,.06,objectMaterial.detail,objectMaterial.detail,true);
+      }else localBox(baseM,0,0,.63,.22,.62,.08,objectMaterial.dark,objectMaterial.detail,true);
+    }else if(type==='nameplate'){
+      localBox(baseM,0,0,.57,.76,.48,.07,objectMaterial.faceSoft,objectMaterial.detail,true);
+      localBox(baseM,0,0,.62,.58,.08,.04,objectMaterial.detail,objectMaterial.detail,true);
+    }else if(type==='acrylicWindow'){
+      localBox(baseM,0,0,.55,.88,.88,.025,[0,0,0,0],objectMaterial.detail,false);
+      localBox(baseM,0,0,.57,.78,.78,.02,[0,0,0,0],[0.72,0.80,0.86,.75],false);
+    }else if(type==='emboss'){
+      localBox(baseM,0,0,.57,.62,.62,.08,objectMaterial.faceSoft,objectMaterial.detail,true);
+      localBox(baseM,0,0,.63,.34,.34,.05,objectMaterial.dark,objectMaterial.detail,true);
+    }else if(type==='cut'){
+      localBox(baseM,0,0,.58,.76,.76,.03,[0,0,0,0],objectMaterial.edge,false);
+      localBox(baseM,0,0,.60,.04,.86,.03,objectMaterial.detail,objectMaterial.detail,true);
+      localBox(baseM,0,0,.60,.86,.04,.03,objectMaterial.detail,objectMaterial.detail,true);
+    }else if(type==='anchor'){
+      localBox(baseM,0,0,.60,.34,.34,.10,objectMaterial.dark,objectMaterial.edge,true);
+    }else if(type==='plate'){
+      localBox(baseM,0,0,.56,.92,.92,.035,objectMaterial.faceSoft,objectMaterial.detail,true);
+      localBox(baseM,0,0,.61,.82,.82,.022,[0,0,0,0],objectMaterial.edge,false);
+      [[-.42,-.42],[.42,-.42],[.42,.42],[-.42,.42]].forEach(([x,y])=>localBox(baseM,x,y,.63,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));
+    }else if(type==='groundBar'){
+      localBox(baseM,0,0,.58,.84,.28,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      for(let i=-3;i<=3;i++) localBox(baseM,i*.11,0,.65,.035,.09,.05,objectMaterial.dark,objectMaterial.detail,true);
+    }else if(type==='cableHook'){
+      if(o.option==='수평'){
+        localBox(baseM,0,-.24,.58,.78,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+        localBox(baseM,-.34,.08,.58,.10,.54,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+        localBox(baseM,.34,.08,.58,.10,.54,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      }else{
+        const dir=o.option&&o.option.includes('왼쪽')?-1:1;
+        localBox(baseM,dir*.18,0,.58,.12,.78,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+        localBox(baseM,0,.30,.58,.48,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      }
+    }else if(type==='cover'){
+      localBox(baseM,0,0,.56,.88,.88,.04,[0,0,0,0],objectMaterial.detail,false);
+      [[0,-.38],[0,.38],[-.38,0],[.38,0]].forEach(([x,y])=>localBox(baseM,x,y,.62,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));
+    }else if(type==='doubleLock'){
+      localBox(baseM,.10,0,.58,.18,.78,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      localBox(baseM,-.18,.28,.58,.44,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+    }
   }
   function cabinetParts(c,yCenter,mode){
     const w=+c.width,h=+c.height,d=+c.depth,t=Math.max(6,Math.min(18,d*.08));const out=[];

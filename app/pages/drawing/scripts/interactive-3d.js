@@ -16,7 +16,7 @@
     if(o.type==="groundBar" || o.type==="cableHook") return "utility";
     return "external";
   }
-  function roleColor(role){return role==="internal"?"#34d399":role==="cutout"?"#f59e0b":role==="utility"?"#c084fc":"#38bdf8";}
+  function roleColor(role){return role==="internal"?"#d9e2ec":role==="cutout"?"#d9e2ec":role==="utility"?"#d9e2ec":"#d9e2ec";}
   function rotate(p,v){
     const yaw=v.yaw*Math.PI/180,pitch=v.pitch*Math.PI/180;
     const x1=p.x*Math.cos(yaw)+p.z*Math.sin(yaw);
@@ -123,13 +123,6 @@
     const base=Math.min(300/Math.max(maxW,1),370/Math.max(totalH,1),150/Math.max(maxD,1));
     let off=0;safeCabinets.forEach((c,i)=>{const g=cabinetGeometry(c,off,totalH);off+=+c.height||0;renderCabinet(svg,c,g,v,base,v.displayMode,i);});
     svg.appendChild(svgEl("circle",{cx:210+(v.panX||0),cy:270+(v.panY||0),r:2.5,class:"kenc-3d-origin"}));
-    const roles=[...new Set(safeCabinets.flatMap(c=>(c.objects||[]).map(o=>objectRole(o,o.surface||"front"))))];
-    if(roles.length){
-      const names={external:"외부 부착",internal:"내부 부착",cutout:"관통/타공",utility:"접지/기타"};
-      const legend=svgEl("g",{class:"kenc-3d-role-legend"});
-      roles.forEach((r,i)=>{const y=18+i*18;legend.appendChild(svgEl("circle",{cx:14,cy:y,r:4,fill:roleColor(r)}));legend.appendChild(svgEl("text",{x:24,y:y+4},names[r]));});
-      svg.appendChild(legend);
-    }
     const label=s.mode3d==="stack"?`적층 ${safeCabinets.length}EA · 전체 높이 ${totalH} mm`:`${ctx.currentCabinet.width} × ${ctx.currentCabinet.height} × ${ctx.currentCabinet.depth} mm`;
     svg.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle",class:"kenc-3d-label"},label));svg.dataset.zoom=Math.round(v.zoom*100)+"%";
     syncButtons();

@@ -55,3 +55,11 @@
 #drawingPanel .kenc-3d-role-legend text{fill:#e2e8f0;paint-order:stroke;stroke:#0f172a;stroke-width:2px;stroke-linejoin:round}
 #drawingPanel #drawingOutput3d .kenc-3d-role-legend,#drawingPanel #drawingOutput3d .kenc-3d-mount-standoff,#drawingPanel #drawingOutput3d .kenc-3d-mount-point{display:none!important}
 #drawingPanel #drawingOutput3d .kenc-3d-internal-panel-fill{fill:#fff!important;stroke:#111827!important}
+
+/* KENC UI 2.0 1.0.1: 2D-object-matched neutral CAD preview */
+#drawingPanel .drawing-3d-svg.kenc-interactive-3d:not(#drawingOutput3d) .kenc-3d-object-halo{stroke:#d9e2ec!important;filter:none!important;opacity:.78}
+#drawingPanel .drawing-3d-svg.kenc-interactive-3d:not(#drawingOutput3d) .kenc-3d-object-part{stroke:#e5e7eb!important;fill:none}
+#drawingPanel .drawing-3d-svg.kenc-interactive-3d:not(#drawingOutput3d) .kenc-3d-internal-panel-fill{fill:rgba(148,163,184,.14)!important;stroke:#d9e2ec!important}
+#drawingPanel .kenc-3d-mount-standoff{stroke:#cbd5e1!important}
+#drawingPanel .kenc-3d-mount-point{fill:#cbd5e1!important;stroke:#f8fafc!important}
+#drawingPanel .kenc-3d-role-legend{display:none!important}
