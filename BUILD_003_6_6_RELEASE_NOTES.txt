@@ -1,8 +1,0 @@
-KENC UI 2.0 Build 003.6.6 — Corrected Reissue
-
-Base: Build 003.6.5
-- Reverted the broken lower-panel patch.
-- Wide desktop: 30 / 18 / 34 / 18.
-- Standard desktop: two balanced rows to prevent panel compression.
-- Mobile: one-column order.
-- No drawing-engine or object changes.

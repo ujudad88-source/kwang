@@ -1,0 +1,1 @@
+(function(){'use strict';const id='emboss';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'export',function(ctx){return{id,variant:ctx.object.variant||'round_knockout',surface:ctx.transform.surface,position:ctx.transform.center,size:{w:ctx.transform.width,h:ctx.transform.height,d:ctx.transform.depth}};});})();

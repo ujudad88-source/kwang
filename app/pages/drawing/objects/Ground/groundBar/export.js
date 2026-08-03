@@ -1,0 +1,1 @@
+(function(){'use strict';const id='groundBar';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'export',function(ctx){return{id,variant:ctx.object.variant||'copper_left',surface:ctx.transform.surface,position:ctx.transform.center,size:{w:ctx.transform.width,h:ctx.transform.height,d:ctx.transform.depth}};});})();

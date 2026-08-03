@@ -1,0 +1,1 @@
+(function(){'use strict';const id='cut';const base=window.KENC_OBJECT_REGISTRY.definition(id);if(!base)console.warn('[KENC] definition missing:',id);window.KENC_OBJECT_MODULES=window.KENC_OBJECT_MODULES||{};window.KENC_OBJECT_MODULES[id]=Object.assign(window.KENC_OBJECT_MODULES[id]||{},{definition:base,moduleVersion:'1.0.4'});})();

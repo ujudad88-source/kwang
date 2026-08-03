@@ -1,9 +1,0 @@
-KENC UI 2.0 Build 004.0.0
-
-- Level 3 page-isolated directory structure added
-- Level 4 Drawing component contracts added
-- All inline CSS and JavaScript externalized while preserving load order
-- Legacy runtime frozen as compatibility layer
-- New page/component extension points added
-- Full-width and same-row bottom workspace rules retained
-- No drawing geometry, object attachment, Firebase schema, or data changes

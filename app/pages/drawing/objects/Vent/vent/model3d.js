@@ -1,0 +1,1 @@
+(function(){'use strict';const id='vent';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'wide_louver',transform:ctx.transform,material:ctx.object.material||null};});})();

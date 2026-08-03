@@ -1,0 +1,19 @@
+{
+  "version": "1.0.4",
+  "schemaVersion": 2,
+  "engines": [
+    "ObjectRegistry",
+    "ObjectEngine",
+    "AttachEngine",
+    "SceneEngine",
+    "PreviewEngine",
+    "ExportEngine"
+  ],
+  "objectModuleContract": [
+    "definition.js",
+    "model2d.js",
+    "model3d.js",
+    "export.js"
+  ],
+  "objectCount": 12
+}

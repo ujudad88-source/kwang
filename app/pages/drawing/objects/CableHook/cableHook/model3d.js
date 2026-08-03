@@ -1,0 +1,1 @@
+(function(){'use strict';const id='cableHook';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'left_tag_weld',transform:ctx.transform,material:ctx.object.material||null};});})();

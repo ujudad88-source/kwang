@@ -1,0 +1,1 @@
+(function(){'use strict';const id='acrylicWindow';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'framed_clear',transform:ctx.transform,material:ctx.object.material||null};});})();
