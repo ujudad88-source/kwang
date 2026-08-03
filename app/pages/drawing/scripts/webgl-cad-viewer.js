@@ -92,4 +92,6 @@
   }
   document.addEventListener('click',e=>{const mb=e.target.closest('#drawingPanel [data-3d-view-mode]');if(mb){e.preventDefault();e.stopImmediatePropagation();setMode(mb.dataset['3dViewMode']);return;}const b=e.target.closest('#drawingPanel [data-3d-action]');if(!b)return;const a=b.dataset['3dAction'];if(['front','iso','fit','reset'].includes(a)){e.preventDefault();e.stopImmediatePropagation();setPreset(a==='front'?'front':'reset');}},true);
   window.KENC3DViewer={render:renderWebGL,reset:()=>setPreset('reset'),setMode};
+  const boot=()=>setTimeout(()=>window.KENC_DRAWING_API?.renderAll?.(),0);
+  if(window.KENC_DRAWING_API)boot();else document.addEventListener('kenc:drawing-api-ready',boot,{once:true});
 })();

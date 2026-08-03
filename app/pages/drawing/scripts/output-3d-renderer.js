@@ -15,7 +15,10 @@
     const w=+c.width,h=+c.height,d=+c.depth,x=+o.x||0,y=+o.y||0;
     let O,U,V;
     if(s==='front'){
-      const a=worldDoorPoint(c,mode,x,y-h/2,4),au=worldDoorPoint(c,mode,x+1,y-h/2,4),av=worldDoorPoint(c,mode,x,y-h/2+1,4);
+      const fp=window.KENC_CAD_MODEL?.frontPoint;
+      const a=fp?fp(c,x,y,5,mode,y0):worldDoorPoint(c,mode,x,y-h/2,4);
+      const au=fp?fp(c,x+1,y,5,mode,y0):worldDoorPoint(c,mode,x+1,y-h/2,4);
+      const av=fp?fp(c,x,y+1,5,mode,y0):worldDoorPoint(c,mode,x,y-h/2+1,4);
       O=p(a.x,a.y,a.z,sc);const pu=p(au.x,au.y,au.z,sc),pv=p(av.x,av.y,av.z,sc);U={x:pu.x-O.x,y:pu.y-O.y};V={x:pv.x-O.x,y:pv.y-O.y};
     }
     else if(s==='inside'){O=p(-w/2+x,y0-h/2+y,-d/2+Math.max(20,d*.28),sc);U={x:sc,y:0};V={x:0,y:sc};}
