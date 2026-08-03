@@ -3,7 +3,7 @@
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external'));
   const roleColor={external:[0.22,0.74,0.98,1],internal:[0.20,0.83,0.60,1],cutout:[0.96,0.62,0.08,1],utility:[0.76,0.52,0.98,1]};
-  const defaults=()=>({yaw:-35,pitch:-18,zoom:1,panX:0,panY:0,displayMode:'exterior'});
+  const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior'});
   let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
   function state(){return window.KENC_DRAWING_API?.getState?.();}
   function view(){const s=state(); if(!s)return defaults(); return s.live3dView||(s.live3dView=defaults());}
@@ -34,7 +34,7 @@
   function drawGeom(vertices,mode,color,matrix){gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(posLoc);gl.vertexAttribPointer(posLoc,3,gl.FLOAT,false,0,0);gl.uniform4fv(colorLoc,color);gl.uniformMatrix4fv(mvpLoc,false,new Float32Array(matrix));gl.drawArrays(mode,0,vertices.length/3);}
   function drawBox(m,color,edge=[0.85,0.92,1,1],face=true){if(face)drawGeom(cubeVerts,gl.TRIANGLES,color,m);drawGeom(edgeVerts,gl.LINES,edge,m);}
   function faceTransform(c,y0,surface,o,mode){const w=c.width,h=c.height,d=c.depth,ow=o.w||20,oh=o.h||20,x=o.x||0,y=o.y||0,th=Math.max(3,Math.min(12,d*.05));let tx=0,ty=y0+y+oh/2-h/2,tz=0,sx=ow,sy=oh,sz=th;
-    if(surface==='front'){tx=-w/2+x+ow/2;tz=d/2+th/2+2;if(mode==='open'||mode==='exploded'){const ang=(mode==='open'?-82:-8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;const lx=x+ow/2;tx=-w/2-ex+Math.cos(ang)*lx;tz=d/2+ex*.15-Math.sin(ang)*lx;return mat4Mul(translate(tx,ty,tz),mat4Mul(rotY(ang),scale(sx,sy,sz)));}}
+    if(surface==='front'){tx=-w/2+x+ow/2;tz=d/2+th/2+2;if(mode==='open'||mode==='exploded'){const ang=(mode==='open'?82:8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;const fromRight=w-(x+ow/2);tx=w/2+ex-Math.cos(ang)*fromRight;tz=d/2+ex*.15-Math.sin(ang)*fromRight;return mat4Mul(translate(tx,ty,tz),mat4Mul(rotY(ang),scale(sx,sy,sz)));}}
     else if(surface==='back'){tx=w/2-x-ow/2;tz=-d/2-th/2;}
     else if(surface==='inside'){tx=-w/2+x+ow/2;tz=-d/2+Math.max(20,d*.28);sz=Math.max(4,Math.min(10,d*.04));}
     else if(surface==='left'){tx=-w/2-th/2;tz=d/2-x-ow/2;sx=th;sz=ow;}
@@ -60,8 +60,8 @@
     push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
     if(mode==='exterior'||mode==='xray')push('door',mat4Mul(translate(0,yCenter,d/2+t/2),scale(w,h,t)),[.20,.24,.29,mode==='xray'?.10:.34]);
     if(mode==='open'||mode==='exploded'){
-      const ang=(mode==='open'?-82:-8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;
-      const door=mat4Mul(translate(-w/2-ex,yCenter,d/2+ex*.15),mat4Mul(rotY(ang),mat4Mul(translate(w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,.32]);
+      const ang=(mode==='open'?82:8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;
+      const door=mat4Mul(translate(w/2+ex,yCenter,d/2+ex*.15),mat4Mul(rotY(ang),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,.32]);
     }
     if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
@@ -69,14 +69,14 @@
   function sceneBounds(cabs){const total=cabs.reduce((a,c)=>a+(+c.height||0),0),maxW=Math.max(...cabs.map(c=>+c.width||1)),maxD=Math.max(...cabs.map(c=>+c.depth||1));return{total,maxW,maxD,size:Math.max(total,maxW,maxD)};}
   function renderWebGL(ctx){ctxCache=ctx;ensureCanvas(ctx.svg);const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
     resize();gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(.018,.035,.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
-    const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,span=b.size*0.72/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
+    const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
     let off=-b.total/2;cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;cabinetParts(c,yCenter,v.displayMode||'exterior').forEach(p=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
       (c.objects||[]).forEach(o=>{const surface=o.surface||'front';if((v.displayMode==='exterior')&&surface==='inside')return;const role=roleOf(o,surface),m=faceTransform(c,yCenter,surface,o,v.displayMode||'exterior');addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role);});
     });syncButtons();}
   function ensureCanvas(svg){if(canvas&&canvas.isConnected)return;const wrap=svg.parentElement;canvas=document.createElement('canvas');canvas.className='kenc-webgl-3d-canvas';canvas.setAttribute('aria-label','WebGL 실시간 3D 미리보기');svg.style.display='none';wrap.appendChild(canvas);gl=canvas.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});if(!gl){svg.style.display='';canvas.remove();canvas=null;return;}initGL();bindCanvas();}
   function resize(){if(!canvas)return;const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);const w=Math.max(2,Math.round(r.width*dpr)),h=Math.max(2,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
   function redraw(){if(ctxCache&&gl)renderWebGL(ctxCache);}
-  function setPreset(name){const v=view();if(name==='front')Object.assign(v,{yaw:0,pitch:0,zoom:1,panX:0,panY:0});else Object.assign(v,{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});redraw();}
+  function setPreset(name){const v=view();if(name==='front')Object.assign(v,{yaw:0,pitch:0,zoom:1.12,panX:0,panY:0});else Object.assign(v,{yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0});redraw();}
   function setMode(m){view().displayMode=m;redraw();}
   function syncButtons(){const v=view();document.querySelectorAll('#drawingPanel [data-3d-view-mode]').forEach(b=>b.classList.toggle('active',b.dataset['3dViewMode']===v.displayMode));}
   function bindCanvas(){
