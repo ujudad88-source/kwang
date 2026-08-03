@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-  const roleOf=(o,s)=>s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external'));
+  const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
   const roleColor={external:[0.22,0.74,0.98,1],internal:[0.20,0.83,0.60,1],cutout:[0.96,0.62,0.08,1],utility:[0.76,0.52,0.98,1]};
   const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior'});
   let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
@@ -34,7 +34,13 @@
   function drawGeom(vertices,mode,color,matrix){gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(posLoc);gl.vertexAttribPointer(posLoc,3,gl.FLOAT,false,0,0);gl.uniform4fv(colorLoc,color);gl.uniformMatrix4fv(mvpLoc,false,new Float32Array(matrix));gl.drawArrays(mode,0,vertices.length/3);}
   function drawBox(m,color,edge=[0.85,0.92,1,1],face=true){if(face)drawGeom(cubeVerts,gl.TRIANGLES,color,m);drawGeom(edgeVerts,gl.LINES,edge,m);}
   function faceTransform(c,y0,surface,o,mode){const w=c.width,h=c.height,d=c.depth,ow=o.w||20,oh=o.h||20,x=o.x||0,y=o.y||0,th=Math.max(3,Math.min(12,d*.05));let tx=0,ty=y0+y+oh/2-h/2,tz=0,sx=ow,sy=oh,sz=th;
-    if(surface==='front'){tx=-w/2+x+ow/2;tz=d/2+th/2+2;if(mode==='open'||mode==='exploded'){const ang=(mode==='open'?82:8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;const fromRight=w-(x+ow/2);tx=w/2+ex-Math.cos(ang)*fromRight;tz=d/2+ex*.15-Math.sin(ang)*fromRight;return mat4Mul(translate(tx,ty,tz),mat4Mul(rotY(ang),scale(sx,sy,sz)));}}
+    if(surface==='front'){
+      const placement=window.KENC_CAD_MODEL?.frontObjectPlacement?.(c,o,mode,y0);
+      if(placement){
+        return mat4Mul(translate(placement.center.x,placement.center.y,placement.center.z),mat4Mul(rotY(placement.angle),scale(sx,sy,sz)));
+      }
+      tx=-w/2+x+ow/2;tz=d/2+th/2+2;
+    }
     else if(surface==='back'){tx=w/2-x-ow/2;tz=-d/2-th/2;}
     else if(surface==='inside'){tx=-w/2+x+ow/2;tz=-d/2+Math.max(20,d*.28);sz=Math.max(4,Math.min(10,d*.04));}
     else if(surface==='left'){tx=-w/2-th/2;tz=d/2-x-ow/2;sx=th;sz=ow;}
@@ -60,8 +66,8 @@
     push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
     if(mode==='exterior'||mode==='xray')push('door',mat4Mul(translate(0,yCenter,d/2+t/2),scale(w,h,t)),[.20,.24,.29,mode==='xray'?.10:.34]);
     if(mode==='open'||mode==='exploded'){
-      const ang=(mode==='open'?82:8)*Math.PI/180,ex=mode==='exploded'?w*.60:0;
-      const door=mat4Mul(translate(w/2+ex,yCenter,d/2+ex*.15),mat4Mul(rotY(ang),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,.32]);
+      const pose=window.KENC_CAD_MODEL?.doorPose?.(c,mode,yCenter)||{angle:(mode==='open'?82:8)*Math.PI/180,hingeX:w/2+(mode==='exploded'?w*.60:0),hingeY:yCenter,hingeZ:d/2+(mode==='exploded'?w*.60:0)*.15};
+      const door=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,.32]);
     }
     if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
