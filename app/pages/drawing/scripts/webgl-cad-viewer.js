@@ -2,7 +2,7 @@
   'use strict';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
-  const objectMaterial={face:[0.48,0.52,0.57,0.98],faceSoft:[0.66,0.69,0.73,0.96],glass:[0.48,0.72,0.84,0.20],void:[0.005,0.008,0.014,1],edge:[0.08,0.10,0.13,1],detail:[0.86,0.88,0.91,1],dark:[0.03,0.04,0.06,1],copper:[0.72,0.34,0.12,1],bakelite:[0.78,0.56,0.10,1]};
+  const objectMaterial={face:[0.16,0.19,0.23,0.96],faceSoft:[0.22,0.25,0.29,0.92],glass:[0.48,0.58,0.66,0.16],void:[0.015,0.025,0.04,0.98],edge:[0.88,0.92,0.96,1],detail:[0.72,0.78,0.84,1],dark:[0.04,0.06,0.09,1]};
   const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior'});
   let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
   function state(){return window.KENC_DRAWING_API?.getState?.();}
@@ -59,12 +59,17 @@
     drawBox(baseM,face,objectMaterial.edge,type!=='cut'&&type!=='anchor');
 
     if(type==='vent'){
-      const n=5;
-      for(let i=1;i<=n;i++){
-        const yy=-.36+i*(.72/(n+1));
-        localBox(baseM,0,yy,.57,.82,.075,.12,objectMaterial.faceSoft,objectMaterial.edge,true);
+      // KENC 표준 5단 와이드 절곡 루버. 판에 붙인 그릴이 아니라 절곡 날개가 전방으로 돌출된다.
+      localBox(baseM,0,0,.535,.94,.92,.028,[0.20,0.24,0.29,.98],objectMaterial.edge,true);
+      const bladeMetal=[0.43,0.48,0.54,1], bladeEdge=[0.86,0.90,0.94,1], bladeShadow=[0.08,0.10,0.13,1];
+      for(let i=0;i<5;i++){
+        const yy=-.33+i*.165;
+        // 절곡 상면과 전면 날개를 분리해 실제 깊이를 만든다.
+        localBox(baseM,0,yy-.025,.61,.82,.045,.15,bladeMetal,bladeEdge,true);
+        localBox(baseM,0,yy+.045,.69,.82,.095,.055,[0.30,0.34,0.39,1],bladeEdge,true);
+        localBox(baseM,0,yy+.092,.735,.74,.018,.025,bladeShadow,bladeShadow,true);
       }
-      localBox(baseM,0,0,.54,.94,.90,.045,[0,0,0,0],objectMaterial.edge,false);
+      localBox(baseM,0,0,.755,.86,.84,.028,[0,0,0,0],bladeEdge,false);
     }else if(type==='key'){
       localBox(baseM,0,0,.56,.56,.86,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
       if(o.option==='푸쉬버튼키') localBox(baseM,0,-.25,.63,.18,.18,.08,objectMaterial.dark,objectMaterial.detail,true);
@@ -88,11 +93,11 @@
     }else if(type==='anchor'){
       localBox(baseM,0,0,.60,.34,.34,.10,objectMaterial.dark,objectMaterial.edge,true);
     }else if(type==='plate'){
-      localBox(baseM,0,0,.56,.92,.92,o.option==='빼끄판'?.12:(o.option==='PVC속판'?.10:.045),o.option==='빼끄판'?objectMaterial.bakelite:objectMaterial.faceSoft,objectMaterial.edge,true);
+      localBox(baseM,0,0,.56,.92,.92,.035,objectMaterial.faceSoft,objectMaterial.detail,true);
       localBox(baseM,0,0,.61,.82,.82,.022,[0,0,0,0],objectMaterial.edge,false);
       [[-.42,-.42],[.42,-.42],[.42,.42],[-.42,.42]].forEach(([x,y])=>localBox(baseM,x,y,.63,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));
     }else if(type==='groundBar'){
-      localBox(baseM,0,0,.58,.84,.28,.10,o.option&&o.option.includes('동접지')?objectMaterial.copper:objectMaterial.faceSoft,objectMaterial.edge,true);
+      localBox(baseM,0,0,.58,.84,.28,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
       for(let i=-3;i<=3;i++) localBox(baseM,i*.11,0,.65,.035,.09,.05,objectMaterial.dark,objectMaterial.detail,true);
     }else if(type==='cableHook'){
       if(o.option==='수평'){

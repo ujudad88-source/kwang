@@ -78,18 +78,18 @@
     if (orientationMedia.addEventListener) orientationMedia.addEventListener("change", syncOrientationClass); else orientationMedia.addListener(syncOrientationClass);
 
     const drawingToolDefs = [
-      {id:"vent",label:"환기구",icon:"▦",options:["와이드 절곡형 루버"],w:160,h:90},
-      {id:"anchor",label:"구멍",icon:"•",options:["앙카구멍 Ø14","피스구멍 Ø6"],w:18,h:18},
+      {id:"vent",label:"환기구",icon:"▦",options:["일반형","루버형"],w:160,h:90},
+      {id:"anchor",label:"앙카구멍",icon:"•",options:["앙카구멍"],w:18,h:18},
       {id:"key",label:"키종류",icon:"⌸",options:["탈착키","푸쉬버튼키","푸쉬핸들키"],w:42,h:120},
-      {id:"nameplate",label:"명판",icon:"▭",options:["통신용 100×30","분전반용 150×30"],w:100,h:30},
+      {id:"nameplate",label:"명판",icon:"▭",options:["기본형"],w:150,h:45},
       {id:"acrylicWindow",label:"투명아크릴창",icon:"▭",options:["기본형"],w:220,h:140},
       {id:"emboss",label:"타공형태",icon:"⊙",options:["엠보타공 원형","엠보타공 사각형"],w:90,h:90},
       {id:"cut",label:"타공",icon:"⊗",options:["원형타공","사각타공"],w:90,h:90},
       {id:"plate",label:"속판",icon:"□",options:["PVC속판","철속판","빼끄판"],w:180,h:130},
-      {id:"groundBar",label:"접지",icon:"⏟",options:["철접지 · 좌측면","철접지 · 우측면","동접지 · 좌측면","동접지 · 우측면"],w:180,h:55},
-      {id:"cableHook",label:"케이블 걸이",icon:"‹›",options:["좌측면 태그용접","우측면 태그용접","내부 수평 태그용접"],w:150,h:45},
-      {id:"cover",label:"타공 덮개",icon:"▣",options:["4점 나사형"],w:110,h:90},
-      {id:"doubleLock",label:"이중시건",icon:"⊃",options:["노출함용","카바용"],w:70,h:80}
+      {id:"groundBar",label:"접지",icon:"⏟",options:["철접지 · 상(위)","철접지 · 하(아래)","철접지 · 좌(왼쪽)","철접지 · 우(오른쪽)","동접지 · 상(위)","동접지 · 하(아래)","동접지 · 좌(왼쪽)","동접지 · 우(오른쪽)"],w:180,h:55},
+      {id:"cableHook",label:"케이블 걸이",icon:"‹›",options:["왼쪽 <","오른쪽 >","수평"],w:55,h:75},
+      {id:"cover",label:"타공 덮개",icon:"▣",options:["기본형"],w:110,h:90},
+      {id:"doubleLock",label:"이중시건",icon:"⊃",options:["기본형"],w:70,h:80}
     ];
     const drawingSurfaces=[
       {id:"front",label:"정면"},{id:"back",label:"뒷면"},{id:"inside",label:"내부"},{id:"left",label:"좌측"},{id:"right",label:"우측"},{id:"top",label:"상부"},{id:"bottom",label:"하부"}
@@ -119,41 +119,44 @@
     function toPlane(e){const q=screenPoint(e),l=drawingState.layout;return{x:(q.x-l.x)/l.s,y:(q.y-l.y)/l.s}}
     function selectedObj(){return currentObjects().find(o=>o.id===drawingState.selectedObjectId)||null}
     function updateObjectPanel(){const o=selectedObj(),dis=!o;[drawingObjectX,drawingObjectY,drawingObjectW,drawingObjectH,drawingObjectRotation,drawingApplyBtn,drawingDeleteBtn].forEach(x=>x.disabled=dis);drawingSelectedName.value=o?`${toolById(o.type).label} · ${o.option}`:"선택된 객체 없음";drawingObjectX.value=o?Math.round(o.x):"";drawingObjectY.value=o?Math.round(o.y):"";drawingObjectW.value=o?Math.round(o.w):"";drawingObjectH.value=o?Math.round(o.h):"";drawingObjectRotation.value=o?Math.round(o.rot||0):"";const isNameplate=!!o&&o.type==="nameplate";drawingObjectLabelField.classList.toggle("show",isNameplate);drawingObjectLabel.disabled=!isNameplate;drawingObjectLabel.value=isNameplate?(o.label||"명판"):""}
-    function drawShape(g,o,x,y,w,h,is3d=false){const black="#1f2937",red="#dc2626",sw=is3d?1.3:2,steel=is3d?"#aeb7c2":"#e5e7eb";
+    function drawShape(g,o,x,y,w,h,is3d=false){const black="#1f2937",red="#e11d48",sw=is3d?1.3:2;
       if(o.type==="vent"){
-        g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:is3d?"#87919d":"none",stroke:black,"stroke-width":sw}));
-        const n=5,bladeH=h*.11;for(let i=0;i<n;i++){const yy=y+h*.12+i*h*.155;g.appendChild(svgEl("path",{d:`M ${x+w*.08} ${yy} L ${x+w*.92} ${yy} L ${x+w*.84} ${yy+bladeH} L ${x+w*.16} ${yy+bladeH} Z`,fill:is3d?"#606a75":"none",stroke:black,"stroke-width":sw*.8}));}
-      } else if(o.type==="anchor"){
-        const dia=o.option.includes('6')?6:14,r=Math.max(2,Math.min(w,h)*(dia===6?.18:.32));g.appendChild(svgEl("circle",{cx:x+w/2,cy:y+h/2,r,fill:is3d?"#0b1020":"none",stroke:black,"stroke-width":sw}));
-        if(!is3d)g.appendChild(svgEl("text",{x:x+w/2,y:y+h+11,"text-anchor":"middle","font-size":8,fill:black},`Ø${dia}`));
-      } else if(o.type==="key"){
-        if(o.option==="탈착키"){g.appendChild(svgEl("rect",{x:x+w*.18,y:y+h*.18,width:w*.64,height:h*.64,rx:3,fill:is3d?"#111827":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.48,r:w*.11,fill:"none",stroke:is3d?"#d1d5db":black,"stroke-width":sw}));}
-        else if(o.option==="푸쉬버튼키"){g.appendChild(svgEl("rect",{x:x+w*.16,y:y+h*.08,width:w*.68,height:h*.84,rx:5,fill:is3d?"#c7ccd1":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("rect",{x:x+w*.28,y:y+h*.18,width:w*.44,height:h*.30,rx:3,fill:is3d?"#66707a":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.72,r:w*.10,fill:"none",stroke:black,"stroke-width":sw}));}
-        else {g.appendChild(svgEl("rect",{x:x+w*.18,y:y+h*.04,width:w*.64,height:h*.92,rx:7,fill:is3d?"#c9ced4":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("rect",{x:x+w*.31,y:y+h*.15,width:w*.38,height:h*.52,rx:w*.16,fill:is3d?"#707984":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.82,r:w*.09,fill:"none",stroke:black,"stroke-width":sw}));}
-      } else if(o.type==="nameplate"){
-        const ww=o.option.includes('100')?100:150;if(!o.userSized){o.w=ww;o.h=30;}g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:is3d?"#f7f4e9":"white",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.label||o.option.split(' ')[0]));
-      } else if(o.type==="acrylicWindow"){
-        const inset=Math.max(3,Math.min(w,h)*.06);g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:3,fill:is3d?"rgba(210,216,222,.7)":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("rect",{x:x+inset,y:y+inset,width:w-inset*2,height:h-inset*2,rx:2,fill:is3d?"rgba(125,211,252,.18)":"none",stroke:is3d?"#7dd3fc":black,"stroke-width":sw*.75}));
-      } else if(o.type==="emboss"){
-        const circular=o.option.includes("원형");if(circular){const r=Math.min(w,h)*.34,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:is3d?"#b8c0c8":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("circle",{cx,cy,r:r*.88,fill:"none",stroke:black,"stroke-width":sw*.55,"stroke-dasharray":"4 3"}));}else{g.appendChild(svgEl("rect",{x:x+w*.14,y:y+h*.14,width:w*.72,height:h*.72,rx:3,fill:is3d?"#b8c0c8":"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("rect",{x:x+w*.20,y:y+h*.20,width:w*.60,height:h*.60,rx:2,fill:"none",stroke:black,"stroke-width":sw*.55,"stroke-dasharray":"4 3"}));}
-      } else if(o.type==="cut"){
-        const cx=x+w/2,cy=y+h/2,circular=o.option==="원형타공";if(circular)g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:is3d?"#05070b":"none",stroke:is3d?black:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:is3d?"#05070b":"none",stroke:is3d?black:red,"stroke-width":sw}));if(!is3d){g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}));}
-      } else if(o.type==="plate"){
-        const pvc=o.option==="PVC속판",bak=o.option==="빼끄판",fill=is3d?(pvc?"#d8dde2":bak?"#c99a24":"#b8c0c8"):"none";g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:3,fill,stroke:black,"stroke-width":sw}));
-        [[.09,.09],[.91,.09],[.09,.91],[.91,.91]].forEach(([a,b])=>g.appendChild(svgEl("rect",{x:x+w*a-w*.035,y:y+h*b-h*.012,width:w*.07,height:h*.024,rx:2,fill:is3d?"#111827":"none",stroke:black,"stroke-width":sw*.7})));
-        if(pvc){for(let yy=y+h*.13;yy<y+h*.88;yy+=Math.max(7,h*.10))for(let xx=x+w*.13;xx<x+w*.88;xx+=Math.max(7,w*.08))g.appendChild(svgEl("circle",{cx:xx,cy:yy,r:Math.max(1,Math.min(w,h)*.009),fill:black}));}
-        if(!is3d)g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option));
-      } else if(o.type==="groundBar"){
-        const copper=o.option.includes("동접지"),right=o.option.includes("우측면"),fill=is3d?(copper?"#b87333":"#aeb7c2"):"none";g.appendChild(svgEl("rect",{x,y:y+h*.28,width:w,height:h*.44,rx:2,fill,stroke:black,"stroke-width":sw}));for(let i=1;i<=7;i++)g.appendChild(svgEl("circle",{cx:x+w*i/8,cy:y+h*.5,r:Math.max(1.8,h*.07),fill:is3d?"#111827":"none",stroke:black,"stroke-width":sw*.7}));g.appendChild(svgEl("path",{d:right?`M ${x} ${y+h*.2} L ${x-w*.12} ${y+h*.5} L ${x} ${y+h*.8}`:`M ${x+w} ${y+h*.2} L ${x+w*1.12} ${y+h*.5} L ${x+w} ${y+h*.8}`,fill:"none",stroke:black,"stroke-width":sw}));
-      } else if(o.type==="cableHook"){
-        const right=o.option.includes('우측'),inner=o.option.includes('내부');g.appendChild(svgEl("path",{d:inner?`M ${x} ${y+h*.55} L ${x+w} ${y+h*.55} L ${x+w} ${y+h*.25}`:right?`M ${x+w} ${y+h*.15} L ${x+w*.18} ${y+h*.15} L ${x+w*.18} ${y+h*.85} L ${x+w*.78} ${y+h*.85}`:`M ${x} ${y+h*.15} L ${x+w*.82} ${y+h*.15} L ${x+w*.82} ${y+h*.85} L ${x+w*.22} ${y+h*.85}`,fill:"none",stroke:black,"stroke-width":Math.max(3,sw*2),"stroke-linejoin":"round"}));
-      } else if(o.type==="cover"){
-        g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:is3d?"#8d998c":"none",stroke:black,"stroke-width":sw}));[[.5,.08],[.5,.92],[.08,.5],[.92,.5]].forEach(([a,b])=>{g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(2,Math.min(w,h)*.04),fill:is3d?"#d1d5db":"none",stroke:black,"stroke-width":sw*.7}));g.appendChild(svgEl("line",{x1:x+w*a-3,y1:y+h*b,x2:x+w*a+3,y2:y+h*b,stroke:black,"stroke-width":1}));});
-      } else if(o.type==="doubleLock"){
-        if(o.option==="노출함용"){g.appendChild(svgEl("rect",{x:x+w*.35,y:y+h*.05,width:w*.30,height:h*.42,fill:is3d?steel:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("path",{d:`M ${x+w*.38} ${y+h*.46} Q ${x+w*.5} ${y+h*.88} ${x+w*.62} ${y+h*.46}`,fill:"none",stroke:black,"stroke-width":Math.max(4,sw*2)}));}else{g.appendChild(svgEl("rect",{x:x+w*.10,y:y+h*.12,width:w*.80,height:h*.24,rx:2,fill:is3d?steel:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.24,r:h*.07,fill:is3d?"#080b10":"none",stroke:black,"stroke-width":sw}));}
+        // KENC 표준 와이드 절곡 루버: 철판 자체를 프레스/절곡한 5단 형상
+        const edge=is3d?"#cbd5e1":black, metal=is3d?"#64748b":"#f8fafc", shadow=is3d?"#0f172a":"#475569";
+        const framePad=Math.max(1.5,Math.min(w,h)*.035), bladeH=h*.105, gap=h*.055;
+        g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:Math.max(2,Math.min(w,h)*.035),fill:is3d?"#334155":"#fff",stroke:edge,"stroke-width":sw}));
+        for(let i=0;i<5;i++){
+          const by=y+h*.14+i*(bladeH+gap), bx=x+w*.075, bw=w*.85, lip=Math.max(2,h*.045);
+          // 상단 절곡면
+          g.appendChild(svgEl("polygon",{points:`${bx},${by+lip} ${bx+w*.045},${by} ${bx+bw-w*.045},${by} ${bx+bw},${by+lip}`,
+            fill:metal,stroke:edge,"stroke-width":Math.max(.75,sw*.72),"stroke-linejoin":"round"}));
+          // 전면 루버 날개
+          g.appendChild(svgEl("polygon",{points:`${bx},${by+lip} ${bx+bw},${by+lip} ${bx+bw-w*.035},${by+bladeH} ${bx+w*.035},${by+bladeH}`,
+            fill:is3d?"#475569":"#e2e8f0",stroke:edge,"stroke-width":Math.max(.75,sw*.72),"stroke-linejoin":"round"}));
+          // 아래쪽 음영으로 절곡 깊이 표현
+          g.appendChild(svgEl("line",{x1:bx+w*.04,y1:by+bladeH,x2:bx+bw-w*.04,y2:by+bladeH,stroke:shadow,"stroke-width":Math.max(.7,sw*.55),"stroke-opacity":is3d?.9:.65}));
+        }
+        if(!is3d) g.appendChild(svgEl("text",{x:x+w/2,y:y+h-.05*h,"text-anchor":"middle","font-size":Math.max(7,Math.min(11,w/17)),fill:"#475569","font-weight":700},"와이드 절곡 루버"));
       }
+      else if(o.type==="anchor")g.appendChild(svgEl("circle",{cx:x+w/2,cy:y+h/2,r:Math.max(2,Math.min(w,h)*.22),fill:black}));
+      else if(o.type==="key"){g.appendChild(svgEl("rect",{x:x+w*.22,y,width:w*.56,height:h,rx:Math.min(8,w*.2),fill:"none",stroke:black,"stroke-width":sw}));if(o.option==="탈착키"){g.appendChild(svgEl("rect",{x:x+w*.35,y:y+h*.18,width:w*.3,height:h*.34,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.5,y1:y+h*.52,x2:x+w*.5,y2:y+h*.78,stroke:black,"stroke-width":sw}));g.appendChild(svgEl("polyline",{points:`${x+w*.38},${y+h*.69} ${x+w*.5},${y+h*.8} ${x+w*.62},${y+h*.69}`,fill:"none",stroke:black,"stroke-width":sw}))}else if(o.option==="푸쉬버튼키")g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.25,r:Math.min(w,h)*.12,fill:"none",stroke:black,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.36,y:y+h*.15,width:w*.28,height:h*.7,rx:w*.12,fill:"none",stroke:black,"stroke-width":sw}))}
+      else if(o.type==="nameplate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(15,w/7)),fill:black,"font-weight":700},o.label||"명판"))}
+      else if(o.type==="acrylicWindow"){if(is3d){const edge="#0891b2",inset=Math.max(1.5,Math.min(w,h)*.035);g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"rgba(125,211,252,.07)",stroke:edge,"stroke-width":Math.max(.9,sw),"stroke-opacity":.72}));if(w>18&&h>14)g.appendChild(svgEl("rect",{x:x+inset,y:y+inset,width:Math.max(1,w-inset*2),height:Math.max(1,h-inset*2),rx:1.5,fill:"none",stroke:"#67e8f9","stroke-width":Math.max(.55,sw*.55),"stroke-opacity":.48}));if(w>34&&h>24){g.appendChild(svgEl("line",{x1:x+w*.18,y1:y+h*.12,x2:x+w*.42,y2:y+h*.38,stroke:"#e0f2fe","stroke-width":Math.max(.8,sw*.8),"stroke-opacity":.68}));g.appendChild(svgEl("line",{x1:x+w*.28,y1:y+h*.1,x2:x+w*.5,y2:y+h*.34,stroke:"#bae6fd","stroke-width":Math.max(.55,sw*.55),"stroke-opacity":.48}))}if(w>58&&h>20)g.appendChild(svgEl("text",{x:x+w/2,y:y+Math.min(h*.18,13),"text-anchor":"middle","font-size":Math.max(6,Math.min(9,w/14)),fill:"#0e7490","font-weight":700,"fill-opacity":.7},"투명아크릴창"))}else{g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:2,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(15,w/8)),fill:black,"font-weight":700},"투명아크릴창"))}}
+      else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
+      else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
+      else if(o.type==="plate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option))}
+      else if(o.type==="groundBar"){
+        const material=o.option.includes("동접지")?"copper":"iron";
+        const direction=o.option.includes("하(")?"down":o.option.includes("좌(")?"left":o.option.includes("우(")?"right":"up";
+        g.appendChild(svgEl("image",{x,y,width:w,height:h,href:`assets/ground/${material}_${direction}.png`,"preserveAspectRatio":"xMidYMid meet"}));
+      }
+      else if(o.type==="cableHook"){
+        if(o.option==="수평")g.appendChild(svgEl("image",{x,y,width:w,height:h,href:"assets/cable_hook_horizontal.png","preserveAspectRatio":"xMidYMid meet"}));
+        else g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(18,h*.75),fill:black},o.option.includes("왼쪽")?"<":">"));
+      }
+      else if(o.type==="cover"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));[[.5,.1],[.5,.9],[.1,.5],[.9,.5]].forEach(([a,b])=>g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(1.5,Math.min(w,h)*.035),fill:"none",stroke:black,"stroke-width":sw})))}
+      else if(o.type==="doubleLock")g.appendChild(svgEl("text",{x:x+w/2,y:y+h*.72,"text-anchor":"middle","font-size":Math.max(20,h*.72),fill:black},"⊃"));
     }
-
     function render2d(){const c=currentCabinet(),p=plane(drawingState.surface),vw=760,vh=700,pad={l:105,r:55,t:60,b:90},s=Math.min((vw-pad.l-pad.r)/p.width,(vh-pad.t-pad.b)/p.height),w=p.width*s,h=p.height*s,x=pad.l+(vw-pad.l-pad.r-w)/2,y=pad.t+(vh-pad.t-pad.b-h)/2;drawingState.layout={x,y,s,w,h,p};drawingCanvas.innerHTML="";drawingCanvas.append(svgEl("rect",{x:0,y:0,width:vw,height:vh,fill:"#fff"}),svgEl("text",{x:24,y:30,"font-size":16,"font-weight":800,fill:"#111827"},`${drawingSurfaces.find(v=>v.id===drawingState.surface).label} · ${c.name}`));drawingCanvas.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"#fff",stroke:"#111827","stroke-width":2}));
       currentObjects().filter(o=>o.surface===drawingState.surface).forEach(o=>{const sx=x+o.x*s,sy=y+o.y*s,sw=o.w*s,sh=o.h*s,g=svgEl("g",{"data-id":o.id,transform:`rotate(${o.rot||0} ${sx+sw/2} ${sy+sh/2})`,style:"cursor:grab"});drawShape(g,o,sx,sy,sw,sh);if(o.id===drawingState.selectedObjectId)g.appendChild(svgEl("rect",{x:sx-4,y:sy-4,width:sw+8,height:sh+8,fill:"none",stroke:"#2563eb","stroke-width":2,"stroke-dasharray":"6 4"}));g.appendChild(svgEl("rect",{x:sx-8,y:sy-8,width:sw+16,height:sh+16,fill:"transparent","data-id":o.id}));drawingCanvas.appendChild(g)});
       drawingCanvas.append(svgEl("line",{x1:x,y1:y+h+30,x2:x+w,y2:y+h+30,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x+w/2,y:y+h+53,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800},`${p.width}`),svgEl("line",{x1:x-30,y1:y,x2:x-30,y2:y+h,stroke:"#2563eb","stroke-width":1.8}),svgEl("text",{x:x-42,y:y+h/2,"text-anchor":"middle",fill:"#2563eb","font-size":15,"font-weight":800,transform:`rotate(-90 ${x-42} ${y+h/2})`},`${p.height}`));
