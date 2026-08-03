@@ -29,7 +29,14 @@ const APP_ASSETS = [
   './assets/ground/copper_down.png',
   './assets/ground/copper_left.png',
   './assets/ground/copper_right.png'
-];
+,
+  './app/pages/drawing/engine/object-definitions.js',
+  './app/pages/drawing/engine/object-engine.js',
+  './app/pages/drawing/engine/attach-engine.js',
+  './app/pages/drawing/engine/scene-engine.js',
+  './app/pages/drawing/engine/preview-engine.js',
+  './app/pages/drawing/engine/export-engine.js',
+  './app/pages/drawing/engine/legacy-adapter.js'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)));
