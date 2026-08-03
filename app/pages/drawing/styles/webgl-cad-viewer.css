@@ -1,0 +1,6 @@
+.drawing-3d-wrap,.drawing-3d-canvas-wrap,.drawing-pro-3d-stage{position:relative;min-height:0}
+.kenc-webgl-3d-canvas{display:block;width:100%;height:100%;min-height:330px;background:#05101d;touch-action:none;cursor:grab;border-radius:8px}
+.kenc-webgl-3d-canvas:active{cursor:grabbing}
+@media(max-width:900px){.kenc-webgl-3d-canvas{min-height:300px}}
+
+.drawing-3d-wrap{display:flex;flex-direction:column}.drawing-3d-wrap .kenc-webgl-3d-canvas{flex:1}

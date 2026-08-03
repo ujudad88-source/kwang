@@ -265,7 +265,8 @@
         for(const surface of drawingSurfaces){drawingState.surface=surface.id;render2d();captured.push({label:surface.label,img:await svgToImage(drawingCanvas)})}
         drawingState.mode3d="single";
         render3d();
-        captured.push({label:"단독 함체",img:await svgToImage(drawing3dCanvas)});
+        const output3d=(window.KENC3DOutputRenderer&&window.KENC3DOutputRenderer.render)?window.KENC3DOutputRenderer.render(drawingState,currentCabinet()):drawing3dCanvas;
+        captured.push({label:"단독 함체",img:await svgToImage(output3d)});
       }finally{drawingState.surface=previousSurface;drawingState.selectedObjectId=previousSelected;drawingState.mode3d=previousMode3d;buildTabs();renderAll()}
       const noteLines=getProductionNoteLines(),noteH=noteLines.length?Math.max(190,90+noteLines.length*42):0;const canvas=document.createElement("canvas"),W=1800,H=2300+noteH,margin=70,gap=34,header=150,cellW=(W-margin*2-gap)/2,cellH=(2300-header-margin-gap*3)/4;
       canvas.width=W;canvas.height=H;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);ctx.fillStyle="#172033";ctx.font="700 50px sans-serif";ctx.fillText("광전기통신 손도면 생성기",margin,70);ctx.font="26px sans-serif";ctx.fillStyle="#526174";const c=currentCabinet();ctx.fillText(`${c.name} · ${c.width} × ${c.height} × ${c.depth} mm · ${c.material} · ${c.thickness}`,margin,116);

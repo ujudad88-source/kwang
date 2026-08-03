@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-ui-004-0-2";
+const CACHE_NAME = "kenc-ui-004-1-0";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -17,6 +17,9 @@ const APP_ASSETS = [
   './data/users.json',
   './js/firebase-config.js',
   './js/firebase-auth.js',
+  './app/pages/drawing/scripts/output-3d-renderer.js',
+  './app/pages/drawing/scripts/webgl-cad-viewer.js',
+  './app/pages/drawing/styles/webgl-cad-viewer.css',
   './assets/ground/iron_up.png',
   './assets/ground/iron_down.png',
   './assets/ground/iron_left.png',
