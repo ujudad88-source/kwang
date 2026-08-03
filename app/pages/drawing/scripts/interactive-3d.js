@@ -32,7 +32,7 @@
   }
   function faceBasis(c,y0,surface,mode){
     const w=+c.width,h=+c.height,d=+c.depth,eps=1.2;
-    if(surface==="front" && (mode==="open"||mode==="exploded")) return doorBasis(c,y0,mode==="open"?-82:-24,mode==="exploded"?w*.14:0);
+    if(surface==="front" && (mode==="open"||mode==="exploded")) return doorBasis(c,y0,mode==="open"?-82:-8,mode==="exploded"?w*.52:0);
     const map={
       front:{origin:{x:-w/2,y:y0,z:d/2+eps},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0}},
       back:{origin:{x:w/2,y:y0,z:-d/2-eps},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0}},
@@ -57,11 +57,14 @@
       });
     });
     entries.sort((x,y)=>x.depth-y.depth).forEach(({surface,o,a,b,cc,d,po})=>{
-      const opacity=mode==="xray"?(surface==="inside"?1:.92):1;
-      const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity,"data-kenc-3d-object":o.id||""});
-      const inner=svgEl("g",{transform:`rotate(${+o.rot||0} ${( +o.x||0)+( +o.w||0)/2} ${( +o.y||0)+( +o.h||0)/2})`});
-      draw(inner,o,+o.x||0,+o.y||0,+o.w||10,+o.h||10,true);
-      inner.querySelectorAll("*").forEach(el=>{if(el.hasAttribute("stroke-dasharray"))el.removeAttribute("stroke-dasharray");});
+      const opacity=1;
+      const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity,class:`kenc-3d-object kenc-object-${surface}`,"data-kenc-3d-object":o.id||"","data-surface":surface});
+      const ox=+o.x||0,oy=+o.y||0,ow=Math.max(+o.w||10,10),oh=Math.max(+o.h||10,10);
+      const pad=Math.max(4,Math.min(12,Math.min(ow,oh)*.10));
+      outer.appendChild(svgEl("rect",{x:ox-pad,y:oy-pad,width:ow+pad*2,height:oh+pad*2,rx:Math.min(8,pad),class:"kenc-3d-object-halo"}));
+      const inner=svgEl("g",{transform:`rotate(${+o.rot||0} ${ox+ow/2} ${oy+oh/2})`,class:"kenc-3d-object-shape"});
+      draw(inner,o,ox,oy,ow,oh,true);
+      inner.querySelectorAll("*").forEach(el=>{if(el.hasAttribute("stroke-dasharray"))el.removeAttribute("stroke-dasharray");el.classList.add("kenc-3d-object-part");});
       outer.appendChild(inner);root.appendChild(outer);
     });
   }
@@ -74,16 +77,20 @@
     sorted.forEach(({f,p})=>root.appendChild(svgEl("polygon",{points:polyPoints(p),class:`kenc-3d-face kenc-face-${f.name}`,"data-mode":mode,opacity:faceOpacity})));
     g.edges.forEach(([a,b])=>root.appendChild(svgEl("line",{x1:projected[a].x,y1:projected[a].y,x2:projected[b].x,y2:projected[b].y,class:"kenc-3d-edge"})));
     if(mode==="open"||mode==="exploded"){
-      const db=doorBasis(c,g.y0,mode==="open"?-82:-24,mode==="exploded"?g.w*.14:0);
+      const db=doorBasis(c,g.y0,mode==="open"?-82:-8,mode==="exploded"?g.w*.52:0);
       const p0=project(db.origin,v,scale),p1=project(add(db.origin,db.u,g.w),v,scale),p2=project(add(add(db.origin,db.u,g.w),db.v,g.h),v,scale),p3=project(add(db.origin,db.v,g.h),v,scale);
       root.appendChild(svgEl("polygon",{points:polyPoints([p0,p1,p2,p3]),class:"kenc-3d-door",opacity:mode==="exploded"?.22:.34}));
       [[p0,p1],[p1,p2],[p2,p3],[p3,p0]].forEach(([a,b])=>root.appendChild(svgEl("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:"kenc-3d-edge kenc-door-edge"})));
     }
     if(mode==="exploded"){
-      const rearShift={x:g.w*.10,y:0,z:-g.d*.30};
+      const rearShift={x:g.w*.24,y:0,z:-Math.max(g.d*1.65,g.w*.18)};
       const rp=[0,1,2,3].map(i=>project(add(g.pts[i],rearShift),v,scale));
       root.appendChild(svgEl("polygon",{points:polyPoints(rp),class:"kenc-3d-exploded-rear",opacity:.20}));
       [[0,1],[1,2],[2,3],[3,0]].forEach(([a,b])=>root.appendChild(svgEl("line",{x1:rp[a].x,y1:rp[a].y,x2:rp[b].x,y2:rp[b].y,class:"kenc-3d-edge kenc-exploded-edge"})));
+      [0,1,2,3].forEach(i=>{const baseP=project(g.pts[i],v,scale);root.appendChild(svgEl("line",{x1:baseP.x,y1:baseP.y,x2:rp[i].x,y2:rp[i].y,class:"kenc-3d-explode-guide"}));});
+      const db=doorBasis(c,g.y0,-8,g.w*.52);
+      const dp=[project(db.origin,v,scale),project(add(db.origin,db.u,g.w),v,scale),project(add(add(db.origin,db.u,g.w),db.v,g.h),v,scale),project(add(db.origin,db.v,g.h),v,scale)];
+      [0,1,2,3].forEach((i)=>{const source=project(g.pts[[4,5,6,7][i]],v,scale);root.appendChild(svgEl("line",{x1:source.x,y1:source.y,x2:dp[i].x,y2:dp[i].y,class:"kenc-3d-explode-guide"}));});
     }
     renderObjectGroup(root,c,g.y0,v,scale,mode);
   }
