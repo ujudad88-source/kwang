@@ -23,11 +23,11 @@
   function plane(surface,c){if(surface==='left'||surface==='right')return{width:num(c.depth,130),height:num(c.height,700)};if(surface==='top'||surface==='bottom')return{width:num(c.width,600),height:num(c.depth,130)};return{width:num(c.width,600),height:num(c.height,700)};}
   function clampObject(o,c){const p=plane(o.surface,c);o.w=Math.min(Math.max(1,o.w),p.width);o.h=Math.min(Math.max(1,o.h),p.height);o.x=Math.min(Math.max(0,o.x),Math.max(0,p.width-o.w));o.y=Math.min(Math.max(0,o.y),Math.max(0,p.height-o.h));return o;}
   function normalizeCabinet(c){c.objects=Array.isArray(c.objects)?c.objects:[];c.objects.forEach(o=>normalizeObject(o,c));c.schemaVersion=2;return c;}
-  function normalizeState(s){if(!s||typeof s!=='object')return s;s.cabinets=Array.isArray(s.cabinets)?s.cabinets:[];s.cabinets.forEach(normalizeCabinet);s.engineVersion='1.0.4';return s;}
+  function normalizeState(s){if(!s||typeof s!=='object')return s;s.cabinets=Array.isArray(s.cabinets)?s.cabinets:[];s.cabinets.forEach(normalizeCabinet);s.engineVersion='1.0.6';return s;}
   function addObject(cabinet,input){const o=normalizeObject(clone(input),cabinet);cabinet.objects.push(o);emit('added',{cabinet,object:o});return o;}
   function updateObject(cabinet,id,patch){const o=cabinet.objects.find(x=>x.id===id);if(!o)return null;Object.assign(o,clone(patch));normalizeObject(o,cabinet);emit('updated',{cabinet,object:o,patch});return o;}
   function removeObject(cabinet,id){const i=cabinet.objects.findIndex(x=>x.id===id);if(i<0)return null;const [o]=cabinet.objects.splice(i,1);emit('removed',{cabinet,object:o});return o;}
   function serialize(state){return JSON.stringify(normalizeState(clone(state)));}
   function deserialize(text){return normalizeState(JSON.parse(text));}
-  window.KENC_OBJECT_ENGINE={version:'1.0.4',definition,resolveVariant,normalizeObject,normalizeCabinet,normalizeState,plane,clampObject,addObject,updateObject,removeObject,serialize,deserialize,on,emit};
+  window.KENC_OBJECT_ENGINE={version:'1.0.6',definition,resolveVariant,normalizeObject,normalizeCabinet,normalizeState,plane,clampObject,addObject,updateObject,removeObject,serialize,deserialize,on,emit};
 })();

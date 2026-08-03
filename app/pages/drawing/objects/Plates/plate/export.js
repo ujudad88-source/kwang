@@ -1,1 +1,1 @@
-(function(){'use strict';const id='plate';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'export',function(ctx){return{id,variant:ctx.object.variant||'pvc_perforated',surface:ctx.transform.surface,position:ctx.transform.center,size:{w:ctx.transform.width,h:ctx.transform.height,d:ctx.transform.depth}};});})();
+(function(){'use strict';const id='plate';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'export',function(ctx){return window.KENC_OBJECT_RENDERER_BRIDGE.contextPayload(ctx,'export');});})();

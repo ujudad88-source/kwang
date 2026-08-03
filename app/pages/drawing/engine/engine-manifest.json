@@ -1,20 +1,5 @@
 {
-  "version": "1.0.5",
-  "engines": [
-    "object",
-    "attach",
-    "scene-graph",
-    "selection",
-    "history",
-    "preview",
-    "export"
-  ],
-  "features": [
-    "parent-child scene graph",
-    "object inspector",
-    "visibility/lock properties",
-    "render-layer metadata",
-    "history foundation",
-    "object module architecture"
-  ]
+  "version": "1.0.6",
+  "engines": ["object","attach","scene-graph","selection","history","preview","export","object-library","renderer-bridge"],
+  "features": ["standard object geometry catalog","material definitions","2D/3D/export shared descriptors","parent-child scene graph","object inspector","visibility/lock properties","history foundation","object module architecture"]
 }
