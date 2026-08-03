@@ -1,19 +1,20 @@
 {
-  "version": "1.0.4",
-  "schemaVersion": 2,
+  "version": "1.0.5",
   "engines": [
-    "ObjectRegistry",
-    "ObjectEngine",
-    "AttachEngine",
-    "SceneEngine",
-    "PreviewEngine",
-    "ExportEngine"
+    "object",
+    "attach",
+    "scene-graph",
+    "selection",
+    "history",
+    "preview",
+    "export"
   ],
-  "objectModuleContract": [
-    "definition.js",
-    "model2d.js",
-    "model3d.js",
-    "export.js"
-  ],
-  "objectCount": 12
+  "features": [
+    "parent-child scene graph",
+    "object inspector",
+    "visibility/lock properties",
+    "render-layer metadata",
+    "history foundation",
+    "object module architecture"
+  ]
 }

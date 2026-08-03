@@ -89,7 +89,11 @@ const APP_ASSETS = [
   './app/pages/drawing/objects/Locks/doubleLock/model2d.js',
   './app/pages/drawing/objects/Locks/doubleLock/model3d.js',
   './app/pages/drawing/objects/Locks/doubleLock/export.js'
-];
+,
+  "app/pages/drawing/engine/selection-engine.js",
+  "app/pages/drawing/engine/history-engine.js",
+  "app/pages/drawing/engine/object-inspector.js",
+  "app/pages/drawing/styles/object-inspector.css"];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)));
