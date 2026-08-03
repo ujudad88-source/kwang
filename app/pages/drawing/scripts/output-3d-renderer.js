@@ -3,7 +3,7 @@
   const NS='http://www.w3.org/2000/svg';
   const el=(tag,a={},t='')=>{const e=document.createElementNS(NS,tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,String(v)));if(t)e.textContent=t;return e;};
   const role=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
-  const colors={external:'#dbeafe',internal:'#dcfce7',cutout:'#ffedd5',utility:'#f3e8ff'},strokes={external:'#2563eb',internal:'#16a34a',cutout:'#ea580c',utility:'#9333ea'};
+  const colors={external:'#f8fafc',internal:'#f1f5f9',cutout:'#ffffff',utility:'#f8fafc'},strokes={external:'#111827',internal:'#111827',cutout:'#dc2626',utility:'#111827'};
   let projectPoint=(x,y,z)=>({x:350+x,y:330+y});
   function makeIsometricProjector(c){
     const yaw=-35*Math.PI/180,pitch=-24*Math.PI/180,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
@@ -33,7 +33,7 @@
     const b=basisFor(c,o,s,y0);if(!b)return;const r=role(o,s),ow=Number(o.w)||20,oh=Number(o.h)||20,{O,U,V}=b;
     const pts=[[0,0],[ow,0],[ow,oh],[0,oh]].map(([x,y])=>({x:O.x+U.x*x+V.x*y,y:O.y+U.y*x+V.y*y}));
     const poly=el('polygon',{points:pts.map(q=>`${q.x},${q.y}`).join(' '),fill:colors[r],stroke:strokes[r],'stroke-width':4,'vector-effect':'non-scaling-stroke'});svg.appendChild(poly);
-    if(o.type==='vent'){for(let i=1;i<=5;i++){const a={x:O.x+U.x*ow*.18+V.x*oh*i/6,y:O.y+U.y*ow*.18+V.y*oh*i/6},b2={x:O.x+U.x*ow*.82+V.x*oh*i/6,y:O.y+U.y*ow*.82+V.y*oh*i/6};line(svg,a,b2,{stroke:'#111827','stroke-width':2});}}
+    if(o.type==='vent'){for(let i=1;i<=5;i++){const yy=oh*(.12+(i-1)*.155),a={x:O.x+U.x*ow*.08+V.x*yy,y:O.y+U.y*ow*.08+V.y*yy},b2={x:O.x+U.x*ow*.92+V.x*yy,y:O.y+U.y*ow*.92+V.y*yy};line(svg,a,b2,{stroke:'#111827','stroke-width':3});}} else if(o.type==='cut'){const a=pts[0],b3=pts[2],c3=pts[1],d3=pts[3];line(svg,a,b3,{stroke:'#dc2626','stroke-width':3});line(svg,c3,d3,{stroke:'#dc2626','stroke-width':3});}
     else{const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;const label=o.label||o.option||({nameplate:'명판',plate:'PVC속판',cut:'타공',groundBar:'접지'}[o.type])||o.type;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#111827'},label));}
   }
   function render(state,cabinet){

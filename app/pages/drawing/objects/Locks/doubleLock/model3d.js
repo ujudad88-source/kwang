@@ -1,1 +1,1 @@
-(function(){'use strict';const id='doubleLock';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return window.KENC_OBJECT_RENDERER_BRIDGE.contextPayload(ctx,'3d');});})();
+(function(){'use strict';const id='doubleLock';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'exposed',transform:ctx.transform,material:ctx.object.material||null};});})();

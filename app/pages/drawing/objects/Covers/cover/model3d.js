@@ -1,1 +1,1 @@
-(function(){'use strict';const id='cover';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return window.KENC_OBJECT_RENDERER_BRIDGE.contextPayload(ctx,'3d');});})();
+(function(){'use strict';const id='cover';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'four_screw',transform:ctx.transform,material:ctx.object.material||null};});})();

@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-ui-2-0-1-0-6";
+const CACHE_NAME = "kenc-ui-2-0-1-0-4";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -31,8 +31,6 @@ const APP_ASSETS = [
   './assets/ground/copper_right.png'
 ,
   './app/pages/drawing/engine/object-definitions.js',
-  './app/pages/drawing/engine/object-library.js',
-  './app/pages/drawing/engine/object-renderer-bridge.js',
   './app/pages/drawing/engine/object-engine.js',
   './app/pages/drawing/engine/attach-engine.js',
   './app/pages/drawing/engine/scene-engine.js',

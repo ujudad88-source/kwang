@@ -1,0 +1,1 @@
+window.KENC_RENDERER_MIGRATION={version:'1.0.6.1',active:true,features:['wide-louver','hole-diameters','key-variants','nameplates','acrylic','knockouts','cutouts','plates','ground','cable-hook','cover-4-screw','double-lock']};
