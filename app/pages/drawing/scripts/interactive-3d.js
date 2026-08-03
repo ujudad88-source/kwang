@@ -3,10 +3,13 @@
   const NS="http://www.w3.org/2000/svg";
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const svgEl=(tag,attrs={},text="")=>{const e=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,String(v)));if(text)e.textContent=text;return e;};
-  let svg=null, dragging=null, pointers=new Map(), pinch=null;
-  const defaults=()=>({yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});
+  const add=(a,b,m=1)=>({x:a.x+b.x*m,y:a.y+b.y*m,z:a.z+b.z*m});
+  const avg=(arr,key)=>arr.reduce((s,p)=>s+p[key],0)/Math.max(arr.length,1);
+  let svg=null,dragging=null,pointers=new Map(),pinch=null;
+  const defaults=()=>({yaw:-35,pitch:-18,zoom:1,panX:0,panY:0,displayMode:"exterior"});
   function state(){return window.KENC_DRAWING_API?.getState?.();}
   function view(){const s=state();if(!s)return defaults();return s.live3dView||(s.live3dView=defaults());}
+  function normalizeView(v){if(!v.displayMode)v.displayMode="exterior";return v;}
   function rotate(p,v){
     const yaw=v.yaw*Math.PI/180,pitch=v.pitch*Math.PI/180;
     const x1=p.x*Math.cos(yaw)+p.z*Math.sin(yaw);
@@ -15,79 +18,111 @@
   }
   function project(p,v,scale){const q=rotate(p,v);return{x:210+(v.panX||0)+q.x*scale*v.zoom,y:270+(v.panY||0)+q.y*scale*v.zoom,z:q.z};}
   function cabinetGeometry(c,yOffset,totalH){
-    const w=c.width,h=c.height,d=c.depth,y0=yOffset-totalH/2;
+    const w=+c.width||1,h=+c.height||1,d=+c.depth||1,y0=yOffset-totalH/2;
     const pts=[[-w/2,y0,-d/2],[w/2,y0,-d/2],[w/2,y0+h,-d/2],[-w/2,y0+h,-d/2],[-w/2,y0,d/2],[w/2,y0,d/2],[w/2,y0+h,d/2],[-w/2,y0+h,d/2]].map(([x,y,z])=>({x,y,z}));
-    return{pts,y0,edges:[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]]};
+    return{pts,y0,w,h,d,edges:[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]],faces:[
+      {name:"back",idx:[0,1,2,3]},{name:"front",idx:[4,5,6,7]},{name:"left",idx:[0,4,7,3]},
+      {name:"right",idx:[1,5,6,2]},{name:"top",idx:[0,1,5,4]},{name:"bottom",idx:[3,2,6,7]}
+    ]};
   }
-  function faceBasis(c,y0,surface){
-    const w=c.width,h=c.height,d=c.depth;
+  function doorBasis(c,y0,angleDeg=-82,explode=0){
+    const w=+c.width,h=+c.height,d=+c.depth,th=angleDeg*Math.PI/180;
+    const hinge={x:-w/2-explode,y:y0,z:d/2+explode*.18};
+    return{origin:hinge,u:{x:Math.cos(th),y:0,z:-Math.sin(th)},v:{x:0,y:1,z:0},normal:{x:Math.sin(th),y:0,z:Math.cos(th)}};
+  }
+  function faceBasis(c,y0,surface,mode){
+    const w=+c.width,h=+c.height,d=+c.depth,eps=1.2;
+    if(surface==="front" && (mode==="open"||mode==="exploded")) return doorBasis(c,y0,mode==="open"?-82:-24,mode==="exploded"?w*.14:0);
     const map={
-      front:{origin:{x:-w/2,y:y0,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},opacity:1},
-      back:{origin:{x:-w/2,y:y0,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},opacity:.58},
-      inside:{origin:{x:-w/2,y:y0,z:-d/2+d*.92},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},opacity:.96,mounted:true},
-      left:{origin:{x:-w/2,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0},opacity:.8},
-      right:{origin:{x:w/2,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0},opacity:.92},
-      top:{origin:{x:-w/2,y:y0,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1},opacity:.9},
-      bottom:{origin:{x:-w/2,y:y0+h,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1},opacity:.84}
+      front:{origin:{x:-w/2,y:y0,z:d/2+eps},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0}},
+      back:{origin:{x:w/2,y:y0,z:-d/2-eps},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0}},
+      inside:{origin:{x:-w/2,y:y0,z:-d/2+Math.min(10,d*.12)},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0}},
+      left:{origin:{x:-w/2-eps,y:y0,z:d/2},u:{x:0,y:0,z:-1},v:{x:0,y:1,z:0}},
+      right:{origin:{x:w/2+eps,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0}},
+      top:{origin:{x:-w/2,y:y0-eps,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1}},
+      bottom:{origin:{x:-w/2,y:y0+h+eps,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:-1}}
     };
     return map[surface]||map.front;
   }
-  function plus(a,b,m=1){return{x:a.x+b.x*m,y:a.y+b.y*m,z:a.z+b.z*m};}
-  function renderObjects(root,c,y0,v,scale){
-    const draw=window.KENC_DRAWING_API?.drawObjectShape;
-    if(typeof draw!=="function")return;
-    const order=["back","inside","left","right","top","bottom","front"];
-    order.forEach(surface=>{
-      const f=faceBasis(c,y0,surface);
-      const po=project(f.origin,v,scale),pu=project(plus(f.origin,f.u),v,scale),pv=project(plus(f.origin,f.v),v,scale);
+  function renderObjectGroup(root,c,y0,v,scale,mode){
+    const draw=window.KENC_DRAWING_API?.drawObjectShape;if(typeof draw!=="function")return;
+    const visible=mode==="exterior"?["front","back","left","right","top","bottom"]:["inside","back","left","right","top","bottom","front"];
+    const entries=[];
+    visible.forEach(surface=>{
+      const f=faceBasis(c,y0,surface,mode),po=project(f.origin,v,scale),pu=project(add(f.origin,f.u),v,scale),pv=project(add(f.origin,f.v),v,scale);
       const a=pu.x-po.x,b=pu.y-po.y,cc=pv.x-po.x,d=pv.y-po.y;
-      (c.objects||[]).filter(o=>o.surface===surface).forEach(o=>{
-        const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity:f.opacity,"data-kenc-3d-object":o.id});
-        const inner=svgEl("g",{transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`});
-        draw(inner,o,o.x,o.y,o.w,o.h,true);
-        if(f.mounted)inner.setAttribute("filter","drop-shadow(2px 2px 1.4px rgba(15,23,42,.48))");
-        outer.appendChild(inner);root.appendChild(outer);
+      (c.objects||[]).filter(o=>(o.surface||"front")===surface).forEach(o=>{
+        const center3=add(add(f.origin,f.u,(+o.x||0)+(+o.w||0)/2),f.v,(+o.y||0)+(+o.h||0)/2);
+        entries.push({surface,o,f,a,b,cc,d,po,depth:rotate(center3,v).z});
       });
     });
+    entries.sort((x,y)=>x.depth-y.depth).forEach(({surface,o,a,b,cc,d,po})=>{
+      const opacity=mode==="xray"?(surface==="inside"?1:.92):1;
+      const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity,"data-kenc-3d-object":o.id||""});
+      const inner=svgEl("g",{transform:`rotate(${+o.rot||0} ${( +o.x||0)+( +o.w||0)/2} ${( +o.y||0)+( +o.h||0)/2})`});
+      draw(inner,o,+o.x||0,+o.y||0,+o.w||10,+o.h||10,true);
+      inner.querySelectorAll("*").forEach(el=>{if(el.hasAttribute("stroke-dasharray"))el.removeAttribute("stroke-dasharray");});
+      outer.appendChild(inner);root.appendChild(outer);
+    });
+  }
+  function polyPoints(points){return points.map(p=>`${p.x},${p.y}`).join(" ");}
+  function renderCabinet(root,c,g,v,scale,mode,index){
+    const projected=g.pts.map(p=>project(p,v,scale));
+    const faceOpacity=mode==="xray"?.12:(mode==="section"?.18:.30);
+    const faces=g.faces.filter(f=>!(mode==="section"&&f.name==="front") && !((mode==="open"||mode==="exploded")&&f.name==="front"));
+    const sorted=faces.map(f=>({f,p:f.idx.map(i=>projected[i]),z:avg(f.idx.map(i=>rotate(g.pts[i],v)),"z")})).sort((a,b)=>a.z-b.z);
+    sorted.forEach(({f,p})=>root.appendChild(svgEl("polygon",{points:polyPoints(p),class:`kenc-3d-face kenc-face-${f.name}`,"data-mode":mode,opacity:faceOpacity})));
+    g.edges.forEach(([a,b])=>root.appendChild(svgEl("line",{x1:projected[a].x,y1:projected[a].y,x2:projected[b].x,y2:projected[b].y,class:"kenc-3d-edge"})));
+    if(mode==="open"||mode==="exploded"){
+      const db=doorBasis(c,g.y0,mode==="open"?-82:-24,mode==="exploded"?g.w*.14:0);
+      const p0=project(db.origin,v,scale),p1=project(add(db.origin,db.u,g.w),v,scale),p2=project(add(add(db.origin,db.u,g.w),db.v,g.h),v,scale),p3=project(add(db.origin,db.v,g.h),v,scale);
+      root.appendChild(svgEl("polygon",{points:polyPoints([p0,p1,p2,p3]),class:"kenc-3d-door",opacity:mode==="exploded"?.22:.34}));
+      [[p0,p1],[p1,p2],[p2,p3],[p3,p0]].forEach(([a,b])=>root.appendChild(svgEl("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:"kenc-3d-edge kenc-door-edge"})));
+    }
+    if(mode==="exploded"){
+      const rearShift={x:g.w*.10,y:0,z:-g.d*.30};
+      const rp=[0,1,2,3].map(i=>project(add(g.pts[i],rearShift),v,scale));
+      root.appendChild(svgEl("polygon",{points:polyPoints(rp),class:"kenc-3d-exploded-rear",opacity:.20}));
+      [[0,1],[1,2],[2,3],[3,0]].forEach(([a,b])=>root.appendChild(svgEl("line",{x1:rp[a].x,y1:rp[a].y,x2:rp[b].x,y2:rp[b].y,class:"kenc-3d-edge kenc-exploded-edge"})));
+    }
+    renderObjectGroup(root,c,g.y0,v,scale,mode);
   }
   function render(ctx){
-    svg=ctx.svg;const s=ctx.state,v=s.live3dView||(s.live3dView=defaults());
-    svg.innerHTML="";svg.setAttribute("viewBox","0 0 420 560");svg.classList.add("kenc-interactive-3d");
+    svg=ctx.svg;const s=ctx.state,v=normalizeView(s.live3dView||(s.live3dView=defaults()));
+    svg.innerHTML="";svg.setAttribute("viewBox","0 0 420 560");svg.classList.add("kenc-interactive-3d");svg.dataset.displayMode=v.displayMode;
     svg.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,class:"kenc-3d-bg"}));
     const cabinets=s.mode3d==="stack"?s.cabinets:[ctx.currentCabinet];
-    const totalH=cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...cabinets.map(c=>c.width)),maxD=Math.max(...cabinets.map(c=>c.depth));
+    const safeCabinets=(cabinets||[]).filter(Boolean);if(!safeCabinets.length)return;
+    const totalH=safeCabinets.reduce((a,c)=>a+(+c.height||0),0),maxW=Math.max(...safeCabinets.map(c=>+c.width||1)),maxD=Math.max(...safeCabinets.map(c=>+c.depth||1));
     const base=Math.min(300/Math.max(maxW,1),370/Math.max(totalH,1),150/Math.max(maxD,1));
-    let off=0;const all=[];
-    cabinets.forEach((c,i)=>{const g=cabinetGeometry(c,off,totalH);off+=c.height;all.push({c,g,projected:g.pts.map(p=>project(p,v,base)),i});});
-    all.forEach(({g,projected})=>g.edges.forEach(([a,b])=>svg.appendChild(svgEl("line",{x1:projected[a].x,y1:projected[a].y,x2:projected[b].x,y2:projected[b].y,class:"kenc-3d-edge"}))));
-    all.forEach(({c,g})=>renderObjects(svg,c,g.y0,v,base));
+    let off=0;safeCabinets.forEach((c,i)=>{const g=cabinetGeometry(c,off,totalH);off+=+c.height||0;renderCabinet(svg,c,g,v,base,v.displayMode,i);});
     svg.appendChild(svgEl("circle",{cx:210+(v.panX||0),cy:270+(v.panY||0),r:2.5,class:"kenc-3d-origin"}));
-    const label=s.mode3d==="stack"?`적층 ${cabinets.length}EA · 전체 높이 ${totalH} mm`:`${ctx.currentCabinet.width} × ${ctx.currentCabinet.height} × ${ctx.currentCabinet.depth} mm`;
-    svg.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle",class:"kenc-3d-label"},label));
-    svg.dataset.zoom=Math.round(v.zoom*100)+"%";
+    const label=s.mode3d==="stack"?`적층 ${safeCabinets.length}EA · 전체 높이 ${totalH} mm`:`${ctx.currentCabinet.width} × ${ctx.currentCabinet.height} × ${ctx.currentCabinet.depth} mm`;
+    svg.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle",class:"kenc-3d-label"},label));svg.dataset.zoom=Math.round(v.zoom*100)+"%";
+    syncButtons();
   }
   function redraw(){window.KENC_DRAWING_API?.render3d?.();}
-  function setPreset(name){
-    const v=view();
-    if(name==="front")Object.assign(v,{yaw:0,pitch:0,zoom:1,panX:0,panY:0});
-    else Object.assign(v,defaults());
-    redraw();syncButtons(name==="front"?"front":"reset");
+  function setPreset(name){const v=normalizeView(view());if(name==="front")Object.assign(v,{yaw:0,pitch:0,zoom:1,panX:0,panY:0});else Object.assign(v,{yaw:-35,pitch:-18,zoom:1,panX:0,panY:0});redraw();}
+  function setDisplayMode(mode){const v=normalizeView(view());v.displayMode=mode;redraw();}
+  function syncButtons(){const v=normalizeView(view());document.querySelectorAll('#drawingPanel [data-3d-view-mode]').forEach(b=>b.classList.toggle('active',b.dataset['3dViewMode']===v.displayMode));}
+  function ensureModeControls(panel){
+    const controls=panel?.querySelector('.drawing-pro-3d-controls');if(!controls||controls.querySelector('[data-3d-view-mode]'))return;
+    const group=document.createElement('div');group.className='kenc-3d-view-modes';group.setAttribute('aria-label','3D 보기 모드');
+    [["exterior","외관"],["xray","투명"],["open","문열기"],["section","단면"],["exploded","폭발도"]].forEach(([mode,label])=>{const b=document.createElement('button');b.type='button';b.dataset['3dViewMode']=mode;b.textContent=label;group.appendChild(b);});
+    controls.prepend(group);
   }
-  function syncButtons(name){document.querySelectorAll('[data-3d-action]').forEach(b=>b.classList.toggle('active',b.dataset['3dAction']===name));}
   function bind(){
-    svg=document.getElementById("drawing3dCanvas");if(!svg||svg.dataset.kencInteractiveBound)return;svg.dataset.kencInteractiveBound="1";
-    const panel=svg.closest('.drawing-3d-panel');
-    document.addEventListener('click',e=>{const btn=e.target.closest('#drawingPanel [data-3d-action]');if(!btn)return;const a=btn.dataset['3dAction'];if(!['front','iso','fit','reset'].includes(a))return;e.preventDefault();e.stopImmediatePropagation();setPreset(a==='front'?'front':'reset');},true);
+    svg=document.getElementById("drawing3dCanvas");if(!svg||svg.dataset.kencInteractiveBound)return;svg.dataset.kencInteractiveBound="1";const panel=svg.closest('.drawing-3d-panel');ensureModeControls(panel);
+    document.addEventListener('click',e=>{
+      const modeBtn=e.target.closest('#drawingPanel [data-3d-view-mode]');if(modeBtn){e.preventDefault();e.stopImmediatePropagation();setDisplayMode(modeBtn.dataset['3dViewMode']);return;}
+      const btn=e.target.closest('#drawingPanel [data-3d-action]');if(!btn)return;const a=btn.dataset['3dAction'];if(!['front','iso','fit','reset'].includes(a))return;e.preventDefault();e.stopImmediatePropagation();setPreset(a==='front'?'front':'reset');
+    },true);
     svg.addEventListener('pointerdown',e=>{svg.setPointerCapture?.(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=view();dragging={x:e.clientX,y:e.clientY,yaw:v.yaw,pitch:v.pitch,panX:v.panX||0,panY:v.panY||0,pan:e.button===1||e.button===2||e.shiftKey};svg.classList.add('is-interacting');e.preventDefault();});
     svg.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId)||!dragging)return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=view();if(pointers.size>=2){const pts=[...pointers.values()],dist=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y),cx=(pts[0].x+pts[1].x)/2,cy=(pts[0].y+pts[1].y)/2;if(!pinch)pinch={dist,zoom:v.zoom,cx,cy,panX:v.panX||0,panY:v.panY||0};v.zoom=clamp(pinch.zoom*dist/Math.max(pinch.dist,1),.25,6);v.panX=pinch.panX+(cx-pinch.cx);v.panY=pinch.panY+(cy-pinch.cy);}else if(dragging.pan){v.panX=dragging.panX+(e.clientX-dragging.x);v.panY=dragging.panY+(e.clientY-dragging.y);}else{v.yaw=dragging.yaw+(e.clientX-dragging.x)*.55;v.pitch=clamp(dragging.pitch+(e.clientY-dragging.y)*.45,-89,89);}redraw();e.preventDefault();});
-    const end=e=>{pointers.delete(e.pointerId);if(!pointers.size){dragging=null;pinch=null;svg.classList.remove('is-interacting');}};
-    svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('contextmenu',e=>e.preventDefault());
-    svg.addEventListener('wheel',e=>{const v=view();v.zoom=clamp(v.zoom*Math.exp(-e.deltaY*.0015),.25,6);redraw();e.preventDefault();},{passive:false});
-    svg.addEventListener('dblclick',()=>setPreset('reset'));
-    const note=panel?.querySelector('.drawing-3d-note');if(note)note.textContent='왼쪽 드래그: 자유 회전 · 휠: 확대/축소 · 휠/오른쪽 드래그: 이동 · 더블클릭: 시점 초기화';
-    redraw();
+    const end=e=>{pointers.delete(e.pointerId);if(!pointers.size){dragging=null;pinch=null;svg.classList.remove('is-interacting');}};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('contextmenu',e=>e.preventDefault());
+    svg.addEventListener('wheel',e=>{const v=view();v.zoom=clamp(v.zoom*Math.exp(-e.deltaY*.0015),.25,6);redraw();e.preventDefault();},{passive:false});svg.addEventListener('dblclick',()=>setPreset('reset'));
+    const note=panel?.querySelector('.drawing-3d-note');if(note)note.textContent='외관·투명·문열기·단면·폭발도 지원 · 왼쪽 드래그: 자유 회전 · 휠: 확대/축소 · 휠/오른쪽 드래그: 이동 · 더블클릭: 시점 초기화';redraw();
   }
-  window.KENC3DViewer={render,reset:()=>setPreset('reset')};
-  if(window.KENC_DRAWING_API)bind();else document.addEventListener('kenc:drawing-api-ready',bind,{once:true});
-  document.addEventListener('DOMContentLoaded',bind,{once:true});
+  window.KENC3DViewer={render,reset:()=>setPreset('reset'),setMode:setDisplayMode};
+  if(window.KENC_DRAWING_API)bind();else document.addEventListener('kenc:drawing-api-ready',bind,{once:true});document.addEventListener('DOMContentLoaded',bind,{once:true});
 })();

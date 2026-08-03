@@ -1,14 +1,24 @@
-#drawingPanel .drawing-3d-svg.kenc-interactive-3d{touch-action:none;cursor:grab;user-select:none;background:#202020!important}
+#drawingPanel .drawing-3d-svg.kenc-interactive-3d{touch-action:none;cursor:grab;user-select:none;background:#151b23!important}
 #drawingPanel .drawing-3d-svg.kenc-interactive-3d.is-interacting{cursor:grabbing}
-#drawingPanel .kenc-3d-bg{fill:#202020!important}
-#drawingPanel .kenc-3d-edge{stroke:#f1f5f9;stroke-width:1.6;vector-effect:non-scaling-stroke;fill:none;stroke-dasharray:none!important;opacity:1!important}
+#drawingPanel .kenc-3d-bg{fill:#151b23!important}
+#drawingPanel .kenc-3d-face{fill:#253140;stroke:none}
+#drawingPanel .kenc-3d-door{fill:#314155;stroke:none}
+#drawingPanel .kenc-3d-exploded-rear{fill:#334155;stroke:none}
+#drawingPanel .kenc-3d-edge{stroke:#f8fafc;stroke-width:1.55;vector-effect:non-scaling-stroke;fill:none;stroke-dasharray:none!important;opacity:1!important}
 #drawingPanel .kenc-3d-origin{fill:#3b82f6;stroke:#dbeafe;stroke-width:1}
 #drawingPanel .kenc-3d-label{fill:#cbd5e1;font-size:12px;font-weight:600}
-#drawingPanel .drawing-pro-3d-controls{display:flex;flex-wrap:wrap;gap:6px}
+#drawingPanel .drawing-pro-3d-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#drawingPanel .kenc-3d-view-modes{display:flex;flex-wrap:wrap;gap:5px;width:100%;padding-bottom:2px}
+#drawingPanel .kenc-3d-view-modes button{flex:1 1 auto;min-width:48px}
 #drawingPanel .drawing-pro-3d-controls button.active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important}
-/* 제작 전달 도면의 3D는 출력 문서 스타일로 분리 */
+#drawingPanel .drawing-3d-svg[data-display-mode="xray"] .kenc-3d-face{fill:#38bdf8}
+#drawingPanel .drawing-3d-svg[data-display-mode="section"] .kenc-3d-face{fill:#1e293b}
+#drawingPanel .drawing-3d-svg[data-display-mode="open"] .kenc-3d-door,#drawingPanel .drawing-3d-svg[data-display-mode="exploded"] .kenc-3d-door{fill:#475569}
+/* 제작 전달 도면은 문서용 흰색 배경과 검정 실선 유지 */
 #drawingPanel #drawingOutput3d{background:#fff!important;filter:none!important}
 #drawingPanel #drawingOutput3d .kenc-3d-bg{fill:#fff!important}
+#drawingPanel #drawingOutput3d .kenc-3d-face,#drawingPanel #drawingOutput3d .kenc-3d-door,#drawingPanel #drawingOutput3d .kenc-3d-exploded-rear{fill:#fff!important;opacity:1!important}
 #drawingPanel #drawingOutput3d .kenc-3d-edge{stroke:#111827!important;stroke-dasharray:none!important;opacity:1!important}
 #drawingPanel #drawingOutput3d .kenc-3d-origin{display:none!important}
 #drawingPanel #drawingOutput3d .kenc-3d-label{fill:#111827!important}
+@media(max-width:720px){#drawingPanel .kenc-3d-view-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}#drawingPanel .kenc-3d-view-modes button{min-width:0}}
