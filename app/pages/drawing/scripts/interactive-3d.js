@@ -10,6 +10,13 @@
   function state(){return window.KENC_DRAWING_API?.getState?.();}
   function view(){const s=state();if(!s)return defaults();return s.live3dView||(s.live3dView=defaults());}
   function normalizeView(v){if(!v.displayMode)v.displayMode="exterior";return v;}
+  function objectRole(o,surface){
+    if(surface==="inside" || o.type==="plate") return "internal";
+    if(o.type==="cut" || o.type==="emboss" || o.type==="anchor") return "cutout";
+    if(o.type==="groundBar" || o.type==="cableHook") return "utility";
+    return "external";
+  }
+  function roleColor(role){return role==="internal"?"#34d399":role==="cutout"?"#f59e0b":role==="utility"?"#c084fc":"#38bdf8";}
   function rotate(p,v){
     const yaw=v.yaw*Math.PI/180,pitch=v.pitch*Math.PI/180;
     const x1=p.x*Math.cos(yaw)+p.z*Math.sin(yaw);
@@ -33,14 +40,15 @@
   function faceBasis(c,y0,surface,mode){
     const w=+c.width,h=+c.height,d=+c.depth,eps=1.2;
     if(surface==="front" && (mode==="open"||mode==="exploded")) return doorBasis(c,y0,mode==="open"?-82:-8,mode==="exploded"?w*.52:0);
+    const internalSetback=Math.min(Math.max(18,d*.20),Math.max(22,d*.34));
     const map={
-      front:{origin:{x:-w/2,y:y0,z:d/2+eps},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0}},
-      back:{origin:{x:w/2,y:y0,z:-d/2-eps},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0}},
-      inside:{origin:{x:-w/2,y:y0,z:-d/2+Math.min(10,d*.12)},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0}},
-      left:{origin:{x:-w/2-eps,y:y0,z:d/2},u:{x:0,y:0,z:-1},v:{x:0,y:1,z:0}},
-      right:{origin:{x:w/2+eps,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0}},
-      top:{origin:{x:-w/2,y:y0-eps,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1}},
-      bottom:{origin:{x:-w/2,y:y0+h+eps,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:-1}}
+      front:{origin:{x:-w/2,y:y0,z:d/2+eps+3},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1}},
+      back:{origin:{x:w/2,y:y0,z:-d/2-eps},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:-1}},
+      inside:{origin:{x:-w/2,y:y0,z:-d/2+internalSetback},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},mountDepth:internalSetback},
+      left:{origin:{x:-w/2-eps,y:y0,z:d/2},u:{x:0,y:0,z:-1},v:{x:0,y:1,z:0},normal:{x:-1,y:0,z:0}},
+      right:{origin:{x:w/2+eps,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0},normal:{x:1,y:0,z:0}},
+      top:{origin:{x:-w/2,y:y0-eps,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1},normal:{x:0,y:-1,z:0}},
+      bottom:{origin:{x:-w/2,y:y0+h+eps,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:-1},normal:{x:0,y:1,z:0}}
     };
     return map[surface]||map.front;
   }
@@ -53,15 +61,26 @@
       const a=pu.x-po.x,b=pu.y-po.y,cc=pv.x-po.x,d=pv.y-po.y;
       (c.objects||[]).filter(o=>(o.surface||"front")===surface).forEach(o=>{
         const center3=add(add(f.origin,f.u,(+o.x||0)+(+o.w||0)/2),f.v,(+o.y||0)+(+o.h||0)/2);
-        entries.push({surface,o,f,a,b,cc,d,po,depth:rotate(center3,v).z});
+        entries.push({surface,o,f,a,b,cc,d,po,role:objectRole(o,surface),depth:rotate(center3,v).z});
       });
     });
-    entries.sort((x,y)=>x.depth-y.depth).forEach(({surface,o,a,b,cc,d,po})=>{
-      const opacity=1;
-      const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity,class:`kenc-3d-object kenc-object-${surface}`,"data-kenc-3d-object":o.id||"","data-surface":surface});
+    entries.sort((x,y)=>x.depth-y.depth).forEach(({surface,o,f,a,b,cc,d,po,role})=>{
+      const opacity=1,color=roleColor(role);
+      const outer=svgEl("g",{transform:`matrix(${a} ${b} ${cc} ${d} ${po.x} ${po.y})`,opacity,class:`kenc-3d-object kenc-object-${surface} kenc-role-${role}`,"data-kenc-3d-object":o.id||"","data-surface":surface,"data-role":role,"style":`--kenc-object-color:${color}`});
       const ox=+o.x||0,oy=+o.y||0,ow=Math.max(+o.w||10,10),oh=Math.max(+o.h||10,10);
       const pad=Math.max(4,Math.min(12,Math.min(ow,oh)*.10));
+      if(role==="internal"){
+        const depth=Math.max(10,Math.min(28,f.mountDepth||18));
+        const corners=[[ox,oy],[ox+ow,oy],[ox+ow,oy+oh],[ox,oy+oh]];
+        corners.forEach(([cx,cy])=>{
+          const base=add(add(f.origin,f.u,cx),f.v,cy),back=add(base,f.normal,-depth);
+          const p1=project(back,v,scale),p2=project(base,v,scale);
+          root.appendChild(svgEl("line",{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,class:"kenc-3d-mount-standoff",style:`--kenc-object-color:${color}`}));
+          root.appendChild(svgEl("circle",{cx:p2.x,cy:p2.y,r:2.2,class:"kenc-3d-mount-point",style:`--kenc-object-color:${color}`}));
+        });
+      }
       outer.appendChild(svgEl("rect",{x:ox-pad,y:oy-pad,width:ow+pad*2,height:oh+pad*2,rx:Math.min(8,pad),class:"kenc-3d-object-halo"}));
+      if(role==="internal") outer.appendChild(svgEl("rect",{x:ox,y:oy,width:ow,height:oh,rx:2,class:"kenc-3d-internal-panel-fill"}));
       const inner=svgEl("g",{transform:`rotate(${+o.rot||0} ${ox+ow/2} ${oy+oh/2})`,class:"kenc-3d-object-shape"});
       draw(inner,o,ox,oy,ow,oh,true);
       inner.querySelectorAll("*").forEach(el=>{if(el.hasAttribute("stroke-dasharray"))el.removeAttribute("stroke-dasharray");el.classList.add("kenc-3d-object-part");});
@@ -104,6 +123,13 @@
     const base=Math.min(300/Math.max(maxW,1),370/Math.max(totalH,1),150/Math.max(maxD,1));
     let off=0;safeCabinets.forEach((c,i)=>{const g=cabinetGeometry(c,off,totalH);off+=+c.height||0;renderCabinet(svg,c,g,v,base,v.displayMode,i);});
     svg.appendChild(svgEl("circle",{cx:210+(v.panX||0),cy:270+(v.panY||0),r:2.5,class:"kenc-3d-origin"}));
+    const roles=[...new Set(safeCabinets.flatMap(c=>(c.objects||[]).map(o=>objectRole(o,o.surface||"front"))))];
+    if(roles.length){
+      const names={external:"외부 부착",internal:"내부 부착",cutout:"관통/타공",utility:"접지/기타"};
+      const legend=svgEl("g",{class:"kenc-3d-role-legend"});
+      roles.forEach((r,i)=>{const y=18+i*18;legend.appendChild(svgEl("circle",{cx:14,cy:y,r:4,fill:roleColor(r)}));legend.appendChild(svgEl("text",{x:24,y:y+4},names[r]));});
+      svg.appendChild(legend);
+    }
     const label=s.mode3d==="stack"?`적층 ${safeCabinets.length}EA · 전체 높이 ${totalH} mm`:`${ctx.currentCabinet.width} × ${ctx.currentCabinet.height} × ${ctx.currentCabinet.depth} mm`;
     svg.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle",class:"kenc-3d-label"},label));svg.dataset.zoom=Math.round(v.zoom*100)+"%";
     syncButtons();
