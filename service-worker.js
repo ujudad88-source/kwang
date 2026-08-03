@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-ui-004-2-0";
+const CACHE_NAME = "kenc-ui-004-3-0";
 const APP_ASSETS = [
   './',
   './index.html',

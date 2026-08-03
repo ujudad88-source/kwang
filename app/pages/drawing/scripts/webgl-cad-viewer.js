@@ -57,17 +57,17 @@
   }
   function cabinetParts(c,yCenter,mode){
     const w=+c.width,h=+c.height,d=+c.depth,t=Math.max(6,Math.min(18,d*.08));const out=[];
-    const bodyAlpha=mode==='xray'?.12:(mode==='section'?.16:.28),edge=[.78,.86,.94,1];
+    const bodyAlpha=mode==='xray'?.07:(mode==='open'?.09:(mode==='section'?.12:(mode==='exploded'?.13:.28))),edge=[.78,.86,.94,1];
     const push=(name,m,color=[.25,.29,.34,bodyAlpha],show=true)=>show&&out.push({name,m,color,edge});
     push('back',mat4Mul(translate(0,yCenter,-d/2+t/2),scale(w,h,t)));
     push('left',mat4Mul(translate(-w/2+t/2,yCenter,0),scale(t,h,d)));
     push('right',mat4Mul(translate(w/2-t/2,yCenter,0),scale(t,h,d)),undefined,mode!=='section');
     push('top',mat4Mul(translate(0,yCenter-h/2+t/2,0),scale(w,t,d)));
     push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
-    if(mode==='exterior'||mode==='xray')push('door',mat4Mul(translate(0,yCenter,d/2+t/2),scale(w,h,t)),[.20,.24,.29,mode==='xray'?.10:.34]);
+    if(mode==='exterior'||mode==='xray')push('door',mat4Mul(translate(0,yCenter,d/2+t/2),scale(w,h,t)),[.20,.24,.29,mode==='xray'?.055:.34]);
     if(mode==='open'||mode==='exploded'){
       const pose=window.KENC_CAD_MODEL?.doorPose?.(c,mode,yCenter)||{angle:(mode==='open'?82:8)*Math.PI/180,hingeX:w/2+(mode==='exploded'?w*.60:0),hingeY:yCenter,hingeZ:d/2+(mode==='exploded'?w*.60:0)*.15};
-      const door=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,.32]);
+      const door=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,mode==='open'?.075:.18]);
     }
     if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
@@ -76,9 +76,20 @@
   function renderWebGL(ctx){ctxCache=ctx;ensureCanvas(ctx.svg);const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
     resize();gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(.018,.035,.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
     const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
-    let off=-b.total/2;cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;cabinetParts(c,yCenter,v.displayMode||'exterior').forEach(p=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
-      (c.objects||[]).forEach(o=>{const surface=o.surface||'front';if((v.displayMode==='exterior')&&surface==='inside')return;const role=roleOf(o,surface),m=faceTransform(c,yCenter,surface,o,v.displayMode||'exterior');addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role);});
-    });syncButtons();}
+    const revealAll=['xray','open','section','exploded'].includes(mode);
+    let off=-b.total/2;
+    const cabinetQueue=[],objectQueue=[];
+    cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;
+      cabinetParts(c,yCenter,mode).forEach(p=>cabinetQueue.push({p,c,yCenter}));
+      (c.objects||[]).forEach(o=>{const surface=o.surface||'front';if(mode==='exterior'&&surface==='inside')return;objectQueue.push({c,yCenter,o,surface,role:roleOf(o,surface),m:faceTransform(c,yCenter,surface,o,mode)});});
+    });
+    if(revealAll)gl.depthMask(false);
+    cabinetQueue.forEach(({p})=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
+    gl.depthMask(true);
+    if(revealAll)gl.disable(gl.DEPTH_TEST);
+    objectQueue.forEach(({c,yCenter,o,surface,role,m})=>addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role));
+    if(revealAll)gl.enable(gl.DEPTH_TEST);
+    syncButtons();}
   function ensureCanvas(svg){if(canvas&&canvas.isConnected)return;const wrap=svg.parentElement;canvas=document.createElement('canvas');canvas.className='kenc-webgl-3d-canvas';canvas.setAttribute('aria-label','WebGL 실시간 3D 미리보기');svg.style.display='none';wrap.appendChild(canvas);gl=canvas.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});if(!gl){svg.style.display='';canvas.remove();canvas=null;return;}initGL();bindCanvas();}
   function resize(){if(!canvas)return;const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);const w=Math.max(2,Math.round(r.width*dpr)),h=Math.max(2,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
   function redraw(){if(ctxCache&&gl)renderWebGL(ctxCache);}
