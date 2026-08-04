@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const CABINET_RENDERER_VERSION='2.2.5';
+  const CABINET_RENDERER_VERSION='2.2.6';
   const SVG_FALLBACK_VIEWER=window.KENC3DViewer||null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));

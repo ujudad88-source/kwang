@@ -1,10 +1,10 @@
 (function(){
   'use strict';
-  const VERSION='2.2.1';
+  const VERSION='2.2.6';
   const num=(v,f=0)=>Number.isFinite(Number(v))?Number(v):f;
   const face=v=>window.KENC_ATTACH_ENGINE?.canonicalFace?.(v)||String(v||'front').toLowerCase();
-  const defs=()=>window.KENC_OBJECT_DEFINITIONS||[];
-  const defOf=t=>defs().find(d=>d.id===t)||{};
+  const defs=()=>window.KENC_OBJECT_DEFINITIONS||{};
+  const defOf=t=>window.KENC_OBJECT_REGISTRY?.definition?.(t)||defs()?.[t]||{};
   function clampObject(c,o){
     const d=defOf(o.type), f=face(o.surface||d.mounts?.[0]||'front');
     o.surface=f;

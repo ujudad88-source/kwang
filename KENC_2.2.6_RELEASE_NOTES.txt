@@ -1,0 +1,13 @@
+KENC UI 2.0.2.2.6
+
+수정 핵심
+- orientation-correction-engine의 객체 정의 조회 오류 수정
+- KENC_OBJECT_DEFINITIONS 객체 맵에 배열용 find()를 호출하던 공통 오류 제거
+- KENC_OBJECT_REGISTRY.definition(type) 우선 조회 및 객체 맵 직접 조회 적용
+- 실시간 3D와 KENC 제작 전달 도면 3D의 객체 렌더링 차단 원인 제거
+- 캐시 및 리소스 버전 2.2.6 갱신
+
+원인
+두 3D 렌더러는 객체 변환 전에 KENC_ORIENTATION_CORRECTION.clampObject()를 공통 호출합니다.
+해당 함수 내부의 defOf()가 객체 맵인 KENC_OBJECT_DEFINITIONS에 find()를 호출해 TypeError를 발생시켰습니다.
+렌더러의 오류 격리 때문에 함체는 유지되지만 모든 객체가 건너뛰어졌습니다.
