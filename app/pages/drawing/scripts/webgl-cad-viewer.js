@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const CABINET_RENDERER_VERSION='2.2.6';
+  const CABINET_RENDERER_VERSION='2.3.0';
   const SVG_FALLBACK_VIEWER=window.KENC3DViewer||null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
@@ -362,7 +362,9 @@
       if(SVG_FALLBACK_VIEWER?.render) SVG_FALLBACK_VIEWER.render(ctx);
       return;
     }
-    const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
+    const s=ctx.state,v=s.live3dView||(s.live3dView=defaults());
+    const renderSets=window.KENC_UNIFIED_3D_BRIDGE?.cabinets?.(s,{mode:s.mode3d||'single',preferredCabinet:ctx.currentCabinet,displayMode:v.displayMode||'exterior'})||[];
+    const cabs=renderSets.map(x=>x.cabinet).filter(Boolean);if(!cabs.length)return;
     resize();gl.viewport(0,0,canvas.width,canvas.height);const realistic=(v.quality||'realistic')==='realistic';gl.clearColor(realistic?.035:.018,realistic?.045:.035,realistic?.055:.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
     const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
     const revealAll=['xray','open','section','exploded'].includes(mode);
@@ -370,9 +372,11 @@
     const cabinetQueue=[],objectQueue=[];
     cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;
       cabinetParts(c,yCenter,mode).forEach(p=>cabinetQueue.push({p,c,yCenter}));
-      (c.objects||[]).forEach(o=>{
-        if(!o||o.visible===false||o.render3d===false)return;
-        const surface=o.surface||'front';if(mode==='exterior'&&surface==='inside')return;
+      const renderSet=renderSets.find(x=>x.cabinet===c)||{objects:[]};
+      renderSet.objects.forEach(entry=>{
+        const o=entry.object;
+        if(!o)return;
+        const surface=entry.surface||o.surface||'front';
         const ow=Number(o.w),oh=Number(o.h),ox=Number(o.x),oy=Number(o.y);
         if(![ow,oh,ox,oy].every(Number.isFinite)||ow<=0||oh<=0){console.warn('[KENC 3D] invalid object skipped',o);return;}
         try{objectQueue.push({c,yCenter,o,surface,role:roleOf(o,surface),m:faceTransform(c,yCenter,surface,o,mode)});}

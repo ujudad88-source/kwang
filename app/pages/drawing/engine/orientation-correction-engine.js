@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.2.6';
+  const VERSION='2.3.0';
   const num=(v,f=0)=>Number.isFinite(Number(v))?Number(v):f;
   const face=v=>window.KENC_ATTACH_ENGINE?.canonicalFace?.(v)||String(v||'front').toLowerCase();
   const defs=()=>window.KENC_OBJECT_DEFINITIONS||{};
