@@ -1,0 +1,10 @@
+KENC UI 2.0 v2.2.2
+
+- Object Inspector에 깊이 보정값 추가(-30~+30 mm)
+- 부착면별 X/Y/깊이 보정값 저장
+- 부모 그룹 직접 전환(door/body/inside/utility/holes/covers)
+- 좌우 방향 강제 반전과 mirrorOverride 적용
+- 객체별 기본 위치 복원
+- 전체 객체 자동 보정 기능
+- Orientation Correction Engine을 실제 로딩 경로에 연결
+- 실시간 3D와 제작 전달도면이 동일 객체 데이터를 사용하도록 즉시 재렌더링
