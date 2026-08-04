@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='1.1.0';
+  const VERSION='2.0.0';
   const clone=v=>JSON.parse(JSON.stringify(v));
   const GROUPS=['body','door','inside','utility','holes','covers','guides'];
   const uid=(prefix,n)=>`${prefix}-${String(n).padStart(3,'0')}`;

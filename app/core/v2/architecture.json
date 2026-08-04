@@ -1,0 +1,19 @@
+{
+  "name": "KENC Core",
+  "version": "2.0.0",
+  "schemaVersion": 3,
+  "format": "KENC_PROJECT",
+  "modules": [
+    "uuid",
+    "project-engine",
+    "cabinet-engine",
+    "material-engine",
+    "unified-scene-engine",
+    "project-toolbar"
+  ],
+  "compatibility": {
+    "legacyState": true,
+    "legacyRenderer": true,
+    "legacyFirebase": true
+  }
+}

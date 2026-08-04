@@ -1,0 +1,7 @@
+#kencProjectToolbar{position:fixed;right:16px;bottom:16px;z-index:10040;display:flex;align-items:center;gap:7px;padding:9px 10px;border:1px solid rgba(148,163,184,.35);border-radius:12px;background:rgba(15,23,42,.92);color:#e5e7eb;box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(10px);font-size:12px}
+#kencProjectToolbar strong{font-size:12px;margin-right:2px;color:#f8fafc}
+#kencProjectToolbar button{border:1px solid rgba(148,163,184,.38);border-radius:8px;background:#1e293b;color:#f8fafc;padding:6px 9px;cursor:pointer;font:inherit}
+#kencProjectToolbar button:hover{background:#334155}
+#kencProjectToolbar [data-kenc-project-status]{color:#94a3b8;white-space:nowrap}
+#kencProjectToast{position:fixed;right:18px;bottom:76px;z-index:10050;opacity:0;transform:translateY(6px);pointer-events:none;padding:9px 12px;border-radius:9px;background:#0f766e;color:white;transition:.18s ease;font-size:13px}#kencProjectToast.is-ok,#kencProjectToast.is-error{opacity:1;transform:none}#kencProjectToast.is-error{background:#b91c1c}
+@media(max-width:720px){#kencProjectToolbar{left:8px;right:8px;bottom:8px;overflow-x:auto;justify-content:flex-start}#kencProjectToolbar [data-kenc-project-status]{display:none}}
