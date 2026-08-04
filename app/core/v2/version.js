@@ -1,1 +1,1 @@
-window.KENC_CORE_VERSION='2.2.4';
+window.KENC_CORE_VERSION='2.2.5';

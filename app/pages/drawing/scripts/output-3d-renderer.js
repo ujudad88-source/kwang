@@ -18,7 +18,7 @@
   function p(x,y,z){return projectPoint(x,y,z);}
   function line(svg,a,b,attrs={}){svg.appendChild(el('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:'#111827','stroke-width':3,'stroke-linecap':'round',...attrs}));}
   function basisFor(c,o,s,y0){
-    const d=(window.KENC_OBJECT_DEFINITIONS||[]).find(x=>x.id===o.type)||{};
+    const d=window.KENC_OBJECT_REGISTRY?.definition?.(o.type)||window.KENC_OBJECT_DEFINITIONS?.[o.type]||{};
     window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);
     const place=window.KENC_ATTACH_ENGINE?.normalizePlacement?.(c,o,d);
     const b=window.KENC_ATTACH_ENGINE?.basis?.(c,place?.face||s,y0);
@@ -135,7 +135,7 @@
     svg.appendChild(el('polygon',{points:[B,F,G,C].map(q=>`${q.x},${q.y}`).join(' '),fill:'#e5e7eb',stroke:'#111827','stroke-width':3}));
     svg.appendChild(el('polygon',{points:[A,B,C,D].map(q=>`${q.x},${q.y}`).join(' '),fill:'#ffffff','fill-opacity':.86,stroke:'#111827','stroke-width':3}));
     [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
-    const order=['back','inside','left','right','top','bottom','front'];
+    const order=['back','inside','left','right','top','bottom','front','door'];
     order.forEach(s=>(c.objects||[]).filter(o=>(o.surface||'front')===s).forEach(o=>{
       try{objectRect(svg,c,o,s,y0);}catch(error){console.error('[KENC Output 3D] object renderer isolated',o,error);}
     }));

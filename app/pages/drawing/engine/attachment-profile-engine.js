@@ -1,5 +1,5 @@
 (function(){
- 'use strict';const VERSION='2.2.4',KEY='kenc_attachment_profiles_v223';
+ 'use strict';const VERSION='2.2.5',KEY='kenc_attachment_profiles_v223';
  const num=v=>Number.isFinite(Number(v))?Number(v):0;
  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(_){return{}}}
  function store(v){try{localStorage.setItem(KEY,JSON.stringify(v));return true}catch(_){return false}}

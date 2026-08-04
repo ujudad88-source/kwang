@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const CABINET_RENDERER_VERSION='2.2.4';
+  const CABINET_RENDERER_VERSION='2.2.5';
   const SVG_FALLBACK_VIEWER=window.KENC3DViewer||null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
@@ -40,7 +40,7 @@
     return [b.u.x,b.u.y,b.u.z,0,b.v.x,b.v.y,b.v.z,0,b.normal.x,b.normal.y,b.normal.z,0,0,0,0,1];
   }
   function faceTransform(c,y0,surface,o,mode){
-    const d=(window.KENC_OBJECT_DEFINITIONS||[]).find(x=>x.id===o.type)||{};
+    const d=window.KENC_OBJECT_REGISTRY?.definition?.(o.type)||window.KENC_OBJECT_DEFINITIONS?.[o.type]||{};
     window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);
     surface=window.KENC_ATTACH_ENGINE?.canonicalFace?.(surface)||surface;
     const ow=Number(o.w)||20,oh=Number(o.h)||20,th=Math.max(3,Math.min(12,(+c.depth||100)*.05));
