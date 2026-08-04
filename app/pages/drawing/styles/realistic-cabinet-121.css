@@ -1,0 +1,3 @@
+/* KENC UI 2.0 v1.2.1 — parametric cabinet detail layer */
+html[data-kenc-render-quality="realistic"] .kenc-webgl-3d-canvas{filter:contrast(1.04) saturate(.92)}
+html[data-kenc-render-quality="realistic"] #kencRenderQualityBtn.active{box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}

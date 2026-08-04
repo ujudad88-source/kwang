@@ -1,0 +1,5 @@
+
+:root[data-kenc-render-quality="realistic"] .kenc-webgl-3d-canvas{filter:saturate(.96) contrast(1.04);}
+#kencRenderQualityBtn.active{background:#eef6ff;border-color:#2f80ed;color:#174f91;}
+#kencPlacementAssistBtn{font-weight:700;}
+@media(max-width:720px){#kencRenderQualityBtn,#kencPlacementAssistBtn{min-height:40px}.drawing-toolbar-actions{gap:6px;}}

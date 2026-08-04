@@ -1,0 +1,24 @@
+#drawingPanel .kenc-manufacturing-badge.ok{border-color:#2d9a6d;background:#14352d;color:#c7f8e5}
+#drawingPanel .kenc-manufacturing-badge.error{border-color:#c65353;background:#3e2025;color:#ffd6d6}
+#drawingPanel .kenc-manufacturing-section{display:grid;gap:8px;margin-top:10px}
+#drawingPanel .kenc-manufacturing-summary{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:8px;border:1px solid #405268;background:#142233;color:#e7eef7}
+#drawingPanel .kenc-manufacturing-summary.ok{border-color:#2d8c68}.kenc-manufacturing-summary.error{border-color:#b64e57}
+#drawingPanel .kenc-manufacturing-list{display:grid;gap:6px}
+#drawingPanel .kenc-manufacturing-item{padding:9px 11px;border-radius:7px;border:1px solid #34475d;background:#111d2b;color:#cfdae8;font-size:12px}
+#drawingPanel .kenc-manufacturing-item.error{border-color:#a94852;color:#ffd0d4}.kenc-manufacturing-item.warning{border-color:#a77d2d;color:#ffe5aa}.kenc-manufacturing-item.info{border-color:#3475a6;color:#cce9ff}.kenc-manufacturing-item.ok{border-color:#31815f;color:#c9f3df}
+#drawingPanel .kenc-bom-summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px solid #38506a;border-radius:8px;background:#122134;color:#dce8f6}
+#drawingPanel .kenc-bom-summary span{color:#9eb1c7;font-size:12px}.kenc-bom-summary button{margin-left:auto;border:1px solid #4c6c8e;border-radius:6px;background:#1b3149;color:#e8f2fc;padding:7px 10px;cursor:pointer}
+#drawingPanel .kenc-bom-detail>div{display:grid;gap:3px}.kenc-bom-detail small{color:#91a4ba;font-size:11px}
+#drawingPanel .kenc-process-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-top:4px}
+#drawingPanel .kenc-process-summary>strong{grid-column:1/-1;color:#f0f5fb;font-size:12px}
+#drawingPanel .kenc-process-summary span{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid #30465e;border-radius:7px;background:#101d2b;color:#b9c9da;font-size:12px}
+#drawingPanel .kenc-process-summary em{font-style:normal;color:#83b7ff;font-weight:800}
+@media(max-width:700px){#drawingPanel .kenc-manufacturing-summary{flex-direction:column}#drawingPanel .kenc-bom-summary button{margin-left:0;width:100%}#drawingPanel .kenc-process-summary{grid-template-columns:1fr}}
+#drawingPanel .kenc-rules-note{font-size:12px;color:#9fb0c4}
+.kenc-rules-dialog{width:min(720px,calc(100vw - 24px));max-height:86vh;padding:0;border:1px solid #42556b;border-radius:12px;background:#101b28;color:#e8eef6}
+.kenc-rules-dialog::backdrop{background:rgba(4,9,15,.72)}
+.kenc-rules-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-height:86vh}
+.kenc-rules-panel>header,.kenc-rules-panel>footer{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #314154}.kenc-rules-panel>footer{border-top:1px solid #314154;border-bottom:0}.kenc-rules-panel>footer span{flex:1}
+.kenc-rules-panel header div{display:grid;gap:3px;flex:1}.kenc-rules-panel header small{color:#9fb0c4}.kenc-rules-panel button{border:1px solid #42566d;border-radius:7px;background:#172638;color:#e8eef6;padding:8px 12px}.kenc-rules-panel button.primary{background:#1c6b8f;border-color:#2b86af}
+.kenc-rules-grid{overflow:auto;padding:12px 16px;display:grid;gap:8px}.kenc-rule-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;padding:10px;border:1px solid #304257;border-radius:8px;background:#142131}.kenc-rule-row>div{display:grid;grid-template-columns:repeat(4,minmax(72px,1fr));gap:8px}.kenc-rule-row label{display:grid;grid-template-columns:22px 1fr;align-items:center;gap:5px}.kenc-rule-row input{width:100%;min-width:0;border:1px solid #40546b;border-radius:6px;background:#0f1a27;color:#eef4fb;padding:7px}
+@media(max-width:600px){.kenc-rule-row{grid-template-columns:1fr}.kenc-rule-row>div{grid-template-columns:repeat(2,1fr)}}

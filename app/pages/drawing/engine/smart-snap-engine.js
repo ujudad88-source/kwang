@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='1.1.1';
+  const VERSION='1.1.2';
   const STORAGE_KEY='kenc.smartSnap.enabled';
   const THRESHOLD=8;
   const SAFE_MARGIN=20;

@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-ui-2-0-1-0-6-6";
+const CACHE_NAME = "kenc-ui-2-0-v1-2-1";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -28,8 +28,7 @@ const APP_ASSETS = [
   './assets/ground/copper_up.png',
   './assets/ground/copper_down.png',
   './assets/ground/copper_left.png',
-  './assets/ground/copper_right.png'
-,
+  './assets/ground/copper_right.png',
   './app/pages/drawing/engine/object-definitions.js',
   './app/pages/drawing/engine/object-engine.js',
   './app/pages/drawing/engine/attach-engine.js',
@@ -88,12 +87,20 @@ const APP_ASSETS = [
   './app/pages/drawing/objects/Locks/doubleLock/definition.js',
   './app/pages/drawing/objects/Locks/doubleLock/model2d.js',
   './app/pages/drawing/objects/Locks/doubleLock/model3d.js',
-  './app/pages/drawing/objects/Locks/doubleLock/export.js'
-,
-  "app/pages/drawing/engine/selection-engine.js",
-  "app/pages/drawing/engine/history-engine.js",
-  "app/pages/drawing/engine/object-inspector.js",
-  "app/pages/drawing/styles/object-inspector.css"];
+  './app/pages/drawing/objects/Locks/doubleLock/export.js',
+  'app/pages/drawing/engine/selection-engine.js',
+  'app/pages/drawing/engine/history-engine.js',
+  'app/pages/drawing/engine/object-inspector.js',
+  'app/pages/drawing/styles/object-inspector.css',
+  './app/pages/drawing/engine/manufacturing-rules-engine.js',
+  './app/pages/drawing/engine/manufacturing-settings.js',
+  './app/pages/drawing/engine/bom-engine.js',
+  './app/pages/drawing/styles/manufacturing-bom.css',
+  './app/pages/drawing/engine/placement-assistant.js',
+  './app/pages/drawing/engine/realistic-quality-engine.js',
+  './app/pages/drawing/styles/realistic-quality.css',
+  './app/pages/drawing/styles/realistic-cabinet-121.css'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)));

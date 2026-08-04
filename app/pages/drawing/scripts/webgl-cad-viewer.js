@@ -2,8 +2,8 @@
   'use strict';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
-  const objectMaterial={face:[0.16,0.19,0.23,0.96],faceSoft:[0.22,0.25,0.29,0.92],glass:[0.48,0.58,0.66,0.16],void:[0.015,0.025,0.04,0.98],edge:[0.88,0.92,0.96,1],detail:[0.72,0.78,0.84,1],dark:[0.04,0.06,0.09,1]};
-  const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior'});
+  const objectMaterial={face:[0.28,0.31,0.34,0.98],faceSoft:[0.42,0.45,0.48,0.96],glass:[0.38,0.72,0.88,0.18],void:[0.008,0.012,0.018,0.99],edge:[0.90,0.93,0.95,1],detail:[0.78,0.81,0.84,1],dark:[0.025,0.035,0.045,1]};
+  const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior',quality:'realistic'});
   let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
   function state(){return window.KENC_DRAWING_API?.getState?.();}
   function view(){const s=state(); if(!s)return defaults(); return s.live3dView||(s.live3dView=defaults());}
@@ -13,6 +13,7 @@
   function scale(x,y,z){const m=mat4Identity();m[0]=x;m[5]=y;m[10]=z;return m;}
   function rotX(a){const c=Math.cos(a),s=Math.sin(a),m=mat4Identity();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m;}
   function rotY(a){const c=Math.cos(a),s=Math.sin(a),m=mat4Identity();m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m;}
+  function rotateZ(a){const c=Math.cos(a),s=Math.sin(a),m=mat4Identity();m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m;}
   function ortho(l,r,b,t,n,f){const m=mat4Identity();m[0]=2/(r-l);m[5]=2/(t-b);m[10]=-2/(f-n);m[12]=-(r+l)/(r-l);m[13]=-(t+b)/(t-b);m[14]=-(f+n)/(f-n);return m;}
   function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
   function initGL(){
@@ -211,24 +212,91 @@
   }
   function cabinetParts(c,yCenter,mode){
     const w=+c.width,h=+c.height,d=+c.depth,t=Math.max(6,Math.min(18,d*.08));const out=[];
+    const realistic=(view().quality||'realistic')==='realistic';
     const bodyAlpha=mode==='xray'?.07:(mode==='open'?.09:(mode==='section'?.12:(mode==='exploded'?.13:.28))),edge=[.78,.86,.94,1];
-    const push=(name,m,color=[.25,.29,.34,bodyAlpha],show=true)=>show&&out.push({name,m,color,edge});
+    const powder=realistic?[.40,.43,.45,bodyAlpha]:[.25,.29,.34,bodyAlpha];
+    const push=(name,m,color=powder,show=true,customEdge=edge)=>show&&out.push({name,m,color,edge:customEdge});
+    const part=(base,tx,ty,tz,sx,sy,sz)=>mat4Mul(base,mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz)));
+
+    // 본체는 실제 절곡 조립체처럼 후판·측판·상하판을 독립 부품으로 구성한다.
     push('back',mat4Mul(translate(0,yCenter,-d/2+t/2),scale(w,h,t)));
     push('left',mat4Mul(translate(-w/2+t/2,yCenter,0),scale(t,h,d)));
     push('right',mat4Mul(translate(w/2-t/2,yCenter,0),scale(t,h,d)),undefined,mode!=='section');
     push('top',mat4Mul(translate(0,yCenter-h/2+t/2,0),scale(w,t,d)));
     push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
-    if(mode==='exterior'||mode==='xray')push('door',mat4Mul(translate(0,yCenter,d/2+t/2),scale(w,h,t)),[.20,.24,.29,mode==='xray'?.055:.34]);
+
+    // 전면 개구부 절곡 리턴과 모서리 접합선을 넣어 단순 박스 느낌을 줄인다.
+    const returnW=Math.max(8,Math.min(18,w*.028)),returnD=Math.max(4,t*.42),frontZ=d/2-returnD/2;
+    const returnColor=realistic?[.50,.53,.55,Math.max(bodyAlpha,.70)]:[.34,.38,.42,Math.max(bodyAlpha,.55)];
+    push('body-return-top',mat4Mul(translate(0,yCenter-h/2+returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
+    push('body-return-bottom',mat4Mul(translate(0,yCenter+h/2-returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
+    push('body-return-left',mat4Mul(translate(-w/2+returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor);
+    push('body-return-right',mat4Mul(translate(w/2-returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor,mode!=='section');
+
+    if(realistic){
+      const seam=[.16,.18,.20,.75],seamEdge=[.42,.45,.48,.8],sw=Math.max(1.5,t*.10);
+      [[-w/2+t*.55,-h/2+t*.55],[w/2-t*.55,-h/2+t*.55],[-w/2+t*.55,h/2-t*.55],[w/2-t*.55,h/2-t*.55]].forEach(([sx,sy],i)=>{
+        if(mode==='section'&&(i===1||i===3))return;
+        push('corner-seam',mat4Mul(translate(sx,yCenter+sy,-d/2+t*.62),scale(sw,Math.max(16,h*.065),sw)),seam,true,seamEdge);
+      });
+      // 속판 고정 스터드 4개. 내부 구조 식별용이며 문과 독립적으로 고정된다.
+      const stud=[.62,.65,.67,1],studEdge=[.23,.25,.28,1],studZ=-d/2+Math.max(18,d*.22);
+      [[-.36,-.36],[.36,-.36],[-.36,.36],[.36,.36]].forEach(([px,py])=>{
+        push('mounting-stud',mat4Mul(translate(px*w,yCenter+py*h,studZ),scale(Math.max(5,t*.38),Math.max(5,t*.38),Math.max(12,d*.10))),stud,true,studEdge);
+      });
+    }
+
+    const flange=Math.max(10,Math.min(24,w*.035)),gap=Math.max(2,Math.min(5,w*.006));
+    const doorColor=realistic?[.57,.59,.60,mode==='xray'?.055:.98]:[.46,.49,.51,mode==='xray'?.055:.96];
+    const flangeTop=realistic?[.67,.69,.70,.99]:[.61,.64,.66,.98];
+    const flangeBottom=realistic?[.43,.45,.46,.99]:[.38,.41,.43,.98];
+    const gasket=[.035,.042,.047,mode==='xray'?.10:.96],gasketEdge=[.09,.10,.11,1];
+
+    function addDoorAssembly(base,alphaMode){
+      push('door',mat4Mul(base,scale(w,h,t)),[doorColor[0],doorColor[1],doorColor[2],alphaMode]);
+      push('door-top-flange',part(base,0,-h/2+flange/2,t*.58,w-gap*2,flange,Math.max(2,t*.24)),flangeTop);
+      push('door-bottom-flange',part(base,0,h/2-flange/2,t*.58,w-gap*2,flange,Math.max(2,t*.24)),flangeBottom);
+      push('door-left-flange',part(base,-w/2+flange/2,0,t*.58,flange,h-flange*2,Math.max(2,t*.24)),realistic?[.60,.62,.63,.99]:[.55,.58,.60,.98]);
+      push('door-right-flange',part(base,w/2-flange/2,0,t*.58,flange,h-flange*2,Math.max(2,t*.24)),realistic?[.38,.40,.41,.99]:[.34,.37,.39,.98]);
+      if(realistic){
+        const gw=Math.max(4,Math.min(9,w*.012)),gz=-t*.57;
+        push('gasket-top',part(base,0,-h/2+flange+gw/2,gz,w-flange*2-gw*2,gw,Math.max(2,t*.16)),gasket,true,gasketEdge);
+        push('gasket-bottom',part(base,0,h/2-flange-gw/2,gz,w-flange*2-gw*2,gw,Math.max(2,t*.16)),gasket,true,gasketEdge);
+        push('gasket-left',part(base,-w/2+flange+gw/2,0,gz,gw,h-flange*2-gw*2,Math.max(2,t*.16)),gasket,true,gasketEdge);
+        push('gasket-right',part(base,w/2-flange-gw/2,0,gz,gw,h-flange*2-gw*2,Math.max(2,t*.16)),gasket,true,gasketEdge);
+      }
+    }
+
+    if(mode==='exterior'||mode==='xray'){
+      const base=translate(0,yCenter,d/2+t/2);
+      addDoorAssembly(base,mode==='xray'?.055:.98);
+      // 실제 경첩은 본체측 리프·문측 리프·중앙 배럴을 분리해 표현한다.
+      [yCenter-h*.30,yCenter+h*.30].forEach(hy=>{
+        const hh=Math.max(28,h*.10),hx=w/2+t*.60,hz=d/2+t*.62;
+        push('hinge-body-leaf',mat4Mul(translate(w/2-t*.10,hy,hz-t*.18),scale(t*.32,hh*.78,t*.28)),[.30,.32,.33,1]);
+        push('hinge-door-leaf',mat4Mul(translate(w/2+t*.78,hy,hz+t*.12),scale(t*.34,hh*.78,t*.28)),[.42,.44,.45,1]);
+        push('hinge-barrel',mat4Mul(translate(hx,hy,hz),scale(t*.62,hh,t*.62)),[.22,.24,.25,1]);
+        if(realistic){
+          push('hinge-pin-top',mat4Mul(translate(hx,hy-hh*.53,hz),scale(t*.75,t*.14,t*.75)),[.62,.64,.65,1]);
+          push('hinge-pin-bottom',mat4Mul(translate(hx,hy+hh*.53,hz),scale(t*.75,t*.14,t*.75)),[.42,.44,.45,1]);
+        }
+      });
+    }
     if(mode==='open'||mode==='exploded'){
       const pose=window.KENC_CAD_MODEL?.doorPose?.(c,mode,yCenter)||{angle:(mode==='open'?82:8)*Math.PI/180,hingeX:w/2+(mode==='exploded'?w*.60:0),hingeY:yCenter,hingeZ:d/2+(mode==='exploded'?w*.60:0)*.15};
-      const door=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),mat4Mul(translate(-w/2,0,0),scale(w,h,t))));push('door',door,[.24,.28,.32,mode==='open'?.075:.18]);
+      const base=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),translate(-w/2,0,0)));
+      addDoorAssembly(base,mode==='open'?.18:.30);
+      const hh=Math.max(28,h*.10);
+      [-h*.30,h*.30].forEach(ly=>{
+        push('hinge-door-open',part(base,w/2+t*.18,ly,t*.16,t*.62,hh,t*.62),[.24,.26,.27,1]);
+      });
     }
     if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
   }
   function sceneBounds(cabs){const total=cabs.reduce((a,c)=>a+(+c.height||0),0),maxW=Math.max(...cabs.map(c=>+c.width||1)),maxD=Math.max(...cabs.map(c=>+c.depth||1));return{total,maxW,maxD,size:Math.max(total,maxW,maxD)};}
   function renderWebGL(ctx){ctxCache=ctx;ensureCanvas(ctx.svg);const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
-    resize();gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(.018,.035,.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
+    resize();gl.viewport(0,0,canvas.width,canvas.height);const realistic=(v.quality||'realistic')==='realistic';gl.clearColor(realistic?.035:.018,realistic?.045:.035,realistic?.055:.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
     const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
     const revealAll=['xray','open','section','exploded'].includes(mode);
     let off=-b.total/2;
@@ -237,6 +305,7 @@
       cabinetParts(c,yCenter,mode).forEach(p=>cabinetQueue.push({p,c,yCenter}));
       (c.objects||[]).forEach(o=>{const surface=o.surface||'front';if(mode==='exterior'&&surface==='inside')return;objectQueue.push({c,yCenter,o,surface,role:roleOf(o,surface),m:faceTransform(c,yCenter,surface,o,mode)});});
     });
+    if(realistic&&mode!=='exploded'){const floor=mat4Mul(vp,mat4Mul(translate(0,b.total*.53,-b.maxD*.12),scale(b.maxW*1.35,Math.max(3,b.size*.012),b.maxD*1.65)));drawBox(floor,[.01,.015,.02,.20],[.03,.04,.05,.08],true);}
     if(revealAll)gl.depthMask(false);
     cabinetQueue.forEach(({p})=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
     gl.depthMask(true);
@@ -245,7 +314,7 @@
     if(revealAll)gl.enable(gl.DEPTH_TEST);
     syncButtons();}
   function ensureCanvas(svg){if(canvas&&canvas.isConnected)return;const wrap=svg.parentElement;canvas=document.createElement('canvas');canvas.className='kenc-webgl-3d-canvas';canvas.setAttribute('aria-label','WebGL 실시간 3D 미리보기');svg.style.display='none';wrap.appendChild(canvas);gl=canvas.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});if(!gl){svg.style.display='';canvas.remove();canvas=null;return;}initGL();bindCanvas();}
-  function resize(){if(!canvas)return;const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);const w=Math.max(2,Math.round(r.width*dpr)),h=Math.max(2,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
+  function resize(){if(!canvas)return;const r=canvas.getBoundingClientRect(),quality=view().quality||'realistic',dpr=Math.min(window.devicePixelRatio||1,quality==='realistic'?2.5:1.6);const w=Math.max(2,Math.round(r.width*dpr)),h=Math.max(2,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
   function redraw(){if(ctxCache&&gl)renderWebGL(ctxCache);}
   function setPreset(name){const v=view();if(name==='front')Object.assign(v,{yaw:0,pitch:0,zoom:1.12,panX:0,panY:0});else Object.assign(v,{yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0});redraw();}
   function setMode(m){view().displayMode=m;redraw();}
