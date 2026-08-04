@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.2.3';
+  const VERSION='2.2.4';
   const num=(v,f=0)=>Number.isFinite(Number(v))?Number(v):f;
   const api=()=>window.KENC_DRAWING_API;
   const defOf=t=>window.KENC_OBJECT_ENGINE?.definition?.(t)||{};

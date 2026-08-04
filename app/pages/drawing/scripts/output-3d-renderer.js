@@ -32,6 +32,7 @@
     return{O,U:{x:(pu.x-O.x)*mirror,y:(pu.y-O.y)*mirror},V:{x:pv.x-O.x,y:pv.y-O.y}};
   }
   function objectRect(svg,c,o,s,y0){
+    if(!o||o.visible===false||o.export===false||o.render3d===false)return;
     const b=basisFor(c,o,s,y0);if(!b)return;const r=role(o,s),ow=Number(o.w)||20,oh=Number(o.h)||20,{O,U,V}=b;
     const pts=[[0,0],[ow,0],[ow,oh],[0,oh]].map(([x,y])=>({x:O.x+U.x*x+V.x*y,y:O.y+U.y*x+V.y*y}));
     const poly=el('polygon',{points:pts.map(q=>`${q.x},${q.y}`).join(' '),fill:colors[r],stroke:strokes[r],'stroke-width':4,'vector-effect':'non-scaling-stroke'});svg.appendChild(poly);
@@ -57,6 +58,7 @@
     }else if(o.type==='nameplate'){
       const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#111827'},o.label||o.option));
     }else if(o.type==='acrylicWindow'){
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
       const inset=.11;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#d8f3ff','fill-opacity':.28,stroke:'#334155','stroke-width':3})); const h1=cxy(.22,.22),h2=cxy(.54,.25);line(svg,h1,h2,{stroke:'#ffffff','stroke-opacity':.9,'stroke-width':2});
     }else if(o.type==='doubleLock'){
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});const m=cxy(.5,.45);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:8,fill:'#fff',stroke:'#111827','stroke-width':3}));svg.appendChild(el('text',{x:m.x,y:m.y+22,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
@@ -133,7 +135,12 @@
     svg.appendChild(el('polygon',{points:[B,F,G,C].map(q=>`${q.x},${q.y}`).join(' '),fill:'#e5e7eb',stroke:'#111827','stroke-width':3}));
     svg.appendChild(el('polygon',{points:[A,B,C,D].map(q=>`${q.x},${q.y}`).join(' '),fill:'#ffffff','fill-opacity':.86,stroke:'#111827','stroke-width':3}));
     [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
-    const order=['back','inside','left','right','top','bottom','front'];order.forEach(s=>(c.objects||[]).filter(o=>(o.surface||'front')===s).forEach(o=>objectRect(svg,c,o,s,y0)));
+    const order=['back','inside','left','right','top','bottom','front'];
+    order.forEach(s=>(c.objects||[]).filter(o=>(o.surface||'front')===s).forEach(o=>{
+      try{objectRect(svg,c,o,s,y0);}catch(error){console.error('[KENC Output 3D] object renderer isolated',o,error);}
+    }));
+    // 객체 오류나 겹침 이후에도 제작 전달 도면에서 함체 윤곽을 확실히 유지한다.
+    [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b,{stroke:'#111827','stroke-width':3.2}));
     svg.appendChild(el('text',{x:350,y:625,'text-anchor':'middle','font-size':24,'font-weight':800,fill:'#111827'},`${c.width} × ${c.height} × ${c.depth} mm`));
     svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 통합 부착방향 보정 · ${(c.objects||[]).length} EA`));
     return svg;

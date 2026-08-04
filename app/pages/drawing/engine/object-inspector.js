@@ -17,5 +17,5 @@
  }catch(e){console.error('[KENC Inspector] render isolated error',e);if(body)body.innerHTML='<div class="koi-empty">속성 패널 오류가 격리되었습니다. 3D 미리보기는 계속 사용할 수 있습니다.</div>';}}
  function init(){create();timer=setInterval(()=>render(false),350);document.addEventListener('kenc:object-engine-ready',()=>render(true));document.addEventListener('kenc:selection-changed',()=>render(true));}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
- window.KENC_OBJECT_INSPECTOR={version:'2.2.3',render};
+ window.KENC_OBJECT_INSPECTOR={version:'2.2.4',render};
 })();

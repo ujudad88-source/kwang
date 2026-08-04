@@ -1,6 +1,7 @@
 (function(){
   'use strict';
-  const CABINET_RENDERER_VERSION='2.2.1';
+  const CABINET_RENDERER_VERSION='2.2.4';
+  const SVG_FALLBACK_VIEWER=window.KENC3DViewer||null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
   const objectMaterial={face:[0.28,0.31,0.34,0.98],faceSoft:[0.42,0.45,0.48,0.96],glass:[0.38,0.72,0.88,0.18],void:[0.008,0.012,0.018,0.99],edge:[0.90,0.93,0.95,1],detail:[0.78,0.81,0.84,1],dark:[0.025,0.035,0.045,1]};
@@ -355,7 +356,13 @@
     return out;
   }
   function sceneBounds(cabs){const total=cabs.reduce((a,c)=>a+(+c.height||0),0),maxW=Math.max(...cabs.map(c=>+c.width||1)),maxD=Math.max(...cabs.map(c=>+c.depth||1));return{total,maxW,maxD,size:Math.max(total,maxW,maxD)};}
-  function renderWebGL(ctx){ctxCache=ctx;ensureCanvas(ctx.svg);const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
+  function renderWebGL(ctx){
+    ctxCache=ctx;
+    if(!ensureCanvas(ctx.svg)||!gl){
+      if(SVG_FALLBACK_VIEWER?.render) SVG_FALLBACK_VIEWER.render(ctx);
+      return;
+    }
+    const s=ctx.state,v=s.live3dView||(s.live3dView=defaults()),cabs=(s.mode3d==='stack'?s.cabinets:[ctx.currentCabinet]).filter(Boolean);if(!cabs.length)return;
     resize();gl.viewport(0,0,canvas.width,canvas.height);const realistic=(v.quality||'realistic')==='realistic';gl.clearColor(realistic?.035:.018,realistic?.045:.035,realistic?.055:.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
     const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
     const revealAll=['xray','open','section','exploded'].includes(mode);
@@ -363,17 +370,36 @@
     const cabinetQueue=[],objectQueue=[];
     cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;
       cabinetParts(c,yCenter,mode).forEach(p=>cabinetQueue.push({p,c,yCenter}));
-      (c.objects||[]).forEach(o=>{const surface=o.surface||'front';if(mode==='exterior'&&surface==='inside')return;objectQueue.push({c,yCenter,o,surface,role:roleOf(o,surface),m:faceTransform(c,yCenter,surface,o,mode)});});
+      (c.objects||[]).forEach(o=>{
+        if(!o||o.visible===false||o.render3d===false)return;
+        const surface=o.surface||'front';if(mode==='exterior'&&surface==='inside')return;
+        const ow=Number(o.w),oh=Number(o.h),ox=Number(o.x),oy=Number(o.y);
+        if(![ow,oh,ox,oy].every(Number.isFinite)||ow<=0||oh<=0){console.warn('[KENC 3D] invalid object skipped',o);return;}
+        try{objectQueue.push({c,yCenter,o,surface,role:roleOf(o,surface),m:faceTransform(c,yCenter,surface,o,mode)});}
+        catch(error){console.error('[KENC 3D] object transform isolated',o,error);}
+      });
     });
     if(realistic&&mode!=='exploded'){const floor=mat4Mul(vp,mat4Mul(translate(0,b.total*.53,-b.maxD*.12),scale(b.maxW*1.35,Math.max(3,b.size*.012),b.maxD*1.65)));drawBox(floor,[.01,.015,.02,.20],[.03,.04,.05,.08],true);}
     if(revealAll)gl.depthMask(false);
     cabinetQueue.forEach(({p})=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
     gl.depthMask(true);
     if(revealAll)gl.disable(gl.DEPTH_TEST);
-    objectQueue.forEach(({c,yCenter,o,surface,role,m})=>addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role));
+    objectQueue.forEach(({c,yCenter,o,surface,role,m})=>{
+      try{addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role);}
+      catch(error){console.error('[KENC 3D] object renderer isolated',o,error);}
+    });
     if(revealAll)gl.enable(gl.DEPTH_TEST);
+    // 객체가 깊이값 또는 재질 문제로 본체를 가려도 함체 외곽선은 항상 마지막에 유지한다.
+    cabinetQueue.forEach(({p})=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,false));
     syncButtons();}
-  function ensureCanvas(svg){if(canvas&&canvas.isConnected)return;const wrap=svg.parentElement;canvas=document.createElement('canvas');canvas.className='kenc-webgl-3d-canvas';canvas.setAttribute('aria-label','WebGL 실시간 3D 미리보기');svg.style.display='none';wrap.appendChild(canvas);gl=canvas.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});if(!gl){svg.style.display='';canvas.remove();canvas=null;return;}initGL();bindCanvas();}
+  function ensureCanvas(svg){
+    if(canvas&&canvas.isConnected&&gl)return true;
+    if(!svg?.parentElement)return false;
+    const wrap=svg.parentElement;canvas=document.createElement('canvas');canvas.className='kenc-webgl-3d-canvas';canvas.setAttribute('aria-label','WebGL 실시간 3D 미리보기');wrap.appendChild(canvas);
+    gl=canvas.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});
+    if(!gl){canvas.remove();canvas=null;svg.style.display='';return false;}
+    svg.style.display='none';initGL();bindCanvas();return true;
+  }
   function resize(){if(!canvas)return;const r=canvas.getBoundingClientRect(),quality=view().quality||'realistic',dpr=Math.min(window.devicePixelRatio||1,quality==='realistic'?2.5:1.6);const w=Math.max(2,Math.round(r.width*dpr)),h=Math.max(2,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
   function redraw(){if(ctxCache&&gl)renderWebGL(ctxCache);}
   function setPreset(name){const v=view();if(name==='front')Object.assign(v,{yaw:0,pitch:0,zoom:1.12,panX:0,panY:0});else Object.assign(v,{yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0});redraw();}
