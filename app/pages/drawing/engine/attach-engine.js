@@ -10,14 +10,14 @@
     const w=n(c.width,600),h=n(c.height,700),d=n(c.depth,130),t=n(c.thickness,1.6),e=t/2;
     const setback=Math.min(Math.max(18,d*.2),Math.max(22,d*.34)); face=canonicalFace(face);
     const map={
-      front:{origin:{x:-w/2,y:y0,z:d/2+e},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
-      door:{origin:{x:-w/2,y:y0,z:d/2+e},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
-      back:{origin:{x:w/2,y:y0,z:-d/2-e},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:-1},rotation:{x:0,y:Math.PI,z:0}},
-      inside:{origin:{x:-w/2,y:y0,z:-d/2+setback},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
-      left:{origin:{x:-w/2-e,y:y0,z:d/2},u:{x:0,y:0,z:-1},v:{x:0,y:1,z:0},normal:{x:-1,y:0,z:0},rotation:{x:0,y:-Math.PI/2,z:0}},
-      right:{origin:{x:w/2+e,y:y0,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0},normal:{x:1,y:0,z:0},rotation:{x:0,y:Math.PI/2,z:0}},
-      top:{origin:{x:-w/2,y:y0-e,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1},normal:{x:0,y:-1,z:0},rotation:{x:-Math.PI/2,y:0,z:0}},
-      bottom:{origin:{x:-w/2,y:y0+h+e,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:-1},normal:{x:0,y:1,z:0},rotation:{x:Math.PI/2,y:0,z:0}}
+      front:{origin:{x:-w/2,y:y0-h/2,z:d/2+e},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
+      door:{origin:{x:-w/2,y:y0-h/2,z:d/2+e},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
+      back:{origin:{x:w/2,y:y0-h/2,z:-d/2-e},u:{x:-1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:-1},rotation:{x:0,y:Math.PI,z:0}},
+      inside:{origin:{x:-w/2,y:y0-h/2,z:-d/2+setback},u:{x:1,y:0,z:0},v:{x:0,y:1,z:0},normal:{x:0,y:0,z:1},rotation:{x:0,y:0,z:0}},
+      left:{origin:{x:-w/2-e,y:y0-h/2,z:d/2},u:{x:0,y:0,z:-1},v:{x:0,y:1,z:0},normal:{x:-1,y:0,z:0},rotation:{x:0,y:-Math.PI/2,z:0}},
+      right:{origin:{x:w/2+e,y:y0-h/2,z:-d/2},u:{x:0,y:0,z:1},v:{x:0,y:1,z:0},normal:{x:1,y:0,z:0},rotation:{x:0,y:Math.PI/2,z:0}},
+      top:{origin:{x:-w/2,y:y0-h/2-e,z:-d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:1},normal:{x:0,y:-1,z:0},rotation:{x:-Math.PI/2,y:0,z:0}},
+      bottom:{origin:{x:-w/2,y:y0+h/2+e,z:d/2},u:{x:1,y:0,z:0},v:{x:0,y:0,z:-1},normal:{x:0,y:1,z:0},rotation:{x:Math.PI/2,y:0,z:0}}
     };return map[face]||map.front;
   }
   function anchorOffset(anchor,p,o){
@@ -34,5 +34,5 @@
   function transform(c,o,y0=0,d={}){const place=normalizePlacement(c,o,d),b=basis(c,place.face,y0);return{basis:b,center:point(c,o,y0,d),width:n(o.w),height:n(o.h),depth:n(o.depth,d.depth||0),rotation:n(o.rot)+n(d.rotationOffset),faceRotation:b.rotation,mirror:place.mirror,parent:place.parent,surface:place.face,local:{x:place.x,y:place.y},anchor:o.anchor||d.anchor||'free'};}
   function corners(c,o,y0=0,d={}){const t=transform(c,o,y0,d),b=t.basis,halfW=t.width/2,halfH=t.height/2;return[[-halfW,-halfH],[halfW,-halfH],[halfW,halfH],[-halfW,halfH]].map(([x,y])=>add(add(t.center,b.u,x),b.v,y));}
   function selfTest(){const cab={width:600,height:700,depth:130,thickness:1.6};const cases=['front','back','left','right','top','bottom','inside','door'].map(surface=>transform(cab,{surface,x:10,y:20,w:100,h:50,depth:4},{},{}));return{ok:cases.every(x=>Number.isFinite(x.center.x+x.center.y+x.center.z)),cases};}
-  window.KENC_ATTACH_ENGINE={version:'1.1.0',canonicalFace,dimensions,basis,anchorOffset,resolveParent,resolveMirror,resolveDepth,normalizePlacement,point,transform,corners,selfTest};
+  window.KENC_ATTACH_ENGINE={version:'2.2.1',canonicalFace,dimensions,basis,anchorOffset,resolveParent,resolveMirror,resolveDepth,normalizePlacement,point,transform,corners,selfTest};
 })();

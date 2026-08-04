@@ -1,5 +1,6 @@
 (function(){
   'use strict';
+  const CABINET_RENDERER_VERSION='2.2.1';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
   const objectMaterial={face:[0.28,0.31,0.34,0.98],faceSoft:[0.42,0.45,0.48,0.96],glass:[0.38,0.72,0.88,0.18],void:[0.008,0.012,0.018,0.99],edge:[0.90,0.93,0.95,1],detail:[0.78,0.81,0.84,1],dark:[0.025,0.035,0.045,1]};
@@ -34,21 +35,28 @@
     -.5,-.5,-.5,-.5,-.5,.5,.5,-.5,-.5,.5,-.5,.5,.5,.5,-.5,.5,.5,.5,-.5,.5,-.5,-.5,.5,.5];
   function drawGeom(vertices,mode,color,matrix){gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(posLoc);gl.vertexAttribPointer(posLoc,3,gl.FLOAT,false,0,0);gl.uniform4fv(colorLoc,color);gl.uniformMatrix4fv(mvpLoc,false,new Float32Array(matrix));gl.drawArrays(mode,0,vertices.length/3);}
   function drawBox(m,color,edge=[0.85,0.92,1,1],face=true){if(face)drawGeom(cubeVerts,gl.TRIANGLES,color,m);drawGeom(edgeVerts,gl.LINES,edge,m);}
-  function faceTransform(c,y0,surface,o,mode){const w=c.width,h=c.height,d=c.depth,ow=o.w||20,oh=o.h||20,x=o.x||0,y=o.y||0,th=Math.max(3,Math.min(12,d*.05));let tx=0,ty=y0+y+oh/2-h/2,tz=0,sx=ow,sy=oh,sz=th;
-    if(surface==='front'){
+  function basisMatrix(b){
+    return [b.u.x,b.u.y,b.u.z,0,b.v.x,b.v.y,b.v.z,0,b.normal.x,b.normal.y,b.normal.z,0,0,0,0,1];
+  }
+  function faceTransform(c,y0,surface,o,mode){
+    const d=(window.KENC_OBJECT_DEFINITIONS||[]).find(x=>x.id===o.type)||{};
+    window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);
+    surface=window.KENC_ATTACH_ENGINE?.canonicalFace?.(surface)||surface;
+    const ow=Number(o.w)||20,oh=Number(o.h)||20,th=Math.max(3,Math.min(12,(+c.depth||100)*.05));
+    // Front/door objects use the same physical door pivot as the door assembly.
+    if(surface==='front'||surface==='door'){
       const placement=window.KENC_CAD_MODEL?.frontObjectPlacement?.(c,o,mode,y0);
       if(placement){
-        return mat4Mul(translate(placement.center.x,placement.center.y,placement.center.z),mat4Mul(rotY(placement.angle),scale(sx,sy,sz)));
+        const mirror=window.KENC_ATTACH_ENGINE?.resolveMirror?.(o,d)?-1:1;
+        return mat4Mul(translate(placement.center.x,placement.center.y,placement.center.z),mat4Mul(rotY(placement.angle),scale(ow*mirror,oh,th)));
       }
-      tx=-w/2+x+ow/2;tz=d/2+th/2+2;
     }
-    else if(surface==='back'){tx=w/2-x-ow/2;tz=-d/2-th/2;}
-    else if(surface==='inside'){tx=-w/2+x+ow/2;tz=-d/2+Math.max(20,d*.28);sz=Math.max(4,Math.min(10,d*.04));}
-    else if(surface==='left'){tx=-w/2-th/2;tz=d/2-x-ow/2;sx=th;sz=ow;}
-    else if(surface==='right'){tx=w/2+th/2;tz=-d/2+x+ow/2;sx=th;sz=ow;}
-    else if(surface==='top'){tx=-w/2+x+ow/2;ty=y0-h/2-th/2;tz=-d/2+y+oh/2;sy=th;sz=oh;}
-    else if(surface==='bottom'){tx=-w/2+x+ow/2;ty=y0+h/2+th/2;tz=d/2-y-oh/2;sy=th;sz=oh;}
-    return mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz));
+    const t=window.KENC_ATTACH_ENGINE?.transform?.(c,o,y0,d);
+    if(t){
+      const depth=Math.max(2,th), mirror=t.mirror?-1:1;
+      return mat4Mul(translate(t.center.x,t.center.y,t.center.z),mat4Mul(basisMatrix(t.basis),mat4Mul(rotateZ((t.rotation||0)*Math.PI/180),scale(ow*mirror,oh,depth))));
+    }
+    return mat4Mul(translate(0,y0,0),scale(ow,oh,th));
   }
   function localBox(baseM,tx,ty,tz,sx,sy,sz,face=objectMaterial.face,edge=objectMaterial.edge,showFace=true){
     const m=mat4Mul(baseM,mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz)));
@@ -278,7 +286,7 @@
     }
   }
   function cabinetParts(c,yCenter,mode){
-    const w=+c.width,h=+c.height,d=+c.depth,t=Math.max(6,Math.min(18,d*.08));const out=[];
+    const w=+c.width,h=+c.height,d=+c.depth,rawT=Number(c.thicknessMm||String(c.thickness||'1.6').match(/[\d.]+/)?.[0]||1.6),t=Math.max(4,Math.min(10,rawT*3));const out=[];
     const realistic=(view().quality||'realistic')==='realistic';
     const bodyAlpha=mode==='xray'?.07:(mode==='open'?.09:(mode==='section'?.12:(mode==='exploded'?.13:.28))),edge=[.78,.86,.94,1];
     const powder=realistic?[.40,.43,.45,bodyAlpha]:[.25,.29,.34,bodyAlpha];
@@ -300,24 +308,31 @@
     push('body-return-left',mat4Mul(translate(-w/2+returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor);
     push('body-return-right',mat4Mul(translate(w/2-returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor,mode!=='section');
 
+    // 실제 제작함의 판넬 끝단을 식별할 수 있도록 얇은 헤밍 절곡과 후면 단차를 추가한다.
+    const hem=Math.max(2,Math.min(5,t*.45)),hemColor=realistic?[.58,.60,.61,Math.max(bodyAlpha,.82)]:returnColor;
+    push('top-front-hem',mat4Mul(translate(0,yCenter-h/2+t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
+    push('bottom-front-hem',mat4Mul(translate(0,yCenter+h/2-t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
+    push('left-front-hem',mat4Mul(translate(-w/2+t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor);
+    push('right-front-hem',mat4Mul(translate(w/2-t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor,mode!=='section');
+    if(realistic){
+      const rearStep=[.32,.35,.37,Math.max(bodyAlpha,.68)];
+      push('rear-top-step',mat4Mul(translate(0,yCenter-h/2+t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
+      push('rear-bottom-step',mat4Mul(translate(0,yCenter+h/2-t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
+    }
+
+
     if(realistic){
       const seam=[.16,.18,.20,.75],seamEdge=[.42,.45,.48,.8],sw=Math.max(1.5,t*.10);
       [[-w/2+t*.55,-h/2+t*.55],[w/2-t*.55,-h/2+t*.55],[-w/2+t*.55,h/2-t*.55],[w/2-t*.55,h/2-t*.55]].forEach(([sx,sy],i)=>{
         if(mode==='section'&&(i===1||i===3))return;
         push('corner-seam',mat4Mul(translate(sx,yCenter+sy,-d/2+t*.62),scale(sw,Math.max(16,h*.065),sw)),seam,true,seamEdge);
       });
-      // 속판 고정 스터드 4개. 내부 구조 식별용이며 문과 독립적으로 고정된다.
-      const stud=[.62,.65,.67,1],studEdge=[.23,.25,.28,1],studZ=-d/2+Math.max(18,d*.22);
-      [[-.36,-.36],[.36,-.36],[-.36,.36],[.36,.36]].forEach(([px,py])=>{
-        push('mounting-stud',mat4Mul(translate(px*w,yCenter+py*h,studZ),scale(Math.max(5,t*.38),Math.max(5,t*.38),Math.max(12,d*.10))),stud,true,studEdge);
-      });
     }
 
-    const flange=Math.max(10,Math.min(24,w*.035)),gap=Math.max(2,Math.min(5,w*.006));
+    const flange=Math.max(10,Math.min(24,w*.035)),gap=0;
     const doorColor=realistic?[.57,.59,.60,mode==='xray'?.055:.98]:[.46,.49,.51,mode==='xray'?.055:.96];
     const flangeTop=realistic?[.67,.69,.70,.99]:[.61,.64,.66,.98];
     const flangeBottom=realistic?[.43,.45,.46,.99]:[.38,.41,.43,.98];
-    const gasket=[.035,.042,.047,mode==='xray'?.10:.96],gasketEdge=[.09,.10,.11,1];
 
     function addDoorAssembly(base,alphaMode){
       push('door',mat4Mul(base,scale(w,h,t)),[doorColor[0],doorColor[1],doorColor[2],alphaMode]);
@@ -325,38 +340,16 @@
       push('door-bottom-flange',part(base,0,h/2-flange/2,t*.58,w-gap*2,flange,Math.max(2,t*.24)),flangeBottom);
       push('door-left-flange',part(base,-w/2+flange/2,0,t*.58,flange,h-flange*2,Math.max(2,t*.24)),realistic?[.60,.62,.63,.99]:[.55,.58,.60,.98]);
       push('door-right-flange',part(base,w/2-flange/2,0,t*.58,flange,h-flange*2,Math.max(2,t*.24)),realistic?[.38,.40,.41,.99]:[.34,.37,.39,.98]);
-      if(realistic){
-        const gw=Math.max(4,Math.min(9,w*.012)),gz=-t*.57;
-        push('gasket-top',part(base,0,-h/2+flange+gw/2,gz,w-flange*2-gw*2,gw,Math.max(2,t*.16)),gasket,true,gasketEdge);
-        push('gasket-bottom',part(base,0,h/2-flange-gw/2,gz,w-flange*2-gw*2,gw,Math.max(2,t*.16)),gasket,true,gasketEdge);
-        push('gasket-left',part(base,-w/2+flange+gw/2,0,gz,gw,h-flange*2-gw*2,Math.max(2,t*.16)),gasket,true,gasketEdge);
-        push('gasket-right',part(base,w/2-flange-gw/2,0,gz,gw,h-flange*2-gw*2,Math.max(2,t*.16)),gasket,true,gasketEdge);
-      }
     }
 
     if(mode==='exterior'||mode==='xray'){
       const base=translate(0,yCenter,d/2+t/2);
       addDoorAssembly(base,mode==='xray'?.055:.98);
-      // 실제 경첩은 본체측 리프·문측 리프·중앙 배럴을 분리해 표현한다.
-      [yCenter-h*.30,yCenter+h*.30].forEach(hy=>{
-        const hh=Math.max(28,h*.10),hx=w/2+t*.60,hz=d/2+t*.62;
-        push('hinge-body-leaf',mat4Mul(translate(w/2-t*.10,hy,hz-t*.18),scale(t*.32,hh*.78,t*.28)),[.30,.32,.33,1]);
-        push('hinge-door-leaf',mat4Mul(translate(w/2+t*.78,hy,hz+t*.12),scale(t*.34,hh*.78,t*.28)),[.42,.44,.45,1]);
-        push('hinge-barrel',mat4Mul(translate(hx,hy,hz),scale(t*.62,hh,t*.62)),[.22,.24,.25,1]);
-        if(realistic){
-          push('hinge-pin-top',mat4Mul(translate(hx,hy-hh*.53,hz),scale(t*.75,t*.14,t*.75)),[.62,.64,.65,1]);
-          push('hinge-pin-bottom',mat4Mul(translate(hx,hy+hh*.53,hz),scale(t*.75,t*.14,t*.75)),[.42,.44,.45,1]);
-        }
-      });
     }
     if(mode==='open'||mode==='exploded'){
       const pose=window.KENC_CAD_MODEL?.doorPose?.(c,mode,yCenter)||{angle:(mode==='open'?82:8)*Math.PI/180,hingeX:w/2+(mode==='exploded'?w*.60:0),hingeY:yCenter,hingeZ:d/2+(mode==='exploded'?w*.60:0)*.15};
       const base=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),translate(-w/2,0,0)));
       addDoorAssembly(base,mode==='open'?.18:.30);
-      const hh=Math.max(28,h*.10);
-      [-h*.30,h*.30].forEach(ly=>{
-        push('hinge-door-open',part(base,w/2+t*.18,ly,t*.16,t*.62,hh,t*.62),[.24,.26,.27,1]);
-      });
     }
     if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
@@ -392,7 +385,7 @@
     const end=e=>{pointers.delete(e.pointerId);if(!pointers.size){drag=null;pinch=null;}};canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('contextmenu',e=>e.preventDefault());canvas.addEventListener('wheel',e=>{const v=view();v.zoom=clamp(v.zoom*Math.exp(-e.deltaY*.0015),.25,7);redraw();e.preventDefault();},{passive:false});canvas.addEventListener('dblclick',()=>setPreset('reset'));window.addEventListener('resize',redraw);
   }
   document.addEventListener('click',e=>{const mb=e.target.closest('#drawingPanel [data-3d-view-mode]');if(mb){e.preventDefault();e.stopImmediatePropagation();setMode(mb.dataset['3dViewMode']);return;}const b=e.target.closest('#drawingPanel [data-3d-action]');if(!b)return;const a=b.dataset['3dAction'];if(['front','iso','fit','reset'].includes(a)){e.preventDefault();e.stopImmediatePropagation();setPreset(a==='front'?'front':'reset');}},true);
-  window.KENC3DViewer={render:renderWebGL,reset:()=>setPreset('reset'),setMode};
+  window.KENC3DViewer={version:CABINET_RENDERER_VERSION,render:renderWebGL,reset:()=>setPreset('reset'),setMode};
   const boot=()=>setTimeout(()=>window.KENC_DRAWING_API?.renderAll?.(),0);
   if(window.KENC_DRAWING_API)boot();else document.addEventListener('kenc:drawing-api-ready',boot,{once:true});
 })();

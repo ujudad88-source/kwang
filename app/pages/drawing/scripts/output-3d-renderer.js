@@ -18,16 +18,18 @@
   function p(x,y,z){return projectPoint(x,y,z);}
   function line(svg,a,b,attrs={}){svg.appendChild(el('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:'#111827','stroke-width':3,'stroke-linecap':'round',...attrs}));}
   function basisFor(c,o,s,y0){
-    const w=+c.width,h=+c.height,d=+c.depth,x=+o.x||0,y=+o.y||0;let O,U,V;
-    const vec=(a,b)=>({x:b.x-a.x,y:b.y-a.y});
-    if(s==='front'){O=p(-w/2+x,y0-h/2+y,d/2+5);U=vec(O,p(-w/2+x+1,y0-h/2+y,d/2+5));V=vec(O,p(-w/2+x,y0-h/2+y+1,d/2+5));}
-    else if(s==='inside'){O=p(-w/2+x,y0-h/2+y,-d/2+Math.max(20,d*.28));U=vec(O,p(-w/2+x+1,y0-h/2+y,-d/2+Math.max(20,d*.28)));V=vec(O,p(-w/2+x,y0-h/2+y+1,-d/2+Math.max(20,d*.28)));}
-    else if(s==='back'){O=p(w/2-x,y0-h/2+y,-d/2-3);U=vec(O,p(w/2-x-1,y0-h/2+y,-d/2-3));V=vec(O,p(w/2-x,y0-h/2+y+1,-d/2-3));}
-    else if(s==='left'){O=p(-w/2,y0-h/2+y,d/2-x);U=vec(O,p(-w/2,y0-h/2+y,d/2-x-1));V=vec(O,p(-w/2,y0-h/2+y+1,d/2-x));}
-    else if(s==='right'){O=p(w/2,y0-h/2+y,-d/2+x);U=vec(O,p(w/2,y0-h/2+y,-d/2+x+1));V=vec(O,p(w/2,y0-h/2+y+1,-d/2+x));}
-    else if(s==='top'){O=p(-w/2+x,y0-h/2,d/2-y);U=vec(O,p(-w/2+x+1,y0-h/2,d/2-y));V=vec(O,p(-w/2+x,y0-h/2,d/2-y-1));}
-    else if(s==='bottom'){O=p(-w/2+x,y0+h/2,-d/2+y);U=vec(O,p(-w/2+x+1,y0+h/2,-d/2+y));V=vec(O,p(-w/2+x,y0+h/2,-d/2+y+1));}
-    else return null;return{O,U,V};
+    const d=(window.KENC_OBJECT_DEFINITIONS||[]).find(x=>x.id===o.type)||{};
+    window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);
+    const place=window.KENC_ATTACH_ENGINE?.normalizePlacement?.(c,o,d);
+    const b=window.KENC_ATTACH_ENGINE?.basis?.(c,place?.face||s,y0);
+    if(!b)return null;
+    const depth=window.KENC_ATTACH_ENGINE?.resolveDepth?.(o,d)||0;
+    const origin={x:b.origin.x+b.u.x*(place?.x||0)+b.v.x*(place?.y||0)+b.normal.x*depth,
+      y:b.origin.y+b.u.y*(place?.x||0)+b.v.y*(place?.y||0)+b.normal.y*depth,
+      z:b.origin.z+b.u.z*(place?.x||0)+b.v.z*(place?.y||0)+b.normal.z*depth};
+    const O=p(origin.x,origin.y,origin.z),pu=p(origin.x+b.u.x,origin.y+b.u.y,origin.z+b.u.z),pv=p(origin.x+b.v.x,origin.y+b.v.y,origin.z+b.v.z);
+    const mirror=place?.mirror?-1:1;
+    return{O,U:{x:(pu.x-O.x)*mirror,y:(pu.y-O.y)*mirror},V:{x:pv.x-O.x,y:pv.y-O.y}};
   }
   function objectRect(svg,c,o,s,y0){
     const b=basisFor(c,o,s,y0);if(!b)return;const r=role(o,s),ow=Number(o.w)||20,oh=Number(o.h)||20,{O,U,V}=b;
@@ -133,7 +135,7 @@
     [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
     const order=['back','inside','left','right','top','bottom','front'];order.forEach(s=>(c.objects||[]).filter(o=>(o.surface||'front')===s).forEach(o=>objectRect(svg,c,o,s,y0)));
     svg.appendChild(el('text',{x:350,y:625,'text-anchor':'middle','font-size':24,'font-weight':800,fill:'#111827'},`${c.width} × ${c.height} × ${c.depth} mm`));
-    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 실제형 객체 렌더러 2차 · ${(c.objects||[]).length} EA`));
+    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 통합 부착방향 보정 · ${(c.objects||[]).length} EA`));
     return svg;
   }
   window.KENC3DOutputRenderer={render};

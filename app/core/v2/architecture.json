@@ -1,6 +1,6 @@
 {
   "name": "KENC Core",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "schemaVersion": 3,
   "format": "KENC_PROJECT",
   "modules": [
@@ -15,5 +15,15 @@
     "legacyState": true,
     "legacyRenderer": true,
     "legacyFirebase": true
+  },
+  "cabinetRenderer": {
+    "version": "2.2.0",
+    "parametricPanels": true,
+    "excluded": [
+      "door-gap",
+      "rubber-gasket",
+      "detailed-hinge",
+      "mounting-studs"
+    ]
   }
 }
