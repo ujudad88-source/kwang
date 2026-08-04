@@ -1,1 +1,1 @@
-(function(){'use strict';const id='groundBar';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'copper_left',transform:ctx.transform,material:ctx.object.material||null};});})();
+(function(){'use strict';const id='groundBar';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',ctx=>({id,variant:ctx.object.variant||'copper_left',shape:'bar-with-six-terminal-studs',transform:ctx.transform,mirror:(ctx.object.option||'').includes('우(')}));})();

@@ -143,18 +143,30 @@
         localBox(baseM,-.08,-.30,.09,.56,.008,.008,[.94,.74,.22,.55],[.94,.74,.22,.55],true);
       }
     }else if(type==='groundBar'){
-      localBox(baseM,0,0,.58,.84,.28,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-      for(let i=-3;i<=3;i++) localBox(baseM,i*.11,0,.65,.035,.09,.05,objectMaterial.dark,objectMaterial.detail,true);
-    }else if(type==='cableHook'){
-      if(o.option==='수평'){
-        localBox(baseM,0,-.24,.58,.78,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-        localBox(baseM,-.34,.08,.58,.10,.54,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-        localBox(baseM,.34,.08,.58,.10,.54,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-      }else{
-        const dir=o.option&&o.option.includes('왼쪽')?-1:1;
-        localBox(baseM,dir*.18,0,.58,.12,.78,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
-        localBox(baseM,0,.30,.58,.48,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
+      const copper=(o.option||'').includes('동접지'), left=(o.option||'').includes('좌(');
+      const face=copper?[.72,.36,.12,1]:[.62,.67,.71,1], edge=copper?[.30,.13,.04,1]:[.22,.26,.30,1], bright=copper?[.95,.58,.28,1]:[.86,.90,.93,1];
+      const bx=left?-.34:.34;
+      localBox(baseM,bx,0,.58,.18,.88,.075,face,edge,true);
+      localBox(baseM,bx-.035,0,.622,.025,.80,.014,bright,bright,true);
+      for(let i=-2.5;i<=2.5;i++){
+        const yy=i*.14, dir=left?1:-1, sx=bx+dir*.12;
+        localBox(baseM,sx+dir*.16,yy,.62,.32,.035,.035,edge,edge,true);
+        localBox(baseM,sx+dir*.34,yy,.63,.075,.075,.055,face,edge,true);
+        localBox(baseM,sx+dir*.34,yy,.664,.028,.028,.012,bright,bright,true);
       }
+      localBox(baseM,bx,-.39,.63,.07,.07,.04,[.03,.04,.05,1],edge,true);
+      localBox(baseM,bx,.39,.63,.07,.07,.04,[.03,.04,.05,1],edge,true);
+    }else if(type==='cableHook'){
+      const left=(o.option||'').includes('왼쪽'), face=[.68,.72,.75,1], edge=[.25,.29,.33,1], weld=[.40,.44,.48,1];
+      localBox(baseM,0,-.08,.58,.88,.18,.075,face,edge,true);
+      // 양 끝 태그용접부
+      localBox(baseM,-.40,-.08,.63,.055,.25,.045,weld,edge,true);
+      localBox(baseM,.40,-.08,.63,.055,.25,.045,weld,edge,true);
+      // 절곡된 케이블 받침: 좌/우 방향에 따라 개방부 반전
+      const dir=left?1:-1;
+      localBox(baseM,-dir*.10,.12,.60,.55,.10,.09,face,edge,true);
+      localBox(baseM,dir*.20,.30,.60,.10,.40,.09,face,edge,true);
+      localBox(baseM,dir*.28,.46,.60,.22,.09,.09,face,edge,true);
     }else if(type==='cover'){
       localBox(baseM,0,0,.56,.88,.88,.04,[0,0,0,0],objectMaterial.detail,false);
       [[0,-.38],[0,.38],[-.38,0],[.38,0]].forEach(([x,y])=>localBox(baseM,x,y,.62,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));

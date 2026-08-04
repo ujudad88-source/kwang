@@ -1,1 +1,1 @@
-(function(){'use strict';const id='cableHook';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'left_tag_weld',transform:ctx.transform,material:ctx.object.material||null};});})();
+(function(){'use strict';const id='cableHook';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',ctx=>({id,variant:ctx.object.variant||'left_tag_weld',shape:'bent-steel-cable-support',fastening:'tag-weld-both-ends',transform:ctx.transform,mirror:(ctx.object.option||'').includes('오른쪽')}));})();

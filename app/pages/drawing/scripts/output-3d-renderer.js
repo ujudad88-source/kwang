@@ -46,6 +46,16 @@
       const inset=.10;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#bae6fd','fill-opacity':.35,stroke:'#0891b2','stroke-width':3}));
     }else if(o.type==='doubleLock'){
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});const m=cxy(.5,.45);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:8,fill:'#fff',stroke:'#111827','stroke-width':3}));svg.appendChild(el('text',{x:m.x,y:m.y+22,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
+    }else if(o.type==='groundBar'){
+      const copper=(o.option||'').includes('동접지'),left=(o.option||'').includes('좌('),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const stroke=copper?'#7c3f15':'#4b5563',fill=copper?'#b87333':'#aeb7bf';
+      const u0=left?.12:.72;const a=cxy(u0,.07),b=cxy(u0+.16,.93);svg.appendChild(el('polygon',{points:[a,cxy(u0+.16,.07),b,cxy(u0,.93)].map(q=>`${q.x},${q.y}`).join(' '),fill,stroke,'stroke-width':2}));
+      for(let i=0;i<6;i++){const v=.14+i*.145,start=cxy(left?.28:.72,v),end=cxy(left?.76:.24,v);line(svg,start,end,{stroke,'stroke-width':2.5});svg.appendChild(el('circle',{cx:end.x,cy:end.y,r:4,fill,stroke,'stroke-width':1.5}));}
+    }else if(o.type==='cableHook'){
+      const left=(o.option||'').includes('왼쪽'),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const q=[cxy(.05,.38),cxy(.95,.38),cxy(.95,.58),cxy(.05,.58)];svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#d7dce0',stroke:'#475569','stroke-width':2}));
+      const s1=cxy(left?.16:.84,.50),s2=cxy(left?.68:.32,.50),s3=cxy(left?.68:.32,.82);line(svg,s1,s2,{stroke:'#475569','stroke-width':5});line(svg,s2,s3,{stroke:'#475569','stroke-width':5});
+      [.08,.92].forEach(u=>{const w1=cxy(u,.35),w2=cxy(u,.61);line(svg,w1,w2,{stroke:'#6b7280','stroke-width':3});});
     }else if(o.type==='plate'){
       const variant=(o.variant||'') || (o.option==='철속판'?'steel_plain':((o.option==='빼끄판'||o.option==='베크라이트 절연판')?'bakelite_yellow':'pvc_perforated'));
       const fill=variant==='bakelite_yellow'?'#d6a72b':variant==='steel_plain'?'#d1d5db':'#c7cccf';
