@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.0.0',num=(v,f)=>Number.isFinite(Number(v))?Number(v):f;
+  const VERSION='2.0.1',num=(v,f)=>Number.isFinite(Number(v))?Number(v):f;
   function thicknessValue(v){const m=String(v??'1.6').match(/[\d.]+/);return Math.max(.6,num(m?.[0],1.6));}
   function normalize(c,index=0){
     if(!c)return c;window.KENC_UUID?.ensure(c,'uuid');

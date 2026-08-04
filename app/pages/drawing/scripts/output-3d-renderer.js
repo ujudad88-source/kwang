@@ -3,7 +3,7 @@
   const NS='http://www.w3.org/2000/svg';
   const el=(tag,a={},t='')=>{const e=document.createElementNS(NS,tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,String(v)));if(t)e.textContent=t;return e;};
   const role=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
-  const colors={external:'#dbeafe',internal:'#dcfce7',cutout:'#ffedd5',utility:'#f3e8ff'},strokes={external:'#2563eb',internal:'#16a34a',cutout:'#ea580c',utility:'#9333ea'};
+  const colors={external:'#eef2f5',internal:'#e7ece8',cutout:'#fff1e7',utility:'#eee9f2'},strokes={external:'#303840',internal:'#384840',cutout:'#b45309',utility:'#55445f'};
   let projectPoint=(x,y,z)=>({x:350+x,y:330+y});
   function makeIsometricProjector(c){
     const yaw=-35*Math.PI/180,pitch=-24*Math.PI/180,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
@@ -34,28 +34,47 @@
     const pts=[[0,0],[ow,0],[ow,oh],[0,oh]].map(([x,y])=>({x:O.x+U.x*x+V.x*y,y:O.y+U.y*x+V.y*y}));
     const poly=el('polygon',{points:pts.map(q=>`${q.x},${q.y}`).join(' '),fill:colors[r],stroke:strokes[r],'stroke-width':4,'vector-effect':'non-scaling-stroke'});svg.appendChild(poly);
     if(o.type==='vent'){
-      for(let i=0;i<5;i++){const yy=oh*(.15+i*.145);const a={x:O.x+U.x*ow*.12+V.x*yy,y:O.y+U.y*ow*.12+V.y*yy},b2={x:O.x+U.x*ow*.88+V.x*yy,y:O.y+U.y*ow*.88+V.y*yy};line(svg,a,b2,{stroke:'#111827','stroke-width':2});}
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      for(let i=0;i<5;i++){
+        const v=.14+i*.15;
+        const q=[[.10,v-.025],[.90,v-.025],[.86,v+.07],[.14,v+.07]].map(([u,y])=>cxy(u,y));
+        svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#89939b',stroke:'#27313a','stroke-width':2.2}));
+        line(svg,cxy(.14,v+.07),cxy(.86,v+.07),{stroke:'#111827','stroke-width':3});
+      }
+      line(svg,cxy(.08,.08),cxy(.08,.91),{stroke:'#475569','stroke-width':3});line(svg,cxy(.92,.08),cxy(.92,.91),{stroke:'#475569','stroke-width':3});
     }else if(o.type==='key'){
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
-      const a=cxy(.36,.12),b2=cxy(.64,.88);line(svg,a,{x:b2.x-U.x*ow*.28,y:b2.y-U.y*ow*.28},{stroke:'#374151','stroke-width':5});
-      const mid=cxy(.5,.72);svg.appendChild(el('circle',{cx:mid.x,cy:mid.y,r:5,fill:'#fff',stroke:'#111827','stroke-width':2}));
-      const label=cxy(.5,.50);svg.appendChild(el('text',{x:label.x,y:label.y,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
+      const variant=o.option||'키'; const mid=cxy(.5,.48);
+      const bodyFill=variant==='탈착키'?'#111827':'#c9ced2';
+      const bodyStroke=variant==='탈착키'?'#020617':'#475569';
+      const q=[[.30,.08],[.70,.08],[.70,.92],[.30,.92]].map(([u,v])=>cxy(u,v));
+      svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:bodyFill,stroke:bodyStroke,'stroke-width':2.5}));
+      svg.appendChild(el('circle',{cx:mid.x,cy:mid.y-8,r:7,fill:variant==='탈착키'?'#030712':'#e5e7eb',stroke:'#111827','stroke-width':2}));
+      line(svg,{x:mid.x,y:mid.y-14},{x:mid.x,y:mid.y-2},{stroke:variant==='탈착키'?'#d1d5db':'#475569','stroke-width':2});
+      const label=cxy(.5,.78);svg.appendChild(el('text',{x:label.x,y:label.y,'text-anchor':'middle','font-size':9,'font-weight':800,fill:variant==='탈착키'?'#f8fafc':'#111827'},variant));
     }else if(o.type==='nameplate'){
       const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#111827'},o.label||o.option));
     }else if(o.type==='acrylicWindow'){
-      const inset=.10;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#bae6fd','fill-opacity':.35,stroke:'#0891b2','stroke-width':3}));
+      const inset=.11;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#d8f3ff','fill-opacity':.28,stroke:'#334155','stroke-width':3})); const h1=cxy(.22,.22),h2=cxy(.54,.25);line(svg,h1,h2,{stroke:'#ffffff','stroke-opacity':.9,'stroke-width':2});
     }else if(o.type==='doubleLock'){
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});const m=cxy(.5,.45);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:8,fill:'#fff',stroke:'#111827','stroke-width':3}));svg.appendChild(el('text',{x:m.x,y:m.y+22,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
     }else if(o.type==='groundBar'){
       const copper=(o.option||'').includes('동접지'),left=(o.option||'').includes('좌('),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
-      const stroke=copper?'#7c3f15':'#4b5563',fill=copper?'#b87333':'#aeb7bf';
-      const u0=left?.12:.72;const a=cxy(u0,.07),b=cxy(u0+.16,.93);svg.appendChild(el('polygon',{points:[a,cxy(u0+.16,.07),b,cxy(u0,.93)].map(q=>`${q.x},${q.y}`).join(' '),fill,stroke,'stroke-width':2}));
-      for(let i=0;i<6;i++){const v=.14+i*.145,start=cxy(left?.28:.72,v),end=cxy(left?.76:.24,v);line(svg,start,end,{stroke,'stroke-width':2.5});svg.appendChild(el('circle',{cx:end.x,cy:end.y,r:4,fill,stroke,'stroke-width':1.5}));}
+      const stroke=copper?'#6b2f0e':'#46515a',fill=copper?'#b65a22':'#a9b2b9',metal='#e5e7eb';
+      const u0=left?.10:.72,dir=left?1:-1;
+      const q=[[u0,.06],[u0+.18,.06],[u0+.18,.94],[u0,.94]].map(([u,v])=>cxy(u,v));svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill,stroke,'stroke-width':2.3}));
+      [.09,.91].forEach(v=>{const m=cxy(u0+.09,v);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:4.7,fill:metal,stroke,'stroke-width':1.5}));line(svg,{x:m.x-2.5,y:m.y},{x:m.x+2.5,y:m.y},{stroke,'stroke-width':1.2});});
+      for(let i=0;i<6;i++){
+        const v=.15+i*.14,start=cxy(left?.27:.73,v),end=cxy(left?.76:.24,v),nut=cxy(left?.80:.20,v);
+        line(svg,start,end,{stroke,'stroke-width':3});svg.appendChild(el('circle',{cx:end.x,cy:end.y,r:5.5,fill:metal,stroke,'stroke-width':1.4}));
+        svg.appendChild(el('circle',{cx:nut.x,cy:nut.y,r:3.4,fill,stroke,'stroke-width':1.2}));
+      }
     }else if(o.type==='cableHook'){
       const left=(o.option||'').includes('왼쪽'),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
-      const q=[cxy(.05,.38),cxy(.95,.38),cxy(.95,.58),cxy(.05,.58)];svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#d7dce0',stroke:'#475569','stroke-width':2}));
-      const s1=cxy(left?.16:.84,.50),s2=cxy(left?.68:.32,.50),s3=cxy(left?.68:.32,.82);line(svg,s1,s2,{stroke:'#475569','stroke-width':5});line(svg,s2,s3,{stroke:'#475569','stroke-width':5});
-      [.08,.92].forEach(u=>{const w1=cxy(u,.35),w2=cxy(u,.61);line(svg,w1,w2,{stroke:'#6b7280','stroke-width':3});});
+      const q=[cxy(.04,.36),cxy(.96,.36),cxy(.96,.57),cxy(.04,.57)];svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#c8d0d5',stroke:'#3f4b54','stroke-width':2.4}));
+      const s1=cxy(left?.15:.85,.47),s2=cxy(left?.68:.32,.47),s3=cxy(left?.68:.32,.79),s4=cxy(left?.84:.16,.79),s5=cxy(left?.84:.16,.67);
+      [ [s1,s2],[s2,s3],[s3,s4],[s4,s5] ].forEach(([a,b])=>line(svg,a,b,{stroke:'#3f4b54','stroke-width':5.2}));
+      [.075,.925].forEach(u=>{for(let j=0;j<4;j++){const q=cxy(u,.39+j*.05);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:2.3,fill:'#6b7379',stroke:'#374151','stroke-width':.7}));}});
     }else if(o.type==='cut'){
       const round=(o.option||'')==='원형타공',red='#dc2626',cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
       const center=cxy(.5,.5);
@@ -93,7 +112,8 @@
       const fill=variant==='bakelite_yellow'?'#d6a72b':variant==='steel_plain'?'#d1d5db':'#c7cccf';
       const polygon=svg.lastChild; if(polygon&&polygon.tagName==='polygon') polygon.setAttribute('fill',fill);
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
-      [[.07,.07],[.93,.07],[.07,.93],[.93,.93]].forEach(([u,v])=>{const q=cxy(u,v);svg.appendChild(el('ellipse',{cx:q.x,cy:q.y,rx:5,ry:2.5,fill:'#fff',stroke:'#374151','stroke-width':1.5,transform:`rotate(${u===v?-45:45} ${q.x} ${q.y})`}));});
+      [[.07,.07],[.93,.07],[.07,.93],[.93,.93]].forEach(([u,v])=>{const q=cxy(u,v);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:5.2,fill:'#d1d5db',stroke:'#374151','stroke-width':1.4}));svg.appendChild(el('ellipse',{cx:q.x,cy:q.y,rx:3.3,ry:1.7,fill:'#111827',stroke:'#374151','stroke-width':.8,transform:`rotate(${u===v?-45:45} ${q.x} ${q.y})`}));});
+      if(variant==='bakelite_yellow'){for(let i=2;i<10;i++){line(svg,cxy(.12,i/12),cxy(.88,i/12),{stroke:'#7c4a12','stroke-opacity':.22,'stroke-width':1});}}
       if(variant==='pvc_perforated'){
         for(let iy=2;iy<=10;iy++)for(let ix=2;ix<=8;ix++){const u=ix/10,v=iy/12;if((ix<3&&iy<3)||(ix>7&&iy<3)||(ix<3&&iy>9)||(ix>7&&iy>9))continue;const q=cxy(u,v);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:1.15,fill:'#4b5563'}));}
         const q=cxy(.5,.5);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:3.2,fill:'#fff',stroke:'#374151','stroke-width':1.3}));
@@ -113,7 +133,7 @@
     [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
     const order=['back','inside','left','right','top','bottom','front'];order.forEach(s=>(c.objects||[]).filter(o=>(o.surface||'front')===s).forEach(o=>objectRect(svg,c,o,s,y0)));
     svg.appendChild(el('text',{x:350,y:625,'text-anchor':'middle','font-size':24,'font-weight':800,fill:'#111827'},`${c.width} × ${c.height} × ${c.depth} mm`));
-    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 배치 객체 ${(c.objects||[]).length} EA`));
+    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 실제형 객체 렌더러 2차 · ${(c.objects||[]).length} EA`));
     return svg;
   }
   window.KENC3DOutputRenderer={render};

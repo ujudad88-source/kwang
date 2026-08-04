@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.0.0',SCHEMA=3,clone=v=>JSON.parse(JSON.stringify(v));
+  const VERSION='2.1.1',SCHEMA=3,clone=v=>JSON.parse(JSON.stringify(v));
   const api=()=>window.KENC_DRAWING_API;
   function normalizeState(state){
     if(!state||typeof state!=='object')throw new Error('유효한 도면 상태가 아닙니다.');
@@ -29,7 +29,7 @@
     api()?.renderAll?.();window.KENC_PREVIEW_ENGINE?.invalidate?.('project-import');
     document.dispatchEvent(new CustomEvent('kenc:project-loaded',{detail:{project:incoming.project}}));return incoming;
   }
-  async function openFile(file){const text=await file.text();return applyPackage(JSON.parse(text));}
+  async function openFile(file,prepared){const result=prepared||await window.KENC_PROJECT_COMPATIBILITY?.prepareFile?.(file);if(result){if(!result.report?.ok)throw new Error(result.report.errors.join(' '));return applyPackage(result.package);}const text=await file.text();return applyPackage(JSON.parse(text));}
   function newProject(){
     const current=api()?.getState?.();if(!current)return null;
     current.project={uuid:window.KENC_UUID.create(),name:'새 KENC 프로젝트',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};

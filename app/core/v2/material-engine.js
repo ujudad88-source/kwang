@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.0.0';
+  const VERSION='2.0.1';
   const materials={
     powderSteel:{id:'powderSteel',label:'분체도장 철판',family:'metal',baseColor:'#b8bec2',metalness:.45,roughness:.62,opacity:1},
     galvanizedSteel:{id:'galvanizedSteel',label:'아연도금 철',family:'metal',baseColor:'#aeb6ba',metalness:.65,roughness:.48,opacity:1},

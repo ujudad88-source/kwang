@@ -1,1 +1,1 @@
-(function(){'use strict';const id='acrylicWindow';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'framed_clear',transform:ctx.transform,material:ctx.object.material||null};});})();
+(function(){'use strict';const id='acrylicWindow';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,version:'2.1.1',quality:'realistic',variant:ctx.object.variant||'framed_clear',parts:['abs-frame','rubber-gasket','clear-acrylic','reflection-layer'],transform:ctx.transform,material:'acrylic-clear'};});})();

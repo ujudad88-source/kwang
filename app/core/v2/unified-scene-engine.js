@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='2.0.0';
+  const VERSION='2.0.1';
   function build(state=window.KENC_DRAWING_API?.getState?.()){
     if(!state)return null;window.KENC_PROJECT_ENGINE?.normalizeState(state);
     const legacy=window.KENC_SCENE_ENGINE?.build?.(state);

@@ -1,7 +1,44 @@
-#kencProjectToolbar{position:fixed;right:16px;bottom:16px;z-index:10040;display:flex;align-items:center;gap:7px;padding:9px 10px;border:1px solid rgba(148,163,184,.35);border-radius:12px;background:rgba(15,23,42,.92);color:#e5e7eb;box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(10px);font-size:12px}
-#kencProjectToolbar strong{font-size:12px;margin-right:2px;color:#f8fafc}
-#kencProjectToolbar button{border:1px solid rgba(148,163,184,.38);border-radius:8px;background:#1e293b;color:#f8fafc;padding:6px 9px;cursor:pointer;font:inherit}
+#kencProjectToolbar{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:10040;display:flex;align-items:stretch;color:#e5e7eb;font-size:12px;transition:opacity .18s ease,visibility .18s ease}
+#kencProjectToolbar.is-page-hidden{opacity:0;visibility:hidden;pointer-events:none}
+#kencProjectToolbar .kenc-project-handle{width:38px;min-height:116px;border:1px solid rgba(148,163,184,.35);border-right:0;border-radius:11px 0 0 11px;background:rgba(15,23,42,.94);color:#f8fafc;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;box-shadow:-8px 10px 24px rgba(0,0,0,.22)}
+#kencProjectToolbar .kenc-project-handle span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;letter-spacing:.08em}
+#kencProjectToolbar .kenc-project-handle b{font-size:15px;transition:transform .2s ease}
+#kencProjectToolbar:not(.is-collapsed) .kenc-project-handle b{transform:rotate(180deg)}
+#kencProjectToolbar .kenc-project-tools-body{width:286px;padding:11px;border:1px solid rgba(148,163,184,.35);border-right:0;background:rgba(15,23,42,.96);box-shadow:-12px 14px 34px rgba(0,0,0,.3);backdrop-filter:blur(12px);transition:width .22s ease,padding .22s ease,opacity .16s ease;overflow:hidden}
+#kencProjectToolbar.is-collapsed .kenc-project-tools-body{width:0;padding-left:0;padding-right:0;opacity:0;border-left:0;pointer-events:none}
+#kencProjectToolbar header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;color:#f8fafc}
+#kencProjectToolbar header strong{font-size:13px}
+#kencProjectToolbar header button{width:27px;height:27px;padding:0;border-radius:7px}
+#kencProjectToolbar button{border:1px solid rgba(148,163,184,.38);border-radius:8px;background:#1e293b;color:#f8fafc;padding:7px 9px;cursor:pointer;font:inherit}
 #kencProjectToolbar button:hover{background:#334155}
-#kencProjectToolbar [data-kenc-project-status]{color:#94a3b8;white-space:nowrap}
-#kencProjectToast{position:fixed;right:18px;bottom:76px;z-index:10050;opacity:0;transform:translateY(6px);pointer-events:none;padding:9px 12px;border-radius:9px;background:#0f766e;color:white;transition:.18s ease;font-size:13px}#kencProjectToast.is-ok,#kencProjectToast.is-error{opacity:1;transform:none}#kencProjectToast.is-error{background:#b91c1c}
-@media(max-width:720px){#kencProjectToolbar{left:8px;right:8px;bottom:8px;overflow-x:auto;justify-content:flex-start}#kencProjectToolbar [data-kenc-project-status]{display:none}}
+#kencProjectToolbar .kenc-project-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+#kencProjectToolbar [data-kenc-project-status]{display:block;margin-top:9px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kencProjectToast{position:fixed;right:18px;bottom:18px;z-index:10050;opacity:0;transform:translateY(6px);pointer-events:none;padding:9px 12px;border-radius:9px;background:#0f766e;color:white;transition:.18s ease;font-size:13px}#kencProjectToast.is-ok,#kencProjectToast.is-error{opacity:1;transform:none}#kencProjectToast.is-error{background:#b91c1c}
+@media(max-width:720px){#kencProjectToolbar{top:auto;right:8px;bottom:8px;transform:none;flex-direction:column-reverse;align-items:flex-end}#kencProjectToolbar .kenc-project-handle{width:auto;min-height:0;height:40px;padding:0 12px;border-right:1px solid rgba(148,163,184,.35);border-radius:10px;flex-direction:row}#kencProjectToolbar .kenc-project-handle span{writing-mode:horizontal-tb;transform:none}#kencProjectToolbar .kenc-project-tools-body{width:min(330px,calc(100vw - 16px));border-right:1px solid rgba(148,163,184,.35);border-radius:11px;margin-bottom:7px}#kencProjectToolbar.is-collapsed .kenc-project-tools-body{width:min(330px,calc(100vw - 16px));height:0;padding-top:0;padding-bottom:0;margin:0;border:0}#kencProjectToolbar .kenc-project-actions{grid-template-columns:1fr 1fr}}
+#kencProjectToolbar .kenc-project-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:9px;padding:3px;border-radius:9px;background:rgba(2,6,23,.55)}
+#kencProjectToolbar .kenc-project-tabs button{padding:6px;background:transparent;border-color:transparent;color:#94a3b8}
+#kencProjectToolbar .kenc-project-tabs button.is-active{background:#334155;color:#fff;border-color:rgba(148,163,184,.35)}
+#kencProjectToolbar [data-kenc-pane][hidden]{display:none!important}
+#kencProjectToolbar .kenc-history-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+#kencProjectToolbar .kenc-history-list{display:grid;gap:6px;max-height:310px;overflow:auto;padding-right:2px}
+#kencProjectToolbar .kenc-history-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:8px;border:1px solid rgba(148,163,184,.24);border-radius:9px;background:rgba(30,41,59,.72)}
+#kencProjectToolbar .kenc-history-item>div:first-child{min-width:0;display:grid;gap:2px}
+#kencProjectToolbar .kenc-history-item strong,#kencProjectToolbar .kenc-history-item small,#kencProjectToolbar .kenc-history-item em{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#kencProjectToolbar .kenc-history-item small{color:#94a3b8;font-size:10px}#kencProjectToolbar .kenc-history-item em{color:#67e8f9;font-size:10px;font-style:normal}
+#kencProjectToolbar .kenc-history-item>div:last-child{display:flex;flex-direction:column;gap:4px}#kencProjectToolbar .kenc-history-item button{padding:4px 7px;font-size:10px}
+#kencProjectToolbar .kenc-history-empty{margin:12px 0;text-align:center;color:#94a3b8}
+#kencProjectToolbar .kenc-diff-panel{margin-top:9px;padding-top:8px;border-top:1px solid rgba(148,163,184,.24);max-height:360px;overflow:auto}
+#kencProjectToolbar .kenc-diff-head,#kencProjectToolbar .kenc-diff-cabinet header{display:flex;align-items:center;justify-content:space-between;gap:6px}
+#kencProjectToolbar .kenc-diff-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:7px 0}
+#kencProjectToolbar .kenc-diff-summary span{padding:5px;border-radius:7px;background:rgba(30,41,59,.9);text-align:center;color:#cbd5e1}
+#kencProjectToolbar .kenc-diff-cabinet{padding:7px;margin-top:6px;border:1px solid rgba(148,163,184,.24);border-radius:8px;background:rgba(15,23,42,.65)}
+#kencProjectToolbar .kenc-diff-cabinet header small{color:#94a3b8}.kenc-diff-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5px;margin-top:5px}.kenc-diff-row span{font-size:9px;padding:2px 5px;border-radius:5px}.kenc-diff-row .is-add{background:#14532d}.kenc-diff-row .is-remove{background:#7f1d1d}.kenc-diff-row .is-change{background:#78350f}.kenc-diff-row em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.kenc-diff-row button{padding:3px 5px!important;font-size:9px!important}
+#kencProjectToolbar .kenc-import-preview{margin-top:9px;padding:9px;border:1px solid rgba(34,211,238,.32);border-radius:9px;background:rgba(8,47,73,.42);display:grid;gap:6px}
+#kencProjectToolbar .kenc-import-preview[hidden]{display:none!important}
+#kencProjectToolbar .kenc-import-preview>strong{color:#cffafe}
+#kencProjectToolbar .kenc-import-preview>small,#kencProjectToolbar .kenc-import-preview>p{color:#cbd5e1;margin:0}
+#kencProjectToolbar .kenc-import-preview .is-ok{color:#86efac}
+#kencProjectToolbar .kenc-import-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+#kencProjectToolbar .kenc-import-stats span{padding:5px 3px;border-radius:6px;background:rgba(15,23,42,.72);text-align:center;font-size:10px}
+#kencProjectToolbar .kenc-import-preview ul{margin:0;padding-left:17px;max-height:96px;overflow:auto;color:#fbbf24}
+#kencProjectToolbar .kenc-import-preview>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:5px}
