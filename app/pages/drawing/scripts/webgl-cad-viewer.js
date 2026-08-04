@@ -53,6 +53,13 @@
     const m=mat4Mul(baseM,mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz)));
     drawBox(m,face,edge,showFace);
   }
+  function localDisc(baseM,tx,ty,tz,rx,ry,face=objectMaterial.dark,edge=objectMaterial.edge,segments=40){
+    const fan=[0,0,0];
+    for(let i=0;i<=segments;i++){const a=i/segments*Math.PI*2;fan.push(Math.cos(a)*.5,Math.sin(a)*.5,0);}
+    const loop=[];for(let i=0;i<segments;i++){const a=i/segments*Math.PI*2;loop.push(Math.cos(a)*.5,Math.sin(a)*.5,0);}
+    const m=mat4Mul(baseM,mat4Mul(translate(tx,ty,tz),scale(rx*2,ry*2,1)));
+    drawGeom(fan,gl.TRIANGLE_FAN,face,m);drawGeom(loop,gl.LINE_LOOP,edge,m);
+  }
   function addObjectDetails(c,y0,o,surface,baseM,role){
     const type=o.type||'';
     const face=type==='acrylicWindow'?objectMaterial.glass:(type==='cut'||type==='anchor'?objectMaterial.void:objectMaterial.face);
@@ -109,14 +116,34 @@
         localBox(baseM,0,-.12,.69,.20,.20,.055,[0,0,0,0],edge,false);
       }
     }else if(type==='emboss'){
-      localBox(baseM,0,0,.57,.62,.62,.08,objectMaterial.faceSoft,objectMaterial.detail,true);
-      localBox(baseM,0,0,.63,.34,.34,.05,objectMaterial.dark,objectMaterial.detail,true);
+      const round=(o.option||'').includes('원형');
+      // 얕게 눌린 프레스 자국과 점선 절개 예정부. 내부는 막혀 있어 관통되지 않는다.
+      if(round){
+        localDisc(baseM,0,.018,.606,.365,.365,[.17,.20,.24,.96],[.48,.53,.59,1],48);
+        localDisc(baseM,0,-.012,.626,.325,.325,[.23,.26,.30,.96],[.86,.90,.94,1],48);
+        localDisc(baseM,-.07,-.09,.642,.22,.045,[.76,.80,.84,.42],[.76,.80,.84,.42],32);
+      }else{
+        localBox(baseM,0,.018,.606,.72,.72,.035,[.17,.20,.24,.96],[.48,.53,.59,1],true);
+        localBox(baseM,0,-.012,.628,.64,.64,.020,[.23,.26,.30,.96],[.86,.90,.94,1],false);
+        localBox(baseM,-.08,-.27,.642,.42,.025,.012,[.76,.80,.84,.42],[.76,.80,.84,.42],true);
+      }
     }else if(type==='cut'){
-      localBox(baseM,0,0,.58,.76,.76,.03,[0,0,0,0],objectMaterial.edge,false);
-      localBox(baseM,0,0,.60,.04,.86,.03,objectMaterial.detail,objectMaterial.detail,true);
-      localBox(baseM,0,0,.60,.86,.04,.03,objectMaterial.detail,objectMaterial.detail,true);
+      const round=(o.option||'')==='원형타공';
+      // 실제 관통부: 어두운 공극, 철판 림, 안쪽 깊이 그림자를 별도 레이어로 표현한다.
+      if(round){
+        localDisc(baseM,0,0,.606,.405,.405,[.02,.03,.05,1],[.86,.90,.94,1],48);
+        localDisc(baseM,0,.020,.635,.342,.342,[.005,.008,.014,1],[.20,.24,.29,1],48);
+        localDisc(baseM,-.08,-.12,.652,.22,.032,[.90,.94,.98,.36],[.90,.94,.98,.36],32);
+      }else{
+        localBox(baseM,0,0,.606,.82,.82,.045,[0,0,0,0],[.86,.90,.94,1],false);
+        localBox(baseM,0,.020,.634,.72,.72,.050,[.005,.008,.014,1],[.20,.24,.29,1],true);
+        localBox(baseM,-.08,-.31,.655,.46,.024,.014,[.90,.94,.98,.36],[.90,.94,.98,.36],true);
+      }
     }else if(type==='anchor'){
-      localBox(baseM,0,0,.60,.34,.34,.10,objectMaterial.dark,objectMaterial.edge,true);
+      const screw=(o.option||'').includes('피스'), ring=screw?.22:.38, inner=screw?.15:.29;
+      localDisc(baseM,0,0,.606,ring,ring,[.76,.80,.84,1],[.24,.28,.32,1],40);
+      localDisc(baseM,0,.018,.638,inner,inner,[.005,.008,.014,1],[.10,.13,.16,1],40);
+      localDisc(baseM,-.08,-.10,.655,inner*.60,.025,[.92,.95,.98,.42],[.92,.95,.98,.42],28);
     }else if(type==='plate'){
       const variant=(o.variant||'') || (o.option==='철속판'?'steel_plain':((o.option==='빼끄판'||o.option==='베크라이트 절연판')?'bakelite_yellow':'pvc_perforated'));
       const pvc=[.57,.60,.61,1], pvcEdge=[.18,.22,.24,1], steel=[.72,.75,.77,1], steelEdge=[.22,.25,.28,1], bak=[.78,.57,.10,1], bakEdge=[.31,.22,.05,1];
@@ -168,8 +195,15 @@
       localBox(baseM,dir*.20,.30,.60,.10,.40,.09,face,edge,true);
       localBox(baseM,dir*.28,.46,.60,.22,.09,.09,face,edge,true);
     }else if(type==='cover'){
-      localBox(baseM,0,0,.56,.88,.88,.04,[0,0,0,0],objectMaterial.detail,false);
-      [[0,-.38],[0,.38],[-.38,0],[.38,0]].forEach(([x,y])=>localBox(baseM,x,y,.62,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));
+      const face=[.48,.55,.50,1],edge=[.16,.20,.17,1],shine=[.78,.84,.80,1],screw=[.76,.80,.83,1];
+      localBox(baseM,.018,.018,.565,.90,.86,.070,[.18,.22,.19,.36],edge,true);
+      localBox(baseM,0,0,.60,.90,.86,.055,face,edge,true);
+      localBox(baseM,-.12,-.34,.635,.58,.015,.010,shine,shine,true);
+      [[0,-.37],[0,.37],[-.39,0],[.39,0]].forEach(([x,y])=>{
+        localDisc(baseM,x,y,.655,.050,.050,screw,edge,28);
+        localBox(baseM,x,y,.687,.060,.012,.008,edge,edge,true);
+        localBox(baseM,x,y,.688,.012,.060,.008,edge,edge,true);
+      });
     }else if(type==='doubleLock'){
       localBox(baseM,.10,0,.58,.18,.78,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
       localBox(baseM,-.18,.28,.58,.44,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);

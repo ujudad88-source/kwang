@@ -1,1 +1,1 @@
-(function(){'use strict';const id='emboss';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',function(ctx){return{id,variant:ctx.object.variant||'round_knockout',transform:ctx.transform,material:ctx.object.material||null};});})();
+(function(){'use strict';const id='emboss';window.KENC_OBJECT_REGISTRY.registerRenderer(id,'3d',ctx=>({id,variant:ctx.object.variant||((ctx.object.option||'').includes('사각')?'square_knockout':'round_knockout'),shape:'shallow-pressed-knockout',through:false,transform:ctx.transform,rendererVersion:'1.0.6.6'}));})();

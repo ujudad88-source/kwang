@@ -79,7 +79,7 @@
 
     const drawingToolDefs = [
       {id:"vent",label:"환기구",icon:"▦",options:["와이드 절곡 루버형"],w:160,h:90},
-      {id:"anchor",label:"앙카구멍",icon:"•",options:["앙카구멍"],w:18,h:18},
+      {id:"anchor",label:"구멍",icon:"•",options:["앙카구멍 Ø14","피스구멍 Ø6"],w:14,h:14},
       {id:"key",label:"키종류",icon:"⌸",options:["탈착키","푸쉬버튼키","푸쉬핸들키"],w:42,h:120},
       {id:"nameplate",label:"명판",icon:"▭",options:["통신용","분전반용"],w:100,h:30},
       {id:"acrylicWindow",label:"투명아크릴창",icon:"▭",options:["기본형"],w:220,h:140},
@@ -138,7 +138,14 @@
         }
         if(!is3d) g.appendChild(svgEl("text",{x:x+w/2,y:y+h-.05*h,"text-anchor":"middle","font-size":Math.max(7,Math.min(11,w/17)),fill:"#475569","font-weight":700},"와이드 절곡 루버"));
       }
-      else if(o.type==="anchor")g.appendChild(svgEl("circle",{cx:x+w/2,cy:y+h/2,r:Math.max(2,Math.min(w,h)*.22),fill:black}));
+      else if(o.type==="anchor"){
+        const screw=(o.option||"").includes("피스"),dia=screw?6:14,cx=x+w/2,cy=y+h/2;
+        const r=Math.max(2,Math.min(w,h)*.36),rim=is3d?"#dbe2e8":"#6b7280",voidFill=is3d?"#020617":"#111827";
+        g.appendChild(svgEl("circle",{cx,cy,r:r*1.12,fill:"none",stroke:rim,"stroke-width":Math.max(1,sw*.9)}));
+        g.appendChild(svgEl("circle",{cx,cy:cy+Math.max(.6,h*.018),r,fill:voidFill,stroke:is3d?"#334155":"#030712","stroke-width":Math.max(.8,sw*.62)}));
+        g.appendChild(svgEl("path",{d:`M ${cx-r*.72} ${cy-r*.58} A ${r*.90} ${r*.90} 0 0 1 ${cx+r*.55} ${cy-r*.68}`,fill:"none",stroke:"#f8fafc","stroke-width":Math.max(.7,sw*.5),"stroke-opacity":.72}));
+        if(!is3d) g.appendChild(svgEl("text",{x:cx,y:y+h+Math.max(9,h*.42),"text-anchor":"middle","font-size":Math.max(6,Math.min(10,w*.42)),fill:"#374151","font-weight":800},`Ø${dia}`));
+      }
       else if(o.type==="key"){
         const silver=is3d?"#cbd5e1":"#e5e7eb", hi=is3d?"#f8fafc":"#ffffff", dark=is3d?"#111827":"#374151";
         if(o.option==="탈착키"){
@@ -175,8 +182,36 @@
         g.appendChild(svgEl("line",{x1:x+inset+w*.10,y1:y+inset+h*.08,x2:x+inset+w*.38,y2:y+inset+h*.34,stroke:"#e0f2fe","stroke-width":Math.max(1,sw*.8),"stroke-opacity":.8}));
         g.appendChild(svgEl("line",{x1:x+inset+w*.20,y1:y+inset+h*.06,x2:x+inset+w*.47,y2:y+inset+h*.31,stroke:"#bae6fd","stroke-width":Math.max(.7,sw*.55),"stroke-opacity":.65}));
       }
-      else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
-      else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
+      else if(o.type==="emboss"){
+        // 녹아웃(K/O): 완전 관통이 아니라 프레스 절개선과 얕은 눌림을 표현한다.
+        const round=o.option.includes("원형"),cx=x+w/2,cy=y+h/2,edge=is3d?"#cbd5e1":"#374151",shadow=is3d?"#0f172a":"#9ca3af",hi=is3d?"#f8fafc":"#ffffff";
+        if(round){
+          const r=Math.min(w,h)*.34;
+          g.appendChild(svgEl("circle",{cx,cy:cy+Math.max(1,h*.018),r,fill:is3d?"rgba(30,41,59,.26)":"rgba(148,163,184,.13)",stroke:shadow,"stroke-width":Math.max(1,sw*.75)}));
+          g.appendChild(svgEl("circle",{cx,cy:cy-Math.max(1,h*.012),r:r*.92,fill:"none",stroke:edge,"stroke-width":Math.max(1,sw),"stroke-dasharray":`${Math.max(2,sw*2.2)} ${Math.max(2,sw*1.5)}`}));
+          g.appendChild(svgEl("path",{d:`M ${cx-r*.72} ${cy-r*.48} A ${r*.86} ${r*.86} 0 0 1 ${cx+r*.58} ${cy-r*.64}`,fill:"none",stroke:hi,"stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.85}));
+        }else{
+          const rx=x+w*.16,ry=y+h*.16,rw=w*.68,rh=h*.68,rr=Math.max(3,Math.min(w,h)*.05);
+          g.appendChild(svgEl("rect",{x:rx,y:ry+Math.max(1,h*.018),width:rw,height:rh,rx:rr,fill:is3d?"rgba(30,41,59,.26)":"rgba(148,163,184,.13)",stroke:shadow,"stroke-width":Math.max(1,sw*.75)}));
+          g.appendChild(svgEl("rect",{x:rx+w*.025,y:ry-h*.012,width:rw-w*.05,height:rh-h*.025,rx:rr,fill:"none",stroke:edge,"stroke-width":Math.max(1,sw),"stroke-dasharray":`${Math.max(2,sw*2.2)} ${Math.max(2,sw*1.5)}`}));
+          g.appendChild(svgEl("line",{x1:rx+rw*.12,y1:ry+rh*.10,x2:rx+rw*.78,y2:ry+rh*.10,stroke:hi,"stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.85}));
+        }
+      }
+      else if(o.type==="cut"){
+        // 작업 화면에서는 실제 관통홀처럼 어두운 내부, 철판 두께와 가장자리 하이라이트를 표시한다.
+        const round=o.option==="원형타공",cx=x+w/2,cy=y+h/2,voidFill=is3d?"#020617":"#111827",rim=is3d?"#cbd5e1":"#64748b",inner=is3d?"#334155":"#030712";
+        if(round){
+          const r=Math.min(w,h)*.38;
+          g.appendChild(svgEl("circle",{cx,cy,r:r*1.03,fill:"none",stroke:rim,"stroke-width":Math.max(1.2,sw*1.15)}));
+          g.appendChild(svgEl("circle",{cx,cy:cy+Math.max(1,h*.018),r:r*.90,fill:voidFill,stroke:inner,"stroke-width":Math.max(1,sw*.75)}));
+          g.appendChild(svgEl("path",{d:`M ${cx-r*.72} ${cy-r*.56} A ${r*.88} ${r*.88} 0 0 1 ${cx+r*.58} ${cy-r*.66}`,fill:"none",stroke:"#f8fafc","stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.75}));
+        }else{
+          const rx=x+w*.12,ry=y+h*.12,rw=w*.76,rh=h*.76,rr=Math.max(1,Math.min(w,h)*.025);
+          g.appendChild(svgEl("rect",{x:rx,y:ry,width:rw,height:rh,rx:rr,fill:"none",stroke:rim,"stroke-width":Math.max(1.2,sw*1.15)}));
+          g.appendChild(svgEl("rect",{x:rx+w*.035,y:ry+h*.035,width:rw-w*.07,height:rh-h*.07,rx:rr,fill:voidFill,stroke:inner,"stroke-width":Math.max(1,sw*.75)}));
+          g.appendChild(svgEl("line",{x1:rx+rw*.08,y1:ry+rh*.07,x2:rx+rw*.82,y2:ry+rh*.07,stroke:"#f8fafc","stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.75}));
+        }
+      }
       else if(o.type==="plate"){
         const variant=(o.variant||"") || (o.option==="철속판"?"steel_plain":(o.option==="빼끄판"||o.option==="베크라이트 절연판")?"bakelite_yellow":"pvc_perforated");
         const edge=is3d?"#334155":"#374151", slotStroke=is3d?"#475569":"#4b5563";
@@ -235,7 +270,20 @@
         g.appendChild(svgEl("path",{d:path,fill:"none",stroke:edge,"stroke-width":Math.max(4,Math.min(w,h)*.09),"stroke-linecap":"round","stroke-linejoin":"round"}));
         g.appendChild(svgEl("path",{d:path,fill:"none",stroke:metal,"stroke-width":Math.max(2,Math.min(w,h)*.05),"stroke-linecap":"round","stroke-linejoin":"round"}));
       }
-      else if(o.type==="cover"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));[[.5,.1],[.5,.9],[.1,.5],[.9,.5]].forEach(([a,b])=>g.appendChild(svgEl("circle",{cx:x+w*a,cy:y+h*b,r:Math.max(1.5,Math.min(w,h)*.035),fill:"none",stroke:black,"stroke-width":sw})))}
+      else if(o.type==="cover"){
+        const face=is3d?"#7f8c82":"#aab7ad",edge=is3d?"#29332d":"#374151",hi=is3d?"#c7d2ca":"#dfe7e1",shadow=is3d?"#26302a":"#64748b";
+        const rx=Math.max(2,Math.min(w,h)*.025),lip=Math.max(2,Math.min(w,h)*.055);
+        g.appendChild(svgEl("rect",{x:x+lip*.35,y:y+lip*.45,width:w-lip*.3,height:h-lip*.25,rx,fill:shadow,"fill-opacity":.32,stroke:"none"}));
+        g.appendChild(svgEl("rect",{x,y,width:w-lip*.35,height:h-lip*.35,rx,fill:face,stroke:edge,"stroke-width":sw}));
+        g.appendChild(svgEl("line",{x1:x+w*.07,y1:y+h*.08,x2:x+w*.70,y2:y+h*.08,stroke:hi,"stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.72}));
+        [[.5,.095],[.5,.905],[.095,.5],[.905,.5]].forEach(([a,b])=>{
+          const cx=x+(w-lip*.35)*a,cy=y+(h-lip*.35)*b,rr=Math.max(2.2,Math.min(w,h)*.045);
+          g.appendChild(svgEl("circle",{cx,cy,r:rr,fill:is3d?"#cbd5e1":"#e5e7eb",stroke:edge,"stroke-width":Math.max(.8,sw*.65)}));
+          g.appendChild(svgEl("line",{x1:cx-rr*.56,y1:cy,x2:cx+rr*.56,y2:cy,stroke:edge,"stroke-width":Math.max(.7,sw*.55)}));
+          g.appendChild(svgEl("line",{x1:cx,y1:cy-rr*.56,x2:cx,y2:cy+rr*.56,stroke:edge,"stroke-width":Math.max(.7,sw*.55)}));
+        });
+        if(!is3d)g.appendChild(svgEl("text",{x:x+(w-lip*.35)/2,y:y+(h-lip*.35)/2+4,"text-anchor":"middle","font-size":Math.max(7,Math.min(12,w/10)),fill:"#26332b","font-weight":800},"타공덮개"));
+      }
       else if(o.type==="doubleLock"){
         const metal=is3d?"#d1d5db":"#e5e7eb", edge="#374151";
         if(o.option==="카바용"){
@@ -300,10 +348,10 @@
       }
       drawing3dCanvas.innerHTML="";drawing3dCanvas.appendChild(svgEl("rect",{x:0,y:0,width:420,height:560,fill:"#fff"}));if(drawingState.mode3d==="single"){const c=currentCabinet(),sc=Math.min(290/c.width,390/c.height,90/c.depth);drawCabinet3d(drawing3dCanvas,c,55,70,sc,true);drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`${c.width} × ${c.height} × ${c.depth} mm`))}else{const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),maxW=Math.max(...drawingState.cabinets.map(c=>c.width)),maxD=Math.max(...drawingState.cabinets.map(c=>c.depth)),sc=Math.min(285/maxW,390/total,80/maxD);let y=55;drawingState.cabinets.forEach(c=>{drawCabinet3d(drawing3dCanvas,c,55,y,sc,true);y+=c.height*sc});drawing3dCanvas.appendChild(svgEl("text",{x:210,y:535,"text-anchor":"middle","font-size":13,fill:"#667085"},`적층 전체 높이 ${total} mm`))}
     }
-    function addObjectAt(px,py){const t=toolById(drawingState.activeTool),option=drawingState.toolOptions[t.id];let ow=t.w,oh=t.h;if(t.id==="groundBar"){ow=55;oh=180}else if(t.id==="cableHook"){ow=180;oh=55}else if(t.id==="nameplate"){ow=option==="분전반용"?150:100;oh=30}else if(t.id==="doubleLock"&&option==="카바용"){ow=90;oh=34}const o={id:drawingState.nextObjectId++,type:t.id,option,surface:drawingState.surface,x:px-ow/2,y:py-oh/2,w:ow,h:oh,rot:0,label:t.id==="nameplate"?(option==="분전반용"?"분전반용":"통신용"):""};clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
+    function addObjectAt(px,py){const t=toolById(drawingState.activeTool),option=drawingState.toolOptions[t.id];let ow=t.w,oh=t.h;if(t.id==="groundBar"){ow=55;oh=180}else if(t.id==="cableHook"){ow=180;oh=55}else if(t.id==="nameplate"){ow=option==="분전반용"?150:100;oh=30}else if(t.id==="doubleLock"&&option==="카바용"){ow=90;oh=34}else if(t.id==="anchor"){ow=option.includes("피스")?6:14;oh=ow}const o={id:drawingState.nextObjectId++,type:t.id,option,surface:drawingState.surface,x:px-ow/2,y:py-oh/2,w:ow,h:oh,rot:0,label:t.id==="nameplate"?(option==="분전반용"?"분전반용":"통신용"):""};window.KENC_SMART_SNAP?.apply(o,currentCabinet(),{source:"add"});clampObj(o);currentObjects().push(o);drawingState.selectedObjectId=o.id;renderAll();setStatus(`${t.label} 객체를 배치했습니다.`)}
     drawingCanvas.onpointerdown=e=>{const hit=e.target.closest("[data-id]");const q=toPlane(e);if(hit){const o=currentObjects().find(v=>v.id===Number(hit.dataset.id));drawingState.selectedObjectId=o.id;drawingState.drag={id:o.id,dx:q.x-o.x,dy:q.y-o.y};updateObjectPanel();render2d();e.preventDefault()}else if(q.x>=0&&q.y>=0&&q.x<=drawingState.layout.p.width&&q.y<=drawingState.layout.p.height)addObjectAt(q.x,q.y)};
-    window.addEventListener("pointermove",e=>{if(!drawingState.drag)return;const o=currentObjects().find(v=>v.id===drawingState.drag.id),q=toPlane(e);o.x=q.x-drawingState.drag.dx;o.y=q.y-drawingState.drag.dy;clampObj(o);render2d();updateObjectPanel();e.preventDefault()},{passive:false});window.addEventListener("pointerup",()=>drawingState.drag=null);
-    function applyObj(){const o=selectedObj();if(!o)return;o.x=Number(drawingObjectX.value)||0;o.y=Number(drawingObjectY.value)||0;o.w=Number(drawingObjectW.value)||o.w;o.h=Number(drawingObjectH.value)||o.h;o.rot=Number(drawingObjectRotation.value)||0;if(o.type==="nameplate")o.label=drawingObjectLabel.value.trim()||"명판";clampObj(o);renderAll()}
+    window.addEventListener("pointermove",e=>{if(!drawingState.drag)return;const o=currentObjects().find(v=>v.id===drawingState.drag.id),q=toPlane(e);o.x=q.x-drawingState.drag.dx;o.y=q.y-drawingState.drag.dy;window.KENC_SMART_SNAP?.apply(o,currentCabinet(),{source:"drag"});clampObj(o);render2d();updateObjectPanel();e.preventDefault()},{passive:false});window.addEventListener("pointerup",()=>drawingState.drag=null);
+    function applyObj(){const o=selectedObj();if(!o)return;o.x=Number(drawingObjectX.value)||0;o.y=Number(drawingObjectY.value)||0;o.w=Number(drawingObjectW.value)||o.w;o.h=Number(drawingObjectH.value)||o.h;o.rot=Number(drawingObjectRotation.value)||0;if(o.type==="nameplate")o.label=drawingObjectLabel.value.trim()||"명판";window.KENC_SMART_SNAP?.apply(o,currentCabinet(),{source:"inspector"});clampObj(o);renderAll()}
     function deleteObj(){const c=currentCabinet();c.objects=c.objects.filter(o=>o.id!==drawingState.selectedObjectId);drawingState.selectedObjectId=null;renderAll()}
     function renderStackList(){stackList.innerHTML="";drawingState.cabinets.forEach((c,i)=>{const b=document.createElement("div");b.setAttribute("role","button");b.tabIndex=0;b.className="stack-item"+(c.id===drawingState.selectedCabinetId?" active":"");b.innerHTML=`<span><span class="stack-item-title">${c.name}</span><span class="stack-item-size">${c.width} × ${c.height} × ${c.depth}</span></span><span class="stack-order"><button data-up="${c.id}">↑</button><button data-down="${c.id}">↓</button></span>`;b.onclick=e=>{if(e.target.dataset.up){moveCabinet(Number(e.target.dataset.up),-1);return}if(e.target.dataset.down){moveCabinet(Number(e.target.dataset.down),1);return}drawingState.selectedCabinetId=c.id;drawingState.selectedObjectId=null;syncInputs();renderAll()};stackList.appendChild(b)});const total=drawingState.cabinets.reduce((a,c)=>a+c.height,0),d=Math.max(...drawingState.cabinets.map(c=>c.depth));$("stackTotalHeight").textContent=total+" mm";$("stackTotalDepth").textContent=d+" mm";$("stackCount").textContent=drawingState.cabinets.length+" EA";$("stackInfoWidth").textContent=Math.max(...drawingState.cabinets.map(c=>c.width))+" mm";$("stackInfoHeight").textContent=total+" mm";$("stackInfoDepth").textContent=d+" mm";$("stackInfoCount").textContent=drawingState.cabinets.length+" EA"}
     function moveCabinet(id,dir){const i=drawingState.cabinets.findIndex(c=>c.id===id),j=i+dir;if(j<0||j>=drawingState.cabinets.length)return;[drawingState.cabinets[i],drawingState.cabinets[j]]=[drawingState.cabinets[j],drawingState.cabinets[i]];renderAll()}

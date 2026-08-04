@@ -56,6 +56,38 @@
       const q=[cxy(.05,.38),cxy(.95,.38),cxy(.95,.58),cxy(.05,.58)];svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#d7dce0',stroke:'#475569','stroke-width':2}));
       const s1=cxy(left?.16:.84,.50),s2=cxy(left?.68:.32,.50),s3=cxy(left?.68:.32,.82);line(svg,s1,s2,{stroke:'#475569','stroke-width':5});line(svg,s2,s3,{stroke:'#475569','stroke-width':5});
       [.08,.92].forEach(u=>{const w1=cxy(u,.35),w2=cxy(u,.61);line(svg,w1,w2,{stroke:'#6b7280','stroke-width':3});});
+    }else if(o.type==='cut'){
+      const round=(o.option||'')==='원형타공',red='#dc2626',cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const center=cxy(.5,.5);
+      if(round){
+        const ex=Math.hypot(U.x*ow*.38,U.y*ow*.38),ey=Math.hypot(V.x*oh*.38,V.y*oh*.38);
+        svg.appendChild(el('ellipse',{cx:center.x,cy:center.y,rx:Math.max(5,ex),ry:Math.max(5,ey),fill:'none',stroke:red,'stroke-width':4,'vector-effect':'non-scaling-stroke'}));
+      }else{
+        const q=[[.12,.12],[.88,.12],[.88,.88],[.12,.88]].map(([u,v])=>cxy(u,v));
+        svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'none',stroke:red,'stroke-width':4,'vector-effect':'non-scaling-stroke'}));
+      }
+      line(svg,cxy(.25,.25),cxy(.75,.75),{stroke:red,'stroke-width':4});
+      line(svg,cxy(.75,.25),cxy(.25,.75),{stroke:red,'stroke-width':4});
+    }else if(o.type==='emboss'){
+      const round=(o.option||'').includes('원형'),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const center=cxy(.5,.5),dash='7 5';
+      if(round){
+        const ex=Math.hypot(U.x*ow*.34,U.y*ow*.34),ey=Math.hypot(V.x*oh*.34,V.y*oh*.34);
+        svg.appendChild(el('ellipse',{cx:center.x,cy:center.y,rx:Math.max(5,ex),ry:Math.max(5,ey),fill:'#f8fafc','fill-opacity':.35,stroke:'#111827','stroke-width':3,'stroke-dasharray':dash,'vector-effect':'non-scaling-stroke'}));
+      }else{
+        const q=[[.16,.16],[.84,.16],[.84,.84],[.16,.84]].map(([u,v])=>cxy(u,v));
+        svg.appendChild(el('polygon',{points:q.map(a=>`${a.x},${a.y}`).join(' '),fill:'#f8fafc','fill-opacity':.35,stroke:'#111827','stroke-width':3,'stroke-dasharray':dash,'vector-effect':'non-scaling-stroke'}));
+      }
+    }else if(o.type==='anchor'){
+      const screw=(o.option||'').includes('피스'),cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}),m=cxy(.5,.5);
+      const rx=Math.max(3,Math.hypot(U.x*ow*.38,U.y*ow*.38)),ry=Math.max(3,Math.hypot(V.x*oh*.38,V.y*oh*.38));
+      svg.appendChild(el('ellipse',{cx:m.x,cy:m.y,rx,ry,fill:'#111827',stroke:'#6b7280','stroke-width':2.5,'vector-effect':'non-scaling-stroke'}));
+      svg.appendChild(el('text',{x:m.x,y:m.y+Math.max(14,ry+12),'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},screw?'Ø6':'Ø14'));
+    }else if(o.type==='cover'){
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      const polygon=svg.lastChild;if(polygon&&polygon.tagName==='polygon'){polygon.setAttribute('fill','#aab7ad');polygon.setAttribute('stroke','#374151');}
+      [[.5,.10],[.5,.90],[.10,.5],[.90,.5]].forEach(([u,v])=>{const q=cxy(u,v);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:4.5,fill:'#e5e7eb',stroke:'#374151','stroke-width':1.6}));line(svg,{x:q.x-2.5,y:q.y},{x:q.x+2.5,y:q.y},{stroke:'#374151','stroke-width':1.2});line(svg,{x:q.x,y:q.y-2.5},{x:q.x,y:q.y+2.5},{stroke:'#374151','stroke-width':1.2});});
+      const q=cxy(.5,.54);svg.appendChild(el('text',{x:q.x,y:q.y,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#26332b'},'타공덮개'));
     }else if(o.type==='plate'){
       const variant=(o.variant||'') || (o.option==='철속판'?'steel_plain':((o.option==='빼끄판'||o.option==='베크라이트 절연판')?'bakelite_yellow':'pvc_perforated'));
       const fill=variant==='bakelite_yellow'?'#d6a72b':variant==='steel_plain'?'#d1d5db':'#c7cccf';

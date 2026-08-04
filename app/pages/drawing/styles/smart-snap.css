@@ -1,0 +1,6 @@
+.kenc-smart-snap-btn.active{background:#1d4ed8!important;color:#fff!important;border-color:#1d4ed8!important}
+.kenc-smart-snap-btn:not(.active){opacity:.72}
+.kenc-snap-guide{pointer-events:none;stroke:#22d3ee;stroke-width:1.4;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 2px rgba(34,211,238,.65))}
+.kenc-snap-guide.safe{stroke:#f59e0b}.kenc-snap-guide.object{stroke:#a78bfa}
+html[data-kenc-smart-snap-bypass="on"] .kenc-smart-snap-btn{outline:2px dashed #f59e0b;outline-offset:2px}
+@media(max-width:720px){.kenc-smart-snap-btn{min-width:76px}}

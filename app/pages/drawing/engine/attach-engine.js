@@ -34,5 +34,5 @@
   function transform(c,o,y0=0,d={}){const place=normalizePlacement(c,o,d),b=basis(c,place.face,y0);return{basis:b,center:point(c,o,y0,d),width:n(o.w),height:n(o.h),depth:n(o.depth,d.depth||0),rotation:n(o.rot)+n(d.rotationOffset),faceRotation:b.rotation,mirror:place.mirror,parent:place.parent,surface:place.face,local:{x:place.x,y:place.y},anchor:o.anchor||d.anchor||'free'};}
   function corners(c,o,y0=0,d={}){const t=transform(c,o,y0,d),b=t.basis,halfW=t.width/2,halfH=t.height/2;return[[-halfW,-halfH],[halfW,-halfH],[halfW,halfH],[-halfW,halfH]].map(([x,y])=>add(add(t.center,b.u,x),b.v,y));}
   function selfTest(){const cab={width:600,height:700,depth:130,thickness:1.6};const cases=['front','back','left','right','top','bottom','inside','door'].map(surface=>transform(cab,{surface,x:10,y:20,w:100,h:50,depth:4},{},{}));return{ok:cases.every(x=>Number.isFinite(x.center.x+x.center.y+x.center.z)),cases};}
-  window.KENC_ATTACH_ENGINE={version:'1.0.4',canonicalFace,dimensions,basis,anchorOffset,resolveParent,resolveMirror,resolveDepth,normalizePlacement,point,transform,corners,selfTest};
+  window.KENC_ATTACH_ENGINE={version:'1.1.0',canonicalFace,dimensions,basis,anchorOffset,resolveParent,resolveMirror,resolveDepth,normalizePlacement,point,transform,corners,selfTest};
 })();

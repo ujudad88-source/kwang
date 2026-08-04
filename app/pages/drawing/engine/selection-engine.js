@@ -5,5 +5,5 @@
  function clear(scene){return select(scene,null)}
  function onChange(fn){listeners.add(fn);return()=>listeners.delete(fn)}
  function bounds(node){if(!node||node.type!=='object')return null;const o=node.data;return{x:o.x,y:o.y,width:o.w,height:o.h,rotation:o.rot||0,surface:o.surface};}
- window.KENC_SELECTION_ENGINE={version:'1.0.5',select,clear,onChange,bounds,get current(){return current}};
+ window.KENC_SELECTION_ENGINE={version:'1.1.0',select,clear,onChange,bounds,get current(){return current}};
 })();

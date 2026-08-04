@@ -9,5 +9,5 @@
  }
  function init(){create();setInterval(()=>render(false),180);document.addEventListener('kenc:object-engine-ready',()=>render(true));document.addEventListener('kenc:selection-changed',()=>render(true));}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
- window.KENC_OBJECT_INSPECTOR={version:'1.0.5',render};
+ window.KENC_OBJECT_INSPECTOR={version:'1.1.0',render};
 })();

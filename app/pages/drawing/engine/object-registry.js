@@ -14,5 +14,5 @@
   function renderer(id,kind){return renderers.get(id)?.[kind]||null;}
   function list(){return Array.from(definitions.values());}
   function has(id){return definitions.has(id);}
-  window.KENC_OBJECT_REGISTRY={version:'1.0.4',registerDefinition,registerRenderer,definition,renderer,list,has};
+  window.KENC_OBJECT_REGISTRY={version:'1.1.0',registerDefinition,registerRenderer,definition,renderer,list,has};
 })();
