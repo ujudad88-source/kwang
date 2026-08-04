@@ -1,13 +1,13 @@
 (function(){
   'use strict';
-  const VERSION='2.2.2';
+  const VERSION='2.2.3';
   const num=(v,f=0)=>Number.isFinite(Number(v))?Number(v):f;
   const api=()=>window.KENC_DRAWING_API;
   const defOf=t=>window.KENC_OBJECT_ENGINE?.definition?.(t)||{};
   function selected(){const a=api();if(!a?.getState)return{};const state=a.getState(),cab=a.getCurrentCabinet?.(),obj=(cab?.objects||[]).find(x=>x.id===state.selectedObjectId);return{a,state,cab,obj};}
   function rememberDefaults(o){o.meta=o.meta&&typeof o.meta==='object'?o.meta:{};if(!o.meta.attachmentDefaults)o.meta.attachmentDefaults={x:num(o.x),y:num(o.y),depthOffset:num(o.depthOffset),surface:o.surface||'front',parent:o.parent||'',mirror:!!o.mirror,mirrorOverride:!!o.mirrorOverride};return o.meta.attachmentDefaults;}
   function clampDepth(o){const d=defOf(o.type),base=Math.max(2,num(d.depth,4));const limit=Math.max(30,base*4);o.depthOffset=Math.max(-limit,Math.min(limit,num(o.depthOffset)));}
-  function normalize(c,o){if(!c||!o)return o;rememberDefaults(o);clampDepth(o);window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);window.KENC_OBJECT_ENGINE?.normalizeObject?.(o,c);return o;}
+  function normalize(c,o){if(!c||!o)return o;rememberDefaults(o);clampDepth(o);window.KENC_ORIENTATION_CORRECTION?.clampObject?.(c,o);return o;}
   function update(o,patch,c){if(!o||!c)return false;rememberDefaults(o);Object.assign(o,patch||{});normalize(c,o);return true;}
   function toggleMirror(o,c){return update(o,{mirror:!o.mirror,mirrorOverride:true},c);}
   function setParent(o,parent,c){return update(o,{parent},c);}

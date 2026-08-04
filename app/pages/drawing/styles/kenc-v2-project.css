@@ -1,7 +1,7 @@
 #kencProjectToolbar{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:10040;display:flex;align-items:stretch;color:#e5e7eb;font-size:12px;transition:opacity .18s ease,visibility .18s ease}
 #kencProjectToolbar.is-page-hidden{opacity:0;visibility:hidden;pointer-events:none}
 #kencProjectToolbar .kenc-project-handle{width:38px;min-height:116px;border:1px solid rgba(148,163,184,.35);border-right:0;border-radius:11px 0 0 11px;background:rgba(15,23,42,.94);color:#f8fafc;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;box-shadow:-8px 10px 24px rgba(0,0,0,.22)}
-#kencProjectToolbar .kenc-project-handle span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;letter-spacing:.08em}
+#kencProjectToolbar .kenc-project-handle span{writing-mode:vertical-rl;transform:none;font-weight:800;letter-spacing:.08em}
 #kencProjectToolbar .kenc-project-handle b{font-size:15px;transition:transform .2s ease}
 #kencProjectToolbar:not(.is-collapsed) .kenc-project-handle b{transform:rotate(180deg)}
 #kencProjectToolbar .kenc-project-tools-body{width:286px;padding:11px;border:1px solid rgba(148,163,184,.35);border-right:0;background:rgba(15,23,42,.96);box-shadow:-12px 14px 34px rgba(0,0,0,.3);backdrop-filter:blur(12px);transition:width .22s ease,padding .22s ease,opacity .16s ease;overflow:hidden}
