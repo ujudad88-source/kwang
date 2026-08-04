@@ -177,7 +177,35 @@
       }
       else if(o.type==="emboss"){if(o.option.includes("원형")){const r=Math.min(w,h)*.3,cx=x+w/2,cy=y+h/2;g.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:black,"stroke-width":sw}));[[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>g.appendChild(svgEl("line",{x1:cx+dx*(r+4),y1:cy+dy*(r+4),x2:cx+dx*(r+14),y2:cy+dy*(r+14),stroke:black,"stroke-width":sw})))}else g.appendChild(svgEl("rect",{x:x+w*.2,y:y+h*.2,width:w*.6,height:h*.6,fill:"none",stroke:black,"stroke-width":sw}))}
       else if(o.type==="cut"){const cx=x+w/2,cy=y+h/2;if(o.option==="원형타공")g.appendChild(svgEl("circle",{cx,cy,r:Math.min(w,h)*.38,fill:"none",stroke:red,"stroke-width":sw}));else g.appendChild(svgEl("rect",{x:x+w*.12,y:y+h*.12,width:w*.76,height:h*.76,fill:"none",stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.25,y1:y+h*.25,x2:x+w*.75,y2:y+h*.75,stroke:red,"stroke-width":sw}));g.appendChild(svgEl("line",{x1:x+w*.75,y1:y+h*.25,x2:x+w*.25,y2:y+h*.75,stroke:red,"stroke-width":sw}))}
-      else if(o.type==="plate"){g.appendChild(svgEl("rect",{x,y,width:w,height:h,fill:"none",stroke:black,"stroke-width":sw}));g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(8,Math.min(14,w/8)),fill:black,"font-weight":700},o.option))}
+      else if(o.type==="plate"){
+        const variant=(o.variant||"") || (o.option==="철속판"?"steel_plain":(o.option==="빼끄판"||o.option==="베크라이트 절연판")?"bakelite_yellow":"pvc_perforated");
+        const edge=is3d?"#334155":"#374151", slotStroke=is3d?"#475569":"#4b5563";
+        const fill=variant==="bakelite_yellow"?(is3d?"#c99b22":"#d6a72b"):variant==="steel_plain"?(is3d?"#b8bec3":"#d1d5db"):(is3d?"#aeb4b7":"#c7cccf");
+        const radius=Math.max(2,Math.min(w,h)*.025);
+        g.appendChild(svgEl("rect",{x,y,width:w,height:h,rx:radius,fill,stroke:edge,"stroke-width":sw}));
+        g.appendChild(svgEl("rect",{x:x+w*.018,y:y+h*.018,width:w*.964,height:h*.964,rx:radius,fill:"none",stroke:is3d?"#e5e7eb":"#9ca3af","stroke-width":Math.max(.55,sw*.42),"stroke-opacity":.72}));
+        const slot=(cx,cy,ang)=>{
+          const sl=Math.max(8,Math.min(w,h)*.12), st=Math.max(3,Math.min(w,h)*.045);
+          g.appendChild(svgEl("rect",{x:cx-sl/2,y:cy-st/2,width:sl,height:st,rx:st/2,fill:is3d?"#1f2937":"#fff",stroke:slotStroke,"stroke-width":Math.max(.65,sw*.55),transform:`rotate(${ang} ${cx} ${cy})`}));
+        };
+        slot(x+w*.07,y+h*.07,-45);slot(x+w*.93,y+h*.07,45);slot(x+w*.07,y+h*.93,45);slot(x+w*.93,y+h*.93,-45);
+        if(variant==="pvc_perforated"){
+          const cols=Math.max(8,Math.min(22,Math.round(w/9))),rows=Math.max(10,Math.min(28,Math.round(h/9)));
+          const mx=w*.11,my=h*.11,dx=(w-mx*2)/(cols-1),dy=(h-my*2)/(rows-1),rr=Math.max(.55,Math.min(1.5,Math.min(w,h)/180));
+          for(let iy=0;iy<rows;iy++)for(let ix=0;ix<cols;ix++){
+            const px=x+mx+ix*dx,py=y+my+iy*dy;
+            if((ix<2&&iy<2)||(ix>cols-3&&iy<2)||(ix<2&&iy>rows-3)||(ix>cols-3&&iy>rows-3))continue;
+            g.appendChild(svgEl("circle",{cx:px,cy:py,r:rr,fill:is3d?"#475569":"#6b7280","fill-opacity":.88}));
+          }
+          g.appendChild(svgEl("circle",{cx:x+w*.5,cy:y+h*.5,r:Math.max(1.6,Math.min(w,h)*.018),fill:is3d?"#111827":"#fff",stroke:slotStroke,"stroke-width":Math.max(.7,sw*.55)}));
+        }else if(variant==="steel_plain"){
+          g.appendChild(svgEl("line",{x1:x+w*.12,y1:y+h*.18,x2:x+w*.70,y2:y+h*.18,stroke:is3d?"#eef2f5":"#f8fafc","stroke-width":Math.max(.8,sw*.55),"stroke-opacity":.65}));
+        }else{
+          g.appendChild(svgEl("line",{x1:x+w*.10,y1:y+h*.16,x2:x+w*.76,y2:y+h*.16,stroke:"#f4cf63","stroke-width":Math.max(.8,sw*.6),"stroke-opacity":.55}));
+          g.appendChild(svgEl("line",{x1:x+w*.15,y1:y+h*.82,x2:x+w*.84,y2:y+h*.82,stroke:"#8a6414","stroke-width":Math.max(.7,sw*.5),"stroke-opacity":.45}));
+        }
+        g.appendChild(svgEl("text",{x:x+w/2,y:y+h/2+4,"text-anchor":"middle","font-size":Math.max(7,Math.min(13,w/9)),fill:variant==="bakelite_yellow"?"#513b0d":"#1f2937","font-weight":800,"paint-order":"stroke","stroke":fill,"stroke-width":Math.max(1,sw*1.1)},o.option||"속판"));
+      }
       else if(o.type==="groundBar"){
         const material=o.option.includes("동접지")?"copper":"iron";
         const direction=o.option.includes("하(")?"down":o.option.includes("좌(")?"left":o.option.includes("우(")?"right":"up";

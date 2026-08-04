@@ -46,6 +46,17 @@
       const inset=.10;const q=[[inset,inset],[1-inset,inset],[1-inset,1-inset],[inset,1-inset]].map(([u,v])=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v}));svg.appendChild(el('polygon',{points:q.map(x=>`${x.x},${x.y}`).join(' '),fill:'#bae6fd','fill-opacity':.35,stroke:'#0891b2','stroke-width':3}));
     }else if(o.type==='doubleLock'){
       const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});const m=cxy(.5,.45);svg.appendChild(el('circle',{cx:m.x,cy:m.y,r:8,fill:'#fff',stroke:'#111827','stroke-width':3}));svg.appendChild(el('text',{x:m.x,y:m.y+22,'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#111827'},o.option));
+    }else if(o.type==='plate'){
+      const variant=(o.variant||'') || (o.option==='철속판'?'steel_plain':((o.option==='빼끄판'||o.option==='베크라이트 절연판')?'bakelite_yellow':'pvc_perforated'));
+      const fill=variant==='bakelite_yellow'?'#d6a72b':variant==='steel_plain'?'#d1d5db':'#c7cccf';
+      const polygon=svg.lastChild; if(polygon&&polygon.tagName==='polygon') polygon.setAttribute('fill',fill);
+      const cxy=(u,v)=>({x:O.x+U.x*ow*u+V.x*oh*v,y:O.y+U.y*ow*u+V.y*oh*v});
+      [[.07,.07],[.93,.07],[.07,.93],[.93,.93]].forEach(([u,v])=>{const q=cxy(u,v);svg.appendChild(el('ellipse',{cx:q.x,cy:q.y,rx:5,ry:2.5,fill:'#fff',stroke:'#374151','stroke-width':1.5,transform:`rotate(${u===v?-45:45} ${q.x} ${q.y})`}));});
+      if(variant==='pvc_perforated'){
+        for(let iy=2;iy<=10;iy++)for(let ix=2;ix<=8;ix++){const u=ix/10,v=iy/12;if((ix<3&&iy<3)||(ix>7&&iy<3)||(ix<3&&iy>9)||(ix>7&&iy>9))continue;const q=cxy(u,v);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:1.15,fill:'#4b5563'}));}
+        const q=cxy(.5,.5);svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:3.2,fill:'#fff',stroke:'#374151','stroke-width':1.3}));
+      }
+      const q=cxy(.5,.54);svg.appendChild(el('text',{x:q.x,y:q.y,'text-anchor':'middle','font-size':11,'font-weight':800,fill:variant==='bakelite_yellow'?'#513b0d':'#111827'},o.option||'속판'));
     }else{
       const tx=pts.reduce((a,q)=>a+q.x,0)/4,ty=pts.reduce((a,q)=>a+q.y,0)/4;const label=o.label||o.option||({plate:'PVC속판',cut:'타공',groundBar:'접지'}[o.type])||o.type;svg.appendChild(el('text',{x:tx,y:ty+4,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#111827'},label));
     }

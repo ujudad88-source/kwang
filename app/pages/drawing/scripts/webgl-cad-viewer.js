@@ -118,9 +118,30 @@
     }else if(type==='anchor'){
       localBox(baseM,0,0,.60,.34,.34,.10,objectMaterial.dark,objectMaterial.edge,true);
     }else if(type==='plate'){
-      localBox(baseM,0,0,.56,.92,.92,.035,objectMaterial.faceSoft,objectMaterial.detail,true);
-      localBox(baseM,0,0,.61,.82,.82,.022,[0,0,0,0],objectMaterial.edge,false);
-      [[-.42,-.42],[.42,-.42],[.42,.42],[-.42,.42]].forEach(([x,y])=>localBox(baseM,x,y,.63,.045,.045,.05,objectMaterial.dark,objectMaterial.detail,true));
+      const variant=(o.variant||'') || (o.option==='철속판'?'steel_plain':((o.option==='빼끄판'||o.option==='베크라이트 절연판')?'bakelite_yellow':'pvc_perforated'));
+      const pvc=[.57,.60,.61,1], pvcEdge=[.18,.22,.24,1], steel=[.72,.75,.77,1], steelEdge=[.22,.25,.28,1], bak=[.78,.57,.10,1], bakEdge=[.31,.22,.05,1];
+      const face=variant==='bakelite_yellow'?bak:(variant==='steel_plain'?steel:pvc), edge=variant==='bakelite_yellow'?bakEdge:(variant==='steel_plain'?steelEdge:pvcEdge);
+      const thick=variant==='bakelite_yellow'?.070:(variant==='steel_plain'?.032:.060);
+      localBox(baseM,0,0,.56,.94,.94,thick,face,edge,true);
+      // 얇은 가장자리와 실제 판 두께를 구분하는 안쪽 테두리
+      localBox(baseM,0,0,.565,.88,.88,.012,[0,0,0,0],variant==='bakelite_yellow'?[.92,.72,.22,1]:[.84,.87,.88,1],false);
+      // 네 모서리 장공: 실제 관통부처럼 어두운 슬롯과 밝은 가장자리
+      [[-.405,-.405,-45],[.405,-.405,45],[-.405,.405,45],[.405,.405,-45]].forEach(([x,y,a])=>{
+        const sm=mat4Mul(baseM,mat4Mul(translate(x,y,.08),rotateZ(a*Math.PI/180)));
+        localBox(sm,0,0,0,.12,.035,.025,[.035,.045,.055,1],edge,true);
+      });
+      if(variant==='pvc_perforated'){
+        // 확대 시에도 과부하가 없도록 대표 미세 타공을 실제 깊이 점으로 표시
+        for(let iy=-5;iy<=5;iy++)for(let ix=-4;ix<=4;ix++){
+          if((Math.abs(ix)>=4&&Math.abs(iy)>=4))continue;
+          localBox(baseM,ix*.085,iy*.072,.078,.013,.013,.020,[.10,.12,.13,1],pvcEdge,true);
+        }
+        localBox(baseM,0,0,.082,.034,.034,.022,[.05,.06,.07,1],pvcEdge,true);
+      }else if(variant==='steel_plain'){
+        localBox(baseM,-.12,-.30,.08,.48,.008,.008,[.93,.95,.96,.55],[.93,.95,.96,.55],true);
+      }else{
+        localBox(baseM,-.08,-.30,.09,.56,.008,.008,[.94,.74,.22,.55],[.94,.74,.22,.55],true);
+      }
     }else if(type==='groundBar'){
       localBox(baseM,0,0,.58,.84,.28,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
       for(let i=-3;i<=3;i++) localBox(baseM,i*.11,0,.65,.035,.09,.05,objectMaterial.dark,objectMaterial.detail,true);
