@@ -1,4 +1,4 @@
-const CACHE_NAME = "kenc-ui-2-0-v2-2-4";
+const CACHE_NAME = "kenc-ui-2-0-v2-5-0";
 const APP_ASSETS = [
   './',
   './index.html',
@@ -99,7 +99,19 @@ const APP_ASSETS = [
   './app/pages/drawing/engine/placement-assistant.js',
   './app/pages/drawing/engine/realistic-quality-engine.js',
   './app/pages/drawing/styles/realistic-quality.css',
-  './app/pages/drawing/styles/realistic-cabinet-121.css'
+  './app/pages/drawing/styles/realistic-cabinet-121.css',
+  './app/pages/drawing/engine/production-automation-suite.js',
+  './app/pages/drawing/styles/production-automation-suite.css',
+  './app/pages/drawing/engine/cad-professional-suite.js',
+  './app/pages/drawing/styles/cad-professional-suite.css',
+  './app/pages/drawing/engine/cad-manufacturing-completion-suite.js',
+  './app/pages/drawing/styles/cad-manufacturing-completion-suite.css'
+,
+  './app/pages/drawing/engine/cad-fabrication-visual-suite.js',
+  './app/pages/drawing/styles/cad-fabrication-visual-suite.css',
+  './app/pages/drawing/engine/cad-3d-interaction-approval-suite.js'
+,
+  './app/pages/drawing/styles/cad-3d-interaction-approval-suite.css'
 ];
 
 self.addEventListener('install', event => {

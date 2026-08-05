@@ -6,7 +6,7 @@
   const roleOf=(o,s)=>window.KENC_CAD_MODEL?.roleOf?.(o,s)||(s==='inside'||o.type==='plate'?'internal':(['cut','emboss','anchor'].includes(o.type)?'cutout':(['groundBar','cableHook'].includes(o.type)?'utility':'external')));
   const objectMaterial={face:[0.28,0.31,0.34,0.98],faceSoft:[0.42,0.45,0.48,0.96],glass:[0.38,0.72,0.88,0.18],void:[0.008,0.012,0.018,0.99],edge:[0.90,0.93,0.95,1],detail:[0.78,0.81,0.84,1],dark:[0.025,0.035,0.045,1]};
   const defaults=()=>({yaw:-35,pitch:-18,zoom:1.12,panX:0,panY:0,displayMode:'exterior',quality:'realistic'});
-  let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null;
+  let canvas,gl,program,posLoc,colorLoc,mvpLoc,buffer,ctxCache,drag=null,pointers=new Map(),pinch=null,interactionObjects=[];
   function state(){return window.KENC_DRAWING_API?.getState?.();}
   function view(){const s=state(); if(!s)return defaults(); return s.live3dView||(s.live3dView=defaults());}
   function mat4Identity(){return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];}
@@ -286,7 +286,7 @@
       localBox(baseM,-.18,.28,.58,.44,.12,.10,objectMaterial.faceSoft,objectMaterial.edge,true);
     }
   }
-  function cabinetParts(c,yCenter,mode){
+  function cabinetParts(c,yCenter,mode,assemblyMode='combined'){
     const w=+c.width,h=+c.height,d=+c.depth,rawT=Number(c.thicknessMm||String(c.thickness||'1.6').match(/[\d.]+/)?.[0]||1.6),t=Math.max(4,Math.min(10,rawT*3));const out=[];
     const realistic=(view().quality||'realistic')==='realistic';
     const bodyAlpha=mode==='xray'?.07:(mode==='open'?.09:(mode==='section'?.12:(mode==='exploded'?.13:.28))),edge=[.78,.86,.94,1];
@@ -295,34 +295,34 @@
     const part=(base,tx,ty,tz,sx,sy,sz)=>mat4Mul(base,mat4Mul(translate(tx,ty,tz),scale(sx,sy,sz)));
 
     // 본체는 실제 절곡 조립체처럼 후판·측판·상하판을 독립 부품으로 구성한다.
-    push('back',mat4Mul(translate(0,yCenter,-d/2+t/2),scale(w,h,t)));
-    push('left',mat4Mul(translate(-w/2+t/2,yCenter,0),scale(t,h,d)));
-    push('right',mat4Mul(translate(w/2-t/2,yCenter,0),scale(t,h,d)),undefined,mode!=='section');
-    push('top',mat4Mul(translate(0,yCenter-h/2+t/2,0),scale(w,t,d)));
-    push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
+    if(assemblyMode!=='cover')push('back',mat4Mul(translate(0,yCenter,-d/2+t/2),scale(w,h,t)));
+    if(assemblyMode!=='cover')push('left',mat4Mul(translate(-w/2+t/2,yCenter,0),scale(t,h,d)));
+    if(assemblyMode!=='cover')push('right',mat4Mul(translate(w/2-t/2,yCenter,0),scale(t,h,d)),undefined,mode!=='section');
+    if(assemblyMode!=='cover')push('top',mat4Mul(translate(0,yCenter-h/2+t/2,0),scale(w,t,d)));
+    if(assemblyMode!=='cover')push('bottom',mat4Mul(translate(0,yCenter+h/2-t/2,0),scale(w,t,d)));
 
     // 전면 개구부 절곡 리턴과 모서리 접합선을 넣어 단순 박스 느낌을 줄인다.
     const returnW=Math.max(8,Math.min(18,w*.028)),returnD=Math.max(4,t*.42),frontZ=d/2-returnD/2;
     const returnColor=realistic?[.50,.53,.55,Math.max(bodyAlpha,.70)]:[.34,.38,.42,Math.max(bodyAlpha,.55)];
-    push('body-return-top',mat4Mul(translate(0,yCenter-h/2+returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
-    push('body-return-bottom',mat4Mul(translate(0,yCenter+h/2-returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
-    push('body-return-left',mat4Mul(translate(-w/2+returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor);
-    push('body-return-right',mat4Mul(translate(w/2-returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor,mode!=='section');
+    if(assemblyMode!=='cover')push('body-return-top',mat4Mul(translate(0,yCenter-h/2+returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
+    if(assemblyMode!=='cover')push('body-return-bottom',mat4Mul(translate(0,yCenter+h/2-returnW/2,frontZ),scale(w-returnW*2,returnW,returnD)),returnColor);
+    if(assemblyMode!=='cover')push('body-return-left',mat4Mul(translate(-w/2+returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor);
+    if(assemblyMode!=='cover')push('body-return-right',mat4Mul(translate(w/2-returnW/2,yCenter,frontZ),scale(returnW,h-returnW*2,returnD)),returnColor,mode!=='section');
 
     // 실제 제작함의 판넬 끝단을 식별할 수 있도록 얇은 헤밍 절곡과 후면 단차를 추가한다.
     const hem=Math.max(2,Math.min(5,t*.45)),hemColor=realistic?[.58,.60,.61,Math.max(bodyAlpha,.82)]:returnColor;
-    push('top-front-hem',mat4Mul(translate(0,yCenter-h/2+t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
-    push('bottom-front-hem',mat4Mul(translate(0,yCenter+h/2-t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
-    push('left-front-hem',mat4Mul(translate(-w/2+t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor);
-    push('right-front-hem',mat4Mul(translate(w/2-t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor,mode!=='section');
+    if(assemblyMode!=='cover')push('top-front-hem',mat4Mul(translate(0,yCenter-h/2+t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
+    if(assemblyMode!=='cover')push('bottom-front-hem',mat4Mul(translate(0,yCenter+h/2-t*.82,d/2-hem/2),scale(w-returnW*2,hem,hem)),hemColor);
+    if(assemblyMode!=='cover')push('left-front-hem',mat4Mul(translate(-w/2+t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor);
+    if(assemblyMode!=='cover')push('right-front-hem',mat4Mul(translate(w/2-t*.82,yCenter,d/2-hem/2),scale(hem,h-returnW*2,hem)),hemColor,mode!=='section');
     if(realistic){
       const rearStep=[.32,.35,.37,Math.max(bodyAlpha,.68)];
-      push('rear-top-step',mat4Mul(translate(0,yCenter-h/2+t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
-      push('rear-bottom-step',mat4Mul(translate(0,yCenter+h/2-t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
+      if(assemblyMode!=='cover')push('rear-top-step',mat4Mul(translate(0,yCenter-h/2+t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
+      if(assemblyMode!=='cover')push('rear-bottom-step',mat4Mul(translate(0,yCenter+h/2-t*.72,-d/2+t*1.35),scale(w-t*2,t*.38,t*.65)),rearStep);
     }
 
 
-    if(realistic){
+    if(realistic&&assemblyMode!=='cover'){
       const seam=[.16,.18,.20,.75],seamEdge=[.42,.45,.48,.8],sw=Math.max(1.5,t*.10);
       [[-w/2+t*.55,-h/2+t*.55],[w/2-t*.55,-h/2+t*.55],[-w/2+t*.55,h/2-t*.55],[w/2-t*.55,h/2-t*.55]].forEach(([sx,sy],i)=>{
         if(mode==='section'&&(i===1||i===3))return;
@@ -343,16 +343,16 @@
       push('door-right-flange',part(base,w/2-flange/2,0,t*.58,flange,h-flange*2,Math.max(2,t*.24)),realistic?[.38,.40,.41,.99]:[.34,.37,.39,.98]);
     }
 
-    if(mode==='exterior'||mode==='xray'){
+    if(assemblyMode!=='inner'&&(mode==='exterior'||mode==='xray')){
       const base=translate(0,yCenter,d/2+t/2);
       addDoorAssembly(base,mode==='xray'?.055:.98);
     }
-    if(mode==='open'||mode==='exploded'){
+    if(assemblyMode!=='inner'&&(mode==='open'||mode==='exploded')){
       const pose=window.KENC_CAD_MODEL?.doorPose?.(c,mode,yCenter)||{angle:(mode==='open'?82:8)*Math.PI/180,hingeX:w/2+(mode==='exploded'?w*.60:0),hingeY:yCenter,hingeZ:d/2+(mode==='exploded'?w*.60:0)*.15};
       const base=mat4Mul(translate(pose.hingeX,pose.hingeY,pose.hingeZ),mat4Mul(rotY(pose.angle),translate(-w/2,0,0)));
       addDoorAssembly(base,mode==='open'?.18:.30);
     }
-    if(mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
+    if(assemblyMode!=='cover'&&mode==='exploded')push('rear-exploded',mat4Mul(translate(w*.22,yCenter,-d/2-Math.max(d*1.8,w*.22)),scale(w,h,t)),[.20,.24,.29,.22]);
     return out;
   }
   function sceneBounds(cabs){const total=cabs.reduce((a,c)=>a+(+c.height||0),0),maxW=Math.max(...cabs.map(c=>+c.width||1)),maxD=Math.max(...cabs.map(c=>+c.depth||1));return{total,maxW,maxD,size:Math.max(total,maxW,maxD)};}
@@ -363,7 +363,7 @@
       return;
     }
     const s=ctx.state,v=s.live3dView||(s.live3dView=defaults());
-    const renderSets=window.KENC_UNIFIED_3D_BRIDGE?.cabinets?.(s,{mode:s.mode3d||'single',preferredCabinet:ctx.currentCabinet,displayMode:v.displayMode||'exterior'})||[];
+    const renderSets=window.KENC_UNIFIED_3D_BRIDGE?.cabinets?.(s,{mode:s.mode3d||'single',preferredCabinet:ctx.currentCabinet,displayMode:v.displayMode||'exterior',assemblyMode:s.assemblyView||'combined'})||[];
     const cabs=renderSets.map(x=>x.cabinet).filter(Boolean);if(!cabs.length)return;
     resize();gl.viewport(0,0,canvas.width,canvas.height);const realistic=(v.quality||'realistic')==='realistic';gl.clearColor(realistic?.035:.018,realistic?.045:.035,realistic?.055:.058,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
     const b=sceneBounds(cabs),aspect=canvas.width/canvas.height,mode=v.displayMode||'exterior',frameFactor=mode==='exploded'?.72:(mode==='open'?.62:.56),span=b.size*frameFactor/Math.max(v.zoom,.05);const proj=ortho(-span*aspect,span*aspect,span,-span,-b.size*5,b.size*5);const cam=mat4Mul(translate((v.panX||0)*b.size/350,(v.panY||0)*b.size/350,0),mat4Mul(rotX(v.pitch*Math.PI/180),rotY(v.yaw*Math.PI/180)));const vp=mat4Mul(proj,cam);
@@ -371,7 +371,7 @@
     let off=-b.total/2;
     const cabinetQueue=[],objectQueue=[];
     cabs.forEach(c=>{const yCenter=off+(+c.height||0)/2;off+=+c.height||0;
-      cabinetParts(c,yCenter,mode).forEach(p=>cabinetQueue.push({p,c,yCenter}));
+      cabinetParts(c,yCenter,mode,s.assemblyView||'combined').forEach(p=>cabinetQueue.push({p,c,yCenter}));
       const renderSet=renderSets.find(x=>x.cabinet===c)||{objects:[]};
       renderSet.objects.forEach(entry=>{
         const o=entry.object;
@@ -388,8 +388,14 @@
     cabinetQueue.forEach(({p})=>drawBox(mat4Mul(vp,p.m),p.color,p.edge,true));
     gl.depthMask(true);
     if(revealAll)gl.disable(gl.DEPTH_TEST);
+    interactionObjects=[];
     objectQueue.forEach(({c,yCenter,o,surface,role,m})=>{
-      try{addObjectDetails(c,yCenter,o,surface,mat4Mul(vp,m),role);}
+      try{
+        const full=mat4Mul(vp,m);
+        addObjectDetails(c,yCenter,o,surface,full,role);
+        const ww=Math.abs(full[15]||1),nx=(full[12]||0)/ww,ny=(full[13]||0)/ww,r=canvas.getBoundingClientRect();
+        interactionObjects.push({id:o.id,object:o,x:(nx*.5+.5)*r.width,y:(1-(ny*.5+.5))*r.height,w:Math.max(18,(+o.w||20)/Math.max(b.size,1)*r.width*1.4),h:Math.max(18,(+o.h||20)/Math.max(b.size,1)*r.height*1.4),surface});
+      }
       catch(error){console.error('[KENC 3D] object renderer isolated',o,error);}
     });
     if(revealAll)gl.enable(gl.DEPTH_TEST);
@@ -415,7 +421,7 @@
     const end=e=>{pointers.delete(e.pointerId);if(!pointers.size){drag=null;pinch=null;}};canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('contextmenu',e=>e.preventDefault());canvas.addEventListener('wheel',e=>{const v=view();v.zoom=clamp(v.zoom*Math.exp(-e.deltaY*.0015),.25,7);redraw();e.preventDefault();},{passive:false});canvas.addEventListener('dblclick',()=>setPreset('reset'));window.addEventListener('resize',redraw);
   }
   document.addEventListener('click',e=>{const mb=e.target.closest('#drawingPanel [data-3d-view-mode]');if(mb){e.preventDefault();e.stopImmediatePropagation();setMode(mb.dataset['3dViewMode']);return;}const b=e.target.closest('#drawingPanel [data-3d-action]');if(!b)return;const a=b.dataset['3dAction'];if(['front','iso','fit','reset'].includes(a)){e.preventDefault();e.stopImmediatePropagation();setPreset(a==='front'?'front':'reset');}},true);
-  window.KENC3DViewer={version:CABINET_RENDERER_VERSION,render:renderWebGL,reset:()=>setPreset('reset'),setMode};
+  window.KENC3DViewer={version:'3.5.0',render:renderWebGL,reset:()=>setPreset('reset'),setMode,getCanvas:()=>canvas,getInteractionSnapshot:()=>({canvas,objects:interactionObjects.slice(),view:Object.assign({},view())}),redraw};
   const boot=()=>setTimeout(()=>window.KENC_DRAWING_API?.renderAll?.(),0);
   if(window.KENC_DRAWING_API)boot();else document.addEventListener('kenc:drawing-api-ready',boot,{once:true});
 })();

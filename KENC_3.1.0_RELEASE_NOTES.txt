@@ -1,0 +1,11 @@
+KENC UI 2.0 v3.2.0
+
+- 프로젝트 저장형 CAD 엔티티: LINE, RECTANGLE, CIRCLE, POLYLINE
+- 엔티티 선택 및 삭제
+- OFFSET, TRIM, EXTEND, FILLET, CHAMFER 기본 명령
+- 수평, 수직, 평행, 직각, 동일, 고정 구속 메타데이터
+- 구동 치수 기반 길이/직경/폭 수정
+- 판금 BA/SB/BD 계산과 K-Factor 저장
+- PBR 렌더 품질, 그림자, 바닥, 반사 프로필
+- CAD 엔티티 정밀 DXF 내보내기
+- 기존 KENC 3.0.0 기능 및 데이터 호환 유지

@@ -129,26 +129,29 @@
   }
   function render(state,cabinet){
     const svg=el('svg',{xmlns:NS,viewBox:'0 0 700 700',width:700,height:700});svg.appendChild(el('rect',{width:700,height:700,fill:'#fff'}));
-    const renderSet=(window.KENC_UNIFIED_3D_BRIDGE?.cabinets?.(state,{mode:'single',preferredCabinet:cabinet,displayMode:'export',exportMode:true})||[])[0];
+    const renderSet=(window.KENC_UNIFIED_3D_BRIDGE?.cabinets?.(state,{mode:'single',preferredCabinet:cabinet,displayMode:'export',exportMode:true,assemblyMode:state.outputAssemblyView||state.assemblyView||'combined'})||[])[0];
     const c=renderSet?.cabinet||cabinet;
     if(!c)return svg;
+    const assemblyMode=state.outputAssemblyView||state.assemblyView||'combined';
     const renderObjects=renderSet?.objects||[];
     const w=+c.width,h=+c.height,d=+c.depth,y0=0;projectPoint=makeIsometricProjector(c);
     const A=p(-w/2,-h/2,d/2),B=p(w/2,-h/2,d/2),C=p(w/2,h/2,d/2),D=p(-w/2,h/2,d/2),E=p(-w/2,-h/2,-d/2),F=p(w/2,-h/2,-d/2),G=p(w/2,h/2,-d/2),H=p(-w/2,h/2,-d/2);
-    svg.appendChild(el('polygon',{points:[E,F,B,A].map(q=>`${q.x},${q.y}`).join(' '),fill:'#f8fafc',stroke:'#111827','stroke-width':3}));
-    svg.appendChild(el('polygon',{points:[B,F,G,C].map(q=>`${q.x},${q.y}`).join(' '),fill:'#e5e7eb',stroke:'#111827','stroke-width':3}));
-    svg.appendChild(el('polygon',{points:[A,B,C,D].map(q=>`${q.x},${q.y}`).join(' '),fill:'#ffffff','fill-opacity':.86,stroke:'#111827','stroke-width':3}));
-    [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
+    if(assemblyMode!=='cover'){
+      svg.appendChild(el('polygon',{points:[E,F,B,A].map(q=>`${q.x},${q.y}`).join(' '),fill:'#f8fafc',stroke:'#111827','stroke-width':3}));
+      svg.appendChild(el('polygon',{points:[B,F,G,C].map(q=>`${q.x},${q.y}`).join(' '),fill:'#e5e7eb',stroke:'#111827','stroke-width':3}));
+      [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b));
+    }
+    if(assemblyMode!=='inner')svg.appendChild(el('polygon',{points:[A,B,C,D].map(q=>`${q.x},${q.y}`).join(' '),fill:'#ffffff','fill-opacity':.86,stroke:'#111827','stroke-width':3}));
     const order=['back','inside','left','right','top','bottom','front','door'];
     order.forEach(surface=>renderObjects.filter(entry=>(entry.surface||entry.object?.surface||'front')===surface).forEach(entry=>{
       const o=entry.object;
       try{objectRect(svg,c,o,surface,y0);}catch(error){console.error('[KENC Output 3D] object renderer isolated',o,error);}
     }));
     // 객체 오류나 겹침 이후에도 제작 전달 도면에서 함체 윤곽을 확실히 유지한다.
-    [[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b,{stroke:'#111827','stroke-width':3.2}));
+    if(assemblyMode!=='cover')[[A,E],[D,H],[E,F],[F,G],[G,H],[H,E],[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b,{stroke:'#111827','stroke-width':3.2}));if(assemblyMode!=='inner')[[A,B],[B,C],[C,D],[D,A]].forEach(([a,b])=>line(svg,a,b,{stroke:'#111827','stroke-width':3.2}));
     svg.appendChild(el('text',{x:350,y:625,'text-anchor':'middle','font-size':24,'font-weight':800,fill:'#111827'},`${c.width} × ${c.height} × ${c.depth} mm`));
-    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`입체 등각 3D · 공통 Scene Renderer · ${renderObjects.length} EA`));
+    svg.appendChild(el('text',{x:350,y:656,'text-anchor':'middle','font-size':17,fill:'#475569'},`${assemblyMode==='inner'?'내함 단독':assemblyMode==='cover'?'카바 단독':'전체 조립'} · 공통 Scene Renderer · ${renderObjects.length} EA`));
     return svg;
   }
-  window.KENC3DOutputRenderer={version:'2.3.0',render};
+  window.KENC3DOutputRenderer={version:'2.3.1',render};
 })();

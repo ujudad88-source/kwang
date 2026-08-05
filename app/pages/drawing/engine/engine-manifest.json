@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "3.0.0",
   "engines": [
     "object",
     "attach",
@@ -7,7 +7,8 @@
     "selection",
     "history",
     "preview",
-    "export"
+    "export",
+    "cad-professional-suite"
   ],
   "features": [
     "parent-child scene graph",

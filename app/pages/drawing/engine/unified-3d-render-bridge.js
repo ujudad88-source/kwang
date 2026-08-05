@@ -1,13 +1,14 @@
 (function(){
   'use strict';
-  const VERSION='2.3.0';
+  const VERSION='2.3.1';
   let cache={state:null,scene:null,key:''};
   const num=v=>Number.isFinite(Number(v))?Number(v):0;
+  const partOf=o=>o?.targetPart||(['front','door'].includes(o?.surface)?'cover':'inner');
   function stateKey(state){
     if(!state)return'';
     const cabs=state.cabinets||[];
     return [state.selectedCabinetId,state.selectedObjectId,state.mode3d,cabs.length,
-      ...cabs.map(c=>[c.id,c.width,c.height,c.depth,(c.objects||[]).length,...(c.objects||[]).map(o=>[o.id,o.sceneId,o.type,o.x,o.y,o.w,o.h,o.rot,o.surface,o.parent,o.visible,o.render3d,o.export].join(':'))].join('|'))].join('~');
+      ...cabs.map(c=>[c.id,c.width,c.height,c.depth,(c.objects||[]).length,...(c.objects||[]).map(o=>[o.id,o.sceneId,o.type,o.x,o.y,o.w,o.h,o.rot,o.surface,o.parent,o.targetPart,o.visible,o.render3d,o.export].join(':'))].join('|'))].join('~');
   }
   function sceneFor(state){
     if(!state)return null;
@@ -28,13 +29,17 @@
   function objectNodes(cabinetNode,options={}){
     const exportMode=!!options.exportMode;
     const mode=options.displayMode||'exterior';
+    const assemblyMode=options.assemblyMode||'combined';
     const groups=cabinetNode?.children||[];
     const nodes=[];
     groups.forEach(group=>(group.children||[]).forEach(node=>{
       const o=node?.data;
       if(!o||node.visible===false||o.visible===false||node.render?.threeD===false||o.render3d===false)return;
       if(exportMode&&(node.render?.export===false||o.export===false))return;
-      if(mode==='exterior'&&(node.surface==='inside'||node.parent==='inside'))return;
+      const targetPart=partOf(o);
+      if(assemblyMode==='inner'&&targetPart!=='inner')return;
+      if(assemblyMode==='cover'&&targetPart!=='cover')return;
+      if(mode==='exterior'&&assemblyMode!=='inner'&&(node.surface==='inside'||node.parent==='inside'))return;
       nodes.push(node);
     }));
     return nodes.sort((a,b)=>(num(a.zIndex)-num(b.zIndex))||String(a.id).localeCompare(String(b.id)));
@@ -44,7 +49,7 @@
     return cabinetNodes(state,mode,options.preferredCabinet).map(node=>({
       node,
       cabinet:node.data,
-      objects:objectNodes(node,options).map(objectNode=>({node:objectNode,object:objectNode.data,transform:objectNode.transform,surface:objectNode.surface,parent:objectNode.parent}))
+      objects:objectNodes(node,options).map(objectNode=>({node:objectNode,object:objectNode.data,transform:objectNode.transform,surface:objectNode.surface,parent:objectNode.parent,targetPart:partOf(objectNode.data)}))
     }));
   }
   function invalidate(reason='unknown'){
@@ -57,5 +62,5 @@
     return{version:VERSION,ok:!!scene&&sceneObjects.length===sourceObjects.length,sourceObjects:sourceObjects.length,sceneObjects:sceneObjects.length,cabinets:scene?.children?.length||0};
   }
   ['kenc:preview-invalidated','kenc:scene-synced','kenc:object-changed','kenc:project-loaded'].forEach(name=>document.addEventListener(name,()=>{cache={state:null,scene:null,key:''};}));
-  window.KENC_UNIFIED_3D_BRIDGE={version:VERSION,sceneFor,cabinetNodes,objectNodes,cabinets,invalidate,diagnostics};
+  window.KENC_UNIFIED_3D_BRIDGE={version:VERSION,sceneFor,cabinetNodes,objectNodes,cabinets,invalidate,diagnostics,partOf};
 })();

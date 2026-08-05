@@ -15,6 +15,7 @@
   }
   function objectNode(c,o,index){
     const d=window.KENC_OBJECT_ENGINE.definition(o.type)||{};
+    if(!o.targetPart)o.targetPart=['front','door'].includes(o.surface)?'cover':'inner';
     const transform=window.KENC_ATTACH_ENGINE.transform(c,o,0,d);
     const id=o.sceneId||o.uid||uid(String(o.type||'OBJ').toUpperCase(),o.id??index+1);
     o.sceneId=id;

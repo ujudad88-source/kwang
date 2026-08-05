@@ -123,3 +123,6 @@ body.drawing-focus-active .bottom-nav{display:none!important}
  .drawing-pro-workspace.focus-mode .drawing-v85-main{height:calc(100dvh - 52px)!important;padding:4px!important}
 }
 
+
+/* KENC 2.3.1 inner box / cover standalone modes */
+.drawing-assembly-mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:7px;background:#111b29;border-bottom:1px solid #2b3a50}.drawing-assembly-mode{min-height:34px;border:1px solid #30425a;border-radius:7px;background:#182536;color:#9db0c6;font-weight:800}.drawing-assembly-mode.active{background:#2b65c8;color:#fff;border-color:#4b8ff9}.drawing-output-target{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid #d7dee8;background:#f8fafc}.drawing-output-target span{font-size:11px;font-weight:800;color:#475569;margin-right:4px}.drawing-output-target button{border:1px solid #cbd5e1;border-radius:6px;background:#fff;padding:5px 9px;font-size:10px;font-weight:800;color:#475569}.drawing-output-target button.active{background:#1d4ed8;border-color:#1d4ed8;color:#fff}@media(max-width:700px){.drawing-assembly-mode-tabs{grid-template-columns:1fr}.drawing-output-target{flex-wrap:wrap}}
